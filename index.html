@@ -414,6 +414,7 @@ main{min-height:0; display:flex; flex-direction:column}
 /* Der Block nach dem Festlegen. Er ist das Ergebnis eines Zuges, nicht
    eine Fussnote — entsprechend gross. */
 .menue{flex:1; min-height:0; overflow-y:auto; padding:6px 2px 20px}
+.mkarte[disabled]{opacity:.5; cursor:not-allowed}
 .mkarten{display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:12px; margin-top:12px}
 a.mkarte, button.mkarte{display:flex; gap:14px; align-items:center; text-align:left; font:inherit; color:inherit;
   background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:14px 16px;
@@ -576,6 +577,12 @@ body.raten .zahlen{padding:10px 14px}
 .meter i{display:block; height:100%; border-radius:99px; transition:width .6s cubic-bezier(.4,0,.15,1)}
 .meter.bereit i{background:linear-gradient(90deg,var(--STA),var(--EFF),var(--SIC))}
 .meter.auf i{background:linear-gradient(90deg,var(--SIC),var(--EFF),var(--STA))}
+.meter.bez i{background:linear-gradient(90deg,var(--STA),var(--EFF),var(--SIC))}
+/* Die zwei Achsensaetze teilen sich eine Spalte; oben steht, welcher. */
+.bandwahl{display:flex; gap:4px}
+.bandwahl button{font-family:var(--mono); font-size:9px; letter-spacing:.12em; text-transform:uppercase;
+  padding:3px 7px; border-radius:99px; border:1px solid var(--line-soft); background:none; color:var(--muted); cursor:pointer}
+.bandwahl button.an{color:var(--accent); border-color:var(--accent)}
 
 /* ── Festlegen: fünf Zeilen, je fünf Stufen ── */
 .rateliste{display:flex; flex-direction:column; gap:5px}
@@ -756,7 +763,12 @@ table.bil tr.hi td.n{color:var(--accent); font-weight:600}
       </section>
 
       <section class="panel zahlen">
-        <div class="zrow">
+        <div class="zrow" id="bezRow">
+          <span class="zlab">Beziehung</span><span class="znum" id="bezVal">35</span>
+          <div class="meter bez"><i id="bezBar" style="width:35%"></i></div>
+          <div class="zhinweis" id="bezText"></div>
+        </div>
+        <div class="zrow" id="bereitRow" hidden>
           <span class="zlab">Bereitschaft</span><span class="znum" id="bereitVal">30</span>
           <div class="meter bereit"><i id="bereitBar" style="width:30%"></i></div>
         </div>
@@ -768,7 +780,7 @@ table.bil tr.hi td.n{color:var(--accent); font-weight:600}
       </section>
 
       <section class="panel" id="lesebandBox">
-        <div class="lesekopf"><span class="eyebrow" id="lesebandTitel">Dein Bild von ihm</span>
+        <div class="lesekopf"><span class="bandwahl" id="bandwahl"></span>
           <span class="hval" id="hval">–<span>BIT</span></span></div>
         <div class="dims" id="dims"></div>
       </section>
@@ -984,6 +996,9 @@ const vz = x => x > 0 ? "+"+x : String(x);
 const vzk = (x,d) => { const dd=d===undefined?1:d, r=Number(x.toFixed(dd)); return (r>0?"+":"")+nk(r,dd); };
 const WORT = ["null","eine","zwei","drei","vier","fünf","sechs","sieben","acht","neun"];
 const wort = n => WORT[n]!==undefined ? WORT[n] : String(n);
+const ORD = ["nullter","erster","zweiter","dritter","vierter","fünfter","sechster",
+             "siebter","achter","neunter","zehnter"];
+const ord = n => ORD[n] !== undefined ? ORD[n] : (n + ".");
 const gross = s => s.charAt(0).toUpperCase()+s.slice(1);
 
 function startPrior(dims, shift){
@@ -1056,25 +1071,87 @@ const NOFF = 3;
 const stueck = () => WELT.produkte.reduce((a,p) => a + KONTO.bestand[p.id], 0);
 const geld = n => n.toLocaleString('de-DE') + ' €';
 const PHASEN = [
-  {n:"Phase eins", t:"Ankunft"}, {n:"Phase zwei", t:"Wer ist das?"},
-  {n:"Phase drei", t:"Was will er?"}, {n:"Phase vier", t:"Was ihn bewegt"},
-  {n:"Phase fünf", t:"Der Verkauf"}, {n:"Schluss", t:"Auflösung"}
+  {n:"Ankunft", t:"Wer sitzt da?"}, {n:"Sein Wesen", t:"Wie er tickt"},
+  {n:"Seine Antriebe", t:"Worauf er anspringt"}, {n:"Seine Lage", t:"Was gerade ist"},
+  {n:"Der Koffer", t:"Der Verkauf"}, {n:"Abschied", t:"Was bleibt"}
 ];
+
+/* ═══════════════ Die Akte ═══════════════
+   Was von einem Besuch zum nächsten bleibt. Nicht gespeichert wird die
+   Wahrscheinlichkeitsverteilung — das wären 3125 Zahlen je Achsensatz —,
+   sondern die Antworten, die du gehört hast. Beim nächsten Besuch wird
+   daraus dasselbe Bild in einem Wimpernschlag neu gerechnet. */
+const AKTE = {};
+let A = null;
+function akteSichern(){ try{ localStorage.setItem("akte", JSON.stringify(AKTE)); }catch(e){} }
+(function akteLaden(){
+  try{ Object.assign(AKTE, JSON.parse(localStorage.getItem("akte") || "{}")); }catch(e){}
+})();
+function frischeAkte(){
+  return { besuche:0, bez:WELT.beziehung.start, bfVerlauf:[], moVerlauf:[],
+           bfGestellt:[], moGestellt:[], privGestellt:[], zGesehen:[],
+           fakten:[], spuren:[], gesagt:[], gefunden:[], bedarf:[],
+           auf:0, fest:{}, verkauft:[], letzter:null };
+}
+/* Ältere Stände bekommen fehlende Felder nachgereicht, statt dass das
+   Spiel an einem undefined stirbt. */
+function akteVon(id){
+  if(!AKTE[id]) AKTE[id] = frischeAkte();
+  const a = AKTE[id], f = frischeAkte();
+  for(const k in f) if(a[k] === undefined) a[k] = f[k];
+  return a;
+}
+const stufeZu = w => WELT.beziehung.stufen.find(x => w >= x.ab);
+/* Jede Änderung an der Beziehung geht hier durch und wird sofort
+   gesichert — ein geschlossener Browser darf keinen Besuch verschlucken. */
+function bezPlus(w){
+  S.bez = Math.max(0, Math.min(100, S.bez + w));
+  A.bez = S.bez; akteSichern();
+  return w;
+}
 
 function neuerZustand(){
   S = {
-    phase:0, knoten:"start", wechsel:0,
-    talk:[], neu:0, fakten:[], gesagt:[], verlauf:[], gefunden:[], spuren:[],
-    stimmung:"neutral",
-    bfGlaube:null, bfGestellt:[], bfLog:[],
-    moGlaube:null, moGestellt:[], moLog:[],
-    auf:0, privGestellt:[], privLog:[],
+    phase:0, knoten:"start", band:"bf",
+    talk:[], neu:0, verlauf:[],
+    fakten:A.fakten.slice(), gesagt:A.gesagt.slice(),
+    spuren:A.spuren.slice(), gefunden:A.gefunden.slice(),
+    stimmung:"neutral", bez:A.bez, bezStart:A.bez,
+    bfGlaube:null, bfGestellt:A.bfGestellt.slice(), bfLog:[],
+    moGlaube:null, moGestellt:A.moGestellt.slice(), moLog:[],
+    auf:(A.auf || 0) * (WELT.beziehung.aufUebertrag || 0), privGestellt:A.privGestellt.slice(), privLog:[],
+    zustand:null, zGestellt:[], zLog:[], zAn:false, bedarf:[],
     produkt:null, zug:0, zugLog:[], verkauft:null, rateLog:[],
-    raus:false
+    raus:false, angeboten:false, ende:null, faktenStart:A.fakten.length, fragenHeute:0
   };
-  S.bfPrior = startPrior(T, DATA.rollenprior);  S.bfGlaube = S.bfPrior.slice();
-  S.moPrior = startPrior(M, null);              S.moGlaube = S.moPrior.slice();
-  S.bereit  = DATA.verkauf.start;
+  S.bfPrior = startPrior(T, DATA.rollenprior);
+  S.moPrior = startPrior(M, null);
+  S.bfGlaube = spieleNach(S.bfPrior, A.bfVerlauf, DATA.bigfive,    T, "l");
+  S.moGlaube = spieleNach(S.moPrior, A.moVerlauf, DATA.motivfragen, M, "aff");
+  S.bereit = 0;
+  S.zustand = ziehZustand();
+}
+
+/* Dein Bild von ihm aus den Antworten neu aufbauen, die du in früheren
+   Besuchen gehört hast. Dasselbe Ergebnis, ein Bruchteil des Platzes. */
+function spieleNach(prior, verlauf, pool, dims, feld){
+  let g = prior.slice();
+  (verlauf || []).forEach(v => {
+    const f = pool.find(x => x.id === v.f); if(!f) return;
+    const i = f.a.findIndex(a => a.id === v.a); if(i < 0) return;
+    g = update(g, f, i, dims, feld);
+  });
+  return g;
+}
+
+/* Bei jedem Besuch ist etwas anderes los. Was du schon erlebt hast,
+   kommt erst wieder dran, wenn alles übrige durch ist. */
+function ziehZustand(){
+  const alle = DATA.zustaende || [];
+  if(!alle.length) return null;
+  let rest = alle.filter(z => !A.zGesehen.includes(z.id));
+  if(!rest.length){ A.zGesehen = []; rest = alle.slice(); }
+  return rest[Math.floor(Math.random()*rest.length)];
 }
 
 /* Eine Person aufschlagen: Welt und Person zusammenlegen, die
@@ -1085,19 +1162,22 @@ function ladePerson(person){
   T = DATA.traits; M = DATA.motives; HERO = DATA.hero;
   Object.keys(LIK).forEach(k => delete LIK[k]);
   Object.keys(BILD).forEach(k => delete BILD[k]);
+  A = akteVon(person.id);
   neuerZustand();
   cfgBF = { key:"bf", pool:DATA.bigfive, glaube:"bfGlaube", gestellt:"bfGestellt", log:"bfLog",
-    dims:T, feld:"l", wahr:HERO.z, weiterText:"Genug. Ich weiß, wie er tickt.", fertig:() => rateRunde(rateBF) };
+    dims:T, feld:"l", wahr:HERO.z, band:"bf", weiterText:"Genug davon.", fertig:() => drehscheibe() };
   cfgMO = { key:"mo", pool:DATA.motivfragen, glaube:"moGlaube", gestellt:"moGestellt", log:"moLog",
-    dims:M, feld:"aff", wahr:HERO.m, weiterText:"Genug. Ich weiß, worauf er anspringt.", fertig:() => rateRunde(rateMO) };
+    dims:M, feld:"aff", wahr:HERO.m, band:"mo", weiterText:"Genug davon.", fertig:() => drehscheibe() };
   rateBF = { key:"bf", dims:T, labels:DATA.tlabels, poles:DATA.tpoles, wahr:HERO.z,
-    titel:"Merkmale", deutung:DATA.deutung, kopf:`Festlegen · für jedes Merkmal eine Stufe`,
-    aufforderung:`Du gehst die fünf Merkmale im Kopf durch und legst dich fest, bevor du weiterredest.`,
-    weiter:() => uebergang2() };
+    titel:"Sein Wesen", deutung:DATA.deutung, reaktion:(DATA.reaktion||{}).z || {},
+    kopf:`Festlegen · für jedes Merkmal eine Stufe`,
+    aufforderung:`Du gehst die fünf Merkmale im Kopf durch — und sagst ihm dann auf den Kopf zu, für wen du ihn hältst.`,
+    weiter:() => drehscheibe() };
   rateMO = { key:"mo", dims:M, labels:DATA.mlabels, poles:DATA.mpoles, wahr:HERO.m,
-    titel:"Motive", deutung:DATA.mdeutung, kopf:`Festlegen · für jedes Motiv eine Stufe`,
-    aufforderung:`Du legst dich fest, worauf er anspringt.`,
-    weiter:() => uebergang3() };
+    titel:"Seine Antriebe", deutung:DATA.mdeutung, reaktion:(DATA.reaktion||{}).m || {},
+    kopf:`Festlegen · für jedes Motiv eine Stufe`,
+    aufforderung:`Du sagst ihm, worauf er deiner Meinung nach anspringt.`,
+    weiter:() => drehscheibe() };
   ladeBilder();
   document.getElementById("whoName").textContent = HERO.name + ", " + HERO.age;
   document.getElementById("whoName").title = HERO.job + " · " + HERO.ort;
@@ -1199,27 +1279,34 @@ function zeichneAkte(){
     `<div class="akt ${i===S.phase?"now":(i<S.phase?"done":"")}">${a.n}<b>${a.t}</b></div>`).join("");
 }
 
+/* Was hier steht, ist dein Bild von ihm und nicht er. Die wahren Werte
+   bekommst du in diesem Spiel nie zu sehen — nur ihn. */
 function zeichneLeseband(){
-  const box = document.getElementById("lesebandBox");
-  const motiv = S.phase >= 2;
-  box.hidden = false;
+  document.getElementById("lesebandBox").hidden = false;
+  const motiv = S.band === "mo";
   const dims = motiv ? M : T, labels = motiv ? DATA.mlabels : DATA.tlabels;
   const poles = motiv ? DATA.mpoles : DATA.tpoles, glaube = motiv ? S.moGlaube : S.bfGlaube;
-  const wahr = motiv ? HERO.m : HERO.z;
-  document.getElementById("lesebandTitel").textContent = motiv ? "Was ihn antreibt" : "Dein Bild von ihm";
+  const fest = motiv ? A.fest.mo : A.fest.bf;
+  document.getElementById("bandwahl").innerHTML =
+    `<button data-band="bf" class="${motiv?"":"an"}">Wesen</button>
+     <button data-band="mo" class="${motiv?"an":""}">Antriebe</button>`;
+  document.querySelectorAll("#bandwahl button").forEach(b =>
+    b.onclick = () => { S.band = b.dataset.band; zeichneLeseband(); });
   document.getElementById("hval").innerHTML = nk(H(glaube)) + "<span>BIT</span>";
   document.getElementById("dims").innerHTML = dims.map((d,i) => {
     const m = marginal(glaube,i), mx = Math.max(...m), ev = erwartung(m);
     const zellen = m.map((p,j) => `<i class="${j===2?"mid":""}" style="height:${Math.max(6,100*p/mx).toFixed(1)}%"></i>`).join("");
-    const punkt = S.phase >= 5 ? `<div class="truth"><i style="left:${((wahr[d]+2)/4*100).toFixed(1)}%"></i></div>` : "";
+    /* Worauf du dich festgelegt hast, steht als Strich in der Reihe —
+       damit du siehst, wo du dich gegen dein eigenes Modell entschieden
+       hast. Die Wahrheit steht hier nicht. */
+    const marke = fest ? `<div class="truth"><i style="left:${((fest[i]+2)/4*100).toFixed(1)}%"></i></div>` : "";
     /* Die Pole stehen verkürzt in der Titelzeile; ausgeschrieben
        erscheinen sie beim Überfahren. Das spart fünf Zeilen Höhe. */
     return `<div class="dimrow"><div class="dh"><b>${labels[d]}</b>
         <span class="pol" title="links: ${esc(poles[d][0])} — rechts: ${esc(poles[d][1])}">→ ${esc(poles[d][1])}</span>
-        <span class="v">${vzk(ev)}</span></div>
-      <div class="cells">${zellen}</div>${punkt}</div>`;
+        <span class="v">${fest ? "du "+vz(fest[i]) : vzk(ev)}</span></div>
+      <div class="cells">${zellen}</div>${marke}</div>`;
   }).join("");
-
 }
 
 function zeichneNotizen(){
@@ -1230,16 +1317,29 @@ function zeichneNotizen(){
   document.getElementById("notizZahl").textContent = S.fakten.length;
 
   const pb = document.getElementById("privatBox");
-  pb.hidden = S.phase < 3;
-  document.getElementById("privatZahl").textContent = S.gefunden.length + "/" + DATA.privat.felder.length;
-  document.getElementById("privatListe").innerHTML = DATA.privat.felder.map(f => {
-    const da = S.gefunden.includes(f.id);
-    return `<li class="${da?"":"offen"}">${da ? esc(f.wahr) : esc(f.was) + ": noch nichts"}</li>`;
-  }).join("");
+  pb.hidden = false;
+  /* Was du über ihn weißt: die vier privaten Dinge, und was er gerade
+     braucht — letzteres nur, wenn du danach gefragt hast. */
+  const bed = S.zustand && S.zustand.bedarf && S.bedarf.includes(S.zustand.bedarf.id)
+    ? [S.zustand] : [];
+  document.getElementById("privatZahl").textContent =
+    (S.gefunden.length + bed.length) + "/" + (DATA.privat.felder.length + bed.length);
+  document.getElementById("privatListe").innerHTML =
+    bed.map(z => `<li class="neu">gerade: ${esc(z.bedarf.was)}</li>`).join("")
+    + DATA.privat.felder.map(f => {
+        const da = S.gefunden.includes(f.id);
+        return `<li class="${da?"":"offen"}">${da ? esc(f.wahr) : esc(f.was) + ": noch nichts"}</li>`;
+      }).join("");
 }
 
 function zeichneBalken(){
-  const ar = document.getElementById("aufRow"); ar.hidden = S.phase < 3;
+  const b = Math.round(S.bez), st = stufeZu(b);
+  document.getElementById("bezVal").textContent = b + " · " + st.name;
+  document.getElementById("bezBar").style.width = b + "%";
+  document.getElementById("bezText").textContent = st.text;
+  document.getElementById("bereitRow").hidden = S.phase !== 4;
+
+  const ar = document.getElementById("aufRow"); ar.hidden = S.auf <= 0;
   const a = Math.max(0, Math.min(DATA.privat.grenze, S.auf));
   document.getElementById("aufVal").textContent = nk(a,1).replace(",0","") + " / " + DATA.privat.grenze;
   document.getElementById("aufBar").style.width = (100*a/DATA.privat.grenze) + "%";
@@ -1298,11 +1398,27 @@ function erSagt(o){
   setzeStimmung(o.stimmung);
 }
 function merke(o){
-  if(o.fakt && !S.fakten.includes(o.fakt)) S.fakten.push(o.fakt);
-  if(o.spur && !S.spuren.includes(o.spur)) S.spuren.push(o.spur);
+  if(o.fakt && !S.fakten.includes(o.fakt)){ S.fakten.push(o.fakt); A.fakten.push(o.fakt); }
+  if(o.spur && !S.spuren.includes(o.spur)){ S.spuren.push(o.spur); A.spuren.push(o.spur); }
 }
 
-/* ═══════════════ Phase 1: Ankunft als Baum ═══════════════ */
+/* ═══════════════ Ankunft ═══════════════
+   Beim ersten Mal der ganze Empfang. Danach hängt es daran, wie ihr
+   auseinandergegangen seid — und mehr als das siehst du am Anfang
+   nicht: an der Tür steht kein Wert, sondern ein Mensch. */
+function ankunft(){
+  A.besuche++; akteSichern();
+  S.phase = 0;
+  if(A.besuche === 1) return phase1("start");
+  const w = (DATA.wiedersehen || []).find(x => S.bez >= x.ab);
+  sag("regie", `Dein ${ord(A.besuche)} Besuch. Vierter Stock, letzte Tür.`);
+  if(w){ sag("regie", w.regie); erSagt(w); }
+  if(S.auf >= 2) sag("meta", `Er hat noch im Kopf, wie viel du letztes Mal gefragt hast · Auffälligkeit <b>${
+    nk(S.auf,1).replace(",0","")}</b> von ${DATA.privat.grenze}`, {warn:true});
+  zeichne();
+  knopf("Hereinkommen", () => drehscheibe());
+}
+
 function phase1(id){
   S.phase = 0;
   const k = DATA.baum[id];
@@ -1323,7 +1439,72 @@ function phase1(id){
 function uebergang1(){
   const u = DATA.uebergang1;
   sag("regie", u.duFest); erSagt(u);
-  phase2();
+  drehscheibe();
+}
+
+/* ═══════════════ Die Drehscheibe ═══════════════
+   Nach jedem Schritt landest du wieder hier. Was du tust, ist deine
+   Sache: du kannst sofort den Koffer aufmachen, und du kannst jederzeit
+   gehen. Beides hat seinen Preis, und beide Preise stehen dabei. */
+function drehscheibe(){
+  if(S.ende) return;
+  S.phase = 0;
+  const kopf = `Was tust du? · Beziehung ${Math.round(S.bez)} · ${stufeZu(S.bez).name}`;
+  const items = [];
+  const bfOffen = DATA.bigfive.filter(f => !S.bfGestellt.includes(f.id)).length;
+  const moOffen = DATA.motivfragen.filter(f => !S.moGestellt.includes(f.id)).length;
+  /* Ein Preis wie -1,72 liest sich schlecht; eine Stelle reicht. */
+  const preis1 = x => nk(x,1).replace(",0","");
+  const kosten = `<i style="color:var(--STA)">${preis1(fragepreis())}</i> die nächste`;
+
+  if(bfOffen) items.push({ t:`Ihn über sich selbst reden lassen`, tag:kopf,
+    rechts:`Wesen · ${wort(bfOffen)} offen · ${kosten}`,
+    go(){ S.phase = 1; S.band = "bf"; zeichne(); leseRunde(cfgBF); } });
+
+  if(moOffen) items.push({ t:`Herausfinden, worauf er anspringt`, tag:kopf,
+    rechts:`Antriebe · ${wort(moOffen)} offen · ${kosten}`,
+    go(){ S.phase = 2; S.band = "mo"; zeichne(); leseRunde(cfgMO); } });
+
+  /* Festlegen kannst du dich erst, wenn du ihn etwas gefragt hast — und
+     wieder, sobald du seither Neues gehört hast. Wer sich revidiert,
+     wird erneut bewertet. */
+  [["bf", rateBF, `wer er ist`], ["mo", rateMO, `was ihn treibt`]].forEach(pa => {
+    const k = pa[0], cfg = pa[1], was = pa[2];
+    const zahl = (k === "bf" ? A.bfVerlauf : A.moVerlauf).length;
+    const fest = A.fest[k], stand = A.fest[k + "Stand"] || 0;
+    if(!zahl || (fest && stand >= zahl)) return;
+    items.push({ t:(fest ? `Dich neu festlegen: ` : `Dich festlegen: `) + was, tag:kopf, klasse:"weiter",
+      rechts:`aus ${wort(zahl)} ${zahl===1?"Antwort":"Antworten"} · er antwortet dir darauf`,
+      go(){ rateRunde(cfg); } });
+  });
+
+  if(S.zustand && S.zustand.fragen.some(f => !S.zGestellt.includes(f.id)))
+    items.push({ t:`Fragen, was gerade bei ihm los ist`, tag:kopf,
+      rechts: S.zAn ? esc(S.zustand.titel) : `seine Lage · du weißt noch nichts davon`,
+      go(){ S.phase = 3; zeichne(); zustandRunde(); } });
+
+  const privRest = DATA.privatfragen.filter(f => !S.privGestellt.includes(f.id)
+    && !(f.gibt && S.gefunden.includes(f.gibt)));
+  if(privRest.length && S.gefunden.length < DATA.privat.felder.length)
+    items.push({ t:`Ihn nach sich selbst ausfragen`, tag:kopf,
+      klasse: S.auf >= DATA.privat.grenze - 3 ? "riskant" : "",
+      rechts:`privat · Auffälligkeit ${nk(S.auf,1).replace(",0","")} von ${DATA.privat.grenze}`,
+      go(){ S.phase = 3; zeichne(); privatRunde(); } });
+
+  if(!S.angeboten){
+    const B = WELT.beziehung, kann = S.bez >= B.verkaufSchwelle;
+    items.push({ t:`Den Koffer aufmachen`, tag:kopf, klasse: kann ? "weiter" : "riskant",
+      rechts: kann
+        ? `kostet <i style="color:var(--STA)">${vzk(-B.verkaufKosten,0)}</i> · Bereitschaft startet bei ${Math.round(S.bez*B.uebertrag)}`
+        : `<i style="color:var(--STA)">er kennt dich zu wenig — ab ${B.verkaufSchwelle}</i>`,
+      go(){ verkaufStart(); } });
+  }
+
+  items.push({ t:`Dich verabschieden`, tag:kopf, klasse:"weiter",
+    rechts:`Besuch beenden, solange es gut ist`, go(){ abschied(); } });
+
+  zeichne();
+  waehle(items);
 }
 
 /* ═══════════════ Phase 2 und 3: lesen ═══════════════ */
@@ -1349,7 +1530,11 @@ function leseRunde(cfg){
   const rest = cfg.pool.filter(p => !S[cfg.gestellt].includes(p.id));
   if(!rest.length) return cfg.fertig();
   const glaube = S[cfg.glaube];
-  const kopf = `Frage ${S[cfg.gestellt].length+1} · kostet ${nk(-W_FRAGE)} Bereitschaft · noch ${nk(H(glaube))} bit im Dunkeln`;
+  /* Der Preis der naechsten Frage steht ueber der Auswahl, damit man
+     sieht, wann es Zeit wird, wiederzukommen. */
+  const kopf = `Frage ${S[cfg.gestellt].length+1} · kostet ${nk(-fragepreis(),1).replace(",0","")} Beziehung`
+    + (S.fragenHeute >= 5 ? ` · er wird ungeduldig` : ``)
+    + ` · noch ${nk(H(glaube))} bit im Dunkeln`;
   const items = biete(cfg.pool, S[cfg.gestellt]).map(f => {
     const an = anknuepfung(f), g = eig(glaube, f, cfg.dims, cfg.feld);
     return { t: an ? an.text : f.q, tag: kopf,
@@ -1367,6 +1552,7 @@ function stelle(frage, an, cfg){
   const beste = rest.reduce((a,b) => eig(vorher,b,cfg.dims,cfg.feld) > eig(vorher,a,cfg.dims,cfg.feld) ? b : a);
   const besteEig = eig(vorher, beste, cfg.dims, cfg.feld);
 
+  const preis = fragepreis();
   const i = seineAntwort(frage, cfg.wahr, cfg.dims, cfg.feld);
   const antwort = frage.a[i];
   S[cfg.glaube] = update(vorher, frage, i, cfg.dims, cfg.feld);
@@ -1377,29 +1563,37 @@ function stelle(frage, an, cfg){
   setzeStimmung(antwort.stimmung);
   if(antwort.nachRegie) sag("regie", antwort.nachRegie);
   if(antwort.nachEr) sag("er", antwort.nachEr, {wie:antwort.wie});
-  sag("meta", `<b>${gewinn>=0?"+":""}${nk(gewinn)}</b> bit · Geduld <b>${vzk(nachStimmung(W_FRAGE))}</b> · Auffälligkeit <b>${vzk(W_FRAGE_AUF,2)}</b>`,
+  sag("meta", `<b>${gewinn>=0?"+":""}${nk(gewinn)}</b> bit · Beziehung <b>${vzk(nachStimmung(preis))}</b> · Auffälligkeit <b>${vzk(W_FRAGE_AUF,2)}</b>`,
     {lang: `erwartet hatte die Frage ${nk(erwartet)} bit`
       + (beste.id !== frage.id ? `, stärker gewesen wäre <s>${esc(beste.q)}</s> mit ${nk(besteEig)} bit`
                                : `, und das war die stärkste offene Frage`) + `.`});
 
-  S.bereit += nachStimmung(W_FRAGE);
+  bezPlus(nachStimmung(preis));
+  S.fragenHeute++;
   S.auf += W_FRAGE_AUF;
   S[cfg.gestellt].push(frage.id);
+  A[cfg.gestellt].push(frage.id);
+  /* In die Akte wandert die Antwort, nicht das Ergebnis: beim nächsten
+     Besuch wird daraus dasselbe Bild neu gerechnet. */
+  A[cfg.key === "bf" ? "bfVerlauf" : "moVerlauf"].push({f:frage.id, a:antwort.id});
   S[cfg.log].push({frageId:frage.id, q:frage.q, erwartet, gewinn, besteId:beste.id, besteEig});
   S.verlauf.push({frageId:frage.id, antwortId:antwort.id});
-  S.gesagt.push(antwort.id);
+  S.gesagt.push(antwort.id); A.gesagt.push(antwort.id);
+  akteSichern();
   merke(antwort);
   zeichne();
   setTimeout(() => leseRunde(cfg), 60);
 }
 
 /* ═══════════════ Festlegen ═══════════════
-   Wer abbricht, muss sich erklären. Für jede Dimension eine Stufe, und
-   die Auflösung kommt sofort — sonst wartet man bis zum Schluss auf
-   die einzige Rückmeldung, die einen weiterbringt.
-   Die Gewichte stehen unten und sind durchgerechnet: blindes Raten
-   kostet im Mittel, gutes Zuhören zahlt sich aus. */
-const W_RATE_TREFFER = 6.5, W_RATE_NAH = 1.5, W_RATE_DANEBEN = -3.5;
+   Du sagst ihm ins Gesicht, für wen du ihn hältst. Eine Auflösung gibt
+   es nicht — die wahren Werte siehst du in diesem Spiel nie. Was du
+   bekommst, ist er: bei einem Treffer bestätigt er dich, bei einem
+   Fehlgriff widerspricht er, und aus der Richtung seines Widerspruchs
+   kannst du schließen, wohin du danebenlagst.
+   Die Gewichte sind durchgerechnet: blindes Raten kostet im Mittel,
+   gutes Zuhören zahlt sich aus. Siehe balance.py. */
+const W_RATE_TREFFER = 5, W_RATE_NAH = 1, W_RATE_DANEBEN = -3;
 
 function rateRunde(cfg){
   R.aktiv = cfg; R.tipps = [null,null,null,null,null];
@@ -1453,70 +1647,77 @@ function zeichneRateHinweis(){
 }
 
 function werteRaten(cfg, tipps){
+  const glaube = cfg.key === "bf" ? S.bfGlaube : S.moGlaube;
   const zeilen = cfg.dims.map((d,i) => {
+    const m = marginal(glaube, i);
     const dist = Math.abs(tipps[i] - cfg.wahr[d]);
-    const stufe = cfg.wahr[d] > 0 ? "hoch" : (cfg.wahr[d] < 0 ? "tief" : "mitte");
-    return {d, label:cfg.labels[d], tipp:tipps[i], wahr:cfg.wahr[d], dist,
-            deutung: (cfg.deutung[d] || {})[stufe] || "",
-            p: dist===0 ? W_RATE_TREFFER : (dist===1 ? W_RATE_NAH : W_RATE_DANEBEN)};
+    const stufe = tipps[i] > 0 ? "hoch" : (tipps[i] < 0 ? "tief" : "mitte");
+    return { d, i, label:cfg.labels[d], tipp:tipps[i], dist,
+      richtung: tipps[i] > cfg.wahr[d] ? "zuHoch" : (tipps[i] < cfg.wahr[d] ? "zuTief" : "genau"),
+      /* Wie sicher dein eigenes Modell an dieser Stelle war. Das ist
+         deine Zahl, nicht seine — sie darf hier stehen. */
+      sicher: m[tipps[i]+2],
+      gegenModell: modus(m) !== tipps[i],
+      deutung: (cfg.deutung[d] || {})[stufe] || "",
+      p: dist===0 ? W_RATE_TREFFER : (dist===1 ? W_RATE_NAH : W_RATE_DANEBEN) };
   });
-  const punkte  = zeilen.reduce((a,z) => a + z.p, 0);
-  const abstand = zeilen.reduce((a,z) => a + z.dist, 0);
+  const punkte = zeilen.reduce((a,z) => a + z.p, 0);
   const genau = zeilen.filter(z => z.dist===0).length;
   const knapp = zeilen.filter(z => z.dist===1).length;
   const weit  = zeilen.filter(z => z.dist>1).length;
-  S.bereit += punkte;
-  S.rateLog.push({key:cfg.key, zeilen, punkte, abstand});
+  const wirkung = bezPlus(punkte);
 
-  /* Das Festlegen ist der Moment, an dem man etwas lernt. Deshalb steht
-     hier ein eigener Block und keine Randnotiz: wie nah du dran warst,
-     und was der wahre Wert fuer den Rest des Gespraechs bedeutet. */
-  const urteil = abstand === 0 ? "Volltreffer. Alle fünf."
-    : abstand <= 2 ? "Sehr nah dran."
-    : abstand <= 4 ? "Brauchbar gelesen."
-    : abstand <= 7 ? "Halb daneben."
-    : "Weit weg.";
+  A.fest[cfg.key] = tipps.slice();
+  A.fest[cfg.key + "Stand"] = (cfg.key === "bf" ? A.bfVerlauf : A.moVerlauf).length;
+  akteSichern();
+  S.rateLog.push({key:cfg.key, titel:cfg.titel, zeilen, punkte:wirkung, genau, knapp, weit});
+
+  /* Er hört sich das an und antwortet. Auf einen Treffer, wenn es einen
+     gibt, und auf den gröbsten Fehlgriff. Zwei Sätze, nicht fünf —
+     sonst wird aus der Szene eine Tabelle mit Anführungszeichen. */
+  sag("du", `Darf ich Ihnen sagen, für wen ich Sie halte?`, {wie:`ruhig, ohne Anlauf`});
+  sag("er", `Bitte.`, {wie:`abwartend, nicht unfreundlich`});
+  sag("regie", `Du nennst ihm fünf Sätze über ihn. Er hört zu, ohne zu unterbrechen.`);
+
+  const treffer = zeilen.filter(z => z.dist === 0).sort((x,y) => y.sicher - x.sicher)[0];
+  const fehl    = zeilen.filter(z => z.dist > 0).sort((x,y) => y.dist - x.dist)[0];
+  const stimme = o => { if(!o) return; sag("er", o.er, {wie:o.wie});
+    if(o.erRegie) sag("regie", o.erRegie);
+    if(o.er2) sag("er", o.er2, {wie:o.wie2 || o.wie}); };
+  const R2 = cfg.reaktion || {};
+  if(treffer) stimme((R2[treffer.d] || {}).genau);
+  if(fehl)    stimme((R2[fehl.d] || {})[fehl.richtung]);
+  setzeStimmung(punkte >= 12 ? "interessiert" : punkte >= 0 ? "nachdenklich"
+              : punkte >= -8 ? "skeptisch" : "verschlossen");
+
+  const urteil = punkte >= 20 ? "Er widerspricht kein einziges Mal."
+    : punkte >= 12 ? "Er nickt öfter, als er den Kopf schüttelt."
+    : punkte >= 4  ? "Er lässt das meiste stehen."
+    : punkte >= -4 ? "Er hält so oft dagegen, wie er zustimmt."
+    : punkte >= -10 ? "Er widerspricht dir öfter, als dir lieb ist."
+    : "Er widerspricht fast durchgehend. Ihr redet über zwei verschiedene Menschen.";
+
   sag("ergebnis", `<section class="panel festlegung">
     <div class="fkopf">
-      <div><div class="eyebrow">Festgelegt · ${cfg.titel}</div>
+      <div><div class="eyebrow">Festgelegt · ${esc(cfg.titel)}</div>
         <div class="furteil">${urteil}</div></div>
-      <div class="fpunkte ${punkte>=0?"plus":"minus"}">${vzk(punkte,1)}<small>Bereitschaft</small></div>
+      <div class="fpunkte ${wirkung>=0?"plus":"minus"}">${vzk(wirkung,1)}<small>Beziehung</small></div>
     </div>
-    <div class="fbilanz">${gross(wort(genau))} genau getroffen${knapp?`, ${wort(knapp)} um eine Stufe verfehlt`:``}${weit?`, ${wort(weit)} deutlich daneben`:``}.
-      Abstand zum wahren Bild: <b>${abstand}</b> ${abstand===1?"Stufe":"Stufen"} von zwanzig möglichen.</div>
+    <div class="fbilanz">${gross(wort(genau))} ${genau===1?"Punkt hat er bestätigt":"Punkte hat er bestätigt"}${
+      knapp?`, bei ${wort(knapp)} hat er eingeschränkt`:``}${weit?`, bei ${wort(weit)} deutlich widersprochen`:``}.
+      Wie er wirklich ist, wirst du nie schwarz auf weiß sehen — nur, wie er darauf reagiert.</div>
     <table class="ftab">${zeilen.map(z => `
       <tr class="fzeile ${z.dist===0?"ja":(z.dist===1?"nah":"nein")}">
         <td class="fname">${z.label}</td>
-        <td class="n">du ${vz(z.tipp)} · wahr <b>${vz(z.wahr)}</b></td>
+        <td class="n">du <b>${vz(z.tipp)}</b> · dein Modell gab dem ${Math.round(z.sicher*100)} %${
+          z.gegenModell ? ` · <i style="color:var(--EFF)">gegen dein Modell</i>` : ``}</td>
         <td class="n"><span class="treffer ${z.dist===0?"ja":(z.dist===1?"nah":"nein")}">${
-          z.dist===0?"getroffen":(z.dist===1?"knapp":"daneben")}</span> ${vzk(z.p,1)}</td></tr>
-      <tr class="fdeut"><td colspan="3">${esc(z.deutung)}</td></tr>`).join("")}
+          z.dist===0?"bestätigt":(z.dist===1?"eingeschränkt":"widersprochen")}</span> ${vzk(z.p,1)}</td></tr>
+      <tr class="fdeut"><td colspan="3">Wenn du damit recht hast: ${esc(z.deutung)}</td></tr>`).join("")}
     </table>
   </section>`);
   zeichne();
   setTimeout(cfg.weiter, 60);
-}
-
-function phase2(){
-  S.phase = 1;
-  zeichne(); leseRunde(cfgBF);
-}
-function uebergang2(){
-  S.phase = 2;
-  if(!S.bfGestellt.length) sag("regie", "Du fragst gar nicht erst. Mutig.");
-  erSagt({ er:"Sie fragen viel. Fragen Sie ruhig weiter, ich rede gern über mich, das ist eine Schwäche.",
-           wie:"selbstironisch, entspannt", stimmung:"freundlich" });
-  zeichne();
-  knopf("Weiterfragen", () => { zeichne(); leseRunde(cfgMO); });
-}
-function uebergang3(){
-  S.phase = 3;
-  erSagt({ erRegieVor:"Er sieht auf die Uhr, ohne dass es wie ein Hinweis aussieht.",
-           er:"Wir haben noch zehn Minuten. Wollen Sie die für Fragen verbrauchen?",
-           wie:"beiläufig, prüfend", stimmung:"neutral" });
-  sag("regie", "Was du jetzt herausbekommst, steht in keinem Modell. Es entscheidet aber darüber, was du ihm gleich anbieten kannst — und er merkt, wenn du ihn ausfragst.");
-  zeichne();
-  knopf("Vorsichtig weiterfragen", () => privatRunde());
 }
 
 /* ═══════════════ Phase 4: was ihn privat bewegt ═══════════════
@@ -1537,10 +1738,9 @@ function oeffnetSich(f, anker){
 }
 
 function privatRunde(){
-  S.phase = 3;
   const rest = DATA.privatfragen.filter(f => !S.privGestellt.includes(f.id)
     && !(f.gibt && S.gefunden.includes(f.gibt)));
-  if(!rest.length || S.gefunden.length >= DATA.privat.felder.length) return uebergang4();
+  if(!rest.length || S.gefunden.length >= DATA.privat.felder.length) return drehscheibe();
 
   const misch = rest.slice().sort(() => Math.random()-0.5);
   const anker = misch.filter(f => privAnker(f)), ohne = misch.filter(f => !privAnker(f));
@@ -1561,7 +1761,7 @@ function privatRunde(){
             + (f.plump ? ` · <i>plump</i>` : ""),
       go(){ frageprivat(f, a, kosten); } };
   });
-  items.push({ t:"Genug. Ich habe, was ich brauche.", klasse:"weiter", rechts:`+null`, go(){ uebergang4(); } });
+  items.push({ t:"Genug davon.", klasse:"weiter", rechts:`+null`, go(){ drehscheibe(); } });
   waehle(items);
 }
 
@@ -1572,9 +1772,9 @@ function frageprivat(f, anker, kosten){
 
   sag("du", anker ? anker.text : f.q);
   erSagt(o);
-  if(oeffnet && f.gibt && !S.gefunden.includes(f.gibt)) S.gefunden.push(f.gibt);
+  if(oeffnet && f.gibt && !S.gefunden.includes(f.gibt)){ S.gefunden.push(f.gibt); A.gefunden.push(f.gibt); }
+  S.privGestellt.push(f.id); A.privGestellt.push(f.id); akteSichern();
   merke(o);
-  S.privGestellt.push(f.id);
   S.privLog.push({id:f.id, q:f.q, kosten, oeffnet, anker: anker ? anker.k : null});
 
   sag("meta", oeffnet
@@ -1587,24 +1787,118 @@ function frageprivat(f, anker, kosten){
   setTimeout(privatRunde, 60);
 }
 
+/* ═══════════════ Seine Lage ═══════════════
+   Was gerade bei ihm los ist, wird bei jedem Besuch neu gezogen. Jeder
+   Weg hinein unterstellt eine Persönlichkeit — teilnehmend, nüchtern,
+   ordnungsliebend. Verrechnet wird er mit der, die er wirklich hat.
+
+   Vor der Wahl steht nur, was dein eigenes Bild von ihm erwarten lässt.
+   Ist dein Bild falsch, führt dich genau diese Zahl in die Mine. */
+function erwarteterWert(liest, glaube, dims){
+  let v = 0;
+  dims.forEach((d,i) => { if(liest[d]) v += liest[d] * erwartung(marginal(glaube,i)); });
+  return v;
+}
+function wahrerWert(liest){ let v = 0; for(const d in liest) v += liest[d]*HERO.z[d]; return v; }
+
+function zustandRunde(){
+  const z = S.zustand;
+  if(!z) return drehscheibe();
+  if(!S.zAn){
+    S.zAn = true;
+    if(!A.zGesehen.includes(z.id)) A.zGesehen.push(z.id);
+    akteSichern();
+    sag("regie", z.regie); erSagt(z);
+    if(!S.fakten.includes(z.titel)) merke({fakt:z.titel});
+    zeichne();
+  }
+  const rest = z.fragen.filter(f => !S.zGestellt.includes(f.id));
+  if(!rest.length) return drehscheibe();
+  const items = rest.map(f => {
+    const e = erwarteterWert(f.liest, S.bfGlaube, T);
+    const farbe = e > 0.8 ? "var(--SIC)" : (e < -0.8 ? "var(--STA)" : "var(--EFF)");
+    const urteil = e > 0.8 ? "passt zu deinem Bild" : (e < -0.8 ? "gegen dein Bild" : "unklar");
+    return { t:f.t, tag:`Seine Lage · ${esc(z.titel)}`, klasse: e < -0.8 ? "riskant" : "",
+      rechts:`<i style="color:${farbe}" title="Das ist, was dein Modell von ihm erwarten lässt — nicht, was er ist. Ob es stimmt, sagt dir nur er.">${urteil} ${vzk(e)}</i>`,
+      go(){ zustandZug(z, f); } };
+  });
+  items.push({ t:`Das Thema ruhen lassen.`, klasse:"weiter", rechts:``, go(){ drehscheibe(); } });
+  waehle(items);
+}
+
+function zustandZug(z, f){
+  const trifft = wahrerWert(f.liest) > 0;
+  const o = trifft ? f.gut : f.zu;
+  sag("du", f.t, {wie:f.wie});
+  erSagt(o); merke(o);
+  const wirkung = bezPlus(nachStimmung(o.bez || 0));
+  let neu = false;
+  if(trifft && z.bedarf && !S.bedarf.includes(z.bedarf.id)){
+    S.bedarf.push(z.bedarf.id);
+    neu = true;
+  }
+  S.zGestellt.push(f.id);
+  S.zLog.push({id:f.id, t:f.t, trifft, wirkung});
+  akteSichern();
+  sag("meta", `${trifft ? "er geht darauf ein" : "du greifst daneben"} · Beziehung <b>${vzk(wirkung)}</b> auf ${Math.round(S.bez)}`,
+    {warn: !trifft,
+     lang: neu ? `Du weißt jetzt, was er deswegen braucht: ${esc(z.bedarf.was)}. Das zählt gleich für das, was du ihm hinlegst.`
+                : (trifft ? `` : `Dein Zug hat eine Persönlichkeit unterstellt, die er nicht hat. Das merkt er sofort.`)});
+  zeichne();
+  setTimeout(() => zustandRunde(), 60);
+}
+
 function rausgeworfen(){
   const h = DATA.hinausgeworfen;
   sag("regie", h.regie); erSagt(h);
-  S.phase = 5;
-  zeichne();
-  sag("verdict", aufloesung(null, true));
-  zeichne();
-  knopf("Zurück ins Menü", () => zeigeMenue());
+  const w = bezPlus(W_RAUSWURF);
+  sag("meta", `Beziehung <b>${vzk(w)}</b> auf ${Math.round(S.bez)}`, {warn:true});
+  S.ende = "raus";
+  besuchEnde(null);
 }
 
-/* ═══════════════ Phase 5: der Verkauf ═══════════════ */
-function uebergang4(){
+/* ═══════════════ Der Abschied ═══════════════
+   Rechtzeitig zu gehen ist ein Zug und kein Aufgeben: wer aufhört,
+   solange es gut läuft, nimmt den guten Stand mit ins nächste Mal. */
+function abschied(){
+  const a = (DATA.abschied || []).find(x => S.bez >= x.ab);
+  if(a){
+    sag("regie", a.regie); erSagt(a);
+    const w = bezPlus(a.bez || 0);
+    if(w) sag("meta", `Beziehung <b>${vzk(w)}</b> auf ${Math.round(S.bez)}`);
+  }
+  S.ende = "abschied";
+  besuchEnde(null);
+}
+
+/* ═══════════════ Der Koffer ═══════════════
+   Aufmachen darfst du ihn jederzeit — auch in der ersten Minute des
+   ersten Besuchs. Nur sieht er dann hinein und dich an, und beides
+   dauert nicht lange. Der Versuch allein kostet: du hast dich zu
+   erkennen gegeben, und das nimmst du nicht zurück. */
+function verkaufStart(){
+  const B = WELT.beziehung;
+  S.angeboten = true;
+  if(S.bez < B.verkaufSchwelle){
+    const ab = DATA.abfuhr;
+    sag("regie", ab.regie); erSagt(ab);
+    const w = bezPlus(-B.verkaufKosten * 2);
+    sag("meta", `Er macht den Koffer nicht auf · Beziehung <b>${vzk(w)}</b> auf ${Math.round(S.bez)}`,
+      {warn:true, lang:`Ab ${B.verkaufSchwelle} sieht er hinein. Du standest bei ${Math.round(S.bez - w)}.`});
+    S.ende = "abfuhr";
+    return besuchEnde(null);
+  }
   S.phase = 4;
+  bezPlus(-B.verkaufKosten);
+  S.bereit = Math.round(S.bez * B.uebertrag);
   const v = DATA.verkauf;
   sag("regie", v.aufschlag);
   sag("regie", v.reaktionRegie);
   sag("er", v.reaktion, {wie:v.reaktionWie});
   setzeStimmung("neutral");
+  sag("meta", `Der Koffer kostet <b>${vzk(-B.verkaufKosten,0)}</b> Beziehung · Bereitschaft startet bei <b>${S.bereit}</b>`,
+    {lang:`Die Bereitschaft ist keine eigene Währung, sondern das, was aus eurem Verhältnis geworden ist: ${
+      Math.round(S.bez)} mal ${nk(B.uebertrag)}.`});
   zeichne();
   knopf("Etwas anbieten", () => produktwahl());
 }
@@ -1663,11 +1957,19 @@ function produktwahl(){
 /* Durchgerechnet: blindes Raten gewinnt praktisch nie, sorgfaeltiges
    Zuhoeren in vier von fuenf Faellen. Siehe balance.py. */
 const W_AUTO = 2.8, W_TREFFER = 0.35, W_FEHLGRIFF = 0.7, W_RUECKGRIFF = 1,
-      W_PRODUKT = 3, W_PRIVAT = 2;
+      W_PRODUKT = 3, W_PRIVAT = 2, W_BEDARF = 2.5;
+/* Was der Rauswurf kostet — er wirkt über den Besuch hinaus. */
+const W_RAUSWURF = -18;
 /* Jede Frage kostet Geduld. Ohne diesen Preis waere es immer richtig,
    alles zu fragen — und die zweite und dritte Phase haetten keine
    Entscheidung mehr, nur noch Arbeit. */
 const W_FRAGE = -1;
+/* Und sie kostet mehr, je laenger du an einem Nachmittag fragst. Nach
+   der fuenften Frage merkt er, dass er verhoert wird. Wer sich die
+   Fragen ueber mehrere Besuche einteilt, kommt billiger davon — genau
+   das ist der Sinn der Sache. */
+const W_FRAGE_STEIG = 0.12;
+const fragepreis = () => W_FRAGE * (1 + S.fragenHeute * W_FRAGE_STEIG);
 /* Und jede Frage macht ihn ein wenig wachsamer. Wer alles ausfragt,
    betritt den privaten Teil schon halb verbrannt. */
 const W_FRAGE_AUF = 0.55;
@@ -1676,8 +1978,16 @@ function nimmProdukt(p){
   S.produkt = p;
   let passung = 0;
   for(const m in p.passt) passung += p.passt[m] * HERO.m[m];
+  /* Was gerade bei ihm los ist, verschiebt das Gewicht — aber nur, wenn
+     du danach gefragt hast. Wer seine Lage nicht kennt, verkauft ihm
+     etwas an einen Menschen, den es diese Woche nicht gibt. */
+  let bedarf = 0;
+  const zb = S.zustand && S.zustand.bedarf;
+  if(zb && S.bedarf.includes(zb.id))
+    for(const m in zb.braucht) bedarf += (p.passt[m] || 0) * zb.braucht[m];
+  S.produktBedarf = bedarf;
   const treffer = (p.spricht||[]).filter(id => S.gefunden.includes(id));
-  const wirkung = nachStimmung(W_PRODUKT*passung + W_PRIVAT*treffer.length*2);
+  const wirkung = nachStimmung(W_PRODUKT*passung + W_BEDARF*bedarf + W_PRIVAT*treffer.length*2);
   S.bereit += wirkung;
   S.produktPassung = passung; S.produktTreffer = treffer;
 
@@ -1685,6 +1995,7 @@ function nimmProdukt(p){
   erSagt(p);
   sag("meta", `Bereitschaft <b>${vzk(wirkung)}</b>`, {warn: wirkung < 0,
     lang: `Warenpassung ${vzk(passung)} gegen seine Motive`
+      + (bedarf ? `, dazu ${vzk(bedarf)} für das, was gerade bei ihm los ist` : ``)
       + (treffer.length
           ? `, dazu trifft sie ${treffer.map(id => DATA.privat.felder.find(f=>f.id===id).was).join(" und ")}.`
           : `, und sie trifft nichts von dem, was du privat weißt.`)});
@@ -1756,119 +2067,120 @@ function schluss(){
     sag("meta", `Verkauft: ${v.menge}× ${esc(S.produkt.name)} · <b>${geld(v.erloes)}</b> · `
       + `Kasse ${geld(KONTO.kasse)} · noch ${stueck()} Stück im Koffer`);
   }
+  /* Ein Abschluss ist ein Vertrauensbeweis und wirkt nach; ein klares
+     Nein auch, nur andersherum. */
+  const dz = bezPlus(aus.ab >= 72 ? 6 : (aus.ab >= 48 ? 0 : -8));
+  if(dz) sag("meta", `Beziehung <b>${vzk(dz)}</b> auf ${Math.round(S.bez)}`, {warn: dz < 0});
+  S.ende = "verkauf";
+  besuchEnde(aus);
+}
+
+/* ═══════════════ Ende eines Besuchs ═══════════════
+   Alles, was bleibt, steht in der Akte: die Beziehung, was du gehört
+   hast, worauf du dich festgelegt hast. Beim nächsten Mal geht es
+   von hier weiter. */
+function besuchEnde(aus){
+  S.phase = 5;
+  A.letzter = S.ende;
+  A.bez = S.bez;
+  A.auf = S.auf;
+  akteSichern();
   zeichne();
-  sag("verdict", aufloesung(aus, false));
+  sag("verdict", bilanz(aus));
   zeichne();
   knopf("Zurück ins Menü", () => zeigeMenue());
 }
 
-/* ═══════════════ Auflösung ═══════════════ */
-/* Bewertet wird, worauf du dich festgelegt hast — nicht, was das
-   Modell im Hintergrund noch für möglich hielt. */
-function trefferZeile(dims, labels, glaube, wahr, key){
-  const fest = S.rateLog.find(r => r.key === key);
-  return dims.map((d,i) => {
-    const m = marginal(glaube,i), ev = erwartung(m), p = m[wahr[d]+2];
-    const md = fest ? fest.zeilen[i].tipp : modus(m);
-    const dist = Math.abs(md - wahr[d]);
-    const cls = dist===0 ? "ja" : (dist===1 ? "nah" : "nein");
-    const txt = dist===0 ? "getroffen" : (dist===1 ? "eine Stufe daneben" : "daneben");
-    return `<tr class="${dist<=1?"hi":""}"><td>${labels[d]}</td>
-      <td class="n">festgelegt ${vz(md)} · Mittel ${vzk(ev)}</td>
-      <td class="n">wahr ${vz(wahr[d])} · ${Math.round(p*100)} %
-        <span class="treffer ${cls}">${txt}</span></td></tr>`;
-  }).join("");
-}
-
-function aufloesung(aus, raus){
-  const festBF = S.rateLog.find(r => r.key === "bf"), festMO = S.rateLog.find(r => r.key === "mo");
-  const zaehl = (fest, d) => fest ? fest.zeilen.filter(z => z.dist <= d).length : 0;
-  const bfT = zaehl(festBF,0), bfN = zaehl(festBF,1), moT = zaehl(festMO,0), moN = zaehl(festMO,1);
-  const ratePunkte = S.rateLog.reduce((a,r) => a + r.punkte, 0);
+/* ═══════════════ Bilanz eines Besuchs ═══════════════
+   Was hier steht, ist deine Seite: was du getan hast, worauf du dich
+   festgelegt hast und was es die Beziehung gekostet oder gebracht hat.
+   Seine wahren Werte stehen nicht darin und werden es nie. Wer wissen
+   will, ob er richtig lag, muss wiederkommen und zuhören. */
+function bilanz(aus){
+  const B = WELT.beziehung;
+  const dz = S.bez - S.bezStart, st = stufeZu(S.bez);
+  const neueFakten = S.fakten.slice(S.faktenStart);
   const fragen = S.bfLog.concat(S.moLog);
   const bit = fragen.reduce((a,f) => a + f.gewinn, 0);
-  const maxBit = H(S.bfPrior) + H(S.moPrior);
 
-  const klischee = Object.keys(DATA.rollenprior).map(d => {
-    const hoch = DATA.rollenprior[d] > 0, ist = HERO.z[d] > 0;
-    return `<tr class="${hoch===ist?"hi":""}"><td>${DATA.tlabels[d]}</td>
-      <td class="n">Klischee ${hoch?"hoch":"niedrig"}</td>
-      <td class="n">wahr ${vz(HERO.z[d])}
-        <span class="treffer ${hoch===ist?"ja":"nein"}">${hoch===ist?"stimmte":"falsch"}</span></td></tr>`;
-  }).join("");
+  const titel = S.ende === "abfuhr" ? "Er hat dich auflaufen lassen."
+    : S.ende === "raus" ? "Er hat dich hinausgeworfen."
+    : S.ende === "verkauf" ? aus.titel
+    : "Du bist gegangen, bevor es kippte.";
+  const farbe = dz > 4 ? "var(--SIC)" : (dz < -4 ? "var(--STA)" : "var(--EFF)");
+
+  const festTab = S.rateLog.length ? S.rateLog.map(r => `<h2>Worauf du dich festgelegt hast · ${esc(r.titel)}</h2>
+    <table class="bil">${r.zeilen.map(z => `<tr class="${z.dist===0?"hi":""}">
+      <td>${z.label}</td>
+      <td class="n">du ${vz(z.tipp)} · dein Modell ${Math.round(z.sicher*100)} %</td>
+      <td class="n"><span class="treffer ${z.dist===0?"ja":(z.dist===1?"nah":"nein")}">${
+        z.dist===0?"bestätigt":(z.dist===1?"eingeschränkt":"widersprochen")}</span> ${vzk(z.p,1)}</td></tr>`).join("")}
+    </table>
+    <p class="small dim" style="margin-top:8px">Zusammen ${vzk(r.punkte,1)} Beziehung. Was er bestätigt hat, heißt
+    nicht, dass du recht hattest — nur, dass er nicht widersprochen hat.</p>`).join("") : "";
+
+  const lage = S.zLog.length ? `<h2>Was gerade bei ihm los ist</h2>
+    <p class="small" style="margin-bottom:8px"><b>${esc(S.zustand.titel)}</b></p>
+    <table class="bil">${S.zLog.map(z => `<tr class="${z.trifft?"hi":""}">
+      <td>${esc(z.t.length>78 ? z.t.slice(0,78)+"…" : z.t)}</td>
+      <td class="n"><span class="treffer ${z.trifft?"ja":"nein"}">${z.trifft?"er ging darauf ein":"danebengegriffen"}</span> ${vzk(z.wirkung,1)}</td></tr>`).join("")}
+    </table>
+    ${S.zustand.bedarf && S.bedarf.includes(S.zustand.bedarf.id)
+      ? `<p class="small dim" style="margin-top:8px">Du weißt jetzt: ${esc(S.zustand.bedarf.was)}. Das zählt, wenn du ihm etwas hinlegst.</p>`
+      : `<p class="small dim" style="margin-top:8px">Was er deswegen braucht, hast du nicht herausbekommen.</p>`}` : "";
+
+  const notiert = neueFakten.length ? `<h2>Was du heute erfahren hast</h2>
+    <table class="bil">${neueFakten.map(f => `<tr class="hi"><td>${esc(f)}</td></tr>`).join("")}</table>` : "";
 
   const privZeilen = DATA.privat.felder.map(f => {
     const da = S.gefunden.includes(f.id);
-    return `<tr class="${da?"hi":""}"><td>${esc(f.wahr)}</td>
-      <td class="n"><span class="treffer ${da?"ja":"nein"}">${da?"erfahren":"nie erfahren"}</span></td></tr>`;
+    return `<tr class="${da?"hi":""}"><td>${da ? esc(f.wahr) : esc(f.was) + ": noch nichts"}</td>
+      <td class="n"><span class="treffer ${da?"ja":"nein"}">${da?"weißt du":"weißt du nicht"}</span></td></tr>`;
   }).join("");
-
-  const kopf = raus
-    ? `<div class="eyebrow">Vorbei</div><div class="big" style="color:var(--STA)">Er hat dich rausgeworfen.</div>
-       <p class="small dim" style="margin-top:10px">Die Auffälligkeit stand bei ${nk(S.auf,1).replace(",0","")} von
-       ${DATA.privat.grenze}. Vier von den Fragen, die du gestellt hast, waren
-       ${S.privLog.filter(l=>!l.oeffnet).length ? "Fehlgriffe" : "zu direkt"} — und du bist nie zum Verkauf gekommen.</p>`
-    : `<div class="eyebrow">Ausgang</div>
-       <div class="big" style="color:${S.bereit>=72?"var(--SIC)":(S.bereit>=48?"var(--EFF)":"var(--STA)")}">${esc(aus.titel)}</div>
-       <p class="small dim" style="margin-top:10px">Bereitschaft am Ende:
-       ${Math.min(100,Math.round(S.bereit))} von 100${S.bereit>100?" (gedeckelt)":""}. Auffälligkeit
-       ${nk(S.auf,1).replace(",0","")} von ${DATA.privat.grenze}.</p>`;
 
   const produktZeile = S.produkt
     ? `<h2>Was du ihm hingelegt hast</h2>
        <table class="bil"><tr class="${S.produktPassung>0?"hi":""}">
          <td><b>${esc(S.produkt.name)}</b> — ${esc(S.produkt.kurz)}</td>
-         <td class="n">Motivpassung ${vzk(S.produktPassung)}
-           <span class="treffer ${S.produktPassung>0?"ja":"nein"}">${S.produktPassung>0?"passte":"passte nicht"}</span></td></tr>
-       ${DATA.produkte.filter(p => p.id !== S.produkt.id).map(p => {
-          let v = 0; for(const m in p.passt) v += p.passt[m]*HERO.m[m];
-          return `<tr><td>${esc(p.name)}</td><td class="n">wäre ${vzk(v)} gewesen</td></tr>`; }).join("")}
-       </table>
-       <p class="small dim" style="margin-top:8px">Das <b>Was</b> misst sich an seinen Motiven und an dem, was du
-       privat erfahren hast${S.produktTreffer.length ? ` — dein Angebot traf ${wort(S.produktTreffer.length)} davon` : `, davon traf dein Angebot nichts`}.</p>` : "";
+         <td class="n">Motivpassung ${vzk(S.produktPassung)}${
+           S.produktBedarf ? ` · Lage ${vzk(S.produktBedarf)}` : ``}</td></tr>
+       </table>` : "";
 
   const zuege = S.zugLog.length ? `<h2>Wie du es angeboten hast</h2>
     <table class="bil">${S.zugLog.map(z => `<tr class="${z.wirkung>0?"hi":""}">
       <td>${esc(z.t.length>76 ? z.t.slice(0,76)+"…" : z.t)}
         <span class="stufe ${z.auto>0?"pos":(z.auto<0?"neg":"")}">A ${vz(z.auto)}</span>
-        ${z.passung ? `<span class="stufe ${z.passung>0?"pos":"neg"}">C ${vzk(z.passung)}</span>` : ""}
         ${z.rueck ? `<span class="stufe pos">Rückgriff</span>` : ""}
         ${z.faktor && z.faktor !== 1 ? `<span class="stufe ${z.faktor>1?"pos":"neg"}">${
           esc((DATA.stimmungen[z.stimmung]||{}).t || z.stimmung)} ×${nk(z.faktor,2).replace(",00","").replace(/0$/,"")}</span>` : ""}</td>
-      <td class="n">${vzk(z.wirkung)}</td></tr>`).join("")}</table>
-    <p class="small dim" style="margin-top:8px"><b>A</b> ist Autonomieunterstützung und wiegt neunfach, <b>C</b> ist
-    Motivpassung und wiegt anderthalbfach — bei einem Fehlgriff doppelt so schwer negativ. Warum, steht oben unter
-    „Was das Modell tut“.</p>` : "";
+      <td class="n">${vzk(z.wirkung)}</td></tr>`).join("")}</table>` : "";
 
   return `<section class="panel verdict" style="margin-top:20px">
-    ${kopf}
-    <h2>Wer er wirklich ist</h2>
-    <table class="bil">${trefferZeile(T, DATA.tlabels, S.bfGlaube, HERO.z, "bf")}</table>
-    <p class="small dim" style="margin-top:8px">${S.bfGestellt.length ? wort(S.bfGestellt.length)+" Fragen" : "Keine Frage"} gestellt,
-    ${bfT} Merkmale genau getroffen und ${bfN} auf eine Stufe genau. Das Festlegen hat dir über beide
-    Runden ${vzk(ratePunkte,1)} Bereitschaft gebracht.</p>
+    <div class="eyebrow">${ord(A.besuche)} Besuch · Ende</div>
+    <div class="big" style="color:${farbe}">${esc(titel)}</div>
+    <p class="small dim" style="margin-top:10px">Beziehung ${Math.round(S.bezStart)} →
+      <b>${Math.round(S.bez)}</b> (${vzk(dz,0)}), Stufe <b>${st.name}</b>. ${esc(st.text)}</p>
 
-    <h2>Was ihn wirklich antreibt</h2>
-    <table class="bil">${trefferZeile(M, DATA.mlabels, S.moGlaube, HERO.m, "mo")}</table>
-    <p class="small dim" style="margin-top:8px">${S.moGestellt.length ? wort(S.moGestellt.length)+" Fragen" : "Keine Frage"} gestellt,
-    ${moT} genau getroffen und ${moN} auf eine Stufe genau.</p>
+    ${notiert}
+    ${lage}
+    ${festTab}
 
-    <h2>Was ihn privat bewegt</h2>
+    <h2>Was du über ihn persönlich weißt</h2>
     <table class="bil">${privZeilen}</table>
-    <p class="small dim" style="margin-top:8px">${wort(S.gefunden.length)} von ${wort(DATA.privat.felder.length)}
-    erfahren, zum Preis von ${nk(S.auf,1).replace(",0","")} Auffälligkeit.</p>
-
-    <h2>Das Klischee, mit dem du reingegangen bist</h2>
-    <table class="bil">${klischee}</table>
+    ${S.auf ? `<p class="small dim" style="margin-top:8px">Auffälligkeit in diesem Besuch:
+      ${nk(S.auf,1).replace(",0","")} von ${DATA.privat.grenze}.</p>` : ""}
 
     ${fragen.length ? `<h2>Deine Fragen</h2>
     <table class="bil">${fragen.map(f => `<tr class="hi"><td>${esc(f.q)}</td>
       <td class="n">${f.gewinn>=0?"+":""}${nk(f.gewinn)} bit</td></tr>`).join("")}</table>
-    <p class="small dim" style="margin-top:8px">Zusammen ${nk(bit)} bit von ${nk(maxBit,1)} möglichen, in
-    ${wort(fragen.length)} Fragen — das sind ${nk(bit/fragen.length)} bit je Frage.</p>` : ""}
+    <p class="small dim" style="margin-top:8px">Zusammen ${nk(bit)} bit in ${wort(fragen.length)}
+    ${fragen.length===1?"Frage":"Fragen"}, und ${nk(-W_FRAGE*fragen.length)} Beziehung dafür.</p>` : ""}
 
     ${produktZeile}
     ${zuege}
+
+    <p class="small dim" style="margin-top:16px">Wie er wirklich ist, steht hier nicht und wird hier nie stehen.
+    Du hast sein Verhalten, deine Notizen und dein Modell. Mehr hat man bei einem Menschen auch sonst nicht.</p>
   </section>`;
 }
 
@@ -1878,12 +2190,20 @@ function aufloesung(aus, raus){
    hinweg weiter. */
 function zeigeMenue(){
   document.body.classList.add("imMenue");
-  document.getElementById("mkarten").innerHTML = PERSONEN.map(pp => `
-    <button class="mkarte" data-person="${pp.id}">
+  document.getElementById("mkarten").innerHTML = PERSONEN.map(pp => {
+    const a = akteVon(pp.id), st = stufeZu(a.bez), zu = a.bez < WELT.beziehung.verbrannt;
+    /* Beim ersten Mal steht da, wen du besuchst. Danach steht da, wie
+       ihr auseinandergegangen seid. */
+    const unten = zu
+      ? `<i style="color:var(--STA)">verbrannt · er lässt dich nicht mehr herein</i>`
+      : a.besuche
+        ? `${a.besuche===1 ? "ein Besuch" : wort(a.besuche)+" Besuche"} · Beziehung ${Math.round(a.bez)} · ${st.name}`
+        : esc(pp.kurz || pp.hero.job);
+    return `<button class="mkarte" data-person="${pp.id}"${zu?" disabled":""}>
       <span class="mbild" style="background-image:url('${pp.menubild || ""}')"></span>
       <span><b>${esc(pp.hero.name)}, ${pp.hero.age}</b>
-        <span>${esc(pp.kurz || pp.hero.job)}</span></span>
-    </button>`).join("");
+        <span>${unten}</span></span>
+    </button>`; }).join("");
   document.querySelectorAll("[data-person]").forEach(b =>
     b.onclick = () => starteGespraech(PERSONEN.find(x => x.id === b.dataset.person)));
   document.getElementById("mkonto").innerHTML =
@@ -1897,9 +2217,10 @@ function zeigeMenue(){
 }
 
 function zuruecksetzen(){
-  if(!confirm("Kasse, Bestand und alle Einstellungen löschen?")) return;
+  if(!confirm("Kasse, Bestand, alle Akten und alle Einstellungen löschen?\n\nJede Person kennt dich danach wieder nicht.")) return;
   try{
     localStorage.removeItem("konto");
+    localStorage.removeItem("akte");
     localStorage.removeItem("gespraech-theme");
     localStorage.removeItem("musik");
     Object.keys(localStorage).filter(k => k.indexOf("falt-") === 0)
@@ -1907,6 +2228,7 @@ function zuruecksetzen(){
   }catch(e){}
   KONTO.kasse = 0;
   WELT.produkte.forEach(p => { KONTO.bestand[p.id] = p.bestand; });
+  Object.keys(AKTE).forEach(k => delete AKTE[k]);
   zeigeMenue();
 }
 
@@ -1914,7 +2236,7 @@ function starteGespraech(person){
   document.body.classList.remove("imMenue");
   ladePerson(person);
   zeichne();
-  phase1("start");
+  ankunft();
 }
 
 /* ═══════════════ Start ═══════════════ */

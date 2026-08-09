@@ -45,6 +45,42 @@ stimmungswirkung: {
   skeptisch: 0.85, verschlossen: 0.7, gereizt: 0.55, abweisend: 0.4
 },
 
+/* --- Die Beziehung. Sie ist das einzige, was zwischen zwei Besuchen
+       bleibt, und sie entscheidet alles: ob er dich hereinlässt, ob er
+       den Koffer überhaupt ansieht, wie er dich begrüßt.
+
+       Fragen kosten Geduld. Was ihr aufbaut, kommt daher, dass du ihn
+       richtig liest — beim Festlegen und in dem, was gerade bei ihm
+       los ist. Wer sofort verkaufen will, zahlt dafür. --------------- */
+beziehung: {
+  start: 35,
+  /* Darunter macht er den Koffer nicht mehr auf. */
+  verkaufSchwelle: 55,
+  /* Darunter lässt er dich gar nicht mehr herein. */
+  verbrannt: 8,
+  /* Was der Verkaufsversuch an sich kostet: du hast dich zu erkennen
+     gegeben, und das lässt sich nicht zurücknehmen. */
+  verkaufKosten: 6,
+  /* Woraus die Bereitschaft im Verkauf startet. */
+  uebertrag: 0.85,
+  /* Wie viel von der Auffälligkeit er ins nächste Mal mitnimmt. Wer
+     ihn an einem Nachmittag ausquetscht, sitzt beim nächsten Besuch
+     einem Mann gegenüber, der schon weiß, wie das läuft. */
+  aufUebertrag: 0.5,
+  stufen: [
+    { ab:80, name:`verbündet`,
+      text:`Er hält dir den Rücken frei. Was du sagst, gilt bei ihm, bis das Gegenteil bewiesen ist.` },
+    { ab:60, name:`vertraut`,
+      text:`Er redet mit dir über Dinge, die er anderen im Haus nicht erzählt.` },
+    { ab:40, name:`bekannt`,
+      text:`Er weiß, wer du bist, und nimmt sich Zeit. Mehr aber auch nicht.` },
+    { ab:20, name:`fremd`,
+      text:`Ein Termin unter anderen. Er ist höflich, und Höflichkeit ist hier kein gutes Zeichen.` },
+    { ab:-999, name:`verbrannt`,
+      text:`Er hat dich abgeschrieben. Ein Besuch mehr ändert daran nichts.` }
+  ]
+},
+
 sharpness: 1.15,
 
 /* --- Was die wahren Werte für dich bedeuten. Wird nach jedem

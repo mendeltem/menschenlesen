@@ -1,24 +1,25 @@
 # -*- coding: utf-8 -*-
-"""Spielt das Gespraech tausendfach durch, mit drei Spielweisen.
-   Die Zahlen kommen aus daten.js, die Rechenwege sind dieselben wie in
-   spiel.html — hier nachgebaut, damit sich Gewichte durchprobieren
-   lassen, ohne jedes Mal im Browser zu klicken.
+"""Spielt die Besuche tausendfach durch, mit vier Spielweisen.
 
-   Ziel: Zufall gewinnt fast nie, gutes Zuhoeren gewinnt meistens,
-   dazwischen bleibt es offen."""
+   Die Zahlen kommen aus welt.js und personen/, die Gewichte aus
+   spiel.html, die Rechenwege sind dieselben wie im Spiel — hier
+   nachgebaut, damit sich Gewichte durchprobieren lassen, ohne jedes
+   Mal im Browser zu klicken. Weil alles aus dem Spiel selbst gelesen
+   wird, koennen Messung und Wirklichkeit nicht auseinanderlaufen.
+
+   Ziel: wer blind draufloslaeuft, kommt nie zum Abschluss; wer zuhoert,
+   braucht zwei bis drei Besuche; wer alles ausfragt, verbrennt sich die
+   Beziehung, bevor der Koffer aufgeht."""
 import io, re, math, random, sys
 import numpy as np
 from itertools import product as kartesisch
 
-# Welt und Person liegen getrennt; fuer das Auslesen reicht es, sie
-# hintereinanderzuhaengen.
 QUELLE = (io.open("welt.js", encoding="utf-8").read() + "\n"
           + io.open("personen/baumgartner.js", encoding="utf-8").read())
 
 def block(key):
     a = QUELLE.index("\n" + key + ":")
     m = re.search(r"\n(?=[a-zA-Z_][a-zA-Z_0-9]*:)", QUELLE[a+len(key):])
-    # Der letzte Abschnitt reicht bis zum Dateiende
     return QUELLE[a: a+len(key)+m.start()] if m else QUELLE[a:]
 
 def gewichte(text):
@@ -55,33 +56,57 @@ for zug in re.split(r"\n    \{ (?:frage|regie):", block("verkauf"))[1:]:
                      "stimmung": st.group(1) if st else "neutral"})
     if opts: ZUEGE.append(opts)
 
-# Wie die Laune auf jeden Zug wirkt
+# ---------- Was gerade bei ihm los ist ----------
+# Je Zustand: der Bedarf, den er aufdeckt, und die Wege hinein. Jeder Weg
+# unterstellt eine Persoenlichkeit (liest); verrechnet mit der wahren
+# entscheidet das Vorzeichen, ob er darauf eingeht.
+ZUST = []
+for roh in re.split(r"\n\{ id:`", block("zustaende"))[1:]:
+    bed = re.search(r"bedarf:\{[^}]*braucht:\{([^}]*)\}", roh)
+    fr = []
+    for f in re.split(r"\n    \{ id:`", roh)[1:]:
+        li = re.search(r"liest:\{([^}]*)\}", f)
+        if not li: continue
+        gut, _, zu = f.partition("\n      zu:")
+        def hol(teil, was, standard):
+            m = re.search(was, teil)
+            return m.group(1) if m else standard
+        fr.append({"liest": gewichte(li.group(1)),
+                   "gut_bez": float(hol(gut, r"bez:(-?[\d.]+)", "0")),
+                   "zu_bez":  float(hol(zu,  r"bez:(-?[\d.]+)", "0")),
+                   "gut_st":  hol(gut, r"stimmung:`(\w+)`", "neutral"),
+                   "zu_st":   hol(zu,  r"stimmung:`(\w+)`", "neutral")})
+    if fr: ZUST.append({"braucht": gewichte(bed.group(1)) if bed else {}, "fragen": fr})
+
 LAUNE = {k: float(v) for k, v in
          re.findall(r"(\w+):\s*(\d+(?:\.\d+)?)", block("stimmungswirkung"))}
 def nach_laune(w, st):
     f = LAUNE.get(st, 1.0)
     return w * f if w >= 0 else w / f
 
+BEZ = {k: float(v) for k, v in
+       re.findall(r"(start|verkaufSchwelle|verbrannt|verkaufKosten|uebertrag|aufUebertrag):\s*(-?[\d.]+)",
+                  block("beziehung"))}
+
 # ---------- Gewichte: direkt aus dem Spiel gelesen ----------
-# So koennen Simulation und Spiel nicht auseinanderlaufen.
 SPIEL = io.open("spiel.html", encoding="utf-8").read()
-# Alle W_-Konstanten auf einmal einlesen, das ist weniger fehleranfaellig
-import re as _re
 GEFUNDEN = dict((k, float(v)) for k, v in
-                _re.findall(r"(W_[A-Z_]+)\s*=\s*(-?\d+(?:\.\d+)?)", SPIEL))
+                re.findall(r"(W_[A-Z_]+)\s*=\s*(-?\d+(?:\.\d+)?)", SPIEL))
 def konst(name):
     assert name in GEFUNDEN, "Konstante fehlt: " + name
     return GEFUNDEN[name]
 
 G = dict(auto=konst("W_AUTO"), treffer=konst("W_TREFFER"), fehlgriff=konst("W_FEHLGRIFF"),
          rueckgriff=konst("W_RUECKGRIFF"), produkt=konst("W_PRODUKT"), privat=konst("W_PRIVAT"),
+         bedarf=konst("W_BEDARF"), rauswurf=konst("W_RAUSWURF"),
          rtreffer=konst("W_RATE_TREFFER"), rnah=konst("W_RATE_NAH"), rdaneben=konst("W_RATE_DANEBEN"),
-         frage=konst("W_FRAGE"), frageauf=konst("W_FRAGE_AUF"))
-START, JA, OFFEN = 30, 72, 48
+         frage=konst("W_FRAGE"), frageauf=konst("W_FRAGE_AUF"),
+         fragesteig=konst("W_FRAGE_STEIG"))
+JA, OFFEN, GRENZE = 72, 48, 10.0
 
 STUFEN = np.array([-2,-1,0,1,2])
 GLOCKE = {-2:0.10, -1:0.22, 0:0.36, 1:0.22, 2:0.10}
-STATES = np.array(list(kartesisch(STUFEN, repeat=5)))     # (3125, 5)
+STATES = np.array(list(kartesisch(STUFEN, repeat=5)))
 
 def prior(dims, shift):
     p = np.ones(len(STATES))
@@ -91,11 +116,11 @@ def prior(dims, shift):
     return p / p.sum()
 
 def lik(antworten, dims):
-    lad = np.array([[a.get(d, 0.0) for d in dims] for a in antworten])   # (A,5)
-    sc = SHARP * STATES @ lad.T                                          # (3125,A)
+    lad = np.array([[a.get(d, 0.0) for d in dims] for a in antworten])
+    sc = SHARP * STATES @ lad.T
     sc -= sc.max(axis=1, keepdims=True)
     e = np.exp(sc)
-    return (e / e.sum(axis=1, keepdims=True)).T                          # (A,3125)
+    return (e / e.sum(axis=1, keepdims=True)).T
 
 LIK_BF = [lik(f, T) for f in BF]
 LIK_MO = [lik(f, M) for f in MO]
@@ -107,68 +132,136 @@ def eig(pr, L):
     post = L * pr
     s = post.sum(axis=1, keepdims=True); s[s == 0] = 1
     post = post / s
-    hp = float((pa * np.array([H(r) for r in post])).sum())
-    return H(pr) - hp
+    return H(pr) - float((pa * np.array([H(r) for r in post])).sum())
 def antwort_ziehen(antworten, wahr, dims):
     sc = np.array([SHARP*sum(wahr[d]*a.get(d,0.0) for d in dims) for a in antworten])
     e = np.exp(sc - sc.max()); pr = e/e.sum()
     return int(np.random.choice(len(pr), p=pr))
+def randverteilung(pr, d):
+    return np.array([pr[STATES[:, d] == v].sum() for v in STUFEN])
 def modus(pr, d):
-    m = np.array([pr[STATES[:, d] == v].sum() for v in STUFEN])
-    return int(STUFEN[m.argmax()])
+    return int(STUFEN[randverteilung(pr, d).argmax()])
+def erwartung(pr, d):
+    return float((randverteilung(pr, d) * STUFEN).sum())
 
-def partie(art):
-    bereit = float(START); auf = 0.0
-    for LIKS, ROH, wahr, dims in ((LIK_BF, BF, HZ, T), (LIK_MO, MO, HM, M)):
-        pr = prior(dims, ROLLE if dims is T else {})
-        offen = list(range(len(LIKS)))
-        n = {"zufall": random.randint(0, 4), "mittel": 3, "gut": 6 if dims is T else 5, "perfekt": len(LIKS)}[art]
-        n = min(n, len(offen))
-        for _ in range(n):
-            i = max(offen, key=lambda j: eig(pr, LIKS[j])) if art in ("gut","perfekt") else random.choice(offen)
-            offen.remove(i)
-            a = antwort_ziehen(ROH[i], wahr, dims)
-            pr = LIKS[i][a] * pr; pr = pr / pr.sum()
-            bereit += G["frage"]; auf += G["frageauf"]
-        for d in range(5):
-            tipp = random.choice(list(STUFEN)) if art == "zufall" else modus(pr, d)
-            dist = abs(int(tipp) - int(wahr[dims[d]]))
-            bereit += G["rtreffer"] if dist == 0 else (G["rnah"] if dist == 1 else G["rdaneben"])
+# ---------- Die Spielweisen ----------
+# Wie viele Fragen je Besuch, wie sicher die Wahl, wann der Koffer aufgeht.
+GUETE = {"zufall":0.0, "mittel":0.5, "gut":0.85, "perfekt":1.0}
 
-    # Privater Teil: man fragt, solange man es sich leisten kann.
-    # Preis je Fund haengt davon ab, wie gut man anknuepft.
-    preis = {"perfekt": 1.0, "gut": 1.2, "mittel": 1.9, "zufall": 2.6}[art]
-    grenze_vorsicht = {"perfekt": 9.0, "gut": 8.5, "mittel": 8.0, "zufall": 11.0}[art]
-    fakten = 0
-    while fakten < 4 and auf + preis <= grenze_vorsicht:
-        auf += preis
-        # Nicht jede Frage sitzt
-        if random.random() < {"perfekt": 1.0, "gut": 0.85, "mittel": 0.6, "zufall": 0.35}[art]:
-            fakten += 1
-        else:
-            auf += 1.0
-        if auf >= 10: return -999      # rausgeworfen, kein Verkauf
+def fragenplan(art, besuch, nbf, nmo):
+    if art == "perfekt": return nbf, nmo
+    if art == "gut":     return (5 if besuch == 1 else 0), (4 if besuch == 2 else 0)
+    if art == "mittel":  return (3 if besuch <= 2 else 0), (2 if besuch <= 2 else 0)
+    return random.randint(0, 3), random.randint(0, 3)
 
-    GUETE = {"zufall": 0.0, "mittel": 0.5, "gut": 0.85, "perfekt": 1.0}[art]
-    best = max(PROD, key=lambda q: sum(q["passt"].get(m,0)*HM[m] for m in HM))
-    p = best if random.random() < GUETE else random.choice(PROD)
-    passung = sum(p["passt"].get(m,0)*HM[m] for m in HM)
-    treffer = min(len(p["spricht"]), fakten)
-    bereit += G["produkt"]*passung + G["privat"]*treffer*2
+def besuche(art, max_besuche=4):
+    """Spielt eine Person ueber mehrere Besuche. Gibt zurueck, ob und im
+       wievielten Besuch er kauft, und wie ihr am Ende steht."""
+    bez = BEZ["start"]
+    pr = {"bf": prior(T, ROLLE), "mo": prior(M, {})}
+    offen = {"bf": list(range(len(BF))), "mo": list(range(len(MO)))}
+    stand = {"bf": 0, "mo": 0}; gefragt = {"bf": 0, "mo": 0}
+    fakten = 0; auf_rest = 0.0
+    gesehen = []
+    g = GUETE[art]
 
-    laune = "neutral"
-    for opts in ZUEGE:
-        o = max(opts, key=lambda x: x["auto"]) if random.random() < GUETE else random.choice(opts)
-        sm = sum(o["aff"].get(m,0)*HM[m] for m in HM)
-        roh = G["auto"]*o["auto"] + (G["treffer"]*sm if sm >= 0 else G["fehlgriff"]*sm)
-        if o["an"] and fakten >= 2 and random.random() < GUETE: roh += G["rueckgriff"]
-        bereit += nach_laune(roh, laune)     # seine Laune vor deinem Zug zaehlt
-        laune = o["stimmung"]                # danach sitzt er anders da
-    return bereit
+    for besuch in range(1, max_besuche+1):
+        if bez < BEZ["verbrannt"]: return (False, besuch-1, bez, "verbrannt")
+        auf = auf_rest * BEZ["aufUebertrag"]; heute = 0
+        nbf, nmo = fragenplan(art, besuch, len(offen["bf"]), len(offen["mo"]))
+        for key, wieviel, LIKS, ROH, wahr, dims in (
+                ("bf", nbf, LIK_BF, BF, HZ, T), ("mo", nmo, LIK_MO, MO, HM, M)):
+            for _ in range(min(wieviel, len(offen[key]))):
+                i = (max(offen[key], key=lambda j: eig(pr[key], LIKS[j]))
+                     if random.random() < g else random.choice(offen[key]))
+                offen[key].remove(i)
+                a = antwort_ziehen(ROH[i], wahr, dims)
+                pr[key] = LIKS[i][a] * pr[key]; pr[key] /= pr[key].sum()
+                bez += G["frage"] * (1 + heute*G["fragesteig"])
+                heute += 1; auf += G["frageauf"]; gefragt[key] += 1
+            # Festlegen, sobald es seit dem letzten Mal Neues zu hoeren gab
+            if gefragt[key] > stand[key]:
+                stand[key] = gefragt[key]
+                for d in range(5):
+                    tipp = modus(pr[key], d) if random.random() < g else int(random.choice(STUFEN))
+                    dist = abs(tipp - int(wahr[dims[d]]))
+                    bez += G["rtreffer"] if dist == 0 else (G["rnah"] if dist == 1 else G["rdaneben"])
+                bez = min(100.0, max(0.0, bez))
+
+        # Was gerade bei ihm los ist
+        braucht = {}
+        rest = [i for i in range(len(ZUST)) if i not in gesehen] or list(range(len(ZUST)))
+        zi = random.choice(rest); gesehen.append(zi)
+        z = ZUST[zi]; laune = "neutral"
+        for f in z["fragen"]:
+            erw = sum(w*erwartung(pr["bf"], T.index(d)) for d, w in f["liest"].items() if d in T)
+            if random.random() < g:
+                if erw < 0: continue          # wer sein Bild liest, laesst die Mine liegen
+            elif random.random() < 0.5:
+                continue
+            trifft = sum(w*HZ[d] for d, w in f["liest"].items() if d in HZ) > 0
+            bez += nach_laune(f["gut_bez"] if trifft else f["zu_bez"], laune)
+            laune = f["gut_st"] if trifft else f["zu_st"]
+            if trifft: braucht = z["braucht"]
+        bez = min(100.0, max(0.0, bez))
+
+        # Ihn persoenlich ausfragen, solange die Auffaelligkeit es zulaesst
+        preis = {"perfekt":1.0, "gut":1.2, "mittel":1.9, "zufall":2.6}[art]
+        vorsicht = {"perfekt":9.0, "gut":8.5, "mittel":8.0, "zufall":11.0}[art]
+        while fakten < 4 and auf + preis <= vorsicht:
+            auf += preis
+            if random.random() < {"perfekt":1.0, "gut":0.85, "mittel":0.6, "zufall":0.35}[art]:
+                fakten += 1
+            else:
+                auf += 1.0
+            if auf >= GRENZE:
+                bez = max(0.0, bez + G["rauswurf"])
+                break
+        auf_rest = auf
+        if auf >= GRENZE: continue            # rausgeworfen, der Besuch ist vorbei
+
+        # Der Koffer. Wer blind spielt, macht ihn sofort auf.
+        will = (besuch == 1) if art == "zufall" else (bez >= BEZ["verkaufSchwelle"])
+        if not will:
+            bez = min(100.0, bez + 1)         # rechtzeitig gegangen
+            continue
+        if bez < BEZ["verkaufSchwelle"]:
+            bez = max(0.0, bez - 2*BEZ["verkaufKosten"])
+            continue
+        bez -= BEZ["verkaufKosten"]
+        bereit = round(bez * BEZ["uebertrag"])
+
+        best = max(PROD, key=lambda q: sum(q["passt"].get(m,0)*HM[m] for m in HM)
+                                       + G["bedarf"]/G["produkt"]*sum(q["passt"].get(m,0)*braucht.get(m,0) for m in braucht))
+        p = best if random.random() < g else random.choice(PROD)
+        passung = sum(p["passt"].get(m,0)*HM[m] for m in HM)
+        bedarf  = sum(p["passt"].get(m,0)*braucht.get(m,0) for m in braucht)
+        treffer = min(len(p["spricht"]), fakten)
+        bereit += G["produkt"]*passung + G["bedarf"]*bedarf + G["privat"]*treffer*2
+
+        laune = "neutral"
+        for opts in ZUEGE:
+            o = max(opts, key=lambda x: x["auto"]) if random.random() < g else random.choice(opts)
+            sm = sum(o["aff"].get(m,0)*HM[m] for m in HM)
+            roh = G["auto"]*o["auto"] + (G["treffer"]*sm if sm >= 0 else G["fehlgriff"]*sm)
+            if o["an"] and fakten >= 2 and random.random() < g: roh += G["rueckgriff"]
+            bereit += nach_laune(roh, laune)
+            laune = o["stimmung"]
+
+        if bereit >= JA:   return (True,  besuch, min(100.0, bez+6), "kauft")
+        if bereit >= OFFEN: bez = max(0.0, bez); ausgang = "offen"
+        else:               bez = max(0.0, bez-8); ausgang = "nein"
+        return (False, besuch, bez, ausgang)
+
+    return (False, max_besuche, bez, "kein Versuch")
 
 def lauf(art, n):
-    w = np.array([partie(art) for _ in range(n)])
-    return (w >= JA).mean(), ((w >= OFFEN) & (w < JA)).mean(), w.mean()
+    r = [besuche(art) for _ in range(n)]
+    kauft = np.array([x[0] for x in r])
+    wann  = np.array([x[1] for x in r if x[0]])
+    bez   = np.array([x[2] for x in r])
+    tot   = np.array([x[3] == "verbrannt" or x[2] < BEZ["verbrannt"] for x in r])
+    return kauft.mean(), (wann.mean() if len(wann) else float("nan")), bez.mean(), tot.mean()
 
 if __name__ == "__main__":
     N = 400
@@ -177,9 +270,11 @@ if __name__ == "__main__":
         if k == "n": N = int(v)
         else: G[k] = float(v)
     random.seed(7); np.random.seed(7)
-    print("geparst: %d BF, %d Motiv, %d Waren, %d Zuege" % (len(BF), len(MO), len(PROD), len(ZUEGE)))
+    print("geparst: %d BF, %d Motiv, %d Waren, %d Zuege, %d Zustaende"
+          % (len(BF), len(MO), len(PROD), len(ZUEGE), len(ZUST)))
+    print("Beziehung:", BEZ)
     print("Gewichte:", G, " n =", N)
-    print("%-8s %7s %7s %8s" % ("", "kauft", "offen", "Mittel"))
+    print("%-8s %8s %9s %9s %9s" % ("", "kauft", "im Besuch", "Beziehung", "verbrannt"))
     for art in ("zufall", "mittel", "gut", "perfekt"):
-        ja, off, mi = lauf(art, N)
-        print("%-8s %6.1f%% %6.1f%% %8.1f" % (art, 100*ja, 100*off, mi))
+        ja, wann, bz, tot = lauf(art, N)
+        print("%-8s %7.1f%% %9.1f %9.1f %8.1f%%" % (art, 100*ja, wann, bz, 100*tot))

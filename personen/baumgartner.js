@@ -487,4 +487,425 @@ verkauf: {
       wie:`ruhig, fast freundlich, und genau deshalb endgültig` }
   ]
 },
+/* ═══════════════════════════════════════════════════════════════════
+   Was seit dem letzten Mal passiert ist.
+
+   Bei jedem Besuch wird einer dieser Zustände gezogen, mit Vorrang für
+   die, die du noch nicht erlebt hast. Jeder hat drei Wege hinein.
+
+     liest    welche Persönlichkeit dein Zug unterstellt. Verrechnet mit
+              seiner wahren Ausprägung: über null trifft er, unter null
+              greifst du daneben. Das Spiel zeigt dir vorher nur, was
+              dein eigenes Bild von ihm erwarten lässt.
+     gut/zu   was daraus wird. bez ist, was es die Beziehung wert ist.
+     gibt     der Bedarf, den du damit aufdeckst. Ohne ihn weißt du,
+              was los ist, aber nicht, was er deshalb braucht.
+   ═══════════════════════════════════════════════════════════════════ */
+
+zustaende: [
+
+{ id:`umzug`, titel:`Der Umzug in den Neubau`,
+  regie:`Neben dem Regal stehen drei gefaltete Umzugskisten, Banderole noch dran.`,
+  er:`Wir ziehen. Neubau, dritter Stock, Glas, offene Fläche. Im Februar.`,
+  wie:`beiläufig, ohne jede Freude`, stimmung:`neutral`,
+  bedarf:{ id:`umzug_aut`, was:`will im Neubau nicht verplant werden`, braucht:{AUT:1.4, SIC:0.4} },
+  fragen:[
+    { id:`tafel`, t:`Offene Fläche. Wo stellen Sie da Ihre Tafel hin?`, wie:`trocken, mit einem Blick zur Wand`,
+      liest:{O:0.8, C:-0.6, E:0.5},
+      gut:{ er:`Genau die Frage habe ich in der Sitzung gestellt. Es kam keine Antwort.`,
+            erRegie:`Er dreht sich halb zur Tafel um.`,
+            er2:`Die kommt mit. Notfalls trage ich sie nachts selbst rüber.`,
+            wie:`erst trocken, dann deutlich schneller`, wie2:`entschieden`, stimmung:`amuesiert`,
+            fakt:`nimmt die Tafel in den Neubau mit, ob geplant oder nicht`, bez:5 },
+      zu:{ er:`Die Tafel ist ein Möbelstück. Darüber mache ich mir keine Gedanken.`,
+           wie:`abweisend`, stimmung:`verschlossen`, bez:-2 } },
+
+    { id:`sorge`, t:`So ein Umzug macht vielen zu schaffen. Wie geht es Ihnen damit?`, wie:`vorsichtig, mitfühlend`,
+      liest:{N:1.2, A:0.6, E:-0.4},
+      gut:{ er:`Ehrlich gesagt schlecht. Ich hänge an dem Zimmer.`,
+            wie:`leise`, stimmung:`nachdenklich`, bez:4 },
+      zu:{ er:`Zu schaffen.`, erRegie:`Er sieht dich an, als hätte er sich verhört.`,
+           er2:`Es ist ein Umzug, kein Trauerfall. Ich packe Kisten und stelle sie woanders hin.`,
+           wie:`gedehnt`, wie2:`kühl, endgültig`, stimmung:`skeptisch`, bez:-7 } },
+
+    { id:`plan`, t:`Gibt es schon einen Sitzplan?`, wie:`sachlich`,
+      liest:{C:1.0, O:-0.3},
+      gut:{ er:`Seite vier, Variante B. Ich sitze am Fenster, wenn nichts dazwischenkommt.`,
+            wie:`präzise`, stimmung:`neutral`, bez:3 },
+      zu:{ er:`Es gibt bestimmt einen. Ich habe ihn nicht gelesen.`,
+           erRegie:`Er zuckt mit einer Schulter.`,
+           er2:`Ich erfahre im Februar, wo ich sitze, und dann sitze ich da.`,
+           wie:`gleichgültig`, wie2:`abschließend`, stimmung:`verschlossen`, bez:-3 } }
+  ] },
+
+{ id:`frist`, titel:`Elf Tage bis zum Gutachten`,
+  regie:`An der Wand hängt ein Kalenderblatt, auf dem elf Tage durchgestrichen sind. Der zwölfte ist rot umrandet.`,
+  er:`Elf Tage. Dann muss ein Gutachten raus, für das mir die halben Daten fehlen.`,
+  wie:`schnell, angespannt`, stimmung:`neutral`,
+  bedarf:{ id:`frist_eff`, was:`verliert die Frist an Datenaufbereitung`, braucht:{EFF:1.6} },
+  fragen:[
+    { id:`wohin`, t:`Wo gehen die elf Tage hin? Rechnen oder Aufräumen?`, wie:`direkt, ohne Umschweife`,
+      liest:{E:0.7, O:0.5, N:-0.5},
+      gut:{ er:`Aufräumen. Neun von elf.`,
+            erRegie:`Er dreht den Bildschirm zu dir, ohne zu fragen.`,
+            er2:`Sehen Sie sich das an. Dreiundvierzig Dateien, vier Schreibweisen für dieselbe Gemeinde. Das ist kein Gutachten, das ist Hausarbeit.`,
+            wie:`sofort, fast erleichtert`, wie2:`aufgebracht, aber gern`, stimmung:`interessiert`,
+            fakt:`neun von elf Tagen gehen für Datenaufbereitung drauf`, bez:6 },
+      zu:{ er:`Das rechne ich Ihnen jetzt nicht vor.`, wie:`abweisend`, stimmung:`skeptisch`, bez:-4 } },
+
+    { id:`hilfe`, t:`Haben Sie jemanden, der Ihnen etwas abnimmt?`, wie:`fürsorglich`,
+      liest:{A:0.8, N:0.6, E:-0.6},
+      gut:{ er:`Zwei Leute, wenn ich frage. Ich frage zu selten.`, wie:`nachdenklich`, stimmung:`nachdenklich`, bez:3 },
+      zu:{ er:`Abnehmen.`, erRegie:`Er lacht einmal, kurz und ohne Freude.`,
+           er2:`Wenn ich es erkläre, dauert es länger, als wenn ich es mache. Das ist keine Klage, das ist Arithmetik.`,
+           wie:`gedehnt`, wie2:`schneidend`, stimmung:`gereizt`, bez:-6 } },
+
+    { id:`schieben`, t:`Kann man die Frist schieben?`, wie:`pragmatisch`,
+      liest:{C:-0.5, O:0.3},
+      gut:{ er:`Könnte man. Ich habe es noch nie versucht und werde es auch diesmal nicht.`,
+            wie:`trocken`, stimmung:`amuesiert`, bez:2 },
+      zu:{ er:`Fristen sind der einzige Grund, warum hier überhaupt etwas fertig wird.`,
+           wie:`bestimmt`, stimmung:`neutral`, bez:-1 } }
+  ] },
+
+{ id:`chef`, titel:`Die neue Leitung`,
+  regie:`Auf dem Tisch liegt ein Formular mit dem Titel Wochenbericht. Es ist leer und hat einen Kaffeering.`,
+  er:`Wir haben seit April eine neue Leitung. Vierunddreißig. Sie will Wochenberichte.`,
+  wie:`sehr gleichmäßig, was schon etwas heißt`, stimmung:`neutral`,
+  bedarf:{ id:`chef_aut`, was:`erträgt keine Rechenschaft über sein Vorgehen`, braucht:{AUT:1.8} },
+  fragen:[
+    { id:`schreiben`, t:`Und? Schreiben Sie sie?`, wie:`beiläufig, aber genau hinsehend`,
+      liest:{E:0.6, O:0.6, C:-0.7},
+      gut:{ er:`Ich habe im April einen geschrieben und ihn seither jede Woche neu datiert.`,
+            erRegie:`Er sieht dich an, ohne mit der Wimper zu zucken.`,
+            er2:`Es hat noch niemand gemerkt. Das ist der eigentliche Befund.`,
+            wie:`vollkommen sachlich`, wie2:`sehr zufrieden`, stimmung:`amuesiert`,
+            fakt:`datiert seit April denselben Wochenbericht um`, bez:6 },
+      zu:{ er:`Ich schreibe, was verlangt wird.`, wie:`knapp`, stimmung:`verschlossen`, bez:-2 } },
+
+    { id:`jung`, t:`Vierunddreißig. Fällt Ihnen das schwer?`, wie:`vorsichtig`,
+      liest:{N:1.0, A:-0.5},
+      gut:{ er:`Ein wenig, ja. Nicht das Alter. Der Ton.`, wie:`offen`, stimmung:`nachdenklich`, bez:3 },
+      zu:{ er:`Warum sollte mir das schwerfallen? Ich war auch mal vierunddreißig und habe auch Unsinn verlangt.`,
+           erRegie:`Er schiebt das Formular ein Stück von sich weg.`,
+           er2:`Das Alter ist nicht das Problem. Das Formular ist das Problem.`,
+           wie:`ruhig, aber sehr bestimmt`, wie2:`trocken`, stimmung:`skeptisch`, bez:-5 } },
+
+    { id:`was`, t:`Was steht denn drin, in so einem Bericht?`, wie:`neugierig`,
+      liest:{O:0.7, C:0.3},
+      gut:{ er:`Woran ich arbeite, wie weit ich bin, was mich aufhält.`,
+            erRegie:`Er hebt das Formular hoch und lässt es wieder fallen.`,
+            er2:`Drei Fragen, auf die ich seit dreißig Jahren dieselbe Antwort gebe: an Zahlen, mittendrin, an anderen Menschen.`,
+            wie:`sachlich`, wie2:`amüsiert`, stimmung:`amuesiert`, bez:4 },
+      zu:{ er:`Nichts, was Sie interessieren würde.`, wie:`abweisend`, stimmung:`verschlossen`, bez:-2 } }
+  ] },
+
+{ id:`revision`, titel:`Die Revision`,
+  regie:`Neben dem Bildschirm liegt ein Aktenordner mit der Jahreszahl 2021 auf dem Rücken. Er ist aufgeschlagen.`,
+  er:`Eine Revision sieht sich meine Zahlen von 2021 an. Nichts Persönliches, sagt man mir.`,
+  wie:`ruhig, mit einer Betonung auf dem letzten Wort`, stimmung:`neutral`,
+  bedarf:{ id:`rev_sic`, was:`muss Rechenwege von vor vier Jahren belegen können`, braucht:{SIC:1.2, EFF:0.6} },
+  fragen:[
+    { id:`finden`, t:`Finden die etwas?`, wie:`geradeheraus`,
+      liest:{E:0.6, N:-0.8, O:0.4},
+      gut:{ er:`Sie finden zwei Stellen, an denen ich anders gerundet habe als die Vorschrift.`,
+            erRegie:`Er tippt zweimal auf den Ordner.`,
+            er2:`Beide Male war die Vorschrift falsch. Das steht dann nicht im Bericht.`,
+            wie:`vollkommen gelassen`, wie2:`beinahe fröhlich`, stimmung:`amuesiert`,
+            fakt:`hat 2021 zweimal gegen die Rundungsvorschrift gerechnet, mit Absicht`, bez:6 },
+      zu:{ er:`Das werden wir sehen.`, wie:`kurz`, stimmung:`skeptisch`, bez:-3 } },
+
+    { id:`schlaf`, t:`Schlafen Sie schlecht deswegen?`, wie:`teilnehmend, leiser`,
+      liest:{N:1.4, A:0.4},
+      gut:{ er:`Seit drei Wochen wache ich um vier auf.`, wie:`sehr leise`, stimmung:`nachdenklich`, bez:4 },
+      zu:{ er:`Nein.`, erRegie:`Er sagt es, bevor Sie ausgesprochen haben.`,
+           er2:`Ich schlafe hervorragend. Wenn ich nachts wach liege, dann wegen einer Zahl, die nicht aufgeht, und nicht wegen eines Prüfers.`,
+           wie:`sofort`, wie2:`fest`, stimmung:`gereizt`, bez:-6 } },
+
+    { id:`unterlagen`, t:`Haben Sie die Unterlagen von damals noch?`, wie:`nüchtern`,
+      liest:{C:0.9},
+      gut:{ er:`Alles, sortiert nach Datum. Ich hole es Ihnen, wenn Sie wollen.`, wie:`bereitwillig`, stimmung:`neutral`, bez:3 },
+      zu:{ er:`Irgendwo.`, erRegie:`Er sieht auf den Boden neben dem Regal, wo Papier liegt.`,
+           er2:`Genau das ist der Teil, der mich vier Wochen kosten wird.`,
+           wie:`ausweichend`, wie2:`ehrlich, resigniert`, stimmung:`nachdenklich`,
+           fakt:`hat die Unterlagen von 2021 nicht geordnet`, bez:-1 } }
+  ] },
+
+{ id:`nachwuchs`, titel:`Die Doktorandin`,
+  regie:`Ein zweiter Stuhl steht an der Schmalseite des Tisches. Er ist neu und passt nicht zum Rest.`,
+  er:`Ich bekomme eine Doktorandin. Ab Oktober, halbe Stelle, mein Thema.`,
+  wie:`neutral, ohne erkennbare Richtung`, stimmung:`neutral`,
+  bedarf:{ id:`nach_zug`, was:`muss zum ersten Mal jemanden anlernen`, braucht:{ZUG:0.8, EFF:0.8} },
+  fragen:[
+    { id:`freude`, t:`Und? Freut Sie das oder nicht?`, wie:`direkt, fast herausfordernd`,
+      liest:{E:0.8, A:-0.3, O:0.5},
+      gut:{ er:`Beides, und zwar gleichzeitig.`,
+            erRegie:`Er lehnt sich zurück.`,
+            er2:`Ich freue mich auf die Fragen. Ich fürchte den Teil, in dem ich erklären muss, warum ich etwas so mache, wie ich es mache. Ich weiß es nämlich oft nicht.`,
+            wie:`sofort und ehrlich`, wie2:`nachdenklich, offen`, stimmung:`interessiert`,
+            fakt:`kann sein eigenes Vorgehen oft nicht begründen und weiß das`, bez:6 },
+      zu:{ er:`Das ist keine Frage von Freude.`, wie:`abweisend`, stimmung:`verschlossen`, bez:-2 } },
+
+    { id:`erfahrung`, t:`Sie haben doch bestimmt schon oft jemanden betreut.`, wie:`anerkennend`,
+      liest:{A:-0.6, C:0.5},
+      gut:{ er:`Sechs oder sieben. Zwei sind noch in der Wissenschaft.`, wie:`ruhig`, stimmung:`neutral`, bez:2 },
+      zu:{ er:`Nein.`,
+           erRegie:`Er sagt es ohne Schärfe, was es schlimmer macht.`,
+           er2:`Zum ersten Mal, mit zweiundfünfzig. Sie können sich denken, was das über die letzten zwanzig Jahre sagt.`,
+           wie:`knapp`, wie2:`leiser`, stimmung:`verschlossen`,
+           fakt:`bekommt mit zweiundfünfzig die erste Doktorandin`, bez:-4 } },
+
+    { id:`platz`, t:`Und wo soll sie sitzen?`, wie:`praktisch, mit einem Blick auf den zweiten Stuhl`,
+      liest:{O:0.4, C:-0.3},
+      gut:{ er:`Da.`, erRegie:`Er zeigt auf den neuen Stuhl, ohne hinzusehen.`,
+            er2:`Ich weiß noch nicht, ob ich das aushalte. Ich rede laut mit mir selbst.`,
+            wie:`knapp`, wie2:`selbstironisch`, stimmung:`amuesiert`, bez:4 },
+      zu:{ er:`Das wird sich finden.`, wie:`gleichgültig`, stimmung:`neutral`, bez:-1 } }
+  ] },
+
+{ id:`ruecken`, titel:`Der Rücken`,
+  regie:`Er steht, als du hereinkommst, und er setzt sich nicht. Der Stuhl ist auf die höchste Stufe gedreht.`,
+  er:`Bleiben Sie sitzen. Ich stehe gerade lieber.`,
+  wie:`beiläufig, mit einer Hand im Kreuz`, stimmung:`neutral`,
+  bedarf:{ id:`ruecken_eff`, was:`arbeitet im Stehen und verliert dabei Zeit`, braucht:{EFF:1.0, SIC:0.8} },
+  fragen:[
+    { id:`seitwann`, t:`Seit wann?`, wie:`kurz, ohne Mitleid`,
+      liest:{E:0.5, N:-0.7, A:-0.2},
+      gut:{ er:`Seit Ostern. Bandscheibe, sagt der eine, Muskel, sagt der andere.`,
+            erRegie:`Er verlagert das Gewicht.`,
+            er2:`Ich arbeite jetzt im Stehen und verliere dabei täglich eine Stunde, weil ich alle zwanzig Minuten aufhöre.`,
+            wie:`sachlich, fast erleichtert über die knappe Frage`, wie2:`nüchtern`, stimmung:`freundlich`,
+            fakt:`arbeitet seit Ostern im Stehen, verliert täglich eine Stunde`, bez:5 },
+      zu:{ er:`Lang genug.`, wie:`abschließend`, stimmung:`verschlossen`, bez:-2 } },
+
+    { id:`arzt`, t:`Waren Sie damit beim Arzt? Das sollte man nicht schleifen lassen.`, wie:`besorgt, gut gemeint`,
+      liest:{N:1.2, A:0.5, O:-0.4},
+      gut:{ er:`Sie haben recht. Ich schiebe es seit Wochen.`, wie:`einsichtig`, stimmung:`nachdenklich`, bez:3 },
+      zu:{ er:`Bei dreien.`,
+           erRegie:`Er richtet sich auf und sieht dich an.`,
+           er2:`Und jetzt sagen Sie mir bitte nicht, was ich dagegen tun soll. Das machen schon genug Leute, die mich weniger gut kennen als Sie, und die kenne ich seit Jahren.`,
+           wie:`knapp`, wie2:`ruhig und sehr deutlich`, stimmung:`gereizt`, bez:-7 } },
+
+    { id:`stehen`, t:`Arbeitet es sich im Stehen anders?`, wie:`sachlich neugierig`,
+      liest:{O:0.9, E:0.3},
+      gut:{ er:`Vollkommen anders.`,
+            erRegie:`Er wird auf einmal schneller.`,
+            er2:`Im Stehen denke ich linearer und schlechter. Ich habe drei Wochen gebraucht, um zu merken, dass meine Modelle seit Ostern langweiliger sind.`,
+            wie:`sofort`, wie2:`begeistert über den eigenen Befund`, stimmung:`interessiert`,
+            fakt:`hält seine Modelle seit dem Stehen für langweiliger`, bez:6 },
+      zu:{ er:`Es ist Arbeit, im Sitzen wie im Stehen.`, wie:`gleichgültig`, stimmung:`neutral`, bez:-1 } }
+  ] },
+
+{ id:`software`, titel:`Das neue Rechensystem`,
+  regie:`Auf dem Bildschirm steht ein Fenster mit einem Fortschrittsbalken, der sich nicht bewegt.`,
+  er:`Das Haus wechselt das Rechensystem. Alles, was ich in zwölf Jahren geschrieben habe, läuft nicht mehr.`,
+  wie:`sehr ruhig, was hier nichts Gutes bedeutet`, stimmung:`neutral`,
+  bedarf:{ id:`soft_eff`, was:`muss zwölf Jahre eigenen Code retten`, braucht:{EFF:1.4, AUT:0.8} },
+  fragen:[
+    { id:`selbst`, t:`Schreiben Sie es neu oder lassen Sie es liegen?`, wie:`direkt`,
+      liest:{O:0.6, E:0.5, C:-0.4},
+      gut:{ er:`Neu. Und zwar besser.`,
+            erRegie:`Er zieht den Block heran.`,
+            er2:`Ich sitze seit sechs Wochen abends daran und es macht mir mehr Spaß als alles, wofür ich bezahlt werde. Sagen Sie das nicht weiter.`,
+            wie:`entschieden`, wie2:`verschwörerisch`, stimmung:`interessiert`,
+            fakt:`schreibt abends zwölf Jahre Code neu, freiwillig`, bez:6 },
+      zu:{ er:`Ich werde tun, was nötig ist.`, wie:`knapp`, stimmung:`verschlossen`, bez:-2 } },
+
+    { id:`aerger`, t:`Das muss doch ärgerlich sein nach zwölf Jahren.`, wie:`verständnisvoll`,
+      liest:{N:1.0, A:0.4, O:-0.5},
+      gut:{ er:`Es ist ärgerlich. Zwölf Jahre.`, wie:`gedämpft`, stimmung:`nachdenklich`, bez:3 },
+      zu:{ er:`Ärgerlich wäre es, wenn ich den alten Kram behalten müsste.`,
+           erRegie:`Er wischt mit der Hand über den Tisch, als wäre etwas darauf.`,
+           er2:`Die Hälfte davon war Murks. Ich habe nur nie einen Grund gehabt, ihn wegzuwerfen.`,
+           wie:`bestimmt`, wie2:`trocken`, stimmung:`skeptisch`, bez:-4 } },
+
+    { id:`wer`, t:`Wer hat das entschieden?`, wie:`ruhig, aber genau`,
+      liest:{E:0.4, A:-0.4},
+      gut:{ er:`Ein Gremium, in dem niemand sitzt, der rechnet.`,
+            erRegie:`Er hebt beide Hände einen Zentimeter und lässt sie wieder fallen.`,
+            er2:`Ich war nicht gefragt. Ich wäre auch nicht dagegen gewesen. Man hätte mich nur fragen müssen.`,
+            wie:`sachlich`, wie2:`sehr klar`, stimmung:`nachdenklich`,
+            fakt:`stört sich nicht an der Entscheidung, sondern daran, nicht gefragt worden zu sein`, bez:5 },
+      zu:{ er:`Jemand über mir. Wie immer.`, wie:`gleichgültig`, stimmung:`neutral`, bez:-1 } }
+  ] },
+
+{ id:`preis`, titel:`Der Preis, zu dem er nicht will`,
+  regie:`An der Pinnwand hängt ein Brief mit einem geprägten Kopf. Er hängt schief und halb hinter einem Zettel.`,
+  er:`Man hat mich für einen Preis vorgeschlagen. Verleihung im November, Berlin, Abendgarderobe.`,
+  wie:`als läse er eine fremde Meldung vor`, stimmung:`neutral`,
+  bedarf:{ id:`preis_aut`, was:`will nicht herausgestellt werden`, braucht:{AUT:1.2, STA:-0.6} },
+  fragen:[
+    { id:`hin`, t:`Und Sie gehen nicht hin.`, wie:`keine Frage, eine Feststellung`,
+      liest:{E:0.5, O:0.5, A:-0.4},
+      gut:{ er:`Woher wissen Sie das?`,
+            erRegie:`Er sieht dich zum ersten Mal an diesem Tag richtig an.`,
+            er2:`Nein, ich gehe nicht hin. Ich habe die Arbeit zu dritt gemacht und die beiden anderen stehen nicht auf dem Brief. Solange das so ist, hänge ich ihn schief.`,
+            wie:`überrascht`, wie2:`sehr ruhig, sehr fest`, stimmung:`interessiert`,
+            fakt:`lehnt den Preis ab, weil zwei Mitautoren fehlen`, bez:7 },
+      zu:{ er:`Das habe ich nicht gesagt.`, wie:`abwehrend`, stimmung:`skeptisch`, bez:-3 } },
+
+    { id:`gratulieren`, t:`Herzlichen Glückwunsch. Das ist doch eine schöne Sache.`, wie:`herzlich`,
+      liest:{A:0.3, C:0.2, O:-0.6},
+      gut:{ er:`Danke. Es freut mich tatsächlich mehr, als ich zugebe.`, wie:`verlegen`, stimmung:`freundlich`, bez:3 },
+      zu:{ er:`Wofür?`,
+           erRegie:`Er nimmt den Zettel ab, der halb davor hängt, und hängt ihn wieder davor.`,
+           er2:`Für eine Arbeit, die zu dritt entstanden ist und auf der ein Name steht. Wenn Sie das eine schöne Sache nennen, haben wir unterschiedliche Vorstellungen davon.`,
+           wie:`kühl`, wie2:`ohne Lautstärke, aber ohne Rest`, stimmung:`gereizt`, bez:-6 } },
+
+    { id:`wofuer`, t:`Wofür denn?`, wie:`schlicht neugierig`,
+      liest:{O:0.7},
+      gut:{ er:`Ein Schätzverfahren für Erhebungen, bei denen die Hälfte der Leute nicht antwortet.`,
+            erRegie:`Er zeichnet mit dem Finger eine Kurve auf die Tischplatte.`,
+            er2:`Klingt trocken. Ist es auch. Es hat trotzdem drei Jahre gedauert.`,
+            wie:`sachlich`, wie2:`zufrieden`, stimmung:`interessiert`, bez:4 },
+      zu:{ er:`Für Statistik. Das führt jetzt zu weit.`, wie:`abwiegelnd`, stimmung:`neutral`, bez:-1 } }
+  ] },
+
+{ id:`kollege`, titel:`Der Kollege von der Tafel`,
+  regie:`Die Tafel an der Wand ist zum ersten Mal leer. Der Schwamm liegt noch auf der Ablage.`,
+  er:`Der Kollege, mit dem ich mich über die Korrektur gestritten habe, geht Ende des Monats.`,
+  wie:`ruhig, mit einem Blick zur leeren Tafel`, stimmung:`nachdenklich`,
+  bedarf:{ id:`koll_zug`, was:`verliert seinen einzigen echten Gegenspieler`, braucht:{ZUG:1.0, AUT:0.4} },
+  fragen:[
+    { id:`wer`, t:`Und wer widerspricht Ihnen jetzt?`, wie:`ruhig, ohne Ironie`,
+      liest:{E:0.6, O:0.7, N:-0.3},
+      gut:{ er:`Das ist genau die Frage.`,
+            erRegie:`Er sieht die leere Tafel an und dann dich.`,
+            er2:`Ich habe hier vierzig Leute, die freundlich zu mir sind, und einen, der mir gesagt hat, wenn ich Unsinn rechne. Der geht jetzt. Das ist der Verlust, nicht die Stelle.`,
+            wie:`langsam`, wie2:`sehr direkt`, stimmung:`geruehrt`,
+            fakt:`verliert den einzigen Kollegen, der ihm widerspricht`, bez:8 },
+      zu:{ er:`Es widerspricht mir genug.`, wie:`kurz`, stimmung:`verschlossen`, bez:-2 } },
+
+    { id:`streit`, t:`Haben Sie sich denn vertragen am Ende?`, wie:`behutsam`,
+      liest:{A:0.9, N:0.5},
+      gut:{ er:`Wir haben uns nie gestritten im eigentlichen Sinne.`, wie:`milde`, stimmung:`freundlich`, bez:3 },
+      zu:{ er:`Vertragen.`,
+           erRegie:`Er nimmt den Schwamm und legt ihn eine Handbreit weiter.`,
+           er2:`Wir waren nicht zerstritten. Wir waren uneinig. Das ist ein Unterschied, den außerhalb dieses Zimmers offenbar niemand kennt.`,
+           wie:`gedehnt`, wie2:`ungeduldig`, stimmung:`skeptisch`, bez:-5 } },
+
+    { id:`recht`, t:`Wer hatte denn nun recht?`, wie:`mit halbem Lächeln`,
+      liest:{O:0.5, E:0.5, C:-0.3},
+      gut:{ er:`Er.`,
+            erRegie:`Er sagt es ohne jedes Zögern.`,
+            er2:`Ich habe es ihm am Dienstag gesagt. Deshalb ist die Tafel leer.`,
+            wie:`sofort`, wie2:`ruhig`, stimmung:`nachdenklich`,
+            fakt:`hat dem Kollegen zuletzt recht gegeben und die Tafel gewischt`, bez:6 },
+      zu:{ er:`Das spielt jetzt keine Rolle mehr.`, wie:`abschließend`, stimmung:`verschlossen`, bez:-2 } }
+  ] },
+
+{ id:`teilen`, titel:`Der Mitbewohner`,
+  regie:`In der Ecke steht ein zweiter Schreibtisch, noch in Folie. Der Raum wirkt dadurch halb so groß.`,
+  er:`Ab Mai teile ich das Zimmer. Man hat es mir per Rundmail mitgeteilt.`,
+  wie:`beherrscht, mit einer Pause vor dem letzten Wort`, stimmung:`neutral`,
+  bedarf:{ id:`teil_aut`, was:`verliert den einzigen Raum, über den er bestimmt`, braucht:{AUT:1.6, SIC:0.4} },
+  fragen:[
+    { id:`rundmail`, t:`Per Rundmail.`, wie:`nur die zwei Worte, sonst nichts`,
+      liest:{E:0.5, O:0.4, A:-0.5},
+      gut:{ er:`Per Rundmail.`,
+            erRegie:`Er nickt langsam, zweimal.`,
+            er2:`Ich hätte Ja gesagt. Es ist Platz und der Kollege ist in Ordnung. Aber man hat mich nicht gefragt, und deshalb sage ich es jetzt jedem, der hereinkommt.`,
+            wie:`wiederholend`, wie2:`vollkommen offen`, stimmung:`interessiert`,
+            fakt:`hätte zugestimmt, wenn man ihn gefragt hätte`, bez:7 },
+      zu:{ er:`So läuft das hier.`, wie:`resigniert`, stimmung:`verschlossen`, bez:-2 } },
+
+    { id:`schlimm`, t:`Ist das schlimm für Sie?`, wie:`mitfühlend`,
+      liest:{N:1.1, A:0.5},
+      gut:{ er:`Schlimmer, als ich zugeben will.`, wie:`leise`, stimmung:`nachdenklich`, bez:3 },
+      zu:{ er:`Schlimm ist Krieg.`,
+           erRegie:`Er sieht auf die Folie in der Ecke.`,
+           er2:`Das hier ist ein zweiter Tisch. Ich hätte nur gern vorher davon gewusst.`,
+           wie:`trocken`, wie2:`ruhig`, stimmung:`skeptisch`, bez:-4 } },
+
+    { id:`wen`, t:`Wissen Sie schon, wen Sie bekommen?`, wie:`sachlich`,
+      liest:{C:0.6, O:0.2},
+      gut:{ er:`Einen aus der Erhebung, Mitte dreißig. Wir haben zweimal zusammen gerechnet, das ging gut.`,
+            wie:`nüchtern`, stimmung:`neutral`, bez:3 },
+      zu:{ er:`Nein. Ich erfahre es vermutlich wieder per Rundmail.`, wie:`trocken`, stimmung:`skeptisch`, bez:-1 } }
+  ] }
+],
+
+/* ═══════════════════════════════════════════════════════════════════
+   Was er sagt, wenn du dich festlegst.
+
+   Die wahren Werte bekommst du nie zu sehen. Was du bekommst, ist er:
+   Bei einem Treffer bestätigt er dich, bei einem Fehlgriff widerspricht
+   er — und aus der Richtung seines Widerspruchs kannst du schließen,
+   in welche Richtung du danebenlagst. Mehr Hilfe gibt es nicht.
+   ═══════════════════════════════════════════════════════════════════ */
+
+reaktion: {
+  z: {
+    O: { genau:{ er:`Neugierig, ja. Das ist der einzige Grund, warum ich den Job nach dreißig Jahren noch mache.`, wie:`bestätigend` },
+         zuHoch:{ er:`So verspielt bin ich nicht. Am Ende muss eine Zahl dastehen, die stimmt.`, wie:`einschränkend` },
+         zuTief:{ er:`Bewährt.`, erRegie:`Er zieht eine Augenbraue hoch.`, er2:`Ich habe seit zwölf Jahren keine Methode zweimal genommen.`, wie:`gedehnt`, wie2:`trocken` } },
+    C: { genau:{ er:`Ordentlich bin ich nicht. Das sehen Sie ja.`, wie:`ohne jede Scham` },
+         zuHoch:{ er:`Planvoll.`, erRegie:`Er zeigt auf den Papierstapel, den er vorhin vom Stuhl geschoben hat.`, er2:`Sie sitzen auf dem Beweis für das Gegenteil.`, wie:`amüsiert`, wie2:`trocken` },
+         zuTief:{ er:`Ganz so schlimm ist es nicht. Was ich abgebe, stimmt bis zur letzten Stelle.`, wie:`richtigstellend` } },
+    E: { genau:{ er:`Ich rede gern. Das haben Sie in der ersten Minute gemerkt.`, wie:`selbstironisch` },
+         zuHoch:{ er:`Laut bin ich nicht. Ich rede viel, das ist etwas anderes.`, wie:`richtigstellend` },
+         zuTief:{ er:`Zurückhaltend.`, erRegie:`Er lacht kurz.`, er2:`Sie sitzen seit einer halben Stunde hier und ich habe geredet.`, wie:`ungläubig`, wie2:`vergnügt` } },
+    A: { genau:{ er:`Unfreundlich bin ich nicht. Nur ungeduldig. Das verwechseln viele.`, wie:`ruhig` },
+         zuHoch:{ er:`Nachgiebig.`, erRegie:`Er sieht zur Tafel.`, er2:`Fragen Sie den Kollegen, mit dem ich mich seit März nicht einig bin.`, wie:`trocken`, wie2:`nüchtern` },
+         zuTief:{ er:`So hart bin ich nicht. Ich streite über Sachen und nicht über Menschen.`, wie:`einschränkend` } },
+    N: { genau:{ er:`Wenn ich nachts wach liege, dann wegen einer Zahl. Nicht wegen einer Sorge.`, wie:`gelassen` },
+         zuHoch:{ er:`Dünnhäutig.`, erRegie:`Er schüttelt einmal den Kopf.`, er2:`Ich habe zwei Umstrukturierungen überstanden und dabei gut geschlafen.`, wie:`abweisend`, wie2:`fest` },
+         zuTief:{ er:`Ganz kalt lässt mich auch nicht alles.`, wie:`leiser` } }
+  },
+  m: {
+    AUT: { genau:{ er:`Richtig. Sagen Sie mir, wie ich etwas zu tun habe, und ich mache es anders. Nicht aus Trotz. Aus Gewohnheit.`, wie:`sehr klar` },
+           zuHoch:{ er:`So eigen bin ich nicht. Wenn jemand einen besseren Weg kennt, nehme ich ihn.`, wie:`einschränkend` },
+           zuTief:{ er:`Führung.`, erRegie:`Er lehnt sich zurück.`, er2:`Ich habe drei Vorgesetzte überstanden, indem ich sie nicht gefragt habe.`, wie:`gedehnt`, wie2:`trocken` } },
+    SIC: { genau:{ er:`Garantien sind Sätze von Leuten, die nicht haften. Ich arbeite mit Konfidenzintervallen.`, wie:`nüchtern` },
+           zuHoch:{ er:`Verlässlichkeit.`, erRegie:`Er zieht einen Mundwinkel hoch.`, er2:`Mein ganzer Beruf besteht darin, auszurechnen, wie unsicher etwas ist. Ich weiß, was Sicherheit wert ist.`, wie:`amüsiert`, wie2:`bestimmt` },
+           zuTief:{ er:`So sorglos bin ich nicht. Ich sichere, was zu sichern ist.`, wie:`richtigstellend` } },
+    STA: { genau:{ er:`Mein Name steht auf Papieren, die niemand liest. Das reicht mir vollkommen.`, wie:`gleichmütig` },
+           zuHoch:{ er:`Wenn Sie mir schmeicheln wollen, sparen Sie es sich. Der Brief da hängt schief, und zwar mit Absicht.`, wie:`sehr trocken` },
+           zuTief:{ er:`Ganz gleich ist es mir nicht. Ich möchte schon, dass die Richtigen es merken.`, wie:`leiser` } },
+    ZUG: { genau:{ er:`Ich komme allein zurecht. Das ist keine Klage, das ist eine Beschreibung.`, wie:`ruhig` },
+           zuHoch:{ er:`Das Team.`, erRegie:`Er sieht zur Tür.`, er2:`Ich sitze am Ende des Ganges. Das hat Gründe, und keiner davon ist baulich.`, wie:`trocken`, wie2:`sachlich` },
+           zuTief:{ er:`Ganz ohne Leute geht es auch nicht. Ich spiele seit dreißig Jahren mit denselben vieren.`, wie:`einschränkend` } },
+    EFF: { genau:{ er:`Jede Stunde, die für das Aufräumen von Daten draufgeht, kommt nicht wieder. Das ist mein Hauptproblem.`, wie:`bestimmt` },
+           zuHoch:{ er:`Ich bin kein Sparfuchs. Wenn eine Sache drei Jahre braucht, dann braucht sie drei Jahre.`, wie:`einschränkend` },
+           zuTief:{ er:`Aufwand ist mir nicht gleich.`, erRegie:`Er tippt auf den Bildschirm.`, er2:`Sechzig Prozent meiner Zeit gehen fürs Putzen drauf. Fragen Sie mich, was mich das im Jahr kostet.`, wie:`sofort`, wie2:`aufgebracht` } }
+  }
+},
+
+/* --- Wiedersehen. Was er beim zweiten und jedem weiteren Mal sagt,
+       je nachdem, wie ihr auseinandergegangen seid. ----------------- */
+
+wiedersehen: [
+  { ab:70, regie:`Die Tür steht offen. Er sieht auf, bevor du klopfst, und schiebt den Stapel selbst vom Besucherstuhl.`,
+    er:`Da sind Sie ja. Setzen, ich mache Kaffee.`, wie:`aufrichtig erfreut`, stimmung:`freundlich` },
+  { ab:50, regie:`Er sieht kurz auf und dann wieder auf den Bildschirm, arbeitet aber nicht weiter.`,
+    er:`Sie schon wieder. Gut, ich habe zwanzig Minuten.`, wie:`freundlich, aber beschäftigt`, stimmung:`neutral` },
+  { ab:30, regie:`Er lässt die Tür halb offen und bleibt hinter dem Tisch stehen.`,
+    er:`Ich habe nicht viel Zeit. Was gibt es?`, wie:`sachlich, ein wenig kühl`, stimmung:`skeptisch` },
+  { ab:-999, regie:`Er sieht auf die Uhr, bevor er dich ansieht. Der Besucherstuhl liegt voll Papier und bleibt es.`,
+    er:`Ich weiß nicht recht, was wir beide noch besprechen sollen. Aber bitte.`, wie:`ausgesucht höflich, was das Schlimmste ist`, stimmung:`verschlossen` }
+],
+
+/* --- Abschied. Rechtzeitig zu gehen ist ein Zug, kein Aufgeben. ----- */
+
+abschied: [
+  { ab:70, regie:`Er steht auf und bringt dich bis zur Tür, was er sonst nicht tut.`,
+    er:`Kommen Sie wieder. Und bringen Sie das mit, wovon Sie beim letzten Mal angefangen haben.`,
+    wie:`warm`, stimmung:`freundlich`, bez:3 },
+  { ab:50, regie:`Er lehnt sich zurück und lässt die Hände auf dem Tisch liegen.`,
+    er:`War in Ordnung. Melden Sie sich, wenn Sie wieder in der Gegend sind.`,
+    wie:`gleichmäßig freundlich`, stimmung:`neutral`, bez:2 },
+  { ab:30, regie:`Er nickt und zieht die Tastatur schon wieder zu sich heran.`,
+    er:`Ja. Bis dann.`, wie:`kurz`, stimmung:`neutral`, bez:1 },
+  { ab:-999, regie:`Er antwortet nicht sofort und sieht auf den Bildschirm.`,
+    er:`Machen Sie es gut.`, wie:`höflich und ohne jeden Inhalt`, stimmung:`verschlossen`, bez:0 }
+],
+
+/* --- Wenn du den Koffer aufmachst, bevor er dich kennt. ------------- */
+
+abfuhr: {
+  regie:`Du stellst den Koffer auf den Tisch. Er sieht ihn an, ohne den Kopf zu bewegen.`,
+  er:`Ach so.`, erRegie:`Er schiebt den Koffer mit zwei Fingern eine Handbreit von sich weg.`,
+  er2:`Ich dachte, Sie wollten reden. Machen Sie ihn wieder zu, ich kaufe heute nichts. Und beim nächsten Mal sagen Sie es bitte am Anfang.`,
+  wie:`erst neutral`, wie2:`ruhig, ohne Vorwurf, und genau deshalb schlimm`, stimmung:`abweisend` },
+
 });
