@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fünf Merkmale, sechs Fragen</title>
+<style>
+:root{
+  --paper:#E7E8E3; --card:#F3F4F0; --ink:#15181B; --graphite:#6C7278;
+  --rule:#C6C9C3; --rule2:#D8DAD5; --sink:#DCDED8;
+  --O:#7A548F; --C:#4B7A54; --E:#B5851F; --A:#2C5F8A; --N:#A6432C;
+  --mono:ui-monospace,"SF Mono","Cascadia Mono",Menlo,Consolas,"DejaVu Sans Mono",monospace;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+  --serif:Georgia,"Iowan Old Style","Times New Roman",serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;height:100%}
+body{
+  background:var(--paper); color:var(--ink); font-family:var(--sans);
+  font-size:15px; line-height:1.5; -webkit-font-smoothing:antialiased;
+  height:100dvh; overflow:hidden; display:grid; grid-template-rows:auto 1fr;
+}
+.eyebrow{font-family:var(--mono); font-size:10px; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--graphite)}
+.dim{color:var(--graphite)}
+.small{font-size:13px}
+h1{font-family:var(--mono); font-size:17px; letter-spacing:-.01em; font-weight:600; margin:2px 0 0}
+
+/* ---------- Kopfleiste ---------- */
+.top{display:flex; align-items:center; justify-content:space-between; gap:16px;
+  padding:9px 18px; border-bottom:1px solid var(--rule)}
+.tstats{font-family:var(--mono); font-size:11px; color:var(--graphite);
+  display:flex; gap:18px; align-items:center; flex-wrap:wrap}
+.tstats b{color:var(--ink); font-weight:600}
+.toggle{display:flex; align-items:center; gap:6px; cursor:pointer; user-select:none;
+  letter-spacing:.1em; text-transform:uppercase; font-size:10px}
+.toggle input{accent-color:var(--ink); margin:0}
+
+/* ---------- Zweispalter, feste Höhe ---------- */
+.main{display:grid; grid-template-columns:352px 1fr; min-height:0}
+.left{border-right:1px solid var(--rule); padding:14px 16px; display:flex;
+  flex-direction:column; gap:12px; min-height:0; overflow:hidden}
+.right{padding:14px 18px; display:grid; grid-template-rows:auto 1fr; gap:10px; min-height:0}
+
+/* ---------- Person ---------- */
+.person{display:flex; gap:12px; align-items:flex-start}
+.face{flex:0 0 auto; width:74px; height:74px; border:1px solid var(--rule);
+  background-color:#D8D6D0; background-size:400% 500%; background-repeat:no-repeat;
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--mono); font-size:20px; font-weight:600; color:var(--graphite)}
+.face.img{color:transparent}
+.pname{font-family:var(--mono); font-size:15px; font-weight:600; letter-spacing:-.01em}
+.prole{font-size:13.5px; margin-top:1px}
+.pset{font-size:12.5px; color:var(--graphite); margin-top:1px; line-height:1.35}
+.cues{margin:9px 0 0; padding:0; list-style:none}
+.cues li{font-size:13px; padding-left:15px; position:relative; margin-bottom:2px; line-height:1.35}
+.cues li:before{content:"·"; position:absolute; left:4px; color:var(--graphite); font-weight:700}
+.cues .bits{font-family:var(--mono); font-size:10px; color:var(--graphite); margin-left:5px}
+
+/* ---------- Signatur: fünf Schienen ---------- */
+.gauge{border-top:1px solid var(--rule); padding-top:10px}
+.ghead{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:9px}
+.hval{font-family:var(--mono); font-size:22px; font-weight:600; letter-spacing:-.02em}
+.hval span{font-size:10px; font-weight:400; color:var(--graphite); letter-spacing:.12em; margin-left:3px}
+.rail{margin-bottom:9px}
+.rlab{display:flex; justify-content:space-between; align-items:baseline; gap:8px;
+  font-size:11.5px; margin-bottom:3px; line-height:1.2}
+.rlab .nm{font-family:var(--mono); font-weight:600; font-size:11.5px; letter-spacing:.02em}
+.rlab .pole{color:var(--graphite); font-size:11px; flex:1 1 auto; overflow:hidden;
+  white-space:nowrap; text-overflow:ellipsis}
+.rlab .pct{font-family:var(--mono); font-size:11.5px; font-weight:600; flex:0 0 auto}
+.track{position:relative; height:13px; background:var(--sink); border:1px solid var(--rule)}
+.track .mid{position:absolute; left:50%; top:-2px; bottom:-2px; width:1px; background:var(--ink); opacity:.5}
+.track .fill{position:absolute; top:0; bottom:0; transition:left .45s cubic-bezier(.4,0,.15,1), width .45s cubic-bezier(.4,0,.15,1)}
+.track .ghost{position:absolute; top:-4px; bottom:-4px; width:2px; margin-left:-1px;
+  background:var(--ink); opacity:.55}
+.track .fill{min-width:2px}
+.gfoot{font-family:var(--mono); font-size:10px; color:var(--graphite);
+  display:flex; justify-content:space-between; letter-spacing:.06em; margin-top:-2px}
+.hint{margin-top:auto; border-top:1px solid var(--rule); padding-top:9px;
+  font-size:11.5px; color:var(--graphite); line-height:1.5}
+.hint b{color:var(--ink); font-weight:600}
+.blind{font-family:var(--mono); font-size:11.5px; color:var(--graphite); line-height:1.5;
+  border:1px dashed var(--rule); padding:14px 12px; text-align:center}
+
+/* ---------- Züge ---------- */
+.rhead{display:flex; justify-content:space-between; align-items:baseline; gap:12px}
+.budget{font-family:var(--mono); font-size:11px; letter-spacing:.1em; color:var(--graphite)}
+.budget b{color:var(--ink); letter-spacing:0}
+.choices{display:grid; gap:7px; max-width:660px}
+button{font:inherit}
+button.probe{text-align:left; background:var(--card); border:1px solid var(--rule);
+  padding:12px 15px; cursor:pointer; color:var(--ink); line-height:1.35; font-size:15px;
+  transition:background .12s, border-color .12s}
+button.probe:hover{background:#fff; border-color:var(--ink)}
+button.probe:active{transform:translateY(1px)}
+button.probe span{display:block; font-family:var(--mono); font-size:9px;
+  letter-spacing:.16em; text-transform:uppercase; color:var(--graphite); margin-bottom:2px}
+button:focus-visible{outline:2px solid var(--A); outline-offset:2px}
+button.act{font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase;
+  background:var(--ink); color:var(--paper); border:1px solid var(--ink);
+  padding:8px 14px; cursor:pointer}
+button.act.ghostbtn{background:transparent; color:var(--ink)}
+button.act[disabled]{opacity:.3; cursor:default}
+button.act:hover:not([disabled]){opacity:.85}
+.row{display:flex; gap:8px; flex-wrap:wrap; align-items:center}
+
+/* ---------- Protokoll ---------- */
+.logbox{min-height:0; overflow-y:auto; border-top:1px solid var(--rule); padding-top:8px}
+.turn{border-left:2px solid var(--rule); padding:1px 0 1px 11px; margin-bottom:9px}
+.turn .you{font-size:12.5px; color:var(--graphite); line-height:1.35}
+.turn .them{font-family:var(--serif); font-style:italic; font-size:16px; line-height:1.35; margin-top:2px}
+.turn .meta{font-family:var(--mono); font-size:10px; color:var(--graphite); margin-top:3px; line-height:1.4}
+.turn .meta b{color:var(--ink); font-weight:600}
+.turn.best{border-left-color:var(--C)}
+.turn.waste{border-left-color:var(--N)}
+
+/* ---------- Wette ---------- */
+.bets{display:grid; gap:7px}
+.bet{display:grid; grid-template-columns:158px 1fr; gap:10px; align-items:center}
+.bet .bl{font-family:var(--mono); font-size:11px; font-weight:600; line-height:1.2}
+.bet .bl em{display:block; font-style:normal; font-family:var(--sans); font-size:10px;
+  color:var(--graphite); font-weight:400; line-height:1.3; margin-top:1px}
+.scaleb{display:grid; grid-template-columns:repeat(5,1fr); gap:3px}
+.scaleb button{font-family:var(--mono); font-size:11px; padding:7px 2px; cursor:pointer;
+  background:var(--card); border:1px solid var(--rule); color:var(--graphite); line-height:1.1}
+.scaleb button em{display:block; font-style:normal; font-size:8.5px; letter-spacing:.04em}
+.scaleb button:hover{background:#fff}
+.scaleb button.on{background:var(--ink); color:var(--paper); border-color:var(--ink)}
+.betfoot{display:flex; justify-content:space-between; font-family:var(--mono);
+  font-size:9.5px; color:var(--graphite); letter-spacing:.06em; padding-left:168px}
+
+/* ---------- Ergebnisfenster ---------- */
+.scrim{position:fixed; inset:0; background:rgba(21,24,27,.55); display:none;
+  align-items:center; justify-content:center; padding:22px; z-index:50}
+.scrim.open{display:flex}
+.sheet{background:var(--paper); border:1px solid var(--ink); width:min(860px,100%);
+  max-height:100%; display:grid; grid-template-rows:auto 1fr auto; box-shadow:0 18px 50px rgba(0,0,0,.3)}
+.shead{padding:16px 22px 14px; border-bottom:1px solid var(--rule);
+  display:flex; justify-content:space-between; align-items:flex-end; gap:18px; flex-wrap:wrap}
+.score{font-family:var(--mono); font-size:38px; font-weight:600; letter-spacing:-.03em; line-height:1}
+.score small{font-size:11px; font-weight:400; color:var(--graphite); letter-spacing:.12em}
+.sbody{overflow-y:auto; padding:0 22px}
+.sfoot{padding:12px 22px; border-top:1px solid var(--rule); display:flex; gap:8px; justify-content:flex-end}
+details.acc{border-bottom:1px solid var(--rule2)}
+details.acc>summary{font-family:var(--mono); font-size:11px; letter-spacing:.13em;
+  text-transform:uppercase; color:var(--graphite); cursor:pointer; padding:12px 0; list-style:none;
+  display:flex; justify-content:space-between; align-items:center; gap:10px}
+details.acc>summary::-webkit-details-marker{display:none}
+details.acc>summary:after{content:"+"; font-size:14px; color:var(--graphite)}
+details.acc[open]>summary:after{content:"–"}
+details.acc[open]>summary{color:var(--ink)}
+.accin{padding:0 0 16px; font-size:14px}
+.accin p{margin:0 0 9px}
+.accin ul{margin:0 0 9px; padding-left:17px}
+.accin li{margin-bottom:4px}
+.accin h5{font-family:var(--mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--graphite); font-weight:600; margin:12px 0 5px}
+table.t{width:100%; border-collapse:collapse; font-size:13px}
+table.t td,table.t th{padding:5px 8px 5px 0; border-bottom:1px solid var(--rule2);
+  vertical-align:top; text-align:left}
+table.t th{font-family:var(--mono); font-size:9.5px; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--graphite); font-weight:600}
+table.t td.n{font-family:var(--mono); font-size:12px; text-align:right; white-space:nowrap}
+table.t td.pts{font-family:var(--mono); font-size:12px; text-align:right; white-space:nowrap}
+table.t tr.hit td.pts{color:var(--C); font-weight:600}
+table.t tr.miss td.pts{color:var(--N); font-weight:600}
+table.t tr.hit td.n{font-weight:400}
+.leer{border:1px dashed var(--rule); padding:16px 18px; max-width:660px}
+.leer h4{font-family:var(--mono); font-size:11px; letter-spacing:.13em; text-transform:uppercase;
+  color:var(--graphite); font-weight:600; margin:0 0 8px}
+.leer p{margin:0 0 7px; font-size:13.5px; color:var(--graphite); line-height:1.5}
+.leer p b{color:var(--ink); font-weight:600}
+.chip{display:inline-block; font-family:var(--mono); font-size:9px; letter-spacing:.12em;
+  padding:1px 6px; border:1px solid; margin-left:6px; vertical-align:1px}
+.chip.A{color:var(--C); border-color:var(--C)}
+.chip.B{color:var(--E); border-color:var(--E)}
+.chip.C{color:var(--N); border-color:var(--N)}
+.warn{border-left:3px solid var(--N); padding:2px 0 2px 12px; margin-top:10px;
+  font-size:13px; color:var(--graphite); line-height:1.5}
+a{color:var(--A)}
+.acc .src{font-size:12px; color:var(--graphite); line-height:1.45}
+
+@media (prefers-reduced-motion:reduce){ .track .fill{transition:none} }
+@media (max-width:860px){
+  body{overflow:auto; height:auto; min-height:100dvh}
+  .main{grid-template-columns:1fr}
+  .left{border-right:none; border-bottom:1px solid var(--rule); overflow:visible}
+  .right{grid-template-rows:auto auto}
+  .logbox{overflow:visible}
+  .scrim{padding:0}
+  .sheet{border:none; height:100dvh; max-height:100dvh; width:100%}
+}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div>
+    <div class="eyebrow">Big Five · bayessches Update über 32 Zustände</div>
+    <h1>Fünf Merkmale, sechs Fragen</h1>
+  </div>
+  <div class="tstats" id="stats"></div>
+</div>
+
+<div class="main">
+  <div class="left" id="left"></div>
+  <div class="right" id="right"></div>
+</div>
+
+<div class="scrim" id="scrim" role="dialog" aria-modal="true" aria-label="Auflösung">
+  <div class="sheet">
+    <div class="shead" id="shead"></div>
+    <div class="sbody" id="sbody"></div>
+    <div class="sfoot">
+      <button class="act ghostbtn" id="btnClose">Fenster schließen</button>
+      <button class="act" id="btnNext">Nächste Person</button>
+    </div>
+  </div>
+</div>
+
+<script id="daten" type="application/json">{"traits":["O","C","E","A","N"],"labels":{"O":"Offenheit","C":"Gewissenhaftigkeit","E":"Extraversion","A":"Verträglichkeit","N":"Neurotizismus"},"poles":{"O":["vertraut, konkret","neugierig, abstrakt"],"C":["spontan, locker","planvoll, gründlich"],"E":["zurückhaltend","zugewandt, laut"],"A":["hart, direkt","warm, nachgiebig"],"N":["ruhig, robust","dünnhäutig, grüblerisch"]},"sharpness":1.4,"roles":[{"t":"Vertriebsleitung Region Süd","w":{"E":0.9,"A":-0.25}},{"t":"Controlling, seit acht Jahren im Haus","w":{"C":0.9,"O":-0.5,"E":-0.4}},{"t":"Architekturbüro, freiberuflich","w":{"O":1.0,"C":-0.2}},{"t":"Gründung, zweites eigenes Unternehmen","w":{"E":0.7,"O":0.7,"N":-0.4}},{"t":"Sachbearbeitung Verwaltung, 22 Jahre im Amt","w":{"C":0.7,"O":-0.7,"E":-0.3}},{"t":"Pflegedienstleitung","w":{"A":0.7,"C":0.4}},{"t":"IT-Leitung im Konzern","w":{"C":0.6,"O":0.3,"E":-0.3}},{"t":"Betriebsrat, freigestellt","w":{"A":0.6,"E":0.5}},{"t":"Teamleitung Entwicklung","w":{"O":0.5,"C":0.3}},{"t":"Ärztliche Leitung, Belegklinik","w":{"C":0.7,"E":0.3,"A":-0.2}},{"t":"Handwerksbetrieb in dritter Generation","w":{}},{"t":"Projektleitung Bau","w":{"C":0.7,"E":0.3}},{"t":"Lehrkraft am Gymnasium, Deutsch und Kunst","w":{"O":0.8,"A":0.4}},{"t":"Studium, letztes Semester","w":{"O":0.4,"C":-0.3}},{"t":"Nachbarschaft, Anfang 60, frisch pensioniert","w":{}},{"t":"Personalabteilung, Mittelstand","w":{"A":0.6,"E":0.4}},{"t":"Laborleitung, analytische Chemie","w":{"C":0.8,"O":0.4,"E":-0.4}},{"t":"Einkauf, Mittelstand","w":{"C":0.6,"A":-0.3}}],"cues":[{"t":"Der Schreibtisch ist leer bis auf Stift und Laptop","k":"raum","w":{"C":0.9}},{"t":"Auf dem Sideboard stapeln sich Ordner in zwei Reihen","k":"raum","w":{"C":-0.7}},{"t":"Im Regal stehen Bücher in drei Sprachen","k":"raum","w":{"O":0.8}},{"t":"An der Wand hängt ein Konzertplakat, kein Firmenposter","k":"raum","w":{"O":0.9}},{"t":"Die Wände sind leer bis auf den Fluchtplan","k":"raum","w":{"O":-0.6}},{"t":"Kabel und Ladegeräte liegen offen über den Tisch verteilt","k":"raum","w":{"C":-0.6}},{"t":"Beschriftete Ablagefächer, die Etiketten sind frisch gedruckt","k":"raum","w":{"C":1.0}},{"t":"Ein ungewöhnliches Objekt auf dem Tisch, offenbar von einer Reise","k":"raum","w":{"O":0.8}},{"t":"Der Wandkalender steht noch auf dem letzten Monat","k":"raum","w":{"C":-0.7}},{"t":"Redet die ersten drei Minuten fast durchgehend","k":"verhalten","w":{"E":1.0}},{"t":"Antwortet knapp und wartet dann ab","k":"verhalten","w":{"E":-0.8}},{"t":"Duzt Sie nach zwei Minuten","k":"verhalten","w":{"E":0.7}},{"t":"Holt Ihnen ungefragt einen Kaffee","k":"verhalten","w":{"A":0.7}},{"t":"Stellt Sie erst allen im Raum namentlich vor","k":"verhalten","w":{"E":0.5,"A":0.5}},{"t":"Unterbricht Sie einmal mitten im Satz","k":"verhalten","w":{"A":-0.7,"E":0.4}},{"t":"Lacht laut über den eigenen Versprecher","k":"verhalten","w":{"E":0.8}},{"t":"Bedankt sich zweimal dafür, dass Sie den Weg gemacht haben","k":"verhalten","w":{"A":0.6}},{"t":"Widerspricht dem eigenen Kollegen offen vor Ihnen","k":"verhalten","w":{"A":-0.6}},{"t":"Zupft während des Gesprächs am Ärmel","k":"verhalten","w":{"N":0.3}},{"t":"Fragt zweimal nach, ob der Termin wirklich noch passt","k":"verhalten","w":{"N":0.35}},{"t":"Es regnet, das Wetter wird kommentiert","k":"rauschen","w":{}},{"t":"Trinkt schwarzen Kaffee, dritte Tasse","k":"rauschen","w":{}},{"t":"Das Telefon liegt umgedreht auf dem Tisch","k":"rauschen","w":{}},{"t":"Hat den Termin selbst um eine Woche verschoben","k":"rauschen","w":{}},{"t":"Die Jalousie ist halb heruntergelassen","k":"rauschen","w":{}}],"settings":["Erstgespräch im Besprechungsraum, 45 Minuten angesetzt","Zweites Treffen, das erste lief unentschieden","Videocall, Kamera an, Kalender voll","Kurzes Gespräch im Stehen, zwischen zwei Terminen","Abendessen zu zweit, halb geschäftlich","Sie sitzen im Zug nebeneinander, drei Stunden Fahrt","Übergabegespräch, Ihr Vorgänger hat den Kontakt verloren","Der Kontakt kam von dort, nicht von Ihnen"],"probes":[{"id":"urlaub","q":"Wie war Ihr letzter Urlaub?","a":[{"t":"Zwei Wochen dasselbe Haus wie immer. Das ist der Punkt daran.","l":{"O":-1.2,"N":-0.3}},{"t":"Wir sind losgefahren und haben unterwegs entschieden, wo wir schlafen.","l":{"O":1.2,"C":-0.7}},{"t":"Alles Monate vorher gebucht. Flüge, Mietwagen, Museen.","l":{"C":1.2,"O":0.3}},{"t":"Bin kaum weggekommen, hier war zu viel los.","l":{"C":0.4,"N":0.4,"E":-0.3}},{"t":"Zu sechst in einem Haus. Laut und voll.","l":{"E":1.1,"A":0.5}}]},{"id":"deadline","q":"Etwas ist in vier Wochen fällig. Wann fangen Sie an?","a":[{"t":"Sofort. Ich habe so etwas lieber vor mir weg.","l":{"C":1.3}},{"t":"Realistisch in der letzten Woche.","l":{"C":-1.2}},{"t":"Erst mache ich einen Plan, dann sehe ich weiter.","l":{"C":0.9}},{"t":"Kommt darauf an, ob es mich interessiert.","l":{"C":-0.6,"O":0.6}}]},{"id":"kritik","q":"Jemand kritisiert Ihre Arbeit vor der Runde. Was passiert danach?","a":[{"t":"Ich denke abends noch daran, ehrlich gesagt.","l":{"N":1.2}},{"t":"Ich frage direkt nach, was genau gemeint war.","l":{"E":0.6,"N":-0.4}},{"t":"Ich lasse es stehen und schaue mir den Punkt später an.","l":{"N":-0.8,"A":0.4}},{"t":"Ich widerspreche sofort, wenn es nicht stimmt.","l":{"A":-0.9,"E":0.6}}]},{"id":"feierabend","q":"Was machen Sie nach so einem Tag?","a":[{"t":"Unter Leute. Sonst hänge ich nach.","l":{"E":1.2}},{"t":"Tür zu. Keiner will etwas von mir.","l":{"E":-1.2}},{"t":"Laufen. Jeden Tag dieselbe Runde.","l":{"C":0.8,"E":-0.3}},{"t":"Kommt darauf an, was gerade läuft.","l":{}}]},{"id":"fehler","q":"Erzählen Sie mir von einer Entscheidung, die falsch war.","a":[{"t":"Ich habe zu lange gezögert, weil ich alle Risiken sehen wollte.","l":{"N":0.9,"C":0.4}},{"t":"Ich habe jemandem vertraut, der es nicht verdient hatte.","l":{"A":0.8}},{"t":"Wir haben ohne Not etwas Neues probiert.","l":{"O":-0.7,"C":0.4}},{"t":"Fällt mir gerade keine ein.","l":{"N":-0.7,"A":-0.4}}]},{"id":"konflikt","q":"Zwei Leute in Ihrem Team können nicht miteinander.","a":[{"t":"Ich setze mich mit beiden hin, so lange es dauert.","l":{"A":1.1}},{"t":"Ich teile die Aufgaben so, dass sie sich nicht treffen.","l":{"A":-0.3,"C":0.6}},{"t":"Das müssen die untereinander klären.","l":{"A":-0.9}},{"t":"Ich sage beiden deutlich, was ich erwarte.","l":{"A":-0.5,"E":0.6}}]},{"id":"werkzeug","q":"Es gibt ein neues Werkzeug für Ihren Bereich.","a":[{"t":"Ich probiere es am Wochenende aus.","l":{"O":1.2}},{"t":"Erst wenn es zwei Jahre draußen ist.","l":{"O":-1.0,"N":0.3}},{"t":"Ich lasse jemanden testen und berichten.","l":{"C":0.6,"E":-0.2}},{"t":"Wir haben etwas, das läuft.","l":{"O":-0.9,"C":0.3}}]},{"id":"vortrag","q":"Sie sollen morgen vor zweihundert Leuten sprechen.","a":[{"t":"Gern. Ich mache das oft.","l":{"E":1.2,"N":-0.6}},{"t":"Ich schlafe die Nacht davor schlecht.","l":{"N":1.2}},{"t":"Ich schreibe mir jedes Wort auf.","l":{"C":1.0,"N":0.5}},{"t":"Ich schicke jemand anderen.","l":{"E":-1.0}}]},{"id":"stadt","q":"Sie haben drei Stunden in einer fremden Stadt.","a":[{"t":"Ich laufe los und schaue, was kommt.","l":{"O":1.0,"E":0.4}},{"t":"Ich suche ein Café und arbeite.","l":{"E":-0.6,"C":0.4}},{"t":"Ich habe vorher nachgeschaut, was sich lohnt.","l":{"C":0.9}},{"t":"Ich rufe jemanden an, der dort wohnt.","l":{"E":0.9,"A":0.5}}]},{"id":"verspaetung","q":"Ihr Zug hat neunzig Minuten Verspätung.","a":[{"t":"Ärgerlich, aber dann mache ich eben etwas anderes.","l":{"N":-0.9}},{"t":"Ich fange sofort an umzuplanen. Alles.","l":{"C":0.8,"N":0.6}},{"t":"Damit rechne ich, deshalb nehme ich immer den früheren.","l":{"C":1.0,"N":0.5}},{"t":"Ich komme mit dem Nachbarn ins Gespräch.","l":{"E":1.1,"A":0.5}}]},{"id":"lob","q":"Ein Kollege bekommt Lob für etwas, woran Sie mitgearbeitet haben.","a":[{"t":"Gönne ich ihm. Wir wissen beide, wie es war.","l":{"A":1.0}},{"t":"Ich sage es ihm hinterher unter vier Augen.","l":{"A":0.3,"E":-0.2}},{"t":"Ich stelle das in der Runde richtig.","l":{"A":-0.8,"E":0.5}},{"t":"Das beschäftigt mich länger, als es sollte.","l":{"N":1.0}}]},{"id":"klingeln","q":"Bei Ihnen zu Hause klingelt jemand unangemeldet.","a":[{"t":"Da kann jederzeit jemand rein.","l":{"C":1.1}},{"t":"Ich brauche zehn Minuten Vorlauf.","l":{"C":-0.7}},{"t":"Ich mache nicht auf.","l":{"E":-0.9}},{"t":"Kommt vor, stört mich nicht.","l":{"C":-0.4,"A":0.4,"N":-0.4}}]},{"id":"lesen","q":"Lesen Sie gerade etwas?","a":[{"t":"Drei Sachen parallel, eines davon ganz abwegig.","l":{"O":1.2}},{"t":"Fachzeitschriften, wenn ich dazu komme.","l":{"O":-0.2,"C":0.4}},{"t":"Ehrlich, kaum noch.","l":{"O":-0.8}},{"t":"Hörbücher beim Fahren.","l":{"O":0.3}}]},{"id":"regeln","q":"Eine Vorschrift steht Ihnen im Weg und niemand schaut hin.","a":[{"t":"Vorschrift ist Vorschrift.","l":{"C":1.1,"O":-0.5}},{"t":"Ich frage nach, ob es dafür einen Grund gibt.","l":{"C":0.4,"A":0.4}},{"t":"Ich mache es und dokumentiere es hinterher.","l":{"C":-0.4,"O":0.6}},{"t":"Ich hole mir vorher jemanden ins Boot.","l":{"A":0.7,"N":0.4}}]},{"id":"samstag","q":"Wissen Sie heute schon, was Sie am Samstag machen?","a":[{"t":"Auf die Stunde.","l":{"C":1.2}},{"t":"Nein, das ergibt sich.","l":{"C":-1.0,"O":0.4}},{"t":"Da sind Leute eingeladen.","l":{"E":1.0,"A":0.4}},{"t":"Nichts. Genau das ist der Plan.","l":{"E":-0.9}}]},{"id":"position","q":"Jemand vertritt hier eine Position, die Sie für falsch halten.","a":[{"t":"Ich sage das, auch wenn es unangenehm wird.","l":{"A":-0.9,"E":0.5}},{"t":"Ich frage erst, wie er darauf kommt.","l":{"A":0.6,"O":0.5}},{"t":"Ich lasse es. Bringt nichts.","l":{"A":0.4,"E":-0.6}},{"t":"Ich schreibe hinterher eine Mail.","l":{"E":-0.7,"C":0.5}}]},{"id":"schlaf","q":"Schlafen Sie gut?","a":[{"t":"Immer. Kopf aufs Kissen, weg.","l":{"N":-1.2}},{"t":"Wenn viel los ist, wache ich um vier auf.","l":{"N":1.1}},{"t":"Zu wenig, aber das liegt an der Zeit, nicht am Kopf.","l":{"N":0.2,"C":-0.2}},{"t":"Ich habe eine feste Zeit, das hilft.","l":{"C":0.9,"N":-0.3}}]},{"id":"ruder","q":"Ein Projekt läuft aus dem Ruder. Wie merkt man das an Ihnen?","a":[{"t":"Ich werde ruhiger, nicht lauter.","l":{"N":-1.0}},{"t":"Meine Mails werden kürzer und häufiger.","l":{"N":0.8,"E":0.3}},{"t":"Ich baue eine Liste und arbeite sie ab.","l":{"C":1.1}},{"t":"Ich hole mir die Leute zusammen.","l":{"E":0.7,"A":0.6}}]},{"id":"kunst","q":"Waren Sie zuletzt in einer Ausstellung oder einem Konzert?","a":[{"t":"Vorletzte Woche, und es war seltsam gut.","l":{"O":1.2}},{"t":"Wenn meine Frau Karten hat.","l":{"O":-0.4,"A":0.4}},{"t":"Dafür fehlt mir der Zugang.","l":{"O":-1.0}},{"t":"Ich gehe lieber ins Stadion.","l":{"O":-0.5,"E":0.5}}]},{"id":"vertrauen","q":"Ein Anbieter, den niemand kennt, macht Ihnen ein gutes Angebot.","a":[{"t":"Erst einmal davon ausgehen, dass es stimmt.","l":{"A":0.9,"N":-0.5}},{"t":"Da ist immer ein Haken.","l":{"A":-0.9,"N":0.5}},{"t":"Ich prüfe, was prüfbar ist.","l":{"C":0.9}},{"t":"Klingt spannend. Das würde ich probieren.","l":{"O":1.0}}]},{"id":"aufzug","q":"Zehn Minuten im Aufzug mit einem Fremden.","a":[{"t":"Dann rede ich.","l":{"E":1.2}},{"t":"Ich schaue aufs Handy.","l":{"E":-1.0}},{"t":"Kommt darauf an, wer.","l":{"E":-0.2}},{"t":"Ich frage etwas und höre zu.","l":{"E":0.5,"A":0.6}}]},{"id":"unrecht","q":"Sie haben jemandem unrecht getan.","a":[{"t":"Ich entschuldige mich sofort und direkt.","l":{"A":1.0}},{"t":"Ich mache es wieder gut, ohne viele Worte.","l":{"A":0.4,"E":-0.4}},{"t":"Das passiert mir selten.","l":{"A":-0.7}},{"t":"Ich gehe das im Kopf noch tagelang durch.","l":{"N":1.1}}]},{"id":"anfahrt","q":"Sind Sie gut hergekommen?","a":[{"t":"Ging. Die Baustelle kostet zehn Minuten.","l":{}},{"t":"Ja, alles gut.","l":{}},{"t":"Ich wohne um die Ecke.","l":{}}]},{"id":"dabei","q":"Wie lange sind Sie schon hier?","a":[{"t":"Neunzehn Jahre.","l":{"O":-0.3,"C":0.2}},{"t":"Seit zwei Jahren.","l":{"O":0.2}},{"t":"Sieben, mit einer Unterbrechung.","l":{}}]},{"id":"branche","q":"Wie schätzen Sie die Lage in Ihrer Branche ein?","a":[{"t":"Schwierig, aber das war sie schon oft.","l":{}},{"t":"Es sortiert sich gerade neu.","l":{}},{"t":"Fragen Sie mich in einem halben Jahr noch einmal.","l":{}}]},{"id":"wetter","q":"Ganz schön warm heute.","a":[{"t":"Ja, seit Tagen.","l":{}},{"t":"Mir ist es recht.","l":{}},{"t":"Ich hätte gern wieder Regen.","l":{}}]}],"persons":[{"name":"Frau Sommer","age":34,"sheet":1,"col":0,"row":0},{"name":"Herr Baumgartner","age":52,"sheet":1,"col":1,"row":0},{"name":"Dr. Marek","age":45,"sheet":1,"col":2,"row":0},{"name":"Herr Adigüzel","age":41,"sheet":1,"col":3,"row":0},{"name":"Frau Nowak","age":27,"sheet":1,"col":0,"row":1},{"name":"Herr Reinhardt","age":61,"sheet":1,"col":1,"row":1},{"name":"Frau Oduya","age":38,"sheet":1,"col":2,"row":1},{"name":"Herr Lindqvist","age":33,"sheet":1,"col":3,"row":1},{"name":"Frau Brandt","age":56,"sheet":1,"col":0,"row":2},{"name":"Herr Pichler","age":46,"sheet":1,"col":1,"row":2},{"name":"Frau Hoffmann","age":30,"sheet":1,"col":2,"row":2},{"name":"Frau Yildiz","age":43,"sheet":1,"col":3,"row":2},{"name":"Herr Steiner","age":58,"sheet":1,"col":0,"row":3},{"name":"Frau Delacroix","age":49,"sheet":1,"col":1,"row":3},{"name":"Herr Ferreira","age":36,"sheet":1,"col":2,"row":3},{"name":"Frau Ackermann","age":62,"sheet":1,"col":3,"row":3},{"name":"Herr Kessler","age":29,"sheet":1,"col":0,"row":4},{"name":"Frau Petrova","age":35,"sheet":1,"col":1,"row":4},{"name":"Herr Nguyen","age":44,"sheet":1,"col":2,"row":4},{"name":"Frau Bauer","age":24,"sheet":1,"col":3,"row":4},{"name":"Herr Wagner","age":67,"sheet":2,"col":0,"row":0},{"name":"Frau Kowalczyk","age":40,"sheet":2,"col":1,"row":0},{"name":"Herr Osei","age":31,"sheet":2,"col":2,"row":0},{"name":"Frau Lehmann","age":53,"sheet":2,"col":3,"row":0},{"name":"Herr Bergström","age":39,"sheet":2,"col":0,"row":1},{"name":"Frau Ibrahim","age":28,"sheet":2,"col":1,"row":1},{"name":"Herr Vogel","age":50,"sheet":2,"col":2,"row":1},{"name":"Frau Ricci","age":46,"sheet":2,"col":3,"row":1},{"name":"Herr Schulz","age":26,"sheet":2,"col":0,"row":2},{"name":"Frau Haas","age":59,"sheet":2,"col":1,"row":2},{"name":"Herr Tanaka","age":55,"sheet":2,"col":2,"row":2},{"name":"Frau Mendes","age":37,"sheet":2,"col":3,"row":2},{"name":"Herr Krause","age":48,"sheet":2,"col":0,"row":3},{"name":"Frau Weiss","age":32,"sheet":2,"col":1,"row":3},{"name":"Herr Antonov","age":43,"sheet":2,"col":2,"row":3},{"name":"Frau Berger","age":65,"sheet":2,"col":3,"row":3},{"name":"Herr Dlamini","age":34,"sheet":2,"col":0,"row":4},{"name":"Frau Schneider","age":51,"sheet":2,"col":1,"row":4},{"name":"Herr Halvorsen","age":57,"sheet":2,"col":2,"row":4},{"name":"Frau Chen","age":42,"sheet":2,"col":3,"row":4}]}</script>
+<script>
+const D = JSON.parse(document.getElementById("daten").textContent);
+const T = D.traits, K = T.length, NS = 1 << K, LAB = D.labels, POL = D.poles;
+const COL = {O:"var(--O)", C:"var(--C)", E:"var(--E)", A:"var(--A)", N:"var(--N)"};
+const NQ = 6, NOFFER = 4, HMAX = Math.log2(NS);
+const STUFEN = [0.08, 0.25, 0.50, 0.75, 0.92];
+
+/* =========== Mathematik ===========
+   Zustand s ist ein 5-Bit-Wort: Bit k gesetzt heißt Merkmal k hoch.
+   z_k(s) = +1 oder -1. P(Antwort i | s) = softmax_i( sharpness * Summe_k Ladung_ik * z_k(s) ).
+   Der Normierer der Softmax hängt von s ab, deshalb koppelt eine Antwort die
+   fünf Merkmale. Die Anzeige zeigt Randverteilungen, gerechnet wird über alle 32. */
+const Z = [];
+for (let s = 0; s < NS; s++) Z.push(T.map((_, k) => ((s >> k) & 1) ? 1 : -1));
+
+function likelihood(probe){
+  const n = probe.a.length, L = [];
+  for (let i = 0; i < n; i++) L.push(new Array(NS).fill(0));
+  for (let s = 0; s < NS; s++){
+    const v = probe.a.map(a => D.sharpness * T.reduce((x, t, k) => x + (a.l[t] || 0) * Z[s][k], 0));
+    const mx = Math.max(...v);
+    const e = v.map(x => Math.exp(x - mx));
+    const sum = e.reduce((x, y) => x + y, 0);
+    for (let i = 0; i < n; i++) L[i][s] = e[i] / sum;
+  }
+  return L;
+}
+const LIK = {}, PROBE = {};
+D.probes.forEach(p => { LIK[p.id] = likelihood(p); PROBE[p.id] = p; });
+
+const H = p => -p.reduce((a, x) => x > 0 ? a + x * Math.log2(x) : a, 0);
+const norm = v => { const s = v.reduce((a, b) => a + b, 0); return v.map(x => x / s); };
+const sig = x => 1 / (1 + Math.exp(-x));
+
+function makePrior(sources){
+  const q = T.map(t => sig(sources.reduce((a, s) => a + (s.w[t] || 0), 0)));
+  const p = [];
+  for (let s = 0; s < NS; s++){
+    let x = 1;
+    for (let k = 0; k < K; k++) x *= ((s >> k) & 1) ? q[k] : 1 - q[k];
+    p.push(x);
+  }
+  return norm(p);
+}
+function eig(prior, id){
+  const L = LIK[id]; let hp = 0;
+  for (let i = 0; i < L.length; i++){
+    let pa = 0; for (let s = 0; s < NS; s++) pa += L[i][s] * prior[s];
+    if (pa < 1e-12) continue;
+    hp += pa * H(norm(L[i].map((l, s) => l * prior[s])));
+  }
+  return H(prior) - hp;
+}
+const update = (prior, id, i) => norm(LIK[id][i].map((l, s) => l * prior[s]));
+const marg = p => T.map((_, k) => { let x = 0; for (let s = 0; s < NS; s++) if ((s >> k) & 1) x += p[s]; return x; });
+const drawFrom = p => { let r = Math.random(), c = 0; for (let i = 0; i < p.length; i++){ c += p[i]; if (r < c) return i; } return p.length - 1; };
+const pick = a => a[Math.floor(Math.random() * a.length)];
+const sample = (a, n) => { const c = a.slice(), o = []; while (o.length < n && c.length) o.push(c.splice(Math.floor(Math.random() * c.length), 1)[0]); return o; };
+
+// Wie viele bit trägt eine Beobachtung gegenüber der flachen Basisrate?
+function bitsOf(src){
+  const a = makePrior([]), b = makePrior([src]);
+  return b.reduce((s, x, j) => x > 0 ? s + x * Math.log2(x / a[j]) : s, 0);
+}
+
+/* =========== Zustand =========== */
+let blind = false;
+const session = {runden:0, punkte:0, fragen:0, merkmale:0, voll:0};
+let R = null;
+
+function neueRunde(){
+  const role = pick(D.roles), cues = sample(D.cues, 2);
+  const prior = makePrior([role, ...cues]);
+  R = {
+    person: pick(D.persons), role, cues, setting: pick(D.settings),
+    prior, belief: prior.slice(), prev: prior.slice(),
+    truth: drawFrom(prior), log: [], used: [], offered: [],
+    phase: "ask", bets: T.map(() => null)
+  };
+  anbieten();
+}
+function anbieten(){
+  R.offered = sample(D.probes.filter(p => !R.used.includes(p.id)).map(p => p.id), NOFFER);
+}
+
+/* =========== Anzeige =========== */
+const left = document.getElementById("left"), right = document.getElementById("right");
+const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;");
+
+const SHEETS = {1:"personen_gruppe_1.png", 2:"personen_gruppe_2.png"};
+const sheetOK = {};
+for (const n in SHEETS){
+  const im = new Image();
+  im.onload = () => { sheetOK[n] = true; if (R) render(); };
+  im.onerror = () => { sheetOK[n] = false; };
+  im.src = SHEETS[n];
+}
+function faceHTML(p){
+  const mono = p.name.replace(/^(Herr|Frau|Dr\.)\s+/, "").slice(0, 2).toUpperCase();
+  if (!sheetOK[p.sheet]) return `<div class="face" title="${p.name}">${mono}</div>`;
+  return `<div class="face img" title="${p.name}" style="background-image:url('${SHEETS[p.sheet]}');`
+       + `background-position:${(p.col * 100 / 3).toFixed(3)}% ${(p.row * 100 / 4).toFixed(3)}%">${mono}</div>`;
+}
+
+function personHTML(reveal){
+  const p = R.person;
+  return `<div class="person">${faceHTML(p)}<div>
+    <div class="pname">${p.name}, ${p.age}</div>
+    <div class="prole">${R.role.t}</div>
+    <div class="pset">${R.setting}</div>
+  </div></div>
+  <ul class="cues">${R.cues.map(c => {
+    const b = bitsOf(c);
+    return `<li>${c.t}${reveal ? `<span class="bits">${b < 0.01 ? "reines Rauschen" : b.toFixed(2) + " bit"}</span>` : ""}</li>`;
+  }).join("")}</ul>`;
+}
+
+function gaugeHTML(){
+  if (blind && R.phase !== "done")
+    return `<div class="gauge"><div class="blind">Blindmodus.<br>Die Schienen sind verdeckt.<br>
+      Rechne selbst mit und setze am Ende deine Wetten.</div></div>`;
+  const m = marg(R.belief), mp = marg(R.prev), h = H(R.belief);
+  const rails = T.map((t, k) => {
+    const q = m[k], gq = mp[k];
+    const links = q < 0.5, breite = Math.abs(q - 0.5) * 100;
+    const pos = links ? (50 - breite) : 50;
+    const pol = Math.abs(q - 0.5) < 0.02 ? "unentschieden" : (links ? POL[t][0] : POL[t][1]);
+    return `<div class="rail">
+      <div class="rlab">
+        <span class="nm" style="color:${COL[t]}">${LAB[t]}</span>
+        <span class="pole">${pol}</span>
+        <span class="pct">${Math.min(99, Math.max(1, Math.round(q * 100)))}</span>
+      </div>
+      <div class="track">
+        <i class="ghost" style="left:${(gq * 100).toFixed(1)}%"></i>
+        <b class="fill" style="left:${pos.toFixed(1)}%;width:${breite.toFixed(1)}%;background:${COL[t]}"></b>
+        <i class="mid"></i>
+      </div></div>`;
+  }).join("");
+  return `<div class="gauge">
+    <div class="ghead"><div class="eyebrow">Restunsicherheit</div>
+      <div class="hval">${h.toFixed(2)}<span>BIT</span></div></div>
+    ${rails}
+    <div class="gfoot"><span>niedrig</span><span>0 bit sicher · 5.00 bit ratlos</span><span>hoch</span></div>
+  </div>
+  <div class="hint">Der Balken läuft von der Mitte aus. Der senkrechte Strich zeigt, wo das Merkmal
+  <b>vor der letzten Antwort</b> stand. Gerechnet wird über alle 32 Profile gleichzeitig,
+  die fünf Schienen sind nur deren Randverteilungen.</div>`;
+}
+
+function logHTML(){
+  if (!R.log.length) return `<div class="logbox"><div class="leer">
+    <h4>Sechs Fragen, dann wetten</h4>
+    <p>Wähle oben eine der vier Fragen. Die Person antwortet, die fünf Schienen links
+    verschieben sich. <b>Wer früher wettet, bekommt 25 Punkte je gesparter Frage</b>, aber nur
+    wenn am Ende alle fünf Merkmale stimmen.</p>
+    <p>Geübt wird nicht das Deuten der Antwort, sondern die Wahl davor: welche der vier Fragen
+    kann überhaupt etwas trennen. Drei Fragen im Satz tragen exakt null bit.</p>
+    <p>Danach markiert ein <b>grüner Rand</b> hier, dass du die beste der vier genommen hast,
+    ein <b>roter</b>, dass die Frage kaum etwas trennen konnte.</p></div></div>`;
+  return `<div class="logbox">` + R.log.slice().reverse().map(t => {
+    const cls = t.gain >= t.bestEig - 0.02 ? "best" : (t.expected < 0.12 ? "waste" : "");
+    return `<div class="turn ${cls}">
+      <div class="you">${esc(t.q)}</div>
+      <div class="them">„${esc(t.a)}“</div>
+      <div class="meta">erwartet <b>${t.expected.toFixed(2)}</b> · tatsächlich <b>${t.gain >= 0 ? "+" : ""}${t.gain.toFixed(2)}</b> bit${
+        t.bestId !== t.id ? ` · besser wäre „${esc(PROBE[t.bestId].q)}“ mit ${t.bestEig.toFixed(2)}` : " · das war die beste der vier"}</div>
+    </div>`;
+  }).join("") + `</div>`;
+}
+
+function betsHTML(){
+  const zeilen = T.map((t, k) => `<div class="bet">
+    <div class="bl" style="color:${COL[t]}">${LAB[t]}<em>${POL[t][0]} ↔ ${POL[t][1]}</em></div>
+    <div class="scaleb">${STUFEN.map((p, i) =>
+      `<button data-k="${k}" data-p="${p}" class="${R.bets[k] === p ? "on" : ""}">${Math.round(p * 100)}%</button>`).join("")}</div>
+  </div>`).join("");
+  const offen = R.bets.filter(x => x === null).length;
+  return `<div class="rhead"><div class="eyebrow">Deine Wetten · Wahrscheinlichkeit für „hoch“</div>
+      <div class="budget">${offen ? `noch <b>${offen}</b> offen` : "vollständig"}</div></div>
+    <div class="bets">${zeilen}
+      <div class="betfoot"><span>sicher niedrig</span><span>weiß nicht</span><span>sicher hoch</span></div>
+    </div>
+    <div class="row" style="margin-top:12px">
+      <button class="act" data-go="auswerten" ${offen ? "disabled" : ""}>Auswerten</button>
+      <span class="small dim">Logarithmische Bewertung. 92 Prozent und richtig gibt 88 Punkte,
+      8 Prozent und daneben kostet 264.</span>
+    </div>`;
+}
+
+function render(){
+  left.innerHTML = personHTML(R.phase === "done") + gaugeHTML();
+  if (R.phase === "ask"){
+    right.innerHTML = `<div>
+      <div class="rhead"><div class="eyebrow">Zug ${R.used.length + 1} von ${NQ}</div>
+        <div class="budget">${"●".repeat(NQ - R.used.length)}${"○".repeat(R.used.length)}
+          ${R.used.length ? "· jede gesparte Frage 25 Punkte" : ""}</div></div>
+      <div class="choices" style="margin-top:8px">${R.offered.map((id, i) =>
+        `<button class="probe" data-id="${id}"><span>Option ${"ABCD"[i]}</span>${esc(PROBE[id].q)}</button>`).join("")}</div>
+      ${R.used.length ? `<div class="row" style="margin-top:10px">
+        <button class="act ghostbtn" data-go="wetten">Jetzt wetten</button></div>` : ""}
+    </div>` + logHTML();
+  } else {
+    right.innerHTML = `<div>${betsHTML()}</div>` + logHTML();
+  }
+  wire(); renderStats();
+}
+
+function renderStats(){
+  const s = session;
+  document.getElementById("stats").innerHTML =
+    `<span>Runden <b>${s.runden}</b></span>
+     <span>Merkmale <b>${s.runden ? (s.merkmale / s.runden).toFixed(2) : "—"}</b> von 5</span>
+     <span>alle fünf <b>${s.runden ? Math.round(100 * s.voll / s.runden) : 0}%</b></span>
+     <span>Punkte <b>${s.punkte}</b></span>
+     <span>Fragen <b>${s.runden ? (s.fragen / s.runden).toFixed(1) : "—"}</b></span>
+     <label class="toggle"><input type="checkbox" id="blindbox" ${blind ? "checked" : ""}>Blind</label>`;
+  document.getElementById("blindbox").onchange = e => { blind = e.target.checked; render(); };
+}
+
+/* =========== Interaktion =========== */
+function wire(){
+  document.querySelectorAll("button.probe").forEach(b => b.onclick = () => fragen(b.dataset.id));
+  document.querySelectorAll(".scaleb button").forEach(b => b.onclick = () => {
+    R.bets[+b.dataset.k] = +b.dataset.p; render();
+  });
+  document.querySelectorAll("[data-go]").forEach(b => b.onclick = () => {
+    if (b.dataset.go === "wetten"){ R.phase = "bet"; render(); }
+    else auswerten();
+  });
+}
+
+function fragen(id){
+  const vor = R.belief.slice();
+  const expected = eig(vor, id);
+  const bestId = R.offered.reduce((a, b) => eig(vor, b) > eig(vor, a) ? b : a);
+  const bestEig = eig(vor, bestId);
+  const ai = drawFrom(LIK[id].map(row => row[R.truth]));
+  R.prev = vor;
+  R.belief = update(vor, id, ai);
+  R.used.push(id);
+  R.log.push({id, q: PROBE[id].q, a: PROBE[id].a[ai].t, expected, bestId, bestEig,
+              gain: H(vor) - H(R.belief)});
+  if (R.used.length >= NQ) R.phase = "bet"; else anbieten();
+  render();
+}
+
+function auswerten(){
+  const m = marg(R.belief);
+  R.zeilen = T.map((t, k) => {
+    const hoch = (R.truth >> k) & 1;
+    const wette = R.bets[k];
+    const ptrue = hoch ? wette : 1 - wette;
+    return {t, hoch, wette, modell: m[k], ptrue,
+            punkte: Math.round(100 * (1 + Math.log2(ptrue))),
+            treffer: hoch === (wette > 0.5 ? 1 : 0)};
+  });
+  R.richtig = R.zeilen.filter(z => z.treffer).length;
+  R.bonus = R.richtig === K ? 25 * (NQ - R.used.length) : 0;
+  R.punkte = R.zeilen.reduce((a, z) => a + z.punkte, 0) + R.bonus;
+  R.phase = "done";
+  session.runden++; session.punkte += R.punkte; session.fragen += R.used.length;
+  session.merkmale += R.richtig; session.voll += R.richtig === K ? 1 : 0;
+  render();
+  zeigeFenster();
+}
+
+/* =========== Ergebnisfenster =========== */
+const scrim = document.getElementById("scrim");
+document.getElementById("btnClose").onclick = () => scrim.classList.remove("open");
+document.getElementById("btnNext").onclick = () => { scrim.classList.remove("open"); neueRunde(); render(); };
+document.addEventListener("keydown", e => { if (e.key === "Escape") scrim.classList.remove("open"); });
+
+function profilSatz(){
+  return T.map((t, k) => ((R.truth >> k) & 1) ? POL[t][1] : POL[t][0]).join(", ");
+}
+function acc(titel, inhalt, offen){
+  return `<details class="acc" ${offen ? "open" : ""}><summary>${titel}</summary>
+    <div class="accin">${inhalt}</div></details>`;
+}
+
+function zeigeFenster(){
+  const p = R.person;
+  document.getElementById("shead").innerHTML = `
+    <div><div class="eyebrow">Auflösung · ${p.name}</div>
+      <div style="font-family:var(--mono);font-size:16px;font-weight:600;margin-top:3px">
+        ${R.richtig} von 5 Merkmalen richtig</div>
+      <div class="small dim" style="margin-top:2px">${R.used.length} von ${NQ} Fragen gebraucht ·
+        Restunsicherheit ${H(R.belief).toFixed(2)} von ${HMAX.toFixed(2)} bit</div></div>
+    <div style="text-align:right"><div class="score">${R.punkte > 0 ? "+" : ""}${R.punkte}<small> PUNKTE</small></div>
+      ${R.bonus ? `<div class="small dim">davon ${R.bonus} für gesparte Fragen</div>` : ""}</div>`;
+
+  const blatt = `<table class="t"><tr><th>Merkmal</th><th>tatsächlich</th><th class="n">deine Wette</th>
+    <th class="n">Modell</th><th class="pts">Punkte</th></tr>` +
+    R.zeilen.map(z => `<tr class="${z.treffer ? "hit" : "miss"}">
+      <td style="color:${COL[z.t]};font-weight:600">${LAB[z.t]}</td>
+      <td>${z.hoch ? POL[z.t][1] : POL[z.t][0]}</td>
+      <td class="n">${Math.round(z.wette * 100)}% hoch</td>
+      <td class="n">${Math.round(z.modell * 100)}%</td>
+      <td class="pts">${z.punkte > 0 ? "+" : ""}${z.punkte}</td></tr>`).join("") + `</table>
+    <p class="small dim" style="margin-top:8px">Die Spalte „Modell“ ist die Randverteilung der Anzeige.
+    Wo deine Wette stark davon abweicht, hast du entweder die Schienen ignoriert oder etwas gesehen,
+    was das Modell nicht kennt. Ersteres kostet auf Dauer Punkte.</p>`;
+
+  const fragen = `<table class="t"><tr><th>Frage</th><th class="n">bit bei diesem Prior</th></tr>` +
+    D.probes.map(pr => ({id: pr.id, q: pr.q, g: eig(R.prior, pr.id)}))
+      .sort((a, b) => b.g - a.g)
+      .map(x => `<tr class="${R.used.includes(x.id) ? "hit" : ""}"><td>${esc(x.q)}</td>
+        <td class="n">${x.g.toFixed(3)}${R.used.includes(x.id) ? " ✓" : ""}</td></tr>`).join("") + `</table>`;
+
+  const zuege = R.log.map((t, i) => `<div class="turn ${t.gain >= t.bestEig - 0.02 ? "best" : (t.expected < 0.12 ? "waste" : "")}"
+      style="margin-bottom:12px">
+      <div class="you">Zug ${i + 1}: ${esc(t.q)}</div>
+      <div class="them">„${esc(t.a)}“</div>
+      <div class="meta">erwartet <b>${t.expected.toFixed(2)}</b> bit · tatsächlich
+        <b>${t.gain >= 0 ? "+" : ""}${t.gain.toFixed(2)}</b> bit${
+        t.bestId !== t.id ? ` · beste der vier war „${esc(PROBE[t.bestId].q)}“ mit ${t.bestEig.toFixed(2)}` : " · das war die beste der vier"}</div>
+    </div>`).join("");
+
+  document.getElementById("sbody").innerHTML = [
+    acc("Dein Blatt", blatt, true),
+    acc("Was diese Person war", `<p>${p.name}, ${p.age}, ${R.role.t}. Das gezogene Profil:
+      <b>${profilSatz()}</b>.</p>
+      <p class="small dim">Das Profil wurde vor deiner ersten Frage aus dem Prior gezogen und danach
+      nicht mehr verändert. Die Antworten sind Ziehungen aus P(Antwort | Profil), nicht feste Zuordnungen:
+      dieselbe Person kann auf dieselbe Frage zweimal verschieden antworten.</p>`),
+    acc("Was die Fragen wert waren", `<p class="small dim">Erwarteter Informationsgewinn für genau
+      diesen Prior, alle ${D.probes.length} Fragen. Angehakt, was du gestellt hast.</p>` + fragen),
+    acc("Zug für Zug", zuege),
+    acc("Was das Modell rechnet", `
+      <p>Fünf Merkmale, jedes zweistufig, ergibt 2⁵ = 32 mögliche Profile und damit
+      log₂ 32 = 5,00 bit maximale Unsicherheit. Nach Rolle und zwei Beobachtungen stehen im Mittel
+      noch etwa 4,75 bit offen.</p>
+      <p>Jede Antwort ist ein Datenpunkt: P(Profil | Antwort) ∝ P(Antwort | Profil) · P(Profil).
+      Gerechnet wird über alle 32 Profile gleichzeitig, angezeigt werden die fünf Randverteilungen.
+      Das ist nicht dasselbe: weil der Normierer der Antwortverteilung vom ganzen Profil abhängt,
+      koppelt eine Antwort die Merkmale. Wer „ich habe alles Monate vorher gebucht“ sagt, verschiebt
+      Gewissenhaftigkeit nach oben und dadurch alle Erklärungen mit, die sonst zu derselben Antwort
+      geführt hätten.</p>
+      <h5>Was gute von schlechten Fragen trennt</h5>
+      <p>Die beste Frage im Satz trägt bei flachem Prior 0,92 bit, die schwächsten drei tragen
+      0,000 bit. Der Unterschied liegt nicht am Thema, sondern daran, ob die Antwortmöglichkeiten
+      zwischen Profilen auseinanderlaufen. „Ganz schön warm heute“ hat drei Antworten, die alle
+      32 Profile gleich wahrscheinlich machen.</p>
+      <p>Simuliert über 4000 Runden: wer aus den vier angebotenen Fragen immer die stärkste nimmt,
+      steht nach sechs Zügen bei 1,64 bit Restunsicherheit und hat 4,55 von 5 Merkmalen richtig,
+      alle fünf in 62 Prozent der Runden. Wer zufällig aus denselben vier wählt, landet bei 2,40 bit,
+      4,21 Merkmalen und 42 Prozent. Die Fragenwahl allein ist also rund 20 Prozentpunkte wert.</p>`),
+    acc("Woher der Prior kommt", `
+      <p>Ohne jede Information ist jedes Merkmal bei 50 Prozent, weil die Zweiteilung am Median
+      definiert ist. Rolle und Beobachtungen verschieben das.</p>
+      <h5>Rolle</h5>
+      <p>Die Rollen verschieben in die Richtung, die die Berufsliteratur nahelegt. Barrick, Mount und
+      Gupta fanden über 21 Studien, 41 unabhängige Stichproben und 11.559 Personen die stärksten
+      Zusammenhänge zwischen dem unternehmerischen Interessentyp und Extraversion (ρ = 0,41) sowie
+      dem künstlerischen Typ und Offenheit (ρ = 0,39). Die multiplen R lagen bei 0,47 für
+      unternehmerisch, 0,42 für künstlerisch, 0,31 für sozial, 0,27 für konventionell, 0,26 für
+      forschend und 0,11 für praktisch-handwerklich
+      (<a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1744-6570.2003.tb00143.x"
+      target="_blank" rel="noopener">Personnel Psychology 56, 2003</a>).</p>
+      <p>Deshalb steht „Handwerksbetrieb in dritter Generation“ hier mit Gewicht null: für den
+      praktisch-handwerklichen Typ fand die Meta-Analyse keinen Zusammenhang mit irgendeinem der fünf
+      Merkmale. Die Rolle sagt in diesem Fall wirklich nichts.</p>
+      <p class="src">Einschränkung: eine neuere multivariate Meta-Analyse über 34 Studien und
+      19.872 Personen findet Zusammenhänge zwischen −0,08 und 0,36 und schließt daraus, dass
+      Persönlichkeit und Interessen stärker getrennte Konstrukte sind als bisher angenommen
+      (Hurtado Rúa, Stead &amp; Poklar, Journal of Career Assessment, 2019). Meine Gewichte sind
+      an der oberen Kante dessen, was diese Literatur trägt.</p>
+      <h5>Beobachtungen</h5>
+      <p>Die zwei Beobachtungen pro Runde sind nach Kanal getrennt, und das ist keine Willkür.
+      Gosling, Ko, Mannarelli und Morris ließen Beobachter fremde Büros und Schlafzimmer beurteilen,
+      ohne die Person zu sehen. Ordentlichkeit war ein gültiger Hinweis auf Gewissenhaftigkeit,
+      eigenwillige Ausstattung auf Offenheit, für die übrigen drei Merkmale gab es kaum brauchbare
+      Hinweise. Frühere Arbeiten mit Fotos und Videos fanden genau das umgekehrte Muster
+      (<a href="https://pubmed.ncbi.nlm.nih.gov/11902623/" target="_blank" rel="noopener">JPSP 82(3),
+      2002</a>).</p>
+      <p>Also: Raumbeobachtungen im Spiel laden nur auf Gewissenhaftigkeit und Offenheit,
+      Verhaltensbeobachtungen nur auf Extraversion und Verträglichkeit. Neurotizismus bekommt zwei
+      sehr schwache Hinweise und sonst nichts. Fünf Beobachtungen tragen exakt null bit und sind
+      als Rauschen eingebaut.</p>`),
+    acc("Warum manche Merkmale schwerer sind", `
+      <p>Connelly und Ones integrierten 263 unabhängige Stichproben mit 44.178 beurteilten Personen.
+      Die Übereinstimmung zwischen Selbst- und Fremdurteil lag bei Fremden und flüchtigen Bekannten
+      bei r = 0,38 gegenüber 0,46 bei enger Bekanntschaft. Nach Merkmal getrennt werden Extraversion
+      und Gewissenhaftigkeit am genauesten beurteilt, emotionale Stabilität und Verträglichkeit am
+      schlechtesten, und der Abstand ist gerade bei Beobachtern ohne Vertrautheit am größten
+      (<a href="https://pubmed.ncbi.nlm.nih.gov/21038940/" target="_blank" rel="noopener">Psychological
+      Bulletin 136(6), 2010</a>).</p>
+      <p>Der Grund ist Sichtbarkeit: Extraversion zeigt sich in beobachtbarem Verhalten,
+      Neurotizismus in inneren Zuständen, Verträglichkeit ist stark wertend besetzt und wird deshalb
+      uneinheitlich beurteilt.</p>
+      <h5>Ein Unterschied, den dieses Spiel nicht wegdiskutieren soll</h5>
+      <p>Diese Befunde betreffen <i>Beobachtung</i>. Das Spiel fragt und bekommt <i>Selbstauskunft</i>,
+      und das ist ein anderer Kanal. Wer sagt „ich wache um vier auf, wenn viel los ist“, liefert
+      Information über Neurotizismus, die man ihm nicht ansieht. Deshalb ist Neurotizismus hier über
+      Fragen gut lesbar und über Beobachtungen fast gar nicht. In der Simulation liegt Verträglichkeit
+      am Ende bei 89 Prozent richtig, die übrigen vier zwischen 91 und 93.</p>
+      <p class="src">Für den mündlichen Kanal spricht dieselbe Richtung: Mehl, Gosling und Pennebaker
+      zeichneten Alltagsgespräche auf und fanden, dass die Alltagstheorien der Urteilenden im Großen
+      und Ganzen zutrafen, am deutlichsten für Extraversion (JPSP 90, 2006).</p>`),
+    acc("Warum das Gesicht null bit trägt", `
+      <p>Das Porträt wird unabhängig vom gezogenen Profil gewählt und ist als Information wertlos.
+      Das ist Absicht. Persönlichkeitsurteile aus Standbildern erreichen bestenfalls kleine und über
+      Studien hinweg widersprüchliche Trefferquoten. Ein Spiel, in dem Gesicht und Merkmal
+      korrelieren, würde eine Schlussweise einüben, die draußen nicht trägt.</p>
+      <p>Die Illustrationen sind zusätzlich erfunden und tragen kein Merkmal, das man mit etwas
+      Wahrem abgleichen könnte. Wenn du bei einem Gesicht ein Bauchgefühl hast, ist das der
+      Messwert für deine eigenen Stereotype, nicht für die Person.</p>`),
+    acc("Was an diesem Spiel erfunden ist", `
+      <p>Die Bayes-Mechanik ist korrekt. Das Fundament ist es teilweise nicht, und der Unterschied
+      soll sichtbar bleiben.</p>
+      <ul>
+        <li><b>Die Kategorien sind solide.</b> Die fünf Merkmale sind das am besten replizierte
+        Modell der Persönlichkeitspsychologie. Das ist der Teil, der gegenüber selbstgebauten
+        Motivkategorien gewinnt.</li>
+        <li><b>Die Fragen und Antworten sind erfunden.</b> Keine der ${D.probes.length} Fragen stammt
+        aus einer publizierten Skala. Die Ladungen sind meine Einschätzungen, in Zahlen gegossen.
+        Die Anzeige „Extraversion 78 Prozent“ ist eine korrekte Rechnung auf geschätzten Eingaben.</li>
+        <li><b>Die Zweiteilung ist eine Vereinfachung.</b> Alle fünf Merkmale sind stetig verteilt.
+        Am Median zu schneiden wirft Information weg und erzeugt scharfe Grenzen, wo keine sind.
+        Sie steht hier, weil ein Spiel eine entscheidbare Antwort braucht.</li>
+        <li><b>Was trotzdem funktioniert.</b> Der Informationsgehalt einer Frage hängt von der
+        Struktur der Matrix ab, nicht von ihrer Richtigkeit. Dass „Wie war Ihr letzter Urlaub?“
+        mehr trennt als „Sind Sie gut hergekommen?“, bleibt richtig, auch wenn die Einzelgewichte
+        falsch sind. Das Spiel trainiert also die Fähigkeit, die es verspricht. Es misst nur nicht,
+        was es zu messen behauptet.</li>
+        <li><b>Was fehlt, um das zu reparieren.</b> Antwortoptionen an Items des BFI-2 oder der
+        deutschen BFI-10 anlehnen statt frei formulieren, dann P(Antwort | Profil) aus Daten
+        schätzen: Leute füllen erst den Fragebogen aus, beantworten dann die Fragen des Spiels.
+        Ab etwa 300 Personen bekommt man brauchbare Zellen.</li>
+      </ul>`),
+    acc("Was du mit dem Ergebnis anfangen kannst", `
+      <p>Weniger, als das Spiel suggeriert. Der ehrliche Reihenfolge ist: die Diagnose ist besser
+      belegt als ihre Verwertung.</p>
+      <h5>Gilt unabhängig vom Profil <span class="chip A">BELEG A</span></h5>
+      <ul>
+        <li>Den Grund nennen, bevor die Vorgabe kommt, nicht danach.</li>
+        <li>Mindestens zwei echte Optionen offen lassen, auch wenn du eine bevorzugst.</li>
+        <li>Den Einwand in eigenen Worten wiedergeben, bevor du ihn beantwortest.</li>
+        <li>Keine steuernde Sprache, keine Frist als Druckmittel, wenn die Frist nicht echt ist.</li>
+      </ul>
+      <p class="src">Meta-Analyse über 74 Interventionsstudien, 80 Prozent randomisiert:
+      wahrgenommene Autonomieunterstützung g = 0,84, autonome Motivation g = 0,41, Unterstützung
+      von Zugehörigkeit deutlich schwächer mit g = 0,28 (Gillison, Rouse, Standage, Sebire &amp; Ryan,
+      <a href="https://pubmed.ncbi.nlm.nih.gov/30295176/" target="_blank" rel="noopener">Health
+      Psychology Review 13, 2019</a>). Domäne Gesundheitsverhalten, die Übertragung auf Verhandlungen
+      ist Extrapolation.</p>
+      <h5>Auf das erkannte Profil zugeschnitten <span class="chip C">BELEG C</span></h5>
+      <ul>
+        <li><b>Niedrige Offenheit:</b> nicht mit Neuheit werben, sondern mit Bewährtem.</li>
+        <li><b>Hohe Gewissenhaftigkeit:</b> Unterlagen vollständig und vorher, nicht nachgereicht.</li>
+        <li><b>Niedrige Extraversion:</b> Pausen aushalten, nicht zureden, schriftlich nachfassen.</li>
+        <li><b>Niedrige Verträglichkeit:</b> Widerspruch aushalten, nicht persönlich nehmen,
+        keine Freundlichkeit als Währung anbieten.</li>
+        <li><b>Hoher Neurotizismus:</b> Rückfallebene und Ausstieg von selbst ansprechen, bevor
+        gefragt wird.</li>
+      </ul>
+      <div class="warn">Diese fünf sind Praxisheuristik. Eine Meta-Analyse über 41 Studien aus
+      Marketing, Psychologie und Informatik prüft genau diese Annahme: Botschaften an ein erkanntes
+      psychologisches Profil anzupassen bringt über die Gesamtliteratur r = 0,11, und in sauber
+      kontrollierten Designs verschwindet der Effekt fast vollständig, 9 von 11 Effekten nicht
+      signifikant (Perla u. a.,
+      <a href="https://onlinelibrary.wiley.com/doi/10.1002/mar.70073?af=R" target="_blank"
+      rel="noopener">Psychology &amp; Marketing, 2026</a>). Der Befund stammt aus digitaler Werbung
+      mit aus Klickspuren geschätzten Profilen, nicht aus Gesprächen. Die Übertragung ist offen,
+      nicht widerlegt. Vorsichtige Lesart: der Block darüber trägt mehr als der Block hier.</div>`)
+  ].join("");
+  document.getElementById("sbody").scrollTop = 0;
+  scrim.classList.add("open");
+}
+
+neueRunde();
+render();
+</script>
+</body>
+</html>
