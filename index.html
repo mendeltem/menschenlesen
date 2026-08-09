@@ -515,6 +515,9 @@ button.act:hover{filter:brightness(1.08); transform:translateY(-2px)}
 .face:after{content:""; position:absolute; inset:0; background:var(--face-tint,none); mix-blend-mode:var(--face-blend,normal)}
 .who-name{font-size:15px; font-weight:600; letter-spacing:-.01em; line-height:1.2}
 .who-job{font-size:13px; color:var(--muted); margin-top:1px}
+.stimmung.gut{color:var(--SIC); border-color:var(--SIC)}
+.stimmung.schlecht{color:var(--STA); border-color:var(--STA)}
+.stimmung b{font-weight:600}
 .stimmung{margin-top:4px; display:inline-flex; align-items:center; gap:6px; font-family:var(--mono); font-size:10px;
   letter-spacing:.12em; text-transform:uppercase; color:var(--accent); border:1px solid var(--accent);
   border-radius:999px; padding:3px 9px}
@@ -1174,10 +1177,21 @@ function zeichneTalk(){
 }
 
 function setzeStimmung(s){ if(s && DATA.stimmungen[s]) S.stimmung = s; }
+/* Was du sagst, zählt nach seiner Laune. Gutes wird gedämpft, wenn er
+   verstimmt ist; Fehlgriffe werden dadurch schwerer, nicht leichter. */
+const stimmungsFaktor = () => (WELT.stimmungswirkung || {})[S.stimmung] || 1;
+const nachStimmung = w => { const f = stimmungsFaktor(); return w >= 0 ? w * f : w / f; };
 function zeichneKopf(){
   const st = DATA.stimmungen[S.stimmung] || {t:"—"};
+  const f = stimmungsFaktor();
   document.getElementById("face").style.backgroundImage = "url('" + (BILD[S.stimmung] || GRUND) + "')";
-  document.getElementById("stimmung").textContent = st.t;
+  const el = document.getElementById("stimmung");
+  el.innerHTML = esc(st.t) + (f === 1 ? "" : ` <b>×${nk(f,2).replace(",00","").replace(/0$/,"")}</b>`);
+  el.classList.toggle("gut", f > 1);
+  el.classList.toggle("schlecht", f < 1);
+  el.title = f > 1 ? "So aufgelegt zählt, was du sagst, mehr."
+           : f < 1 ? "So verstimmt zählt Gutes weniger und ein Fehlgriff mehr."
+           : "Neutrale Lage: deine Züge zählen unverändert.";
 }
 
 function zeichneAkte(){
@@ -1363,12 +1377,12 @@ function stelle(frage, an, cfg){
   setzeStimmung(antwort.stimmung);
   if(antwort.nachRegie) sag("regie", antwort.nachRegie);
   if(antwort.nachEr) sag("er", antwort.nachEr, {wie:antwort.wie});
-  sag("meta", `<b>${gewinn>=0?"+":""}${nk(gewinn)}</b> bit · Geduld <b>${vzk(W_FRAGE)}</b> · Auffälligkeit <b>${vzk(W_FRAGE_AUF,2)}</b>`,
+  sag("meta", `<b>${gewinn>=0?"+":""}${nk(gewinn)}</b> bit · Geduld <b>${vzk(nachStimmung(W_FRAGE))}</b> · Auffälligkeit <b>${vzk(W_FRAGE_AUF,2)}</b>`,
     {lang: `erwartet hatte die Frage ${nk(erwartet)} bit`
       + (beste.id !== frage.id ? `, stärker gewesen wäre <s>${esc(beste.q)}</s> mit ${nk(besteEig)} bit`
                                : `, und das war die stärkste offene Frage`) + `.`});
 
-  S.bereit += W_FRAGE;
+  S.bereit += nachStimmung(W_FRAGE);
   S.auf += W_FRAGE_AUF;
   S[cfg.gestellt].push(frage.id);
   S[cfg.log].push({frageId:frage.id, q:frage.q, erwartet, gewinn, besteId:beste.id, besteEig});
@@ -1663,7 +1677,7 @@ function nimmProdukt(p){
   let passung = 0;
   for(const m in p.passt) passung += p.passt[m] * HERO.m[m];
   const treffer = (p.spricht||[]).filter(id => S.gefunden.includes(id));
-  const wirkung = W_PRODUKT*passung + W_PRIVAT*treffer.length*2;
+  const wirkung = nachStimmung(W_PRODUKT*passung + W_PRIVAT*treffer.length*2);
   S.bereit += wirkung;
   S.produktPassung = passung; S.produktTreffer = treffer;
 
@@ -1701,7 +1715,9 @@ function ziehe(o, text, rueck){
   for(const m in (o.aff||{})) passung += o.aff[m] * HERO.m[m];
   const fit = passung >= 0 ? W_TREFFER*passung : W_FEHLGRIFF*passung;
   const bonus = rueck ? W_RUECKGRIFF : 0;
-  const wirkung = W_AUTO*o.auto + fit + bonus;
+  const roh = W_AUTO*o.auto + fit + bonus;
+  const faktor = stimmungsFaktor();
+  const wirkung = nachStimmung(roh);
   S.bereit += wirkung;
 
   sag("du", text, {wie:o.wie});
@@ -1711,7 +1727,7 @@ function ziehe(o, text, rueck){
   erSagt({ erRegieVor:o.erRegieVor, er:o.er, erRegie:o.erRegie, er2:o.er2,
            nachEr:o.nachEr, nachRegie:o.nachRegie,
            wie:o.wie2, wie2:o.wie2, stimmung:o.stimmung });
-  S.zugLog.push({id:o.id, t:text, auto:o.auto, passung, wirkung, rueck});
+  S.zugLog.push({id:o.id, t:text, auto:o.auto, passung, wirkung, rueck, faktor, stimmung:S.stimmung});
   S.zug++;
   zeichne();
   setTimeout(zug, 60);
@@ -1816,7 +1832,9 @@ function aufloesung(aus, raus){
       <td>${esc(z.t.length>76 ? z.t.slice(0,76)+"…" : z.t)}
         <span class="stufe ${z.auto>0?"pos":(z.auto<0?"neg":"")}">A ${vz(z.auto)}</span>
         ${z.passung ? `<span class="stufe ${z.passung>0?"pos":"neg"}">C ${vzk(z.passung)}</span>` : ""}
-        ${z.rueck ? `<span class="stufe pos">Rückgriff</span>` : ""}</td>
+        ${z.rueck ? `<span class="stufe pos">Rückgriff</span>` : ""}
+        ${z.faktor && z.faktor !== 1 ? `<span class="stufe ${z.faktor>1?"pos":"neg"}">${
+          esc((DATA.stimmungen[z.stimmung]||{}).t || z.stimmung)} ×${nk(z.faktor,2).replace(",00","").replace(/0$/,"")}</span>` : ""}</td>
       <td class="n">${vzk(z.wirkung)}</td></tr>`).join("")}</table>
     <p class="small dim" style="margin-top:8px"><b>A</b> ist Autonomieunterstützung und wiegt neunfach, <b>C</b> ist
     Motivpassung und wiegt anderthalbfach — bei einem Fehlgriff doppelt so schwer negativ. Warum, steht oben unter

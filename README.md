@@ -55,20 +55,32 @@ genauso wie auf einem Server.
 **Was du besitzt** — Kasse und Bestand — liegt im Speicher des Browsers
 und überlebt Gespräche und Neustarts. *Zurücksetzen* im Menü räumt es weg.
 
+## Die Stimmung
+
+Wie er dasitzt, entscheidet mit. Jeder Zug wird mit einem Faktor
+verrechnet, der an seiner Laune hängt: gerührt ×1,3, interessiert ×1,2,
+neutral ×1, skeptisch ×0,85, gereizt ×0,55. Fehlgriffe wirken umgekehrt —
+in schlechter Laune tun sie mehr weh, nicht weniger. Wer ihn verstimmt,
+macht sich den ganzen Rest schwer; das steht im Rahmen neben seinem
+Gesicht und am Ende in der Zugbilanz.
+
 ## Die Balance
 
-`python balance.py` liest die Zahlen aus dem Spiel und spielt vierhundert
-Partien je Spielweise. Der Stand:
+`python balance.py` liest die Gewichte aus `spiel.html`, die Fragen aus
+`welt.js` und `personen/`, und spielt vierhundert Partien je Spielweise.
+Weil die Zahlen aus dem Spiel selbst kommen, können Messung und Wirklichkeit
+nicht auseinanderlaufen. Der Stand:
 
 | | kauft | lässt offen |
 |---|---|---|
-| Zufall | 0 % | 6 % |
-| Mittelmaß | 11 % | 61 % |
-| gutes Zuhören | 81 % | 19 % |
-| alles ausfragen | 94 %, aber im Mittel schlechter | 6 % |
+| Zufall | 0 % | 5 % |
+| Mittelmaß | 14 % | 56 % |
+| gutes Zuhören | 82 % | 18 % |
+| alles ausfragen | 99 %, aber im Mittel schlechter | 1 % |
 
-Blind raten gewinnt nie. Die Maximalstrategie zahlt sich nicht mehr aus,
-seit Fragen Geduld und Auffälligkeit kosten.
+Blind raten gewinnt nie. Die Maximalstrategie zahlt sich nicht aus, seit
+Fragen Geduld und Auffälligkeit kosten — sie kommt im Schnitt niedriger
+heraus als das gezielte Fragen, nur mit weniger Streuung.
 
 ## Ehrlichkeit
 

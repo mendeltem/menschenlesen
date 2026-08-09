@@ -34,6 +34,17 @@ mpoles: {
 /* Startbild vor dem ersten Wort: ein Rollenklischee, keine Messung.
    Zwei der drei Annahmen sind bei ihm falsch. Das ist Absicht. */
 
+/* --- Was die Stimmung mit deinen Zügen macht. Ein Zug in gereizter
+       Lage wiegt nur gut die Hälfte; einer, wenn er vorgebeugt sitzt,
+       ein Fünftel mehr. Fehlgriffe wirken umgekehrt: in schlechter
+       Stimmung tun sie mehr weh.
+       Die Namen sind dieselben wie in stimmungen bei der Person. ----- */
+stimmungswirkung: {
+  geruehrt: 1.3, interessiert: 1.2, freundlich: 1.15, amuesiert: 1.1,
+  neutral: 1.0, nachdenklich: 1.0,
+  skeptisch: 0.85, verschlossen: 0.7, gereizt: 0.55, abweisend: 0.4
+},
+
 sharpness: 1.15,
 
 /* --- Was die wahren Werte für dich bedeuten. Wird nach jedem

@@ -10,12 +10,16 @@ import io, re, math, random, sys
 import numpy as np
 from itertools import product as kartesisch
 
-QUELLE = io.open("daten.js", encoding="utf-8").read()
+# Welt und Person liegen getrennt; fuer das Auslesen reicht es, sie
+# hintereinanderzuhaengen.
+QUELLE = (io.open("welt.js", encoding="utf-8").read() + "\n"
+          + io.open("personen/baumgartner.js", encoding="utf-8").read())
 
 def block(key):
     a = QUELLE.index("\n" + key + ":")
     m = re.search(r"\n(?=[a-zA-Z_][a-zA-Z_0-9]*:)", QUELLE[a+len(key):])
-    return QUELLE[a: a+len(key)+m.start()]
+    # Der letzte Abschnitt reicht bis zum Dateiende
+    return QUELLE[a: a+len(key)+m.start()] if m else QUELLE[a:]
 
 def gewichte(text):
     return {k: float(v) for k, v in re.findall(r"([A-Z]{1,3})\s*:\s*(-?\d+(?:\.\d+)?)", text)}
@@ -44,14 +48,35 @@ ZUEGE = []
 for zug in re.split(r"\n    \{ (?:frage|regie):", block("verkauf"))[1:]:
     opts = []
     for o in re.split(r"\n        \{ id:`", zug)[1:]:
+        st = re.search(r"stimmung:`(\w+)`", o)
         opts.append({"auto": float(re.search(r"auto:(-?\d+(?:\.\d+)?)", o).group(1)),
                      "aff": gewichte(re.search(r"aff:\s*\{([^}]*)\}", o).group(1)),
-                     "an": "an:{" in o})
+                     "an": "an:{" in o,
+                     "stimmung": st.group(1) if st else "neutral"})
     if opts: ZUEGE.append(opts)
 
-# ---------- Gewichte, die zur Debatte stehen ----------
-G = dict(auto=2.5, treffer=0.35, fehlgriff=0.7, rueckgriff=1, produkt=2.5, privat=1.5,
-         rtreffer=4, rnah=1, rdaneben=-3.5, frage=-1.5, frageauf=0.25)
+# Wie die Laune auf jeden Zug wirkt
+LAUNE = {k: float(v) for k, v in
+         re.findall(r"(\w+):\s*(\d+(?:\.\d+)?)", block("stimmungswirkung"))}
+def nach_laune(w, st):
+    f = LAUNE.get(st, 1.0)
+    return w * f if w >= 0 else w / f
+
+# ---------- Gewichte: direkt aus dem Spiel gelesen ----------
+# So koennen Simulation und Spiel nicht auseinanderlaufen.
+SPIEL = io.open("spiel.html", encoding="utf-8").read()
+# Alle W_-Konstanten auf einmal einlesen, das ist weniger fehleranfaellig
+import re as _re
+GEFUNDEN = dict((k, float(v)) for k, v in
+                _re.findall(r"(W_[A-Z_]+)\s*=\s*(-?\d+(?:\.\d+)?)", SPIEL))
+def konst(name):
+    assert name in GEFUNDEN, "Konstante fehlt: " + name
+    return GEFUNDEN[name]
+
+G = dict(auto=konst("W_AUTO"), treffer=konst("W_TREFFER"), fehlgriff=konst("W_FEHLGRIFF"),
+         rueckgriff=konst("W_RUECKGRIFF"), produkt=konst("W_PRODUKT"), privat=konst("W_PRIVAT"),
+         rtreffer=konst("W_RATE_TREFFER"), rnah=konst("W_RATE_NAH"), rdaneben=konst("W_RATE_DANEBEN"),
+         frage=konst("W_FRAGE"), frageauf=konst("W_FRAGE_AUF"))
 START, JA, OFFEN = 30, 72, 48
 
 STUFEN = np.array([-2,-1,0,1,2])
@@ -131,11 +156,14 @@ def partie(art):
     treffer = min(len(p["spricht"]), fakten)
     bereit += G["produkt"]*passung + G["privat"]*treffer*2
 
+    laune = "neutral"
     for opts in ZUEGE:
         o = max(opts, key=lambda x: x["auto"]) if random.random() < GUETE else random.choice(opts)
-        s = sum(o["aff"].get(m,0)*HM[m] for m in HM)
-        bereit += G["auto"]*o["auto"] + (G["treffer"]*s if s >= 0 else G["fehlgriff"]*s)
-        if o["an"] and fakten >= 2 and random.random() < GUETE: bereit += G["rueckgriff"]
+        sm = sum(o["aff"].get(m,0)*HM[m] for m in HM)
+        roh = G["auto"]*o["auto"] + (G["treffer"]*sm if sm >= 0 else G["fehlgriff"]*sm)
+        if o["an"] and fakten >= 2 and random.random() < GUETE: roh += G["rueckgriff"]
+        bereit += nach_laune(roh, laune)     # seine Laune vor deinem Zug zaehlt
+        laune = o["stimmung"]                # danach sitzt er anders da
     return bereit
 
 def lauf(art, n):
