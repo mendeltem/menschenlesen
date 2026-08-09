@@ -29,19 +29,31 @@ Koffer öffnen kann.
 Motiven und an dem, was du privat erfahren hast. Wie du es anbietest,
 misst sich an seiner Persönlichkeit.
 
-## Die Dateien
+## Wie es gebaut ist
+
+Ein Skelett, das nichts über eine bestimmte Person weiß, und Personen,
+die alles mitbringen: Texte, Fragen, Bilder, Farbschema.
 
 | | |
 |---|---|
-| `gespraech.html` | das Spiel, alles darin außer Bildern und Musik |
+| `index.html` | Menü und Mechanik. Weiß nichts über Baumgartner. |
+| `welt.js` | was für jede Person gilt: die zehn Achsen, was eine Ausprägung bedeutet, dein Koffer, die Belege |
+| `personen/baumgartner.js` | eine Person: Wahrheit, Fragen, Antworten, Stimmungen, Verkaufszüge |
 | `bilder/` | zehn Stimmungen und der Raum |
 | `musik/` | fünf Spuren: Menü, Laden, Gespräch, gewonnen, verloren |
-| `balance.py` | spielt tausend Partien durch und misst die Gewinnchancen |
-| `BILDER_PROMPTS.md` | wie die Bilder entstanden sind, zum Nachmachen |
-| `MUSIK.md` | welche Datei wo läuft und was musikalisch passt |
-| `wissenschaftliche_pruefung.md` | was an dem Modell belegt ist und was nicht |
-| `motivdiagnose.html` | der Vorgänger: fünf Motive, zwanzig Personen |
-| `bigfive_rate(1).html` | der andere Vorgänger: Big Five über 32 Zustände |
+| `balance.py` | spielt vierhundert Partien je Spielweise und misst die Gewinnchancen |
+
+**Eine Person ergänzen** heißt: `personen/baumgartner.js` kopieren, `id`,
+Namen und Texte ändern, Bilder danebenlegen, im `index.html` eine Zeile
+`<script src="personen/…">` anfügen. Am Skelett ändert sich nichts.
+
+Die Personendateien sind JSON in der Form, aber JavaScript in der
+Verpackung — mit Absicht: Browser verbieten `fetch()` auf `file://`, per
+`<script src>` geladene Dateien nicht. So läuft das Spiel per Doppelklick
+genauso wie auf einem Server.
+
+**Was du besitzt** — Kasse und Bestand — liegt im Speicher des Browsers
+und überlebt Gespräche und Neustarts. *Zurücksetzen* im Menü räumt es weg.
 
 ## Die Balance
 

@@ -3,81 +3,1923 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Menschen lesen</title>
+<title>Ein Gespräch mit Tobias Baumgartner</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{ --paper:#0e0f12; --ink:#edeae3; --muted:#9aa1aa; --line:rgba(255,255,255,.13);
-  --surface:rgba(255,255,255,.05); --accent:#e8b04b; --accent-2:#84b4e4;
-  --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
-  --sans:"Space Grotesk",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
-*{box-sizing:border-box}
-body{margin:0; min-height:100vh; background:var(--paper); color:var(--ink); font-family:var(--sans);
-  font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased;
-  background-image:
+:root{
+  --mono:"IBM Plex Mono",ui-monospace,"SF Mono","Cascadia Mono",Menlo,Consolas,monospace;
+  --sans:"Space Grotesk",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --serif:Georgia,"Iowan Old Style","Times New Roman",serif;
+  --r:14px;
+}
+/* ── Tinte · warmes Anthrazit mit Messing ─────────────────── */
+:root, body[data-theme="tinte"]{
+  --paper:#0e0f12;
+  --mesh:
     radial-gradient(900px 620px at 12% -8%, rgba(232,176,75,.20), transparent 62%),
     radial-gradient(820px 600px at 88% 6%, rgba(96,146,196,.18), transparent 62%),
+    radial-gradient(700px 700px at 50% 108%, rgba(150,110,200,.13), transparent 66%),
     linear-gradient(180deg,#141720 0%,#0b0c10 55%,#0e0f12 100%);
-  background-attachment:fixed;
-  display:flex; justify-content:center; padding:8vh 20px 80px}
-.wrap{width:100%; max-width:720px}
+  --pattern:none; --grain:.045;
+  --surface:rgba(255,255,255,.048); --surface-2:rgba(255,255,255,.085); --surface-hi:rgba(255,255,255,.12);
+  --ink:#edeae3; --muted:#9aa1aa;
+  --line:rgba(255,255,255,.13); --line-soft:rgba(255,255,255,.07);
+  --accent:#e8b04b; --accent-2:#84b4e4; --accent-ink:#1b1305;
+  --AUT:#6fa8dc; --SIC:#78c481; --STA:#e8776a; --ZUG:#b58cdb; --EFF:#e8b04b;
+  --glow:0 0 26px rgba(232,176,75,.30); --shade:0 1px 12px rgba(0,0,0,.5);
+  --panel-shadow:0 1px 0 rgba(255,255,255,.05) inset, 0 18px 40px -28px rgba(0,0,0,.9);
+  --face-filter:saturate(.92) contrast(1.03) brightness(.97);
+  --face-tint:linear-gradient(180deg,rgba(232,176,75,.10),rgba(20,20,28,.28));
+  --face-blend:normal;
+}
+
+/* ── Papier · das urspruengliche Blatt, aufgeraeumt ────────── */
+body[data-theme="papier"]{
+  --paper:#E8E9E3;
+  --mesh:
+    radial-gradient(900px 620px at 14% -10%, rgba(44,95,138,.10), transparent 60%),
+    radial-gradient(760px 560px at 92% 2%, rgba(181,133,31,.10), transparent 60%),
+    linear-gradient(180deg,#F2F3EE 0%,#E4E5DF 100%);
+  --pattern:none; --grain:.06;
+  --surface:rgba(255,255,255,.66); --surface-2:rgba(255,255,255,.88); --surface-hi:#fff;
+  --ink:#15181B; --muted:#6C7278;
+  --line:rgba(21,24,27,.17); --line-soft:rgba(21,24,27,.08);
+  --accent:#2C5F8A; --accent-2:#A6432C; --accent-ink:#fff;
+  --AUT:#2C5F8A; --SIC:#4B7A54; --STA:#A6432C; --ZUG:#7A548F; --EFF:#B5851F;
+  --glow:0 0 22px rgba(44,95,138,.18); --shade:none;
+  --panel-shadow:0 1px 0 rgba(255,255,255,.7) inset, 0 14px 30px -24px rgba(20,25,30,.55);
+  --face-filter:none; --face-tint:none; --face-blend:normal;
+  --vignette:0;
+}
+
+/* ── Blaupause · technisches Blau mit Raster ───────────────── */
+body[data-theme="blaupause"]{
+  --paper:#08192a;
+  --mesh:
+    radial-gradient(1000px 640px at 20% -10%, rgba(90,190,255,.16), transparent 62%),
+    radial-gradient(760px 560px at 90% 10%, rgba(40,110,190,.20), transparent 62%),
+    linear-gradient(180deg,#0a2036 0%,#071628 60%,#050f1c 100%);
+  --pattern:
+    repeating-linear-gradient(0deg,rgba(150,215,255,.07) 0 1px,transparent 1px 34px),
+    repeating-linear-gradient(90deg,rgba(150,215,255,.07) 0 1px,transparent 1px 34px);
+  --grain:.03;
+  --surface:rgba(160,220,255,.06); --surface-2:rgba(160,220,255,.11); --surface-hi:rgba(160,220,255,.16);
+  --ink:#e2f2ff; --muted:#8fb3cd;
+  --line:rgba(140,205,255,.22); --line-soft:rgba(140,205,255,.11);
+  --accent:#7fd1ff; --accent-2:#ffd479; --accent-ink:#04202f;
+  --AUT:#6cc4ff; --SIC:#5fd0a0; --STA:#ff8a72; --ZUG:#b39bff; --EFF:#ffcc5c;
+  --glow:0 0 26px rgba(127,209,255,.35); --shade:0 1px 12px rgba(0,0,0,.55);
+  --panel-shadow:0 1px 0 rgba(190,230,255,.07) inset, 0 18px 40px -28px rgba(0,10,20,.9);
+  --face-filter:saturate(.8) brightness(.95); --face-tint:linear-gradient(180deg,rgba(90,180,255,.16),rgba(5,25,45,.34)); --face-blend:normal;
+}
+
+/* ── Terminal · Bernstein auf Schwarz, mit Zeilen ──────────── */
+body[data-theme="terminal"]{
+  --paper:#080604;
+  --mesh:
+    radial-gradient(900px 560px at 50% -12%, rgba(255,176,60,.16), transparent 62%),
+    linear-gradient(180deg,#0d0a06 0%,#070502 100%);
+  --pattern:repeating-linear-gradient(0deg,rgba(255,180,70,.055) 0 1px,transparent 1px 4px);
+  --grain:.05;
+  --surface:rgba(255,180,70,.055); --surface-2:rgba(255,180,70,.10); --surface-hi:rgba(255,180,70,.15);
+  --ink:#ffd9a3; --muted:#b0854f;
+  --line:rgba(255,176,60,.22); --line-soft:rgba(255,176,60,.11);
+  --accent:#ffb03c; --accent-2:#7fe0a0; --accent-ink:#160c00;
+  --AUT:#7fb8e8; --SIC:#7fe0a0; --STA:#ff7a52; --ZUG:#c79bf0; --EFF:#ffc94d;
+  --glow:0 0 26px rgba(255,176,60,.40); --shade:0 1px 12px rgba(0,0,0,.7);
+  --panel-shadow:0 1px 0 rgba(255,200,120,.06) inset, 0 18px 40px -28px rgba(0,0,0,.95);
+  --face-filter:sepia(.35) saturate(.85) brightness(.92); --face-tint:linear-gradient(180deg,rgba(255,176,60,.16),rgba(15,8,0,.4)); --face-blend:normal;
+}
+
+/* ── Neon · Pink auf Aubergine ─────────────────────────────── */
+body[data-theme="neon"]{
+  --paper:#0d0511;
+  --mesh:
+    radial-gradient(900px 560px at 50% -10%, rgba(255,46,166,.24), transparent 62%),
+    radial-gradient(700px 560px at 88% 40%, rgba(0,229,255,.12), transparent 62%),
+    linear-gradient(180deg,#170a20 0%,#0d0511 60%,#0a0410 100%);
+  --pattern:none; --grain:.05;
+  --surface:rgba(255,120,205,.075); --surface-2:rgba(255,120,205,.13); --surface-hi:rgba(255,120,205,.18);
+  --ink:#ffe9f8; --muted:#c78bba;
+  --line:rgba(255,90,190,.24); --line-soft:rgba(255,90,190,.12);
+  --accent:#ff2ea6; --accent-2:#00e5ff; --accent-ink:#180010;
+  --AUT:#4fc3f7; --SIC:#4ade80; --STA:#ff5b6e; --ZUG:#c77dff; --EFF:#ffc94d;
+  --glow:0 0 30px rgba(255,46,166,.45); --shade:0 1px 12px rgba(0,0,0,.6);
+  --panel-shadow:0 1px 0 rgba(255,180,230,.07) inset, 0 18px 40px -28px rgba(0,0,0,.9);
+  --face-filter:saturate(.9) contrast(1.05); --face-tint:linear-gradient(180deg,rgba(255,46,166,.16),rgba(20,4,26,.36)); --face-blend:normal;
+}
+
+/* ── Cyberpunk · Cyan und Signalgelb ───────────────────────── */
+body[data-theme="cyberpunk"]{
+  --paper:#0a0a12;
+  --mesh:
+    radial-gradient(900px 560px at 18% -10%, rgba(0,240,255,.18), transparent 62%),
+    radial-gradient(760px 560px at 86% 14%, rgba(252,238,10,.10), transparent 62%),
+    linear-gradient(180deg,#0e1020 0%,#0a0a12 60%,#08080f 100%);
+  --pattern:repeating-linear-gradient(90deg,rgba(0,240,255,.05) 0 1px,transparent 1px 40px);
+  --grain:.045;
+  --surface:rgba(0,240,255,.06); --surface-2:rgba(0,240,255,.11); --surface-hi:rgba(0,240,255,.16);
+  --ink:#eafcff; --muted:#8fa0bd;
+  --line:rgba(0,240,255,.22); --line-soft:rgba(0,240,255,.10);
+  --accent:#00f0ff; --accent-2:#fcee0a; --accent-ink:#00181c;
+  --AUT:#4fd8ff; --SIC:#3ddc97; --STA:#ff5c6e; --ZUG:#b98cff; --EFF:#fcee0a;
+  --glow:0 0 30px rgba(0,240,255,.40); --shade:0 1px 12px rgba(0,0,0,.6);
+  --panel-shadow:0 1px 0 rgba(160,250,255,.07) inset, 0 18px 40px -28px rgba(0,0,0,.9);
+  --face-filter:saturate(.85) contrast(1.06); --face-tint:linear-gradient(180deg,rgba(0,240,255,.14),rgba(6,10,20,.38)); --face-blend:normal;
+}
+
+/* ── Synthwave · Horizont in Violett ───────────────────────── */
+body[data-theme="synthwave"]{
+  --paper:#16072e;
+  --mesh:
+    radial-gradient(900px 520px at 50% 100%, rgba(255,92,141,.30), transparent 66%),
+    radial-gradient(800px 560px at 20% -10%, rgba(122,92,255,.24), transparent 62%),
+    linear-gradient(180deg,#1d0940 0%,#16072e 55%,#100322 100%);
+  --pattern:none; --grain:.05;
+  --surface:rgba(190,140,255,.08); --surface-2:rgba(190,140,255,.14); --surface-hi:rgba(190,140,255,.19);
+  --ink:#ffeaf6; --muted:#c69ee6;
+  --line:rgba(200,150,255,.24); --line-soft:rgba(200,150,255,.12);
+  --accent:#ff5c8d; --accent-2:#7a5cff; --accent-ink:#26030f;
+  --AUT:#5cc8ff; --SIC:#54dba0; --STA:#ff5c8d; --ZUG:#9b7cff; --EFF:#ffcf5c;
+  --glow:0 0 30px rgba(255,92,141,.42); --shade:0 1px 12px rgba(0,0,0,.6);
+  --panel-shadow:0 1px 0 rgba(255,200,240,.07) inset, 0 18px 40px -28px rgba(0,0,0,.9);
+  --face-filter:saturate(.95) contrast(1.04); --face-tint:linear-gradient(180deg,rgba(122,92,255,.18),rgba(30,6,50,.36)); --face-blend:normal;
+}
+
+/* ── Miami · Koralle und Tuerkis ───────────────────────────── */
+body[data-theme="miami"]{
+  --paper:#140a1e;
+  --mesh:
+    radial-gradient(900px 560px at 16% -10%, rgba(255,111,97,.24), transparent 62%),
+    radial-gradient(800px 560px at 88% 24%, rgba(45,226,230,.16), transparent 62%),
+    linear-gradient(180deg,#1c0f2a 0%,#140a1e 60%,#0f0718 100%);
+  --pattern:none; --grain:.05;
+  --surface:rgba(255,150,140,.075); --surface-2:rgba(255,150,140,.13); --surface-hi:rgba(255,150,140,.18);
+  --ink:#fff0ea; --muted:#d0a5bd;
+  --line:rgba(255,140,130,.24); --line-soft:rgba(255,140,130,.11);
+  --accent:#ff6f61; --accent-2:#2de2e6; --accent-ink:#2a0b06;
+  --AUT:#2de2e6; --SIC:#5fd98a; --STA:#ff6f61; --ZUG:#c48cff; --EFF:#ffc85c;
+  --glow:0 0 30px rgba(255,111,97,.38); --shade:0 1px 12px rgba(0,0,0,.6);
+  --panel-shadow:0 1px 0 rgba(255,210,200,.07) inset, 0 18px 40px -28px rgba(0,0,0,.9);
+  --face-filter:saturate(1) contrast(1.03); --face-tint:linear-gradient(180deg,rgba(255,111,97,.14),rgba(20,10,30,.36)); --face-blend:normal;
+}
+
+/* ── Sakura · helles Rosa, heller Schleier ─────────────────── */
+body[data-theme="sakura"]{
+  --paper:#fff3f8;
+  --mesh:
+    radial-gradient(900px 600px at 20% -10%, rgba(255,122,182,.26), transparent 62%),
+    radial-gradient(760px 560px at 90% 6%, rgba(168,85,247,.14), transparent 62%),
+    linear-gradient(180deg,#fff7fb 0%,#ffeaf3 100%);
+  --pattern:none; --grain:.05;
+  --surface:rgba(255,255,255,.68); --surface-2:rgba(255,255,255,.9); --surface-hi:#fff;
+  --ink:#45122c; --muted:#a05c80;
+  --line:rgba(180,60,120,.20); --line-soft:rgba(180,60,120,.10);
+  --accent:#e0357f; --accent-2:#8b45d6; --accent-ink:#fff;
+  --AUT:#2f7fc4; --SIC:#3f9a68; --STA:#d6402f; --ZUG:#8b45d6; --EFF:#c08313;
+  --glow:0 0 24px rgba(224,53,127,.22); --shade:none;
+  --panel-shadow:0 1px 0 rgba(255,255,255,.8) inset, 0 14px 30px -24px rgba(120,30,70,.4);
+  --face-filter:saturate(1.02); --face-tint:linear-gradient(180deg,rgba(255,140,190,.10),transparent); --face-blend:normal;
+  --vignette:0;
+}
+
+/* ── Dschungel · Blattgruen mit Safrangelb ─────────────────── */
+body[data-theme="dschungel"]{
+  --paper:#08130b;
+  --mesh:
+    radial-gradient(900px 600px at 22% -10%, rgba(74,222,128,.16), transparent 62%),
+    radial-gradient(760px 560px at 86% 20%, rgba(250,204,21,.10), transparent 62%),
+    linear-gradient(180deg,#0c1c11 0%,#08130b 60%,#050f08 100%);
+  --pattern:none; --grain:.05;
+  --surface:rgba(120,220,150,.06); --surface-2:rgba(120,220,150,.11); --surface-hi:rgba(120,220,150,.16);
+  --ink:#e8f8ec; --muted:#8ebd9b;
+  --line:rgba(110,210,145,.22); --line-soft:rgba(110,210,145,.10);
+  --accent:#4ade80; --accent-2:#facc15; --accent-ink:#04150a;
+  --AUT:#5cb8e8; --SIC:#4ade80; --STA:#f0715c; --ZUG:#bb8ce0; --EFF:#facc15;
+  --glow:0 0 28px rgba(74,222,128,.32); --shade:0 1px 12px rgba(0,0,0,.6);
+  --panel-shadow:0 1px 0 rgba(180,255,205,.06) inset, 0 18px 40px -28px rgba(0,0,0,.9);
+  --face-filter:saturate(.88) brightness(.95); --face-tint:linear-gradient(180deg,rgba(74,222,128,.12),rgba(5,20,10,.38)); --face-blend:normal;
+}
+
+/* ── Matrix · nur Gruen, Zeilenraster ──────────────────────── */
+body[data-theme="matrix"]{
+  --paper:#000600;
+  --mesh:
+    radial-gradient(900px 560px at 50% -12%, rgba(0,255,65,.14), transparent 62%),
+    linear-gradient(180deg,#021003 0%,#000600 100%);
+  --pattern:repeating-linear-gradient(0deg,rgba(0,255,65,.06) 0 1px,transparent 1px 4px);
+  --grain:.05;
+  --surface:rgba(0,255,65,.05); --surface-2:rgba(0,255,65,.10); --surface-hi:rgba(0,255,65,.15);
+  --ink:#c8ffd6; --muted:#5fb374;
+  --line:rgba(0,255,65,.22); --line-soft:rgba(0,255,65,.10);
+  --accent:#00ff41; --accent-2:#9dffb8; --accent-ink:#001404;
+  --AUT:#4fe0ff; --SIC:#00ff41; --STA:#ff6a5c; --ZUG:#c08cff; --EFF:#e8ff5c;
+  --glow:0 0 30px rgba(0,255,65,.40); --shade:0 1px 12px rgba(0,0,0,.75);
+  --panel-shadow:0 1px 0 rgba(150,255,180,.06) inset, 0 18px 40px -28px rgba(0,0,0,.95);
+  --face-filter:grayscale(.45) sepia(.4) hue-rotate(60deg) saturate(1.4) brightness(.86);
+  --face-tint:linear-gradient(180deg,rgba(0,255,65,.14),rgba(0,10,2,.45)); --face-blend:normal;
+}
+
+/* ── Ozean · Tiefblau mit Jade ─────────────────────────────── */
+body[data-theme="ozean"]{
+  --paper:#03101c;
+  --mesh:
+    radial-gradient(900px 620px at 18% -10%, rgba(56,189,248,.20), transparent 62%),
+    radial-gradient(800px 600px at 88% 26%, rgba(52,211,153,.14), transparent 62%),
+    linear-gradient(180deg,#06192b 0%,#03101c 60%,#020b14 100%);
+  --pattern:none; --grain:.04;
+  --surface:rgba(90,190,240,.07); --surface-2:rgba(90,190,240,.12); --surface-hi:rgba(90,190,240,.17);
+  --ink:#e6f6ff; --muted:#85b4cf;
+  --line:rgba(90,190,240,.22); --line-soft:rgba(90,190,240,.10);
+  --accent:#38bdf8; --accent-2:#34d399; --accent-ink:#02131d;
+  --AUT:#38bdf8; --SIC:#34d399; --STA:#fb7185; --ZUG:#a78bfa; --EFF:#fbbf24;
+  --glow:0 0 28px rgba(56,189,248,.34); --shade:0 1px 12px rgba(0,0,0,.6);
+  --panel-shadow:0 1px 0 rgba(180,230,255,.06) inset, 0 18px 40px -28px rgba(0,0,0,.9);
+  --face-filter:saturate(.85) brightness(.96); --face-tint:linear-gradient(180deg,rgba(56,189,248,.14),rgba(2,16,28,.38)); --face-blend:normal;
+}
+
+/* ── Kosmos · Nebel in Violett ─────────────────────────────── */
+body[data-theme="kosmos"]{
+  --paper:#05040e;
+  --mesh:
+    radial-gradient(760px 700px at 26% 18%, rgba(126,96,255,.26), transparent 66%),
+    radial-gradient(660px 620px at 78% 58%, rgba(255,92,168,.18), transparent 66%),
+    radial-gradient(900px 520px at 50% 108%, rgba(24,22,74,.6), transparent 68%),
+    linear-gradient(160deg,#07061a 0%,#0d0a24 50%,#05040e 100%);
+  --pattern:none; --grain:.055;
+  --surface:rgba(150,140,255,.075); --surface-2:rgba(150,140,255,.13); --surface-hi:rgba(150,140,255,.18);
+  --ink:#ece9ff; --muted:#9c98c8;
+  --line:rgba(150,140,255,.24); --line-soft:rgba(150,140,255,.11);
+  --accent:#9d8cff; --accent-2:#ff7ab8; --accent-ink:#0a0718;
+  --AUT:#6fb6ff; --SIC:#5fd8a8; --STA:#ff7a8c; --ZUG:#b49bff; --EFF:#ffd166;
+  --glow:0 0 30px rgba(157,140,255,.38); --shade:0 1px 12px rgba(0,0,0,.7);
+  --panel-shadow:0 1px 0 rgba(200,190,255,.07) inset, 0 18px 40px -28px rgba(0,0,0,.95);
+  --face-filter:saturate(.9) contrast(1.04) brightness(.95); --face-tint:linear-gradient(180deg,rgba(126,96,255,.18),rgba(8,6,20,.42)); --face-blend:normal;
+}
+
+/* ── Ekko · Zaun-Teal auf warmem Rost ──────────────────────── */
+body[data-theme="ekko"]{
+  --paper:#0d0a0b;
+  --mesh:
+    radial-gradient(820px 660px at 20% 22%, rgba(46,230,196,.22), transparent 66%),
+    radial-gradient(700px 620px at 80% 62%, rgba(178,12,89,.24), transparent 66%),
+    radial-gradient(900px 520px at 50% 108%, rgba(92,42,31,.5), transparent 68%),
+    linear-gradient(150deg,#16100f 0%,#241715 45%,#0e1416 100%);
+  --pattern:none; --grain:.05;
+  --surface:rgba(46,230,196,.07); --surface-2:rgba(46,230,196,.12); --surface-hi:rgba(46,230,196,.17);
+  --ink:#eaf7f3; --muted:#93b0aa;
+  --line:rgba(46,230,196,.22); --line-soft:rgba(46,230,196,.10);
+  --accent:#2ee6c4; --accent-2:#ff3d7f; --accent-ink:#04140f;
+  --AUT:#4fc8f0; --SIC:#2ee6c4; --STA:#ff3d7f; --ZUG:#b98cf0; --EFF:#ffc247;
+  --glow:0 0 30px rgba(46,230,196,.36); --shade:0 1px 12px rgba(0,0,0,.65);
+  --panel-shadow:0 1px 0 rgba(160,255,235,.06) inset, 0 18px 40px -28px rgba(0,0,0,.9);
+  --face-filter:saturate(.9) contrast(1.04); --face-tint:linear-gradient(180deg,rgba(46,230,196,.13),rgba(20,12,10,.4)); --face-blend:normal;
+}
+
+/* ── LCARS · Schwarz, Orange, weiche Ecken ─────────────────── */
+body[data-theme="lcars"]{
+  --paper:#000000;
+  --mesh:
+    radial-gradient(900px 560px at 14% -10%, rgba(255,156,0,.16), transparent 60%),
+    radial-gradient(700px 520px at 88% 18%, rgba(204,153,204,.12), transparent 60%),
+    linear-gradient(180deg,#0b0906 0%,#000 100%);
+  --pattern:none; --grain:.03;
+  --surface:rgba(255,180,90,.07); --surface-2:rgba(255,180,90,.12); --surface-hi:rgba(255,180,90,.17);
+  --ink:#ffffff; --muted:#b9a9d6;
+  --line:rgba(255,180,90,.24); --line-soft:rgba(255,180,90,.11);
+  --accent:#ff9c00; --accent-2:#cc99cc; --accent-ink:#1a0f00;
+  --AUT:#7fa9ff; --SIC:#66cc99; --STA:#ff6f5c; --ZUG:#cc99cc; --EFF:#ff9c00;
+  --glow:0 0 28px rgba(255,156,0,.34); --shade:0 1px 12px rgba(0,0,0,.7);
+  --panel-shadow:0 1px 0 rgba(255,210,150,.07) inset, 0 18px 40px -28px rgba(0,0,0,.95);
+  --face-filter:saturate(.85) contrast(1.05); --face-tint:linear-gradient(180deg,rgba(255,156,0,.12),rgba(0,0,0,.4)); --face-blend:normal;
+  --r:20px;
+}
+
+*{box-sizing:border-box}
+/* display:flex und display:grid schlagen sonst das hidden-Attribut. */
+[hidden]{display:none !important}
+html,body{margin:0; padding:0; height:100%}
+body{background:var(--paper); color:var(--ink); font-family:var(--sans); font-size:16px; line-height:1.55;
+  -webkit-font-smoothing:antialiased; height:100%; overflow:hidden; display:flex; flex-direction:column;
+  transition:background-color .35s, color .35s}
+.bg,.bg-pattern,.bg-grain{position:fixed; inset:0; pointer-events:none}
+.bg{z-index:-3; background-image:var(--mesh); background-size:cover;
+    animation:drift 60s ease-in-out infinite alternate; transform-origin:50% 40%}
+.bg:after{content:""; position:absolute; inset:0;
+  background:radial-gradient(135% 105% at 50% 0%, transparent 42%, #000 128%); opacity:var(--vignette,.55)}
+.bg-pattern{z-index:-2; background-image:var(--pattern,none)}
+.bg-grain{z-index:-1; opacity:var(--grain,0); mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
+@keyframes drift{from{transform:scale(1) translateY(0)} to{transform:scale(1.08) translateY(-1.5%)}}
+
+.wrap{width:100%; max-width:1180px; margin:0 auto; padding:12px 20px 10px;
+  flex:1; min-height:0; display:flex; flex-direction:column; gap:9px}
 .eyebrow{font-family:var(--mono); font-size:10.5px; letter-spacing:.2em; text-transform:uppercase; color:var(--muted)}
-h1{font-size:34px; font-weight:600; letter-spacing:-.02em; margin:6px 0 14px}
-p{color:var(--muted); margin:0 0 14px; max-width:62ch}
-p b{color:var(--ink); font-weight:500}
-.karten{display:grid; gap:12px; margin-top:32px}
-a.karte{display:block; text-decoration:none; color:inherit; background:var(--surface);
-  border:1px solid var(--line); border-radius:14px; padding:18px 20px;
-  transition:border-color .15s, transform .15s, box-shadow .15s}
-a.karte:hover{border-color:var(--accent); transform:translateY(-2px);
-  box-shadow:0 0 26px rgba(232,176,75,.22)}
-a.karte b{display:block; font-size:19px; font-weight:600; letter-spacing:-.01em}
-a.karte em{display:block; font-style:normal; font-size:13px; color:var(--accent-2); margin:3px 0 8px;
-  font-family:var(--mono); letter-spacing:.04em}
-a.karte span{display:block; font-size:14.5px; color:var(--muted); line-height:1.5}
-footer{margin-top:40px; padding-top:18px; border-top:1px solid var(--line);
-  font-size:13px; color:var(--muted)}
-footer a{color:var(--accent-2)}
+h1{font-size:23px; font-weight:600; letter-spacing:-.02em; margin:3px 0 0}
+h2{font-family:var(--mono); font-size:11px; letter-spacing:.2em; text-transform:uppercase; font-weight:500;
+   color:var(--muted); margin:22px 0 10px; display:flex; align-items:center; gap:12px}
+h2:after{content:""; flex:1; height:1px; background:var(--line-soft)}
+p{margin:0 0 12px}
+.dim{color:var(--muted)} .small{font-size:13.5px}
+.num{font-family:var(--mono); font-variant-numeric:tabular-nums}
+.panel{background-color:var(--surface);   /* Rueckfall, falls color-mix fehlt */
+  background-color:color-mix(in srgb, var(--paper) 74%, transparent);
+  background-image:linear-gradient(var(--surface), var(--surface));
+  border:1px solid var(--line); border-radius:var(--r); padding:13px 16px;
+  box-shadow:var(--panel-shadow)}
+
+/* ── Kopf ── */
+.top{display:flex; justify-content:space-between; align-items:center; gap:14px; flex-wrap:wrap}
+.tools{display:flex; align-items:center; gap:7px; flex-wrap:wrap}
+.tool{display:inline-flex; align-items:center; gap:7px; background:var(--surface); border:1px solid var(--line-soft);
+  border-radius:999px; color:var(--muted); font:inherit; font-size:12.5px; font-weight:500; padding:7px 14px;
+  cursor:pointer; white-space:nowrap;
+  transition:color .15s,border-color .15s}
+.tool:hover{color:var(--ink); border-color:var(--accent)}
+.tool .caret{font-size:9px; opacity:.7}
+.themepick{position:relative}
+.theme-menu{position:absolute; right:0; top:calc(100% + 8px); z-index:60; width:min(430px, calc(100vw - 40px));
+  display:flex; flex-wrap:wrap; gap:7px; background:var(--surface-2); border:1px solid var(--line);
+  border-radius:var(--r); padding:12px; box-shadow:0 26px 50px -26px rgba(0,0,0,.85)}
+.theme-menu[hidden]{display:none}
+.theme-btn{flex:0 0 auto; display:inline-flex; align-items:center; gap:7px; background:var(--surface);
+  border:1px solid var(--line-soft); border-radius:999px; color:var(--muted); font:inherit; font-size:12.5px;
+  font-weight:500; padding:6px 13px 6px 9px; cursor:pointer; white-space:nowrap;
+  transition:color .15s,border-color .15s,box-shadow .15s,transform .15s}
+.theme-btn:hover{color:var(--ink); border-color:var(--accent); transform:translateY(-1px)}
+.theme-btn.active{color:var(--ink); border-color:var(--accent); box-shadow:var(--glow)}
+.theme-dot{width:11px; height:11px; border-radius:50%; background:var(--dot); box-shadow:0 0 8px var(--dot)}
+
+/* ── Phasenleiste ── */
+.akte{display:flex; gap:5px; flex-wrap:wrap}
+.akt{display:inline-flex; align-items:baseline; gap:7px; border:1px solid var(--line-soft); border-radius:999px;
+  padding:4px 12px; background:var(--surface); font-family:var(--mono); font-size:9px; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--muted)}
+.akt b{font-family:var(--sans); font-size:12.5px; font-weight:500; letter-spacing:0; text-transform:none; color:var(--muted)}
+.akt.now{border-color:var(--accent); box-shadow:var(--glow)}
+.akt.now b{color:var(--ink); font-weight:600}
+.akt.done{opacity:.55}
+
+/* ── Zweispalter ── */
+.grid{flex:1; min-height:0; display:grid; grid-template-columns:1fr 320px; gap:18px}
+main{min-height:0; display:flex; flex-direction:column}
+.side{min-height:0; overflow-y:auto; display:flex; flex-direction:column; gap:9px; padding-right:4px}
+.side::-webkit-scrollbar,.talk::-webkit-scrollbar{width:8px}
+.side::-webkit-scrollbar-thumb,.talk::-webkit-scrollbar-thumb{background:var(--line); border-radius:6px}
+.side,.talk{scrollbar-width:thin; scrollbar-color:var(--line) transparent}
+
+/* ── Der Raum als Kopfbild, nur wenn die Datei da ist ── */
+.raum{height:74px; border-radius:var(--r); border:1px solid var(--line); background-size:cover;
+  background-position:center 58%; filter:var(--face-filter,none); position:relative; flex:0 0 auto}
+.raum:after{content:""; position:absolute; inset:0; border-radius:inherit;
+  background:linear-gradient(transparent 30%, var(--paper)); opacity:.7}
+.raum[hidden]{display:none}
+
+/* ── Gespräch ── */
+.chat{position:relative; flex:1; min-height:0; display:flex; flex-direction:column}
+.talk{flex:1; min-height:0; overflow-y:auto; display:flex; flex-direction:column; gap:12px;
+  padding:4px 14px 14px 2px; overscroll-behavior:contain}
+.chat:before{content:""; position:absolute; left:0; right:0; top:0; height:24px; z-index:2; pointer-events:none;
+  background:linear-gradient(var(--paper), transparent); opacity:.9}
+.runter{position:absolute; right:20px; bottom:14px; z-index:3; display:none; align-items:center; gap:7px;
+  font-family:var(--mono); font-size:10px; letter-spacing:.12em; text-transform:uppercase;
+  background:var(--surface-2); color:var(--ink); border:1px solid var(--accent); border-radius:999px;
+  padding:7px 13px; cursor:pointer; box-shadow:var(--glow)}
+.runter.zeig{display:inline-flex}
+.line{max-width:62ch}
+.line.regie{font-family:var(--serif); font-style:italic; font-size:13.5px; color:var(--muted); line-height:1.5;
+  border-left:2px solid var(--line-soft); padding-left:13px; max-width:68ch}
+.line .lab{font-family:var(--mono); font-size:9px; letter-spacing:.18em; text-transform:uppercase;
+  color:var(--muted); display:block; margin-bottom:2px}
+/* Die Sprechweise in Klammern: Vorlage für die Stimme, die später drübergelegt wird */
+.line .wie{font-style:normal; text-transform:none; letter-spacing:.02em; color:var(--accent-2); margin-left:7px}
+.line.du .txt{font-size:14.5px; color:var(--muted)}
+.line.er .txt{font-family:var(--serif); font-size:17px; line-height:1.42; color:var(--ink)}
+.line.er{border-left:2px solid var(--accent); padding-left:14px; margin-left:-2px}
+.line.er .lab{color:var(--accent)}
+.line.neu{animation:rise .4s cubic-bezier(.2,.8,.3,1) both}
+/* Staffelung nach Alter. Größe und Deckkraft nehmen ab, der Inhalt
+   bleibt lesbar — es soll kleiner werden, nicht verschwinden. */
+.line{transition:opacity .3s}
+/* Das Zuletztgesagte ist das, worauf du antworten musst — es bekommt
+   eine eigene Farbe, nicht nur mehr Größe. */
+.line.er.wichtig{border-left-width:3px; border-left-color:var(--accent-2);
+  background:linear-gradient(90deg, color-mix(in srgb, var(--accent-2) 12%, transparent), transparent 78%);
+  border-radius:0 10px 10px 0; padding:6px 12px 7px 14px; margin-left:-2px}
+.line.er.wichtig .lab{color:var(--accent-2)}
+.line.er.wichtig .txt{color:var(--ink)}
+
+/* Der Block nach dem Festlegen. Er ist das Ergebnis eines Zuges, nicht
+   eine Fussnote — entsprechend gross. */
+.menue{flex:1; min-height:0; overflow-y:auto; padding:6px 2px 20px}
+.mkarten{display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:12px; margin-top:12px}
+a.mkarte, button.mkarte{display:flex; gap:14px; align-items:center; text-align:left; font:inherit; color:inherit;
+  background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:14px 16px;
+  cursor:pointer; transition:border-color .15s, transform .15s, box-shadow .15s}
+.mkarte:hover{border-color:var(--accent); transform:translateY(-2px); box-shadow:var(--glow)}
+.mkarte .mbild{flex:0 0 auto; width:66px; height:66px; border-radius:12px; border:1px solid var(--line);
+  background-size:cover; background-position:center 12%; filter:var(--face-filter,none)}
+.mkarte b{display:block; font-size:17px; font-weight:600; letter-spacing:-.01em}
+.mkarte span{display:block; font-size:13px; color:var(--muted); line-height:1.45; margin-top:3px}
+.mkonto{margin-top:22px; font-family:var(--mono); font-size:11.5px; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--muted)}
+.mkonto b{color:var(--accent)}
+.mzeilen{display:flex; flex-direction:column; gap:8px; margin-top:20px; max-width:520px}
+button.mzeile{text-align:left; font:inherit; color:inherit; background:var(--surface);
+  border:1px solid var(--line-soft); border-radius:11px; padding:11px 14px; cursor:pointer;
+  transition:border-color .15s, transform .15s}
+button.mzeile:hover{border-color:var(--accent); transform:translateY(-1px)}
+button.mzeile b{display:block; font-size:14.5px; font-weight:600}
+button.mzeile span{display:block; font-size:12.5px; color:var(--muted); margin-top:2px; line-height:1.45}
+body.imMenue .grid{display:none}
+body:not(.imMenue) .menue{display:none}
+.chatschalter{; margin:4px 0}
+.fkopf{display:flex; justify-content:space-between; align-items:flex-start; gap:18px}
+.furteil{font-size:20px; font-weight:600; letter-spacing:-.01em; margin-top:3px}
+.fpunkte{font-family:var(--mono); font-size:26px; font-weight:600; letter-spacing:-.02em; text-align:right; line-height:1}
+.fpunkte small{display:block; font-size:8.5px; font-weight:400; color:var(--muted); letter-spacing:.18em;
+  text-transform:uppercase; margin-top:4px}
+.fpunkte.plus{color:var(--SIC)} .fpunkte.minus{color:var(--STA)}
+.fbilanz{font-size:13.5px; color:var(--muted); margin-top:10px; line-height:1.5}
+.fbilanz b{color:var(--ink)}
+.ftab{width:100%; border-collapse:collapse; margin-top:12px; font-size:13.5px}
+.ftab .fzeile td{padding:8px 8px 3px 0; color:var(--ink); border-top:1px solid var(--line-soft)}
+.ftab .fzeile:first-child td{border-top:none}
+.ftab .fname{font-weight:600}
+.ftab td.n{font-family:var(--mono); font-size:11.5px; text-align:right; white-space:nowrap; color:var(--muted)}
+.ftab .fdeut td{padding:0 0 9px 0; font-size:12.5px; color:var(--muted); line-height:1.5; border:none}
+.line.davor{opacity:.72}
+.line.davor .txt{font-size:15px}
+.line.davor.regie{font-size:12.5px}
+.line.frueher{opacity:.42}
+.line.frueher .txt{font-size:13px; line-height:1.4}
+.line.frueher.regie{font-size:11.5px; line-height:1.45}
+.line.frueher .lab{font-size:8px; margin-bottom:1px}
+.line.frueher .wie{display:none}
+.line.frueher.meta{font-size:9.5px; line-height:1.6}
+.talk:hover .line.frueher{opacity:.62}
+@keyframes rise{from{opacity:0; transform:translateY(8px)} to{opacity:1; transform:none}}
+.line.meta{font-family:var(--mono); font-size:10.5px; line-height:1.8; letter-spacing:.03em; color:var(--muted);
+  opacity:.85; margin-top:-4px; padding-left:16px; border-left:1px dashed var(--line-soft); max-width:70ch}
+.line.meta b{color:var(--ink); font-weight:600}
+/* Die Rechnung steht eingeklappt da: eine Zeile Ergebnis, der Rest auf Klick. */
+.meta-kopf{background:none; border:none; padding:0; margin:0; font:inherit; color:inherit;
+  text-align:left; cursor:pointer; letter-spacing:inherit}
+.meta-kopf:hover{color:var(--ink)}
+.meta-lang{margin-top:4px; padding-left:14px; border-left:1px solid var(--line-soft); line-height:1.75}
+.line.meta s{text-decoration:none; color:var(--accent-2)}
+.line.meta.warn{color:var(--STA); border-left-color:var(--STA); opacity:1}
+
+/* ── Wahl ── */
+#choices{flex:0 0 auto; padding-top:9px; border-top:1px solid var(--line-soft); max-height:38vh; overflow-y:auto;
+  scrollbar-width:thin}
+/* Steht über allen Knöpfen dasselbe, steht es nur einmal darüber. */
+.wahlkopf{font-family:var(--mono); font-size:9px; letter-spacing:.18em; text-transform:uppercase;
+  color:var(--muted); margin-bottom:7px}
+.wahlkopf em{font-style:normal; color:var(--accent-2)}
+.choices{display:grid; gap:6px}
+button.pick{display:flex; align-items:center; gap:10px; font:inherit; font-size:14.5px; text-align:left;
+  color:var(--ink); line-height:1.35; background:var(--surface); border:1px solid var(--line); border-radius:11px;
+  padding:9px 11px 9px 13px; cursor:pointer;
+  transition:background .15s,border-color .15s,transform .15s,box-shadow .15s}
+button.pick .txtwrap{flex:1 1 auto; min-width:0}
+/* Der Zusatz je Knopf steht rechts statt in einer eigenen Zeile darüber. */
+button.pick .rechts{flex:0 0 auto; font-family:var(--mono); font-size:9.5px; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--accent-2); white-space:nowrap; text-align:right}
+button.pick .rechts i{font-style:normal; color:var(--STA)}
+button.pick:hover{background:var(--surface-2); border-color:var(--accent); transform:translateY(-1px); box-shadow:var(--glow)}
+button.pick:disabled{opacity:.45; cursor:default; transform:none; box-shadow:none}
+button.pick .tag{display:block; font-family:var(--mono); font-size:8.5px; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--muted); margin-bottom:2px}
+button.pick .tag em{font-style:normal; color:var(--accent-2)}
+button.pick .tag i{font-style:normal; color:var(--STA)}
+button.pick .key{flex:0 0 auto; font-family:var(--mono); font-size:10px; color:var(--muted);
+  border:1px solid var(--line); border-radius:6px; min-width:21px; padding:2px 0; text-align:center}
+button.pick:hover .key{color:var(--accent-ink); background:var(--accent); border-color:var(--accent)}
+button.pick.weiter{background:transparent; border-style:dashed}
+button.pick.weiter:hover{background:var(--surface)}
+button:focus-visible{outline:2px solid var(--accent); outline-offset:3px}
+button.act{font-family:var(--mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase; font-weight:500;
+  background:var(--accent); color:var(--accent-ink); border:1px solid var(--accent); border-radius:11px;
+  padding:12px 22px; cursor:pointer; box-shadow:var(--glow); transition:transform .15s, filter .15s}
+button.act:hover{filter:brightness(1.08); transform:translateY(-2px)}
+.row{display:flex; gap:9px; flex-wrap:wrap}
+
+/* ── Person mit Stimmung ── */
+.who{display:flex; gap:13px; align-items:center}
+.face{position:relative; flex:0 0 auto; width:96px; height:96px; border-radius:12px; overflow:hidden;
+  border:1px solid var(--line); background-size:cover; background-position:center 10%;
+  filter:var(--face-filter,none); box-shadow:0 14px 30px -20px rgba(0,0,0,.9); transition:box-shadow .3s}
+.face:after{content:""; position:absolute; inset:0; background:var(--face-tint,none); mix-blend-mode:var(--face-blend,normal)}
+.who-name{font-size:15px; font-weight:600; letter-spacing:-.01em; line-height:1.2}
+.who-job{font-size:13px; color:var(--muted); margin-top:1px}
+.stimmung{margin-top:4px; display:inline-flex; align-items:center; gap:6px; font-family:var(--mono); font-size:10px;
+  letter-spacing:.12em; text-transform:uppercase; color:var(--accent); border:1px solid var(--accent);
+  border-radius:999px; padding:3px 9px}
+
+/* ── Leseband ── */
+/* Zwei schmale Zeilen statt zweier Kästen */
+.zahlen{display:flex; flex-direction:column; gap:9px}
+.zrow{display:grid; grid-template-columns:1fr auto; gap:2px 8px; align-items:baseline}
+.zlab{font-family:var(--mono); font-size:9px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted)}
+.znum{font-family:var(--mono); font-size:15px; font-weight:600; color:var(--accent)}
+.zrow .meter{grid-column:1 / -1; margin-top:3px; height:7px}
+.zhinweis{grid-column:1 / -1; font-size:11px; color:var(--muted); margin-top:3px}
+/* Aufklappbare Kästen: zu, bis man sie braucht */
+.person{padding:10px 12px}
+.falt{padding:8px 14px}
+/* Waehrend des Festlegens braucht die Spalte allen Platz fuer die Balken. */
+body.raten .side > .panel:first-child, body.raten .side > .panel:last-child{display:none}
+body.raten .zahlen{padding:10px 14px}
+.falt-kopf{display:flex; align-items:center; gap:9px; width:100%; background:none; border:none; padding:2px 0;
+  cursor:pointer; text-align:left; color:inherit}
+.falt-kopf .eyebrow{flex:1 1 auto}
+.falt-kopf b{font-family:var(--mono); font-size:11px; color:var(--accent-2); font-weight:600}
+.falt-kopf .pfeil{font-size:10px; color:var(--muted); transition:transform .2s}
+.falt.auf .falt-kopf .pfeil{transform:rotate(180deg)}
+.falt-koerper{margin-top:9px}
+.lesekopf{display:flex; align-items:baseline; justify-content:space-between; gap:10px}
+.hval{font-family:var(--mono); font-size:19px; font-weight:600; letter-spacing:-.03em; line-height:1;
+  color:var(--accent); text-shadow:var(--glow)}
+.hval span{font-size:10px; font-weight:400; color:var(--muted); letter-spacing:.16em; margin-left:5px; text-shadow:none}
+.dims{display:flex; flex-direction:column; gap:6px; margin-top:9px}
+.dimrow .dh{display:flex; align-items:baseline; gap:8px; font-size:12.5px; margin-bottom:3px}
+.dimrow .dh b{flex:0 0 auto}
+.dimrow .pol{flex:1 1 0; min-width:0; font-family:var(--mono); font-size:8.5px; color:var(--muted);
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap; text-align:right}
+.dimrow .dh .v{font-family:var(--mono); font-size:11.5px; color:var(--accent-2)}
+.cells{display:flex; gap:2px; height:20px; align-items:flex-end}
+.cells i{flex:1; display:block; background:var(--accent); border-radius:3px 3px 2px 2px; min-height:2px; opacity:.85;
+  transition:height .5s cubic-bezier(.4,0,.15,1)}
+.cells i.mid{opacity:.5}
+
+.truth{position:relative; height:0}
+.truth i{position:absolute; top:-3px; width:9px; height:9px; border-radius:50%; background:var(--accent-2);
+  box-shadow:0 0 10px var(--accent-2); transform:translateX(-50%)}
+
+/* ── Notizen und Funde ── */
+.notes{list-style:none; margin:9px 0 0; padding:0; display:flex; flex-direction:column; gap:5px}
+.notes li{font-size:12.5px; color:var(--ink); background:var(--surface-2); border:1px solid var(--line-soft);
+  border-radius:9px; padding:6px 10px; line-height:1.4}
+.notes li.offen{color:var(--muted); font-style:italic; background:transparent; border-style:dashed}
+.notes li.neu{animation:rise .4s cubic-bezier(.2,.8,.3,1) both}
+.notes-leer{font-size:12.5px; color:var(--muted); font-style:italic}
+
+/* ── Balken ── */
+.meter{height:9px; border-radius:99px; background:var(--surface-2); border:1px solid var(--line-soft);
+  overflow:hidden; margin-top:9px}
+.meter i{display:block; height:100%; border-radius:99px; transition:width .6s cubic-bezier(.4,0,.15,1)}
+.meter.bereit i{background:linear-gradient(90deg,var(--STA),var(--EFF),var(--SIC))}
+.meter.auf i{background:linear-gradient(90deg,var(--SIC),var(--EFF),var(--STA))}
+
+/* ── Festlegen: fünf Zeilen, je fünf Stufen ── */
+.rateliste{display:flex; flex-direction:column; gap:5px}
+.ratezeile{display:flex; align-items:center; gap:7px}
+/* Das Ratefeld ersetzt den Verlauf an Ort und Stelle — kein Fenster,
+   kein Überlager, dieselbe Fläche. */
+.ratefeld{flex:1; min-height:0; overflow-y:auto; padding:2px 14px 12px 2px}
+.rz{display:grid; grid-template-columns:150px 1fr auto; gap:4px 16px; align-items:center;
+  padding:11px 0; border-bottom:1px solid var(--line-soft)}
+.rz:last-child{border-bottom:none}
+.rz-name b{display:block; font-size:15px; font-weight:600}
+.rz-name span{display:block; font-family:var(--mono); font-size:9px; color:var(--muted); margin-top:2px;
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.rz .cells{height:30px}
+.ratezeile{gap:5px; margin:0}
+.ratezeile button{flex:0 0 auto; width:42px; padding:7px 0; font-size:12.5px; font-family:var(--mono); font-size:11px;
+  background:var(--surface); border:1px solid var(--line); border-radius:7px; color:var(--muted); cursor:pointer;
+  transition:border-color .12s, background .12s, color .12s}
+.ratezeile button:hover{border-color:var(--accent); color:var(--ink)}
+/* Waehrend des Festlegens ist die Spalte der aktive Bereich. */
+#lesebandBox.dran{border-color:var(--accent); box-shadow:var(--glow)}
+#lesebandBox.dran #lesebandTitel{color:var(--accent)}
+.ratehinweis{font-family:var(--mono); font-size:9.5px; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--muted); margin-bottom:9px; line-height:1.7}
+.ratehinweis b{color:var(--ink)}
+button.pick.riskant{border-color:var(--STA)}
+.ratezeile button.an{background:var(--accent); border-color:var(--accent); color:var(--accent-ink); font-weight:600}
+button.act[disabled]{opacity:.4; cursor:default; box-shadow:none; transform:none}
+
+/* ── Waren: alle drei müssen auf einen Blick zu sehen sein, der
+      ausführliche Text steht im Koffer ── */
+.prod{display:grid; gap:6px}
+button.prod{display:flex; align-items:baseline; gap:12px; text-align:left; font:inherit; color:var(--ink);
+  background:var(--surface); border:1px solid var(--line); border-radius:11px; padding:9px 11px 9px 13px;
+  cursor:pointer; transition:border-color .15s, transform .15s, box-shadow .15s}
+button.prod:hover{border-color:var(--accent); transform:translateY(-1px); box-shadow:var(--glow)}
+button.prod b{flex:0 0 auto; font-size:14.5px; font-weight:600; letter-spacing:-.01em; min-width:88px}
+button.prod em{flex:1 1 auto; font-style:normal; font-size:13.5px; color:var(--muted); line-height:1.35}
+button.prod .key{flex:0 0 auto; font-family:var(--mono); font-size:10px; color:var(--muted);
+  border:1px solid var(--line); border-radius:6px; min-width:21px; padding:2px 0; text-align:center}
+.tool.stumm{opacity:.5}
+.tool .zahl{font-family:var(--mono); font-size:12px; color:var(--accent-ink); background:var(--accent);
+  border-radius:999px; min-width:19px; padding:1px 6px; text-align:center; font-weight:600}
+/* Der Koffer im Überblick */
+.ware{border:1px solid var(--line-soft); border-radius:11px; padding:12px 14px; margin-bottom:8px;
+  background:var(--surface)}
+.ware.weg{opacity:.45}
+.ware b{font-size:15px; font-weight:600}
+.ware .kurz{font-size:13.5px; color:var(--accent-2); margin:2px 0 6px}
+.ware .lang{font-size:13px; color:var(--muted); line-height:1.5}
+.kasse{font-family:var(--mono); font-size:12px; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--muted); margin-bottom:12px}
+.kasse b{color:var(--accent); font-size:15px}
+.wmenge{display:block; font-family:var(--mono); font-size:10.5px; color:var(--accent-2); margin-top:2px}
+.ware .haken{font-size:12.5px; color:var(--STA); margin-top:6px; line-height:1.45}
+
+/* ── Auflösung ── */
+.verdict .big{font-size:25px; font-weight:600; letter-spacing:-.02em; line-height:1.15}
+.treffer{display:inline-block; font-family:var(--mono); font-size:9px; letter-spacing:.14em; padding:2px 7px;
+  border:1px solid; border-radius:5px; margin-left:8px; vertical-align:2px}
+.treffer.ja{color:var(--SIC); border-color:var(--SIC)}
+.treffer.nah{color:var(--EFF); border-color:var(--EFF)}
+.treffer.nein{color:var(--STA); border-color:var(--STA)}
+table.bil{width:100%; border-collapse:collapse; font-size:13px; margin-top:4px}
+table.bil td{padding:6px 8px 6px 0; border-bottom:1px solid var(--line-soft); vertical-align:top; color:var(--muted)}
+table.bil td.n{font-family:var(--mono); font-size:11.5px; text-align:right; white-space:nowrap}
+table.bil tr.hi td{color:var(--ink)}
+table.bil tr.hi td.n{color:var(--accent); font-weight:600}
+.stufe{display:inline-block; font-family:var(--mono); font-size:9px; letter-spacing:.14em; padding:2px 7px;
+  border:1px solid; border-radius:5px; margin-left:6px; color:var(--muted); border-color:var(--line)}
+.stufe.pos{color:var(--SIC); border-color:var(--SIC)}
+.stufe.neg{color:var(--STA); border-color:var(--STA)}
+
+/* ── Überlagerungen ── */
+.scrim{position:fixed; inset:0; z-index:50; background:rgba(0,0,0,.74)}
+.scrim[hidden]{display:none}
+.modal{position:fixed; z-index:55; left:50%; top:50%; transform:translate(-50%,-50%);
+  width:min(760px, calc(100vw - 32px)); max-height:min(84vh, 900px); overflow-y:auto;
+  background-color:var(--paper);                    /* deckt, sonst scheint die Seite durch */
+  background-image:linear-gradient(var(--surface-2), var(--surface-2));
+  border:1px solid var(--line); border-radius:var(--r); padding:26px 28px;
+  box-shadow:0 40px 80px -40px rgba(0,0,0,.9)}
+.modal[hidden]{display:none}
+.modal h3{font-size:19px; font-weight:600; margin:0 0 14px; letter-spacing:-.01em}
+.modal p{font-size:13.5px; color:var(--muted); max-width:76ch}
+.modal p b{color:var(--ink)}
+.modal .zu{position:absolute; right:16px; top:14px; background:none; border:none; color:var(--muted);
+  font-size:22px; line-height:1; cursor:pointer; padding:4px 8px}
+.keys{margin-top:18px; padding-top:14px; border-top:1px solid var(--line-soft); font-family:var(--mono);
+  font-size:10.5px; letter-spacing:.1em; color:var(--muted); line-height:2.4}
+.keys b{color:var(--accent-2); font-weight:500; border:1px solid var(--line); border-radius:5px; padding:2px 6px}
+
+@media (max-width:900px){
+  .grid{grid-template-columns:1fr}
+  .side{position:fixed; top:0; right:0; bottom:0; z-index:52; width:min(350px, 88vw); background:var(--paper);
+    border-left:1px solid var(--line); padding:18px 16px; transform:translateX(100%); transition:transform .25s ease}
+  .side.auf{transform:none}
+  .nurschmal{display:inline-flex !important}
+}
+.nurschmal{display:none}
+@media (max-width:760px){
+  .rz{grid-template-columns:1fr; gap:6px}
+  .rz .cells{height:24px}
+  .ratezeile button{flex:1 1 0; width:auto}
+}
+@media (max-width:620px){
+  .wrap{padding:10px 14px 8px; gap:9px}
+  h1{font-size:18px}
+  .line.er .txt{font-size:17px}
+  .akte .akt:not(.now){display:none}
+  #choices{max-height:52vh}
+  .raum{height:80px}
+}
+@media (prefers-reduced-motion:reduce){ *{animation-duration:.001s !important; transition-duration:.001s !important} }
 </style>
 </head>
-<body>
+<body data-theme="tinte">
+<div class="bg" aria-hidden="true"></div>
+<div class="bg-pattern" aria-hidden="true"></div>
+<div class="bg-grain" aria-hidden="true"></div>
+
 <div class="wrap">
-  <div class="eyebrow">Drei Übungen · bayessches Update</div>
-  <h1>Menschen lesen</h1>
-  <p>Drei kleine Spiele zu derselben Frage: <b>welche Frage trennt überhaupt etwas?</b>
-  Man übt nicht, Antworten zu deuten — man übt, vorher zu wissen, welche Frage sich lohnt.
-  Alles läuft im Browser, ohne Server, ohne Konto, ohne Netz.</p>
+  <header class="top">
+    <div>
+      <div class="eyebrow">Ein Gespräch · fünf Phasen</div>
+      <h1>Vierzig Minuten für einen Fremden</h1>
+    </div>
+    <div class="tools">
+      <button class="tool nurschmal" id="sideToggle">Dein Bild von ihm</button>
+      <button class="tool" id="kofferToggle">Koffer <b class="zahl" id="warenZahl">3</b></button>
+      <button class="tool" id="musikToggle" title="Hintergrundmusik">♪ <span id="musikText">an</span></button>
+      <button class="tool" id="infoToggle">Was das Modell tut</button>
+      <div class="themepick">
+        <button class="tool" id="themeToggle" aria-haspopup="true" aria-expanded="false">
+          <span class="theme-dot" id="themeDot"></span><span id="themeName">Tinte</span><span class="caret">▾</span>
+        </button>
+        <div class="theme-menu" id="themeBar" hidden aria-label="Farbschema wählen"></div>
+      </div>
+    </div>
+  </header>
 
-  <div class="karten">
-    <a class="karte" href="gespraech.html">
-      <b>Vierzig Minuten für einen Fremden</b>
-      <em>fünf Phasen · 3125 Zustände · mit Bild und Ton</em>
-      <span>Ein Gespräch mit einem einzigen Menschen. Lies seine Persönlichkeit, dann seine Motive,
-      dann forsche vorsichtig nach dem Privaten — und verkauf ihm am Ende etwas aus deinem Koffer.
-      Jede Frage kostet Geduld und macht ihn wachsamer.</span>
-    </a>
+  <div class="akte" id="akte"></div>
 
-    <a class="karte" href="motivdiagnose.html">
-      <b>Vier Fragen für einen Fremden</b>
-      <em>fünf Motive · vierzig Personen · fünfzehn Farbschemata</em>
-      <span>Der Vorgänger. Vier Fragen, um das Hauptmotiv einer fremden Person zu erkennen,
-      bewertet mit einer logarithmischen Regel: überzogene Sicherheit kostet mehr, als sie einbringt.</span>
-    </a>
+  <section class="menue" id="menue">
+    <div class="eyebrow">Wen besuchst du?</div>
+    <div class="mkarten" id="mkarten"></div>
+    <div class="mkonto" id="mkonto"></div>
+    <div class="mzeilen">
+      <button class="mzeile" id="mLaden"><b>Laden</b>
+        <span>Nachschub kaufen. Ein Stück kostet dort rund ein Drittel dessen, was du dafür bekommst.</span></button>
+      <button class="mzeile" id="mInfo"><b>Was das Modell tut</b>
+        <span>Die Rechnung dahinter, und was daran belegt ist.</span></button>
+      <button class="mzeile" id="mReset"><b>Zurücksetzen</b>
+        <span>Kasse, Bestand und alle gespeicherten Einstellungen löschen.</span></button>
+    </div>
+  </section>
 
-    <a class="karte" href="bigfive_rate(1).html">
-      <b>Fünf Merkmale, sechs Fragen</b>
-      <em>Big Five · 32 Zustände</em>
-      <span>Die erste Fassung. Fünf Persönlichkeitsmerkmale, jeweils hoch oder niedrig,
-      sechs Fragen, um sie auseinanderzuhalten.</span>
-    </a>
+  <div class="grid">
+    <main>
+      <div class="raum" id="raum" hidden aria-hidden="true"></div>
+      <div class="chat">
+        <div class="talk" id="talk"></div>
+        <div class="ratefeld" id="ratefeld" hidden></div>
+        <button class="runter" id="runter">↓ Neueste</button>
+      </div>
+      <div id="choices"></div>
+    </main>
+
+    <aside class="side">
+      <section class="panel person">
+        <div class="who">
+          <div class="face" id="face"></div>
+          <div>
+            <div class="who-name" id="whoName"></div>
+            <div class="stimmung" id="stimmung">—</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel zahlen">
+        <div class="zrow">
+          <span class="zlab">Bereitschaft</span><span class="znum" id="bereitVal">30</span>
+          <div class="meter bereit"><i id="bereitBar" style="width:30%"></i></div>
+        </div>
+        <div class="zrow" id="aufRow" hidden>
+          <span class="zlab">Auffälligkeit</span><span class="znum" id="aufVal">0</span>
+          <div class="meter auf"><i id="aufBar" style="width:0%"></i></div>
+          <div class="zhinweis" id="aufText"></div>
+        </div>
+      </section>
+
+      <section class="panel" id="lesebandBox">
+        <div class="lesekopf"><span class="eyebrow" id="lesebandTitel">Dein Bild von ihm</span>
+          <span class="hval" id="hval">–<span>BIT</span></span></div>
+        <div class="dims" id="dims"></div>
+      </section>
+
+      <section class="panel">
+        <div class="falt" id="privatBox" hidden>
+          <button class="falt-kopf" data-ziel="privatListe">
+            <span class="eyebrow">Was du privat weißt</span><b id="privatZahl">0/4</b><span class="pfeil">▾</span></button>
+          <ul class="notes falt-koerper" id="privatListe" hidden></ul>
+        </div>
+        <div class="falt">
+          <button class="falt-kopf" data-ziel="notes">
+            <span class="eyebrow">Notizen</span><b id="notizZahl">0</b><span class="pfeil">▾</span></button>
+          <ul class="notes falt-koerper" id="notes" hidden></ul>
+        </div>
+      </section>
+    </aside>
   </div>
 
-  <footer>
-    Was an dem Modell belegt ist und was nicht, steht in
-    <a href="wissenschaftliche_pruefung.md">der wissenschaftlichen Prüfung</a>.
-    Kurz gesagt: die Bit-Rechnung stimmt, die Items sind erfunden, und das Gesicht sagt nichts.
-  </footer>
+  <div class="modal" id="koffer" hidden role="dialog" aria-modal="true" aria-label="Dein Koffer">
+    <button class="zu" id="kofferZu" aria-label="Schließen">×</button>
+    <h3>Dein Koffer</h3>
+    <p>Drei Waren. Was du anbietest, entscheidest du danach, was du über den Menschen vor dir gelernt hast —
+    dieselben drei Dinge passen bei jedem anders.</p>
+    <div id="kofferListe"></div>
+    <div class="row" style="margin-top:16px"><button class="act" id="zumLaden">Zum Laden</button></div>
+  </div>
+
+  <div class="modal" id="laden" hidden role="dialog" aria-modal="true" aria-label="Laden">
+    <button class="zu" id="ladenZu" aria-label="Schließen">×</button>
+    <h3>Laden</h3>
+    <p>Nachschub kostet einen Bruchteil dessen, was du draußen dafür bekommst. Was du hier kaufst,
+    liegt beim nächsten Gespräch im Koffer.</p>
+    <div id="ladenListe"></div>
+  </div>
+
+  <div class="scrim" id="scrim" hidden></div>
+  <div class="modal" id="info" hidden role="dialog" aria-modal="true" aria-label="Was das Modell tut">
+    <button class="zu" id="infoZu" aria-label="Schließen">×</button>
+    <h3>Was das Modell tut, und was es nicht kann</h3>
+    <p><b>Fünf Merkmale, fünf Stufen.</b> Jedes Persönlichkeitsmerkmal kann −2 bis +2 stehen. Das sind 5⁵ = 3125
+    mögliche Personen. Vor dem ersten Wort verteilt sich dein Glaube nach einer Glockenkurve auf diese 3125,
+    verschoben durch ein Rollenklischee. Jede Antwort ist ein Datenpunkt: P(Person | Antwort) ∝
+    P(Antwort | Person) · P(Person). Dasselbe noch einmal für die Motive.</p>
+    <p><b>Entropie</b> misst, wie unentschieden dein Bild ist: 11,61 bit bei völliger Ratlosigkeit, 0 bei Gewissheit.
+    Über jeder Frage steht, wie viel sie verspricht. Der ganze Sinn der zweiten und dritten Phase ist, mit möglichst
+    wenigen Fragen möglichst weit zu kommen — deshalb kannst du jederzeit abbrechen und weitergehen.</p>
+    <p><b>Die Person steht fest.</b> Sie wird nicht aus dem Prior gezogen. Das Rollenklischee, mit dem du startest,
+    ist deshalb genau das: ein Klischee, und bei ihm ist es überwiegend falsch.</p>
+    <p><b>Die vierte Phase</b> hat keine Bits. Privates lässt sich nicht ausrechnen, nur erfragen, und Fragen kosten.
+    Jede hat einen Preis in Auffälligkeit; eine, die an etwas anknüpft, das er selbst erzählt hat, kostet weniger.
+    Bei zehn steht er auf. Ob er sich öffnet, hängt an deiner Auffälligkeit und an seiner Stimmung, nicht am Zufall
+    allein.</p>
+    <p><b>Der Verkauf</b> trennt zwei Dinge. <i>Was</i> du anbietest, misst sich an seinen Motiven und an dem, was du
+    privat erfahren hast. <i>Wie</i> du es anbietest, misst sich an seiner Persönlichkeit. Die Wertung gewichtet
+    Autonomieunterstützung rund dreimal so stark wie Motivpassung. <span id="belegA"></span></p>
+    <p><span id="belegC"></span></p>
+    <p><span id="belegAsym"></span></p>
+    <p><b>Wo es dünn bleibt.</b> <span id="belegItems"></span></p>
+    <p><b>Und das Gesicht?</b> Es trägt null bit. Persönlichkeitsurteile aus Standbildern erreichen bestenfalls kleine
+    und über Studien hinweg widersprüchliche Trefferquoten (Jaeger, Sleegers, Stern, Penke &amp; Jones,
+    <i>European Journal of Personality</i>, 2024). Die Stimmung im Rahmen ist keine Diagnose — sie zeigt nur, wie er
+    gerade reagiert.</p>
+    <div class="keys" id="keys"></div>
+  </div>
 </div>
+
+<script>const PERSONEN = [];</script>
+<script src="welt.js"></script>
+<script src="personen/baumgartner.js"></script>
+<script>
+/* ═══════════════ Themes ═══════════════ */
+const THEMES = [
+  {id:"tinte",label:"Tinte",dot:"#e8b04b"}, {id:"papier",label:"Papier",dot:"#2C5F8A"},
+  {id:"blaupause",label:"Blaupause",dot:"#7fd1ff"}, {id:"terminal",label:"Terminal",dot:"#ffb03c"},
+  {id:"neon",label:"Neon",dot:"#ff2ea6"}, {id:"cyberpunk",label:"Cyberpunk",dot:"#00f0ff"},
+  {id:"synthwave",label:"Synthwave",dot:"#7a5cff"}, {id:"miami",label:"Miami",dot:"#ff6f61"},
+  {id:"sakura",label:"Sakura",dot:"#ff9fc7"}, {id:"dschungel",label:"Dschungel",dot:"#4ade80"},
+  {id:"matrix",label:"Matrix",dot:"#00ff41"}, {id:"ozean",label:"Ozean",dot:"#38bdf8"},
+  {id:"kosmos",label:"Kosmos",dot:"#9d8cff"}, {id:"ekko",label:"Ekko",dot:"#2ee6c4"},
+  {id:"lcars",label:"LCARS",dot:"#ff9c00"}
+];
+const themeBar = document.getElementById("themeBar"), themeToggle = document.getElementById("themeToggle");
+themeBar.innerHTML = THEMES.map(t =>
+  `<button class="theme-btn" data-set="${t.id}"><span class="theme-dot" style="--dot:${t.dot}"></span><span class="label">${t.label}</span></button>`).join("");
+function setTheme(id){
+  const t = THEMES.find(x => x.id === id) || THEMES[0];
+  document.body.dataset.theme = t.id;
+  themeBar.querySelectorAll(".theme-btn").forEach(b => b.classList.toggle("active", b.dataset.set === t.id));
+  document.getElementById("themeName").textContent = t.label;
+  document.getElementById("themeDot").style.setProperty("--dot", t.dot);
+  try{ localStorage.setItem("gespraech-theme", t.id); }catch(e){}
+}
+function themeMenu(auf){ themeBar.hidden = !auf; themeToggle.setAttribute("aria-expanded", auf?"true":"false"); }
+themeToggle.onclick = e => { e.stopPropagation(); themeMenu(themeBar.hidden); };
+themeBar.addEventListener("click", e => { const b = e.target.closest(".theme-btn"); if(b){ setTheme(b.dataset.set); themeMenu(false);} });
+document.addEventListener("click", e => { if(!themeBar.hidden && !e.target.closest(".themepick")) themeMenu(false); });
+(function(){ let s=null; try{ s=localStorage.getItem("gespraech-theme"); }catch(e){}
+  setTheme(THEMES.some(t=>t.id===s) ? s : "tinte"); })();
+
+const scrim = document.getElementById("scrim"), info = document.getElementById("info");
+const seite = document.querySelector(".side");
+const koffer = document.getElementById("koffer");
+function zuOffen(){ return !info.hidden || !koffer.hidden || !document.getElementById("laden").hidden
+  || seite.classList.contains("auf"); }
+function zeigeInfo(a){ setTimeout(waehleSpur, 0); info.hidden = !a; scrim.hidden = !zuOffen(); }
+function zeigeKoffer(a){ setTimeout(waehleSpur, 0); if(a) fuelleKoffer(); koffer.hidden = !a; scrim.hidden = !zuOffen(); }
+const laden = document.getElementById("laden");
+function zeigeLaden(a){ setTimeout(waehleSpur, 0); if(a){ fuelleLaden(); koffer.hidden = true; }
+  laden.hidden = !a; scrim.hidden = !zuOffen(); }
+function zeigeSeite(a){ setTimeout(waehleSpur, 0); seite.classList.toggle("auf", a); scrim.hidden = !zuOffen(); }
+document.getElementById("infoToggle").onclick = () => zeigeInfo(true);
+document.getElementById("infoZu").onclick = () => zeigeInfo(false);
+document.getElementById("kofferToggle").onclick = () => zeigeKoffer(koffer.hidden);
+document.getElementById("kofferZu").onclick = () => zeigeKoffer(false);
+document.getElementById("zumLaden").onclick = () => zeigeLaden(true);
+document.getElementById("ladenZu").onclick = () => zeigeLaden(false);
+document.getElementById("sideToggle").onclick = () => zeigeSeite(!seite.classList.contains("auf"));
+document.getElementById("musikToggle").onclick = () => musikSchalten(!musikAn);
+document.addEventListener("pointerdown", function ersteBeruehrung(){
+  document.removeEventListener("pointerdown", ersteBeruehrung);
+  if(musikAn){ laufend = null; waehleSpur(); }
+}, {once:false});
+scrim.onclick = () => { zeigeInfo(false); zeigeKoffer(false); zeigeLaden(false); zeigeSeite(false); };
+
+/* Aufklappbare Kaesten. Zu ist der Normalfall, damit die Spalte ohne
+   Scrollen auskommt; wer sie einmal aufmacht, findet sie offen wieder. */
+function falte(kopf, auf){
+  const kasten = kopf.closest(".falt"), koerper = document.getElementById(kopf.dataset.ziel);
+  kasten.classList.toggle("auf", auf);
+  koerper.hidden = !auf;
+  try{ localStorage.setItem("falt-" + kopf.dataset.ziel, auf ? "1" : "0"); }catch(e){}
+}
+document.querySelectorAll(".falt-kopf").forEach(k => {
+  let auf = false;
+  try{ auf = localStorage.getItem("falt-" + k.dataset.ziel) === "1"; }catch(e){}
+  falte(k, auf);
+  k.onclick = () => falte(k, document.getElementById(k.dataset.ziel).hidden);
+});
+
+/* ═══════════════ Musik ═══════════════
+   Drei Spuren, je nachdem, wo du gerade bist: im Menü, im Gespräch
+   oder im Verkauf. Die Dateien liegen in musik/ neben dieser Datei;
+   fehlt eine, bleibt es an der Stelle still. Browser lassen Ton erst
+   nach der ersten Berührung zu, deshalb startet sie beim ersten Klick. */
+const MUSIK = {
+  menue:     "musik/menu.mp3",       // Koffer und Erklärfenster
+  shop:      "musik/shop.mp3",       // der Laden
+  ingame:    "musik/ingame.mp3",     // das laufende Gespräch
+  gewonnen:  "musik/won.mp3",        // er hat gekauft
+  verloren:  "musik/verloren.mp3"    // kein Abschluss oder rausgeworfen
+};
+const LAUTSTAERKE = 0.35;
+const spuren = {};
+let musikAn = true, laufend = null, blende = null;
+try{ musikAn = localStorage.getItem("musik") !== "aus"; }catch(e){}
+
+function spur(id){
+  if(spuren[id] !== undefined) return spuren[id];
+  const a = new Audio(MUSIK[id]);
+  a.loop = true; a.volume = 0; a.preload = "auto";
+  a.addEventListener("error", () => { spuren[id] = null; });
+  spuren[id] = a;
+  return a;
+}
+function setzeMusik(id){
+  if(!musikAn || id === laufend) return;
+  const alt = laufend ? spuren[laufend] : null;
+  const neu = spur(id);
+  laufend = id;
+  if(!neu) return;
+  neu.play().catch(() => {});                 // vor der ersten Berührung abgelehnt
+  clearInterval(blende);
+  blende = setInterval(() => {
+    let fertig = true;
+    if(neu){ neu.volume = Math.min(LAUTSTAERKE, neu.volume + 0.04); if(neu.volume < LAUTSTAERKE) fertig = false; }
+    if(alt){ alt.volume = Math.max(0, alt.volume - 0.04);
+             if(alt.volume > 0) fertig = false; else alt.pause(); }
+    if(fertig) clearInterval(blende);
+  }, 60);
+}
+function musikAus(){
+  Object.keys(spuren).forEach(k => { if(spuren[k]) { spuren[k].pause(); spuren[k].volume = 0; } });
+  clearInterval(blende); laufend = null;
+}
+function musikSchalten(an){
+  musikAn = an;
+  document.getElementById("musikText").textContent = an ? "an" : "aus";
+  document.getElementById("musikToggle").classList.toggle("stumm", !an);
+  try{ localStorage.setItem("musik", an ? "an" : "aus"); }catch(e){}
+  if(an) waehleSpur(); else musikAus();
+}
+/* Welche Spur passt gerade? Menü schlägt alles, sonst entscheidet die Phase. */
+function waehleSpur(){
+  if(!musikAn) return;
+  if(!document.getElementById("laden").hidden) return setzeMusik("shop");
+  if(document.body.classList.contains("imMenue")) return setzeMusik("menue");
+  if(!S) return;
+  if(!document.getElementById("info").hidden || !document.getElementById("koffer").hidden) return setzeMusik("menue");
+  if(S.phase >= 5) return setzeMusik(S.verkauft ? "gewonnen" : "verloren");
+  setzeMusik("ingame");
+}
+
+/* ═══════════════ Zustandsraum ═══════════════ */
+const STUFEN = [-2,-1,0,1,2];
+const GLOCKE = {"-2":0.10,"-1":0.22,"0":0.36,"1":0.22,"2":0.10};
+function baueZustaende(){ let o=[[]]; for(let d=0;d<5;d++){ const n=[]; o.forEach(s=>STUFEN.forEach(v=>n.push(s.concat(v)))); o=n; } return o; }
+const STATES = baueZustaende(), NS = STATES.length, MAXH = Math.log2(NS);
+const norm = v => { const s=v.reduce((a,b)=>a+b,0); return v.map(x=>x/s); };
+const H = p => -p.reduce((a,x)=> x>0 ? a + x*Math.log2(x) : a, 0);
+const nk = (x,d) => x.toFixed(d===undefined?2:d).replace(".", ",");
+const vz = x => x > 0 ? "+"+x : String(x);
+const vzk = (x,d) => { const dd=d===undefined?1:d, r=Number(x.toFixed(dd)); return (r>0?"+":"")+nk(r,dd); };
+const WORT = ["null","eine","zwei","drei","vier","fünf","sechs","sieben","acht","neun"];
+const wort = n => WORT[n]!==undefined ? WORT[n] : String(n);
+const gross = s => s.charAt(0).toUpperCase()+s.slice(1);
+
+function startPrior(dims, shift){
+  return norm(STATES.map(s => { let p=1;
+    for(let d=0; d<5; d++){ const v=s[d]; p *= GLOCKE[String(v)]*Math.exp((shift&&shift[dims[d]]?shift[dims[d]]:0)*v); }
+    return p; }));
+}
+function likelihood(frage, dims, feld){
+  const A = frage.a.length, L = [];
+  for(let i=0;i<A;i++) L.push(new Float64Array(NS));
+  const lad = frage.a.map(a => dims.map(d => (a[feld] && a[feld][d]) || 0));
+  for(let k=0;k<NS;k++){
+    const s = STATES[k]; let mx=-1e9; const sc=[];
+    for(let i=0;i<A;i++){ let v=0; for(let d=0;d<5;d++) v += s[d]*lad[i][d];
+      v *= DATA.sharpness; sc.push(v); if(v>mx) mx=v; }
+    let sum=0; for(let i=0;i<A;i++){ sc[i]=Math.exp(sc[i]-mx); sum+=sc[i]; }
+    for(let i=0;i<A;i++) L[i][k]=sc[i]/sum;
+  }
+  return L;
+}
+const LIK = {};
+function lik(f, dims, feld){ if(!LIK[f.id]) LIK[f.id] = likelihood(f, dims, feld); return LIK[f.id]; }
+function eig(prior, f, dims, feld){
+  const L = lik(f, dims, feld); let hp = 0;
+  for(let i=0;i<L.length;i++){
+    let pa=0; for(let k=0;k<NS;k++) pa += L[i][k]*prior[k];
+    if(pa < 1e-12) continue;
+    hp += pa*H(norm(Array.from(L[i], (l,k)=> l*prior[k])));
+  }
+  return H(prior) - hp;
+}
+function update(prior, f, i, dims, feld){ const L = lik(f, dims, feld); return norm(Array.from(L[i], (l,k)=> l*prior[k])); }
+function seineAntwort(f, wahr, dims, feld){
+  let mx=-1e9; const sc = f.a.map(a => { let v=0; dims.forEach(d => { v += wahr[d]*((a[feld]&&a[feld][d])||0); });
+    v *= DATA.sharpness; if(v>mx) mx=v; return v; });
+  let sum=0; const p = sc.map(v => { const e=Math.exp(v-mx); sum+=e; return e; });
+  const pr = p.map(x=>x/sum); let r=Math.random(), c=0;
+  for(let i=0;i<pr.length;i++){ c+=pr[i]; if(r<c) return i; }
+  return pr.length-1;
+}
+function marginal(prior, d){ const m=[0,0,0,0,0]; for(let k=0;k<NS;k++) m[STATES[k][d]+2] += prior[k]; return m; }
+const erwartung = m => m.reduce((a,x,i)=> a + x*STUFEN[i], 0);
+function modus(m){ let b=0; for(let i=1;i<5;i++) if(m[i]>m[b]) b=i; return STUFEN[b]; }
+function abstand(g, i, wahr){ return Math.abs(modus(marginal(g,i)) - wahr); }
+
+/* ═══════════════ Spielzustand ═══════════════
+   DATA ist die Welt plus die gerade besuchte Person. Was du besitzt,
+   liegt daneben in KONTO und überlebt jedes Gespräch. */
+let DATA = null, T = null, M = null, HERO = null, S = null;
+let cfgBF = null, cfgMO = null, rateBF = null, rateMO = null;
+const KONTO = { kasse:0, bestand:{} };
+WELT.produkte.forEach(p => { KONTO.bestand[p.id] = p.bestand; });
+/* Was du besitzt, bleibt über Gespräche und über das Schließen des
+   Browsers hinweg erhalten. Zurücksetzen im Menü räumt es weg. */
+function kontoSichern(){
+  try{ localStorage.setItem("konto", JSON.stringify(KONTO)); }catch(e){}
+}
+(function kontoLaden(){
+  try{
+    const roh = JSON.parse(localStorage.getItem("konto") || "null");
+    if(roh && roh.bestand){
+      KONTO.kasse = roh.kasse || 0;
+      WELT.produkte.forEach(p => {
+        if(typeof roh.bestand[p.id] === "number") KONTO.bestand[p.id] = roh.bestand[p.id];
+      });
+    }
+  }catch(e){}
+})();
+const NOFF = 3;
+const stueck = () => WELT.produkte.reduce((a,p) => a + KONTO.bestand[p.id], 0);
+const geld = n => n.toLocaleString('de-DE') + ' €';
+const PHASEN = [
+  {n:"Phase eins", t:"Ankunft"}, {n:"Phase zwei", t:"Wer ist das?"},
+  {n:"Phase drei", t:"Was will er?"}, {n:"Phase vier", t:"Was ihn bewegt"},
+  {n:"Phase fünf", t:"Der Verkauf"}, {n:"Schluss", t:"Auflösung"}
+];
+
+function neuerZustand(){
+  S = {
+    phase:0, knoten:"start", wechsel:0,
+    talk:[], neu:0, fakten:[], gesagt:[], verlauf:[], gefunden:[], spuren:[],
+    stimmung:"neutral",
+    bfGlaube:null, bfGestellt:[], bfLog:[],
+    moGlaube:null, moGestellt:[], moLog:[],
+    auf:0, privGestellt:[], privLog:[],
+    produkt:null, zug:0, zugLog:[], verkauft:null, rateLog:[],
+    raus:false
+  };
+  S.bfPrior = startPrior(T, DATA.rollenprior);  S.bfGlaube = S.bfPrior.slice();
+  S.moPrior = startPrior(M, null);              S.moGlaube = S.moPrior.slice();
+  S.bereit  = DATA.verkauf.start;
+}
+
+/* Eine Person aufschlagen: Welt und Person zusammenlegen, die
+   zwischengespeicherten Wahrscheinlichkeiten wegwerfen, die Fragen und
+   das Festlegen neu verdrahten. */
+function ladePerson(person){
+  DATA = Object.assign({}, WELT, person);
+  T = DATA.traits; M = DATA.motives; HERO = DATA.hero;
+  Object.keys(LIK).forEach(k => delete LIK[k]);
+  Object.keys(BILD).forEach(k => delete BILD[k]);
+  neuerZustand();
+  cfgBF = { key:"bf", pool:DATA.bigfive, glaube:"bfGlaube", gestellt:"bfGestellt", log:"bfLog",
+    dims:T, feld:"l", wahr:HERO.z, weiterText:"Genug. Ich weiß, wie er tickt.", fertig:() => rateRunde(rateBF) };
+  cfgMO = { key:"mo", pool:DATA.motivfragen, glaube:"moGlaube", gestellt:"moGestellt", log:"moLog",
+    dims:M, feld:"aff", wahr:HERO.m, weiterText:"Genug. Ich weiß, worauf er anspringt.", fertig:() => rateRunde(rateMO) };
+  rateBF = { key:"bf", dims:T, labels:DATA.tlabels, poles:DATA.tpoles, wahr:HERO.z,
+    titel:"Merkmale", deutung:DATA.deutung, kopf:`Festlegen · für jedes Merkmal eine Stufe`,
+    aufforderung:`Du gehst die fünf Merkmale im Kopf durch und legst dich fest, bevor du weiterredest.`,
+    weiter:() => uebergang2() };
+  rateMO = { key:"mo", dims:M, labels:DATA.mlabels, poles:DATA.mpoles, wahr:HERO.m,
+    titel:"Motive", deutung:DATA.mdeutung, kopf:`Festlegen · für jedes Motiv eine Stufe`,
+    aufforderung:`Du legst dich fest, worauf er anspringt.`,
+    weiter:() => uebergang3() };
+  ladeBilder();
+  document.getElementById("whoName").textContent = HERO.name + ", " + HERO.age;
+  document.getElementById("whoName").title = HERO.job + " · " + HERO.ort;
+  if(person.theme) setTheme(person.theme);
+}
+
+/* ═══════════════ Bilder ═══════════════
+   Jede Stimmung sucht ihre Datei in bilder/. Was fehlt, fällt auf das
+   eingebettete Grundporträt zurück; die Stimmung steht dann nur als
+   Wort im Rahmen. Nichts davon ist Pflicht. */
+/* Rückfall, wenn eine Person kein Bild mitbringt: eine Silhouette,
+   kein fremdes Gesicht. */
+const GRUND = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23d9d7d1'/%3E%3Ccircle cx='32' cy='25' r='11' fill='%23b4b1aa'/%3E%3Cpath d='M9 63c0-13 10-21 23-21s23 8 23 21z' fill='%23b4b1aa'/%3E%3C/svg%3E";
+const BILD = {};
+function ladeBilder(){
+  Object.keys(DATA.stimmungen).forEach(k => {
+    const q = DATA.stimmungen[k].bild; if(!q) return;
+    const im = new Image();
+    im.onload = () => { BILD[k] = q; zeichneKopf(); };
+    im.src = q;
+  });
+  const e = document.getElementById("raum");
+  e.hidden = true;
+  const r = new Image();
+  r.onload = () => { e.style.backgroundImage = "url('" + DATA.raumbild + "')"; e.hidden = false; };
+  r.src = DATA.raumbild;
+}
+
+/* ═══════════════ Anzeige ═══════════════ */
+const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;");
+const talkEl = document.getElementById("talk"), choicesEl = document.getElementById("choices");
+const runterBtn = document.getElementById("runter");
+const amBoden = () => talkEl.scrollHeight - talkEl.scrollTop - talkEl.clientHeight < 90;
+let leserOben = false;
+talkEl.addEventListener("scroll", () => { leserOben = !amBoden(); runterBtn.classList.toggle("zeig", leserOben); });
+function pinneUnten(){ if(leserOben){ runterBtn.classList.add("zeig"); return; }
+  talkEl.scrollTop = talkEl.scrollHeight; runterBtn.classList.remove("zeig"); }
+runterBtn.onclick = () => { leserOben = false; talkEl.scrollTo({top:talkEl.scrollHeight, behavior:"smooth"});
+  runterBtn.classList.remove("zeig"); };
+
+function sag(who, text, o){ S.talk.push(Object.assign({who, text}, o||{})); S.neu++; }
+function zeichneTalk(){
+  /* Ein Wortwechsel beginnt bei deiner Zeile. Der laufende steht groß,
+     der davor kleiner, alles ältere klein und blass — sonst schreit die
+     ganze Wand gleich laut. */
+  let jetztAb = 0, davorAb = 0, gesehen = 0, letzterEr = -1;
+  for(let i = S.talk.length - 1; i >= 0; i--){
+    if(letzterEr < 0 && S.talk[i].who === "er") letzterEr = i;
+    if(S.talk[i].who === "du"){
+      gesehen++;
+      if(gesehen === 1) jetztAb = i;
+      else { davorAb = i; break; }
+    }
+  }
+  talkEl.innerHTML = S.talk.map((l,i) => {
+    const neu = (i >= S.talk.length - S.neu ? " neu" : "")
+      + " " + (l.who === "verdict" || l.who === "ergebnis" || i >= jetztAb ? "jetzt" : (i >= davorAb ? "davor" : "frueher"))
+      + (i === letzterEr ? " wichtig" : "");
+    if(l.who === "verdict" || l.who === "ergebnis") return `<div class="line${neu}">${l.text}</div>`;
+    if(l.who === "meta"){
+      if(!l.lang) return `<div class="line meta${l.warn?" warn":""}${neu}">${l.text}</div>`;
+      return `<div class="line meta${l.warn?" warn":""}${neu}">
+        <button class="meta-kopf" data-i="${i}">${l.auf?"▾":"▸"} ${l.text}</button>
+        ${l.auf ? `<div class="meta-lang">${l.lang}</div>` : ""}</div>`;
+    }
+    if(l.who === "regie") return `<div class="line regie${neu}">${esc(l.text)}</div>`;
+    const lab = l.who === "er" ? HERO.name.split(" ")[0].toUpperCase() : "DU";
+    const wie = l.wie ? `<em class="wie">(${esc(l.wie)})</em>` : "";
+    return `<div class="line ${l.who}${neu}"><span class="lab">${lab}${wie}</span>
+      <div class="txt">„${esc(l.text)}“</div></div>`;
+  }).join("");
+  S.neu = 0;
+  talkEl.querySelectorAll(".meta-kopf").forEach(b => b.onclick = () => {
+    const l = S.talk[+b.dataset.i]; l.auf = !l.auf; zeichneTalk();
+  });
+  pinneUnten();
+}
+
+function setzeStimmung(s){ if(s && DATA.stimmungen[s]) S.stimmung = s; }
+function zeichneKopf(){
+  const st = DATA.stimmungen[S.stimmung] || {t:"—"};
+  document.getElementById("face").style.backgroundImage = "url('" + (BILD[S.stimmung] || GRUND) + "')";
+  document.getElementById("stimmung").textContent = st.t;
+}
+
+function zeichneAkte(){
+  document.getElementById("akte").innerHTML = PHASEN.map((a,i) =>
+    `<div class="akt ${i===S.phase?"now":(i<S.phase?"done":"")}">${a.n}<b>${a.t}</b></div>`).join("");
+}
+
+function zeichneLeseband(){
+  const box = document.getElementById("lesebandBox");
+  const motiv = S.phase >= 2;
+  box.hidden = false;
+  const dims = motiv ? M : T, labels = motiv ? DATA.mlabels : DATA.tlabels;
+  const poles = motiv ? DATA.mpoles : DATA.tpoles, glaube = motiv ? S.moGlaube : S.bfGlaube;
+  const wahr = motiv ? HERO.m : HERO.z;
+  document.getElementById("lesebandTitel").textContent = motiv ? "Was ihn antreibt" : "Dein Bild von ihm";
+  document.getElementById("hval").innerHTML = nk(H(glaube)) + "<span>BIT</span>";
+  document.getElementById("dims").innerHTML = dims.map((d,i) => {
+    const m = marginal(glaube,i), mx = Math.max(...m), ev = erwartung(m);
+    const zellen = m.map((p,j) => `<i class="${j===2?"mid":""}" style="height:${Math.max(6,100*p/mx).toFixed(1)}%"></i>`).join("");
+    const punkt = S.phase >= 5 ? `<div class="truth"><i style="left:${((wahr[d]+2)/4*100).toFixed(1)}%"></i></div>` : "";
+    /* Die Pole stehen verkürzt in der Titelzeile; ausgeschrieben
+       erscheinen sie beim Überfahren. Das spart fünf Zeilen Höhe. */
+    return `<div class="dimrow"><div class="dh"><b>${labels[d]}</b>
+        <span class="pol" title="links: ${esc(poles[d][0])} — rechts: ${esc(poles[d][1])}">→ ${esc(poles[d][1])}</span>
+        <span class="v">${vzk(ev)}</span></div>
+      <div class="cells">${zellen}</div>${punkt}</div>`;
+  }).join("");
+
+}
+
+function zeichneNotizen(){
+  const el = document.getElementById("notes");
+  el.innerHTML = S.fakten.length
+    ? S.fakten.map((f,i) => `<li class="${i===S.fakten.length-1?"neu":""}">${esc(f)}</li>`).join("")
+    : `<li class="notes-leer">Noch nichts, was der Rede wert wäre.</li>`;
+  document.getElementById("notizZahl").textContent = S.fakten.length;
+
+  const pb = document.getElementById("privatBox");
+  pb.hidden = S.phase < 3;
+  document.getElementById("privatZahl").textContent = S.gefunden.length + "/" + DATA.privat.felder.length;
+  document.getElementById("privatListe").innerHTML = DATA.privat.felder.map(f => {
+    const da = S.gefunden.includes(f.id);
+    return `<li class="${da?"":"offen"}">${da ? esc(f.wahr) : esc(f.was) + ": noch nichts"}</li>`;
+  }).join("");
+}
+
+function zeichneBalken(){
+  const ar = document.getElementById("aufRow"); ar.hidden = S.phase < 3;
+  const a = Math.max(0, Math.min(DATA.privat.grenze, S.auf));
+  document.getElementById("aufVal").textContent = nk(a,1).replace(",0","") + " / " + DATA.privat.grenze;
+  document.getElementById("aufBar").style.width = (100*a/DATA.privat.grenze) + "%";
+  document.getElementById("aufText").textContent =
+    a < 3 ? "Er merkt nichts." : a < 6 ? "Er merkt, dass du fragst." :
+    a < 8 ? "Er weiß, dass du ihn ausfragst." : "Gleich steht er auf.";
+
+  const v = Math.max(0, Math.min(100, Math.round(S.bereit)));
+  document.getElementById("bereitVal").textContent = v + " / 100";
+  document.getElementById("bereitBar").style.width = v + "%";
+}
+
+function zeichne(){ zeichneAkte(); zeichneTalk(); zeichneKopf(); zeichneLeseband(); zeichneNotizen();
+  zeichneBalken(); zeichneWaren(); waehleSpur(); }
+
+const R = { aktiv:null, tipps:[null,null,null,null,null] };
+let gewaehlt = false;
+function sperre(){ if(gewaehlt) return true; gewaehlt = true;
+  choicesEl.querySelectorAll("button").forEach(b => b.disabled = true); return false; }
+function waehle(items){
+  gewaehlt = false;
+  /* Tragen mehrere Knöpfe dieselbe Überschrift, steht sie einmal darüber
+     statt auf jedem einzeln. Was sich je Knopf unterscheidet, wandert
+     als kurze Angabe an den rechten Rand. Beides spart Höhe, und die
+     geht sonst dem Gespräch ab. */
+  const mitTag = items.filter(i => i.tag);
+  const gleich = mitTag.length > 1 && mitTag.every(i => i.tag === mitTag[0].tag) ? mitTag[0].tag : null;
+  choicesEl.innerHTML = (gleich ? `<div class="wahlkopf">${gleich}</div>` : ``)
+    + `<div class="choices">` + items.map((it,i) => {
+      const tag = (it.tag && it.tag !== gleich) ? `<span class="tag">${it.tag}</span>` : "";
+      return `<button class="pick ${it.klasse||""}" data-i="${i}">
+        <span class="txtwrap">${tag}${esc(it.t)}</span>
+        ${it.rechts ? `<span class="rechts">${it.rechts}</span>` : ""}
+        <span class="key">${i+1}</span></button>`;
+    }).join("") + `</div>`;
+  choicesEl.querySelectorAll("button.pick").forEach(b =>
+    b.onclick = () => { if(sperre()) return; items[+b.dataset.i].go(); });
+  pinneUnten();
+}
+function knopf(text, go){
+  gewaehlt = false;
+  choicesEl.innerHTML = `<div class="row"><button class="act">${esc(text)}</button></div>`;
+  choicesEl.querySelector("button").onclick = () => { if(sperre()) return; go(); };
+  pinneUnten();
+}
+
+/* Seine Rede kann aus Regie davor, Rede, Regie, zweiter Rede und Regie
+   danach bestehen. Jede Rede trägt ihre Sprechweise mit. */
+function erSagt(o){
+  if(o.erRegieVor) sag("regie", o.erRegieVor);
+  if(o.er)  sag("er", o.er,  {wie:o.wie});
+  if(o.erRegie) sag("regie", o.erRegie);
+  if(o.er2) sag("er", o.er2, {wie:o.wie2 || o.wie});
+  if(o.nachEr) sag("er", o.nachEr, {wie:o.wie2 || o.wie});
+  if(o.nachRegie) sag("regie", o.nachRegie);
+  setzeStimmung(o.stimmung);
+}
+function merke(o){
+  if(o.fakt && !S.fakten.includes(o.fakt)) S.fakten.push(o.fakt);
+  if(o.spur && !S.spuren.includes(o.spur)) S.spuren.push(o.spur);
+}
+
+/* ═══════════════ Phase 1: Ankunft als Baum ═══════════════ */
+function phase1(id){
+  S.phase = 0;
+  const k = DATA.baum[id];
+  S.knoten = id;
+  if(k.regie) sag("regie", k.regie);
+  erSagt(k); merke(k);
+  zeichne();
+
+  /* Nach seiner Vorstellung geht es ohne Zwischenschritt weiter. */
+  if(k.ende) return uebergang1();
+  /* Der Empfang läuft ab, dann hast du genau eine Frage. Welche du
+     nimmst, entscheidet, womit das Gespräch anfängt. */
+  waehle((k.frage ? DATA.kennenfrage : k.du).map(o => ({
+    t:o.t, tag:`Deine eine Frage im Empfang`,
+    go(){ sag("du", o.t, {wie:o.wie}); zeichne(); setTimeout(() => phase1(o.ziel), 60); }
+  })));
+}
+function uebergang1(){
+  const u = DATA.uebergang1;
+  sag("regie", u.duFest); erSagt(u);
+  phase2();
+}
+
+/* ═══════════════ Phase 2 und 3: lesen ═══════════════ */
+function anknuepfung(f){
+  for(let i = S.verlauf.length-1; i >= 0; i--){
+    const k = S.verlauf[i].frageId + ":" + S.verlauf[i].antwortId;
+    if(f.an && f.an[k]) return {text:f.an[k]};
+  }
+  return null;
+}
+function biete(pool, gestellt){
+  const rest = pool.filter(p => !gestellt.includes(p.id));
+  const mit = rest.filter(p => anknuepfung(p)), ohne = rest.filter(p => !mit.includes(p));
+  const misch = a => a.slice().sort(() => Math.random()-0.5);
+  const aus = [];
+  if(mit.length) aus.push(misch(mit)[0]);
+  misch(ohne).forEach(p => { if(aus.length < NOFF) aus.push(p); });
+  misch(rest).forEach(p => { if(aus.length < NOFF && !aus.includes(p)) aus.push(p); });
+  return aus;
+}
+
+function leseRunde(cfg){
+  const rest = cfg.pool.filter(p => !S[cfg.gestellt].includes(p.id));
+  if(!rest.length) return cfg.fertig();
+  const glaube = S[cfg.glaube];
+  const kopf = `Frage ${S[cfg.gestellt].length+1} · kostet ${nk(-W_FRAGE)} Bereitschaft · noch ${nk(H(glaube))} bit im Dunkeln`;
+  const items = biete(cfg.pool, S[cfg.gestellt]).map(f => {
+    const an = anknuepfung(f), g = eig(glaube, f, cfg.dims, cfg.feld);
+    return { t: an ? an.text : f.q, tag: kopf,
+      rechts: `${nk(g)} bit` + (an ? ` · <i style="color:var(--accent)">Anschluss</i>` : ``),
+      go(){ stelle(f, an, cfg); } };
+  });
+  items.push({ t: cfg.weiterText, klasse:"weiter", rechts:`0 bit`, go(){ cfg.fertig(); } });
+  waehle(items);
+}
+
+function stelle(frage, an, cfg){
+  const vorher = S[cfg.glaube].slice();
+  const erwartet = eig(vorher, frage, cfg.dims, cfg.feld);
+  const rest = cfg.pool.filter(p => !S[cfg.gestellt].includes(p.id));
+  const beste = rest.reduce((a,b) => eig(vorher,b,cfg.dims,cfg.feld) > eig(vorher,a,cfg.dims,cfg.feld) ? b : a);
+  const besteEig = eig(vorher, beste, cfg.dims, cfg.feld);
+
+  const i = seineAntwort(frage, cfg.wahr, cfg.dims, cfg.feld);
+  const antwort = frage.a[i];
+  S[cfg.glaube] = update(vorher, frage, i, cfg.dims, cfg.feld);
+  const gewinn = H(vorher) - H(S[cfg.glaube]);
+
+  sag("du", an ? an.text : frage.q);
+  sag("er", antwort.t, {wie:antwort.wie});
+  setzeStimmung(antwort.stimmung);
+  if(antwort.nachRegie) sag("regie", antwort.nachRegie);
+  if(antwort.nachEr) sag("er", antwort.nachEr, {wie:antwort.wie});
+  sag("meta", `<b>${gewinn>=0?"+":""}${nk(gewinn)}</b> bit · Geduld <b>${vzk(W_FRAGE)}</b> · Auffälligkeit <b>${vzk(W_FRAGE_AUF,2)}</b>`,
+    {lang: `erwartet hatte die Frage ${nk(erwartet)} bit`
+      + (beste.id !== frage.id ? `, stärker gewesen wäre <s>${esc(beste.q)}</s> mit ${nk(besteEig)} bit`
+                               : `, und das war die stärkste offene Frage`) + `.`});
+
+  S.bereit += W_FRAGE;
+  S.auf += W_FRAGE_AUF;
+  S[cfg.gestellt].push(frage.id);
+  S[cfg.log].push({frageId:frage.id, q:frage.q, erwartet, gewinn, besteId:beste.id, besteEig});
+  S.verlauf.push({frageId:frage.id, antwortId:antwort.id});
+  S.gesagt.push(antwort.id);
+  merke(antwort);
+  zeichne();
+  setTimeout(() => leseRunde(cfg), 60);
+}
+
+/* ═══════════════ Festlegen ═══════════════
+   Wer abbricht, muss sich erklären. Für jede Dimension eine Stufe, und
+   die Auflösung kommt sofort — sonst wartet man bis zum Schluss auf
+   die einzige Rückmeldung, die einen weiterbringt.
+   Die Gewichte stehen unten und sind durchgerechnet: blindes Raten
+   kostet im Mittel, gutes Zuhören zahlt sich aus. */
+const W_RATE_TREFFER = 6.5, W_RATE_NAH = 1.5, W_RATE_DANEBEN = -3.5;
+
+function rateRunde(cfg){
+  R.aktiv = cfg; R.tipps = [null,null,null,null,null];
+  sag("regie", cfg.aufforderung);
+  zeichne();
+  /* Der Verlauf tritt zur Seite, das Ratefeld nimmt seinen Platz ein.
+     Gleiche Fläche, gleiche Spalte, kein zusätzliches Fenster. */
+  talkEl.hidden = true;
+  document.getElementById("ratefeld").hidden = false;
+  zeichneRatefeld();
+  zeichneRateHinweis();
+}
+
+function zeichneRatefeld(){
+  if(!R.aktiv) return;
+  const cfg = R.aktiv, glaube = cfg.key === "bf" ? S.bfGlaube : S.moGlaube;
+  document.getElementById("ratefeld").innerHTML = cfg.dims.map((d,i) => {
+    const m = marginal(glaube, i), mx = Math.max(...m);
+    const zellen = m.map((p,j) => `<i class="${j===2?"mid":""}" style="height:${Math.max(6,100*p/mx).toFixed(1)}%"></i>`).join("");
+    return `<div class="rz" data-i="${i}">
+      <div class="rz-name"><b>${cfg.labels[d]}</b><span>${esc(cfg.poles[d][0])} ⟷ ${esc(cfg.poles[d][1])}</span></div>
+      <div class="cells">${zellen}</div>
+      <div class="ratezeile">${STUFEN.map(v =>
+        `<button data-v="${v}" class="${R.tipps[i]===v?"an":""}">${vz(v)}</button>`).join("")}</div>
+    </div>`;
+  }).join("");
+  document.querySelectorAll("#ratefeld .ratezeile button").forEach(b => b.onclick = () => {
+    R.tipps[+b.closest(".rz").dataset.i] = +b.dataset.v;
+    zeichneRatefeld(); zeichneRateHinweis();
+  });
+}
+
+/* Der Bereich unter dem Gespräch darf beim Festlegen nicht leer wirken.
+   Er sagt, was zu tun ist, zählt mit und trägt denselben Knopf wie die
+   Spalte — man kann von beiden Seiten abschließen. */
+function zeichneRateHinweis(){
+  if(!R.aktiv){ return; }
+  const offen = R.tipps.filter(t => t === null).length;
+  choicesEl.innerHTML = `<div class="wahlkopf">${esc(R.aktiv.kopf)} ·
+      ${offen ? `noch <em>${wort(offen)}</em> offen` : `alle fünf gesetzt`}</div>
+    <div class="row"><button class="act" id="rateFertigUnten" ${offen?"disabled":""}>Festlegen</button></div>`;
+  const b = document.getElementById("rateFertigUnten");
+  b.onclick = () => {
+    if(R.tipps.some(t => t === null)) return;
+    const cfg = R.aktiv; R.aktiv = null;
+    talkEl.hidden = false;
+    document.getElementById("ratefeld").hidden = true;
+    werteRaten(cfg, R.tipps.slice());
+  };
+  pinneUnten();
+}
+
+function werteRaten(cfg, tipps){
+  const zeilen = cfg.dims.map((d,i) => {
+    const dist = Math.abs(tipps[i] - cfg.wahr[d]);
+    const stufe = cfg.wahr[d] > 0 ? "hoch" : (cfg.wahr[d] < 0 ? "tief" : "mitte");
+    return {d, label:cfg.labels[d], tipp:tipps[i], wahr:cfg.wahr[d], dist,
+            deutung: (cfg.deutung[d] || {})[stufe] || "",
+            p: dist===0 ? W_RATE_TREFFER : (dist===1 ? W_RATE_NAH : W_RATE_DANEBEN)};
+  });
+  const punkte  = zeilen.reduce((a,z) => a + z.p, 0);
+  const abstand = zeilen.reduce((a,z) => a + z.dist, 0);
+  const genau = zeilen.filter(z => z.dist===0).length;
+  const knapp = zeilen.filter(z => z.dist===1).length;
+  const weit  = zeilen.filter(z => z.dist>1).length;
+  S.bereit += punkte;
+  S.rateLog.push({key:cfg.key, zeilen, punkte, abstand});
+
+  /* Das Festlegen ist der Moment, an dem man etwas lernt. Deshalb steht
+     hier ein eigener Block und keine Randnotiz: wie nah du dran warst,
+     und was der wahre Wert fuer den Rest des Gespraechs bedeutet. */
+  const urteil = abstand === 0 ? "Volltreffer. Alle fünf."
+    : abstand <= 2 ? "Sehr nah dran."
+    : abstand <= 4 ? "Brauchbar gelesen."
+    : abstand <= 7 ? "Halb daneben."
+    : "Weit weg.";
+  sag("ergebnis", `<section class="panel festlegung">
+    <div class="fkopf">
+      <div><div class="eyebrow">Festgelegt · ${cfg.titel}</div>
+        <div class="furteil">${urteil}</div></div>
+      <div class="fpunkte ${punkte>=0?"plus":"minus"}">${vzk(punkte,1)}<small>Bereitschaft</small></div>
+    </div>
+    <div class="fbilanz">${gross(wort(genau))} genau getroffen${knapp?`, ${wort(knapp)} um eine Stufe verfehlt`:``}${weit?`, ${wort(weit)} deutlich daneben`:``}.
+      Abstand zum wahren Bild: <b>${abstand}</b> ${abstand===1?"Stufe":"Stufen"} von zwanzig möglichen.</div>
+    <table class="ftab">${zeilen.map(z => `
+      <tr class="fzeile ${z.dist===0?"ja":(z.dist===1?"nah":"nein")}">
+        <td class="fname">${z.label}</td>
+        <td class="n">du ${vz(z.tipp)} · wahr <b>${vz(z.wahr)}</b></td>
+        <td class="n"><span class="treffer ${z.dist===0?"ja":(z.dist===1?"nah":"nein")}">${
+          z.dist===0?"getroffen":(z.dist===1?"knapp":"daneben")}</span> ${vzk(z.p,1)}</td></tr>
+      <tr class="fdeut"><td colspan="3">${esc(z.deutung)}</td></tr>`).join("")}
+    </table>
+  </section>`);
+  zeichne();
+  setTimeout(cfg.weiter, 60);
+}
+
+function phase2(){
+  S.phase = 1;
+  zeichne(); leseRunde(cfgBF);
+}
+function uebergang2(){
+  S.phase = 2;
+  if(!S.bfGestellt.length) sag("regie", "Du fragst gar nicht erst. Mutig.");
+  erSagt({ er:"Sie fragen viel. Fragen Sie ruhig weiter, ich rede gern über mich, das ist eine Schwäche.",
+           wie:"selbstironisch, entspannt", stimmung:"freundlich" });
+  zeichne();
+  knopf("Weiterfragen", () => { zeichne(); leseRunde(cfgMO); });
+}
+function uebergang3(){
+  S.phase = 3;
+  erSagt({ erRegieVor:"Er sieht auf die Uhr, ohne dass es wie ein Hinweis aussieht.",
+           er:"Wir haben noch zehn Minuten. Wollen Sie die für Fragen verbrauchen?",
+           wie:"beiläufig, prüfend", stimmung:"neutral" });
+  sag("regie", "Was du jetzt herausbekommst, steht in keinem Modell. Es entscheidet aber darüber, was du ihm gleich anbieten kannst — und er merkt, wenn du ihn ausfragst.");
+  zeichne();
+  knopf("Vorsichtig weiterfragen", () => privatRunde());
+}
+
+/* ═══════════════ Phase 4: was ihn privat bewegt ═══════════════
+   Kein bit, sondern ein Preis. Jede Frage kostet Auffälligkeit; eine,
+   die an etwas anknüpft, das er selbst erzählt hat, kostet weniger und
+   trifft öfter. Ob er sich öffnet, hängt an Auffälligkeit und Stimmung. */
+const WAERME = { geruehrt:2, freundlich:1.5, amuesiert:1.5, interessiert:1.2, neutral:0,
+                 nachdenklich:0.5, skeptisch:-1, verschlossen:-1.5, gereizt:-2.5, abweisend:-4 };
+
+function privAnker(f){
+  if(!f.an) return null;
+  for(const k in f.an) if(S.gesagt.includes(k) || S.spuren.includes(k) || S.gefunden.includes(k)) return {k, text:f.an[k]};
+  return null;
+}
+function oeffnetSich(f, anker){
+  const w = WAERME[S.stimmung] || 0;
+  return (6 - S.auf - f.auf*1.4 + w + (anker ? 2.5 : 0)) > 0;
+}
+
+function privatRunde(){
+  S.phase = 3;
+  const rest = DATA.privatfragen.filter(f => !S.privGestellt.includes(f.id)
+    && !(f.gibt && S.gefunden.includes(f.gibt)));
+  if(!rest.length || S.gefunden.length >= DATA.privat.felder.length) return uebergang4();
+
+  const misch = rest.slice().sort(() => Math.random()-0.5);
+  const anker = misch.filter(f => privAnker(f)), ohne = misch.filter(f => !privAnker(f));
+  const aus = [];
+  if(anker.length) aus.push(anker[0]);
+  ohne.forEach(f => { if(aus.length < NOFF) aus.push(f); });
+  misch.forEach(f => { if(aus.length < NOFF && !aus.includes(f)) aus.push(f); });
+
+  const kopf = `Auffälligkeit ${nk(S.auf,1).replace(",0","")} von ${DATA.privat.grenze}`
+    + ` · ${wort(S.gefunden.length)} von ${wort(DATA.privat.felder.length)} Dingen weißt du`;
+  const items = aus.map(f => {
+    const a = privAnker(f), kosten = Math.max(0, f.auf - (a ? 1 : 0));
+    const ziel = S.auf + kosten, warn = ziel >= DATA.privat.grenze - 2;
+    const farbe = kosten <= 1 ? "var(--SIC)" : (kosten <= 2 ? "var(--EFF)" : "var(--STA)");
+    return { t: a ? a.text : f.q, tag: kopf, klasse: warn ? "riskant" : "",
+      rechts: `<i style="color:${farbe}">+${nk(kosten,1).replace(",0","")} → ${nk(ziel,1).replace(",0","")}</i>`
+            + (a ? ` · <i style="color:var(--accent)">Anschluss</i>` : "")
+            + (f.plump ? ` · <i>plump</i>` : ""),
+      go(){ frageprivat(f, a, kosten); } };
+  });
+  items.push({ t:"Genug. Ich habe, was ich brauche.", klasse:"weiter", rechts:`+null`, go(){ uebergang4(); } });
+  waehle(items);
+}
+
+function frageprivat(f, anker, kosten){
+  const oeffnet = oeffnetSich(f, anker);
+  S.auf += kosten + (oeffnet ? 0 : 1);
+  const o = oeffnet ? f.offen : f.zu;
+
+  sag("du", anker ? anker.text : f.q);
+  erSagt(o);
+  if(oeffnet && f.gibt && !S.gefunden.includes(f.gibt)) S.gefunden.push(f.gibt);
+  merke(o);
+  S.privGestellt.push(f.id);
+  S.privLog.push({id:f.id, q:f.q, kosten, oeffnet, anker: anker ? anker.k : null});
+
+  sag("meta", oeffnet
+    ? `er öffnet sich · Auffälligkeit <b>+${nk(kosten,1).replace(",0","")}</b> auf ${nk(S.auf,1).replace(",0","")}`
+    : `er weicht aus · Auffälligkeit <b>+${nk(kosten+1,1).replace(",0","")}</b> auf ${nk(S.auf,1).replace(",0","")}`,
+    {warn: !oeffnet});
+  zeichne();
+
+  if(S.auf >= DATA.privat.grenze){ S.raus = true; return setTimeout(rausgeworfen, 400); }
+  setTimeout(privatRunde, 60);
+}
+
+function rausgeworfen(){
+  const h = DATA.hinausgeworfen;
+  sag("regie", h.regie); erSagt(h);
+  S.phase = 5;
+  zeichne();
+  sag("verdict", aufloesung(null, true));
+  zeichne();
+  knopf("Zurück ins Menü", () => zeigeMenue());
+}
+
+/* ═══════════════ Phase 5: der Verkauf ═══════════════ */
+function uebergang4(){
+  S.phase = 4;
+  const v = DATA.verkauf;
+  sag("regie", v.aufschlag);
+  sag("regie", v.reaktionRegie);
+  sag("er", v.reaktion, {wie:v.reaktionWie});
+  setzeStimmung("neutral");
+  zeichne();
+  knopf("Etwas anbieten", () => produktwahl());
+}
+
+/* Der Koffer, jederzeit über den Kopf zu öffnen. Hier steht der lange
+   Text, damit die Auswahl unten kurz bleiben kann. */
+function fuelleKoffer(){
+  document.getElementById("kofferListe").innerHTML =
+    `<div class="kasse">Kasse <b>${geld(KONTO.kasse)}</b> · ${stueck()} Stück im Koffer</div>`
+    + WELT.produkte.map(p => {
+    const n = KONTO.bestand[p.id];
+    return `<div class="ware ${n?"":"weg"}">
+      <b>${esc(p.name)}</b>
+      <span class="wmenge">${n ? n + "× vorrätig" : "ausverkauft"} · ${geld(p.preis)} das Stück</span>
+      <div class="kurz">${esc(p.kurz)}</div>
+      <div class="lang">${esc(p.text)}</div>
+      <div class="haken">Haken: ${esc(p.haken)}</div></div>`;
+  }).join("");
+}
+/* Der Laden. Kaufen senkt die Kasse und hebt den Bestand — mehr ist es
+   nicht, und mehr braucht es auch nicht. */
+function fuelleLaden(){
+  document.getElementById("ladenListe").innerHTML =
+    `<div class="kasse">Kasse <b>${geld(KONTO.kasse)}</b> · ${stueck()} Stück im Koffer</div>`
+    + WELT.produkte.map(p => `<div class="ware">
+        <b>${esc(p.name)}</b>
+        <span class="wmenge">${KONTO.bestand[p.id]}× im Koffer · Einkauf ${geld(p.ek)} · Verkauf ${geld(p.preis)}</span>
+        <div class="kurz">${esc(p.kurz)}</div>
+        <div class="row" style="margin-top:9px">
+          <button class="act ${KONTO.kasse < p.ek ? "" : ""}" data-kauf="${p.id}" ${KONTO.kasse < p.ek ? "disabled" : ""}>
+            Eines kaufen · ${geld(p.ek)}</button></div>
+      </div>`).join("");
+  document.querySelectorAll("[data-kauf]").forEach(b => b.onclick = () => {
+    const w = WELT.produkte.find(x => x.id === b.dataset.kauf);
+    if(KONTO.kasse < w.ek) return;
+    KONTO.kasse -= w.ek; KONTO.bestand[w.id]++; kontoSichern();
+    fuelleLaden(); zeichneWaren();
+  });
+}
+
+function zeichneWaren(){ document.getElementById("warenZahl").textContent = stueck(); }
+
+function produktwahl(){
+  gewaehlt = false;
+  const da = WELT.produkte.filter(p => KONTO.bestand[p.id] > 0);
+  choicesEl.innerHTML = `<div class="wahlkopf">Was legst du ihm hin? · Einzelheiten stehen oben im Koffer</div>`
+    + `<div class="prod">` + da.map((p,i) =>
+    `<button class="prod" data-id="${p.id}"><b>${esc(p.name)}</b><em>${esc(p.kurz)}</em>
+       <span class="rechts">${KONTO.bestand[p.id]}× · ${geld(p.preis)}</span>
+       <span class="key">${i+1}</span></button>`).join("") + `</div>`;
+  choicesEl.querySelectorAll("button.prod").forEach(b =>
+    b.onclick = () => { if(sperre()) return; nimmProdukt(DATA.produkte.find(p => p.id === b.dataset.id)); });
+  pinneUnten();
+}
+
+/* Durchgerechnet: blindes Raten gewinnt praktisch nie, sorgfaeltiges
+   Zuhoeren in vier von fuenf Faellen. Siehe balance.py. */
+const W_AUTO = 2.8, W_TREFFER = 0.35, W_FEHLGRIFF = 0.7, W_RUECKGRIFF = 1,
+      W_PRODUKT = 3, W_PRIVAT = 2;
+/* Jede Frage kostet Geduld. Ohne diesen Preis waere es immer richtig,
+   alles zu fragen — und die zweite und dritte Phase haetten keine
+   Entscheidung mehr, nur noch Arbeit. */
+const W_FRAGE = -1;
+/* Und jede Frage macht ihn ein wenig wachsamer. Wer alles ausfragt,
+   betritt den privaten Teil schon halb verbrannt. */
+const W_FRAGE_AUF = 0.55;
+
+function nimmProdukt(p){
+  S.produkt = p;
+  let passung = 0;
+  for(const m in p.passt) passung += p.passt[m] * HERO.m[m];
+  const treffer = (p.spricht||[]).filter(id => S.gefunden.includes(id));
+  const wirkung = W_PRODUKT*passung + W_PRIVAT*treffer.length*2;
+  S.bereit += wirkung;
+  S.produktPassung = passung; S.produktTreffer = treffer;
+
+  sag("du", "Das hier. " + p.kurz, {wie:"ohne Anlauf, du legst es einfach hin"});
+  erSagt(p);
+  sag("meta", `Bereitschaft <b>${vzk(wirkung)}</b>`, {warn: wirkung < 0,
+    lang: `Warenpassung ${vzk(passung)} gegen seine Motive`
+      + (treffer.length
+          ? `, dazu trifft sie ${treffer.map(id => DATA.privat.felder.find(f=>f.id===id).was).join(" und ")}.`
+          : `, und sie trifft nichts von dem, was du privat weißt.`)});
+  zeichne();
+  setTimeout(() => zug(), 60);
+}
+
+function zug(){
+  const z = DATA.verkauf.zuege[S.zug];
+  if(!z) return schluss();
+  if(z.regie) sag("regie", z.regie);
+  if(z.frage){ sag("er", z.frage, {wie:z.wie}); setzeStimmung(z.stimmung); }
+  zeichne();
+
+  waehle(z.opt.map(o => {
+    let text = o.t, rueck = null;
+    if(o.an) for(const k in o.an) if(S.gesagt.includes(k) || S.gefunden.includes(k)){ text = o.an[k]; rueck = k; break; }
+    /* Der ehrliche Nachteil hängt an der Ware, nicht am Zug. */
+    text = text.replace("__HAKEN__", S.produkt ? S.produkt.haken : "");
+    return { t:text, tag:`Zug ${S.zug+1} von ${DATA.verkauf.zuege.length}`,
+      rechts: rueck ? `<i style="color:var(--accent)">greift auf</i>` : "",
+      go(){ ziehe(o, text, rueck); } };
+  }));
+}
+
+function ziehe(o, text, rueck){
+  let passung = 0;
+  for(const m in (o.aff||{})) passung += o.aff[m] * HERO.m[m];
+  const fit = passung >= 0 ? W_TREFFER*passung : W_FEHLGRIFF*passung;
+  const bonus = rueck ? W_RUECKGRIFF : 0;
+  const wirkung = W_AUTO*o.auto + fit + bonus;
+  S.bereit += wirkung;
+
+  sag("du", text, {wie:o.wie});
+  /* In einer Zugoption steht wie für dich und wie2 für ihn. Deshalb wird
+     seine Rede hier ausdrücklich zusammengesetzt, sonst spräche er in
+     deinem Tonfall. */
+  erSagt({ erRegieVor:o.erRegieVor, er:o.er, erRegie:o.erRegie, er2:o.er2,
+           nachEr:o.nachEr, nachRegie:o.nachRegie,
+           wie:o.wie2, wie2:o.wie2, stimmung:o.stimmung });
+  S.zugLog.push({id:o.id, t:text, auto:o.auto, passung, wirkung, rueck});
+  S.zug++;
+  zeichne();
+  setTimeout(zug, 60);
+}
+
+function schluss(){
+  S.phase = 5;
+  const aus = DATA.verkauf.ausgang.find(a => S.bereit >= a.ab);
+  /* Beim Abschluss nimmt er ein bis drei Stück, so viele wie du dabei
+     hast. Das füllt die Kasse und leert den Koffer. */
+  if(aus.ab >= 72 && S.produkt){
+    const menge = Math.min(1 + Math.floor(Math.random()*3), KONTO.bestand[S.produkt.id]);
+    const erloes = menge * S.produkt.preis;
+    KONTO.bestand[S.produkt.id] -= menge;
+    KONTO.kasse += erloes;
+    kontoSichern();
+    S.verkauft = {id:S.produkt.id, menge, erloes};
+  }
+  if(aus.regie) sag("regie", aus.regie);
+  erSagt(aus);
+  if(S.verkauft){
+    const v = S.verkauft;
+    sag("regie", v.menge === 1
+      ? `Er nimmt ein Stück und legt es neben den Block.`
+      : `Er nimmt ${wort(v.menge)} Stück. Eines für sich, der Rest — das sagt er nicht.`);
+    sag("meta", `Verkauft: ${v.menge}× ${esc(S.produkt.name)} · <b>${geld(v.erloes)}</b> · `
+      + `Kasse ${geld(KONTO.kasse)} · noch ${stueck()} Stück im Koffer`);
+  }
+  zeichne();
+  sag("verdict", aufloesung(aus, false));
+  zeichne();
+  knopf("Zurück ins Menü", () => zeigeMenue());
+}
+
+/* ═══════════════ Auflösung ═══════════════ */
+/* Bewertet wird, worauf du dich festgelegt hast — nicht, was das
+   Modell im Hintergrund noch für möglich hielt. */
+function trefferZeile(dims, labels, glaube, wahr, key){
+  const fest = S.rateLog.find(r => r.key === key);
+  return dims.map((d,i) => {
+    const m = marginal(glaube,i), ev = erwartung(m), p = m[wahr[d]+2];
+    const md = fest ? fest.zeilen[i].tipp : modus(m);
+    const dist = Math.abs(md - wahr[d]);
+    const cls = dist===0 ? "ja" : (dist===1 ? "nah" : "nein");
+    const txt = dist===0 ? "getroffen" : (dist===1 ? "eine Stufe daneben" : "daneben");
+    return `<tr class="${dist<=1?"hi":""}"><td>${labels[d]}</td>
+      <td class="n">festgelegt ${vz(md)} · Mittel ${vzk(ev)}</td>
+      <td class="n">wahr ${vz(wahr[d])} · ${Math.round(p*100)} %
+        <span class="treffer ${cls}">${txt}</span></td></tr>`;
+  }).join("");
+}
+
+function aufloesung(aus, raus){
+  const festBF = S.rateLog.find(r => r.key === "bf"), festMO = S.rateLog.find(r => r.key === "mo");
+  const zaehl = (fest, d) => fest ? fest.zeilen.filter(z => z.dist <= d).length : 0;
+  const bfT = zaehl(festBF,0), bfN = zaehl(festBF,1), moT = zaehl(festMO,0), moN = zaehl(festMO,1);
+  const ratePunkte = S.rateLog.reduce((a,r) => a + r.punkte, 0);
+  const fragen = S.bfLog.concat(S.moLog);
+  const bit = fragen.reduce((a,f) => a + f.gewinn, 0);
+  const maxBit = H(S.bfPrior) + H(S.moPrior);
+
+  const klischee = Object.keys(DATA.rollenprior).map(d => {
+    const hoch = DATA.rollenprior[d] > 0, ist = HERO.z[d] > 0;
+    return `<tr class="${hoch===ist?"hi":""}"><td>${DATA.tlabels[d]}</td>
+      <td class="n">Klischee ${hoch?"hoch":"niedrig"}</td>
+      <td class="n">wahr ${vz(HERO.z[d])}
+        <span class="treffer ${hoch===ist?"ja":"nein"}">${hoch===ist?"stimmte":"falsch"}</span></td></tr>`;
+  }).join("");
+
+  const privZeilen = DATA.privat.felder.map(f => {
+    const da = S.gefunden.includes(f.id);
+    return `<tr class="${da?"hi":""}"><td>${esc(f.wahr)}</td>
+      <td class="n"><span class="treffer ${da?"ja":"nein"}">${da?"erfahren":"nie erfahren"}</span></td></tr>`;
+  }).join("");
+
+  const kopf = raus
+    ? `<div class="eyebrow">Vorbei</div><div class="big" style="color:var(--STA)">Er hat dich rausgeworfen.</div>
+       <p class="small dim" style="margin-top:10px">Die Auffälligkeit stand bei ${nk(S.auf,1).replace(",0","")} von
+       ${DATA.privat.grenze}. Vier von den Fragen, die du gestellt hast, waren
+       ${S.privLog.filter(l=>!l.oeffnet).length ? "Fehlgriffe" : "zu direkt"} — und du bist nie zum Verkauf gekommen.</p>`
+    : `<div class="eyebrow">Ausgang</div>
+       <div class="big" style="color:${S.bereit>=72?"var(--SIC)":(S.bereit>=48?"var(--EFF)":"var(--STA)")}">${esc(aus.titel)}</div>
+       <p class="small dim" style="margin-top:10px">Bereitschaft am Ende:
+       ${Math.min(100,Math.round(S.bereit))} von 100${S.bereit>100?" (gedeckelt)":""}. Auffälligkeit
+       ${nk(S.auf,1).replace(",0","")} von ${DATA.privat.grenze}.</p>`;
+
+  const produktZeile = S.produkt
+    ? `<h2>Was du ihm hingelegt hast</h2>
+       <table class="bil"><tr class="${S.produktPassung>0?"hi":""}">
+         <td><b>${esc(S.produkt.name)}</b> — ${esc(S.produkt.kurz)}</td>
+         <td class="n">Motivpassung ${vzk(S.produktPassung)}
+           <span class="treffer ${S.produktPassung>0?"ja":"nein"}">${S.produktPassung>0?"passte":"passte nicht"}</span></td></tr>
+       ${DATA.produkte.filter(p => p.id !== S.produkt.id).map(p => {
+          let v = 0; for(const m in p.passt) v += p.passt[m]*HERO.m[m];
+          return `<tr><td>${esc(p.name)}</td><td class="n">wäre ${vzk(v)} gewesen</td></tr>`; }).join("")}
+       </table>
+       <p class="small dim" style="margin-top:8px">Das <b>Was</b> misst sich an seinen Motiven und an dem, was du
+       privat erfahren hast${S.produktTreffer.length ? ` — dein Angebot traf ${wort(S.produktTreffer.length)} davon` : `, davon traf dein Angebot nichts`}.</p>` : "";
+
+  const zuege = S.zugLog.length ? `<h2>Wie du es angeboten hast</h2>
+    <table class="bil">${S.zugLog.map(z => `<tr class="${z.wirkung>0?"hi":""}">
+      <td>${esc(z.t.length>76 ? z.t.slice(0,76)+"…" : z.t)}
+        <span class="stufe ${z.auto>0?"pos":(z.auto<0?"neg":"")}">A ${vz(z.auto)}</span>
+        ${z.passung ? `<span class="stufe ${z.passung>0?"pos":"neg"}">C ${vzk(z.passung)}</span>` : ""}
+        ${z.rueck ? `<span class="stufe pos">Rückgriff</span>` : ""}</td>
+      <td class="n">${vzk(z.wirkung)}</td></tr>`).join("")}</table>
+    <p class="small dim" style="margin-top:8px"><b>A</b> ist Autonomieunterstützung und wiegt neunfach, <b>C</b> ist
+    Motivpassung und wiegt anderthalbfach — bei einem Fehlgriff doppelt so schwer negativ. Warum, steht oben unter
+    „Was das Modell tut“.</p>` : "";
+
+  return `<section class="panel verdict" style="margin-top:20px">
+    ${kopf}
+    <h2>Wer er wirklich ist</h2>
+    <table class="bil">${trefferZeile(T, DATA.tlabels, S.bfGlaube, HERO.z, "bf")}</table>
+    <p class="small dim" style="margin-top:8px">${S.bfGestellt.length ? wort(S.bfGestellt.length)+" Fragen" : "Keine Frage"} gestellt,
+    ${bfT} Merkmale genau getroffen und ${bfN} auf eine Stufe genau. Das Festlegen hat dir über beide
+    Runden ${vzk(ratePunkte,1)} Bereitschaft gebracht.</p>
+
+    <h2>Was ihn wirklich antreibt</h2>
+    <table class="bil">${trefferZeile(M, DATA.mlabels, S.moGlaube, HERO.m, "mo")}</table>
+    <p class="small dim" style="margin-top:8px">${S.moGestellt.length ? wort(S.moGestellt.length)+" Fragen" : "Keine Frage"} gestellt,
+    ${moT} genau getroffen und ${moN} auf eine Stufe genau.</p>
+
+    <h2>Was ihn privat bewegt</h2>
+    <table class="bil">${privZeilen}</table>
+    <p class="small dim" style="margin-top:8px">${wort(S.gefunden.length)} von ${wort(DATA.privat.felder.length)}
+    erfahren, zum Preis von ${nk(S.auf,1).replace(",0","")} Auffälligkeit.</p>
+
+    <h2>Das Klischee, mit dem du reingegangen bist</h2>
+    <table class="bil">${klischee}</table>
+
+    ${fragen.length ? `<h2>Deine Fragen</h2>
+    <table class="bil">${fragen.map(f => `<tr class="hi"><td>${esc(f.q)}</td>
+      <td class="n">${f.gewinn>=0?"+":""}${nk(f.gewinn)} bit</td></tr>`).join("")}</table>
+    <p class="small dim" style="margin-top:8px">Zusammen ${nk(bit)} bit von ${nk(maxBit,1)} möglichen, in
+    ${wort(fragen.length)} Fragen — das sind ${nk(bit/fragen.length)} bit je Frage.</p>` : ""}
+
+    ${produktZeile}
+    ${zuege}
+  </section>`;
+}
+
+/* ═══ Menü ═══
+   Das Menü ist kein eigenes Dokument, sondern eine andere Ansicht
+   desselben. So laufen Musik, Kasse und Bestand über die Gespräche
+   hinweg weiter. */
+function zeigeMenue(){
+  document.body.classList.add("imMenue");
+  document.getElementById("mkarten").innerHTML = PERSONEN.map(pp => `
+    <button class="mkarte" data-person="${pp.id}">
+      <span class="mbild" style="background-image:url('${pp.menubild || ""}')"></span>
+      <span><b>${esc(pp.hero.name)}, ${pp.hero.age}</b>
+        <span>${esc(pp.kurz || pp.hero.job)}</span></span>
+    </button>`).join("");
+  document.querySelectorAll("[data-person]").forEach(b =>
+    b.onclick = () => starteGespraech(PERSONEN.find(x => x.id === b.dataset.person)));
+  document.getElementById("mkonto").innerHTML =
+    `Kasse <b>${geld(KONTO.kasse)}</b> · ${stueck()} Stück im Koffer`;
+  choicesEl.innerHTML = "";
+  document.getElementById("mLaden").onclick = () => zeigeLaden(true);
+  document.getElementById("mInfo").onclick  = () => zeigeInfo(true);
+  document.getElementById("mReset").onclick = () => zuruecksetzen();
+  zeichneWaren();
+  waehleSpur();
+}
+
+function zuruecksetzen(){
+  if(!confirm("Kasse, Bestand und alle Einstellungen löschen?")) return;
+  try{
+    localStorage.removeItem("konto");
+    localStorage.removeItem("gespraech-theme");
+    localStorage.removeItem("musik");
+    Object.keys(localStorage).filter(k => k.indexOf("falt-") === 0)
+      .forEach(k => localStorage.removeItem(k));
+  }catch(e){}
+  KONTO.kasse = 0;
+  WELT.produkte.forEach(p => { KONTO.bestand[p.id] = p.bestand; });
+  zeigeMenue();
+}
+
+function starteGespraech(person){
+  document.body.classList.remove("imMenue");
+  ladePerson(person);
+  zeichne();
+  phase1("start");
+}
+
+/* ═══════════════ Start ═══════════════ */
+document.getElementById("belegA").textContent = WELT.belege.A;
+document.getElementById("belegC").textContent = WELT.belege.C;
+document.getElementById("belegAsym").textContent = WELT.belege.asym;
+document.getElementById("belegItems").textContent = WELT.belege.items;
+document.getElementById("keys").innerHTML = "<b>1</b>–<b>4</b> wählen · <b>T</b> nächstes Theme · <b>Esc</b> schließen";
+
+document.addEventListener("keydown", e => {
+  if(e.ctrlKey || e.altKey || e.metaKey) return;
+  const k = e.key.toLowerCase();
+  if(k >= "1" && k <= "9"){
+    const b = choicesEl.querySelectorAll("button.pick, button.prod")[Number(k)-1];
+    if(b){ e.preventDefault(); b.click(); }
+  } else if(k === "t"){
+    const i = THEMES.findIndex(t => t.id === document.body.dataset.theme);
+    setTheme(THEMES[(i+1) % THEMES.length].id);
+  } else if(k === "escape"){ themeMenu(false); zeigeInfo(false); zeigeKoffer(false); zeigeLaden(false); zeigeSeite(false); }
+  else if(k === "enter"){ const b = choicesEl.querySelector("button.act"); if(b) b.click(); }
+});
+
+zeigeMenue();
+</script>
 </body>
 </html>

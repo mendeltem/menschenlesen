@@ -1,4 +1,11 @@
-# nichts Erzeugtes, nichts Persoenliches
+# Archiv und Quellen: bleiben auf der Platte, gehen nicht ins Netz
+old/
+sources_information/
+Gemini_Generated_Image_*.png
+portraits.webp
+compass_artifact_*.md
+
+# Erzeugtes, Persoenliches
 __pycache__/
 *.pyc
 .DS_Store
