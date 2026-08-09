@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Menschen lesen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{ --paper:#0e0f12; --ink:#edeae3; --muted:#9aa1aa; --line:rgba(255,255,255,.13);
+  --surface:rgba(255,255,255,.05); --accent:#e8b04b; --accent-2:#84b4e4;
+  --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+  --sans:"Space Grotesk",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+*{box-sizing:border-box}
+body{margin:0; min-height:100vh; background:var(--paper); color:var(--ink); font-family:var(--sans);
+  font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased;
+  background-image:
+    radial-gradient(900px 620px at 12% -8%, rgba(232,176,75,.20), transparent 62%),
+    radial-gradient(820px 600px at 88% 6%, rgba(96,146,196,.18), transparent 62%),
+    linear-gradient(180deg,#141720 0%,#0b0c10 55%,#0e0f12 100%);
+  background-attachment:fixed;
+  display:flex; justify-content:center; padding:8vh 20px 80px}
+.wrap{width:100%; max-width:720px}
+.eyebrow{font-family:var(--mono); font-size:10.5px; letter-spacing:.2em; text-transform:uppercase; color:var(--muted)}
+h1{font-size:34px; font-weight:600; letter-spacing:-.02em; margin:6px 0 14px}
+p{color:var(--muted); margin:0 0 14px; max-width:62ch}
+p b{color:var(--ink); font-weight:500}
+.karten{display:grid; gap:12px; margin-top:32px}
+a.karte{display:block; text-decoration:none; color:inherit; background:var(--surface);
+  border:1px solid var(--line); border-radius:14px; padding:18px 20px;
+  transition:border-color .15s, transform .15s, box-shadow .15s}
+a.karte:hover{border-color:var(--accent); transform:translateY(-2px);
+  box-shadow:0 0 26px rgba(232,176,75,.22)}
+a.karte b{display:block; font-size:19px; font-weight:600; letter-spacing:-.01em}
+a.karte em{display:block; font-style:normal; font-size:13px; color:var(--accent-2); margin:3px 0 8px;
+  font-family:var(--mono); letter-spacing:.04em}
+a.karte span{display:block; font-size:14.5px; color:var(--muted); line-height:1.5}
+footer{margin-top:40px; padding-top:18px; border-top:1px solid var(--line);
+  font-size:13px; color:var(--muted)}
+footer a{color:var(--accent-2)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Drei Übungen · bayessches Update</div>
+  <h1>Menschen lesen</h1>
+  <p>Drei kleine Spiele zu derselben Frage: <b>welche Frage trennt überhaupt etwas?</b>
+  Man übt nicht, Antworten zu deuten — man übt, vorher zu wissen, welche Frage sich lohnt.
+  Alles läuft im Browser, ohne Server, ohne Konto, ohne Netz.</p>
+
+  <div class="karten">
+    <a class="karte" href="gespraech.html">
+      <b>Vierzig Minuten für einen Fremden</b>
+      <em>fünf Phasen · 3125 Zustände · mit Bild und Ton</em>
+      <span>Ein Gespräch mit einem einzigen Menschen. Lies seine Persönlichkeit, dann seine Motive,
+      dann forsche vorsichtig nach dem Privaten — und verkauf ihm am Ende etwas aus deinem Koffer.
+      Jede Frage kostet Geduld und macht ihn wachsamer.</span>
+    </a>
+
+    <a class="karte" href="motivdiagnose.html">
+      <b>Vier Fragen für einen Fremden</b>
+      <em>fünf Motive · vierzig Personen · fünfzehn Farbschemata</em>
+      <span>Der Vorgänger. Vier Fragen, um das Hauptmotiv einer fremden Person zu erkennen,
+      bewertet mit einer logarithmischen Regel: überzogene Sicherheit kostet mehr, als sie einbringt.</span>
+    </a>
+
+    <a class="karte" href="bigfive_rate(1).html">
+      <b>Fünf Merkmale, sechs Fragen</b>
+      <em>Big Five · 32 Zustände</em>
+      <span>Die erste Fassung. Fünf Persönlichkeitsmerkmale, jeweils hoch oder niedrig,
+      sechs Fragen, um sie auseinanderzuhalten.</span>
+    </a>
+  </div>
+
+  <footer>
+    Was an dem Modell belegt ist und was nicht, steht in
+    <a href="wissenschaftliche_pruefung.md">der wissenschaftlichen Prüfung</a>.
+    Kurz gesagt: die Bit-Rechnung stimmt, die Items sind erfunden, und das Gesicht sagt nichts.
+  </footer>
+</div>
+</body>
+</html>
