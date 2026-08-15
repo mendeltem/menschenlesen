@@ -90,7 +90,7 @@ AB = {k: float(v) for k, v in
                  block("abschluss"))}
 
 # ---------- Gewichte: direkt aus dem Spiel gelesen ----------
-SPIEL = io.open("spiel.html", encoding="utf-8").read()
+SPIEL = io.open("quelle/spiel.html", encoding="utf-8").read()
 GEFUNDEN = dict((k, float(v)) for k, v in
                 re.findall(r"(W_[A-Z_]+)\s*=\s*(-?\d+(?:\.\d+)?)", SPIEL))
 def konst(name):

@@ -1,0 +1,284 @@
+/* Die fuenfzehn Farbschemata. bauen.py setzt sie an den Platzhalter
+   im Kopf von spiel.html. Eine Person waehlt ihres ueber theme. */
+/* ── Tinte · warmes Anthrazit mit Messing ─────────────────── */
+:root, body[data-theme="tinte"]{
+  --paper:#0e0f12;
+  --mesh:
+    radial-gradient(900px 620px at 12% -8%, rgba(232,176,75,.20), transparent 62%),
+    radial-gradient(820px 600px at 88% 6%, rgba(96,146,196,.18), transparent 62%),
+    radial-gradient(700px 700px at 50% 108%, rgba(150,110,200,.13), transparent 66%),
+    linear-gradient(180deg,#141720 0%,#0b0c10 55%,#0e0f12 100%);
+  --pattern:none; --grain:.045;
+  --surface:rgba(255,255,255,.048); --surface-2:rgba(255,255,255,.085); --surface-hi:rgba(255,255,255,.12);
+  --ink:#edeae3; --muted:#9aa1aa;
+  --line:rgba(255,255,255,.13); --line-soft:rgba(255,255,255,.07);
+  --accent:#e8b04b; --accent-2:#84b4e4; --accent-ink:#1b1305;
+  --AUT:#6fa8dc; --SIC:#78c481; --STA:#e8776a; --ZUG:#b58cdb; --EFF:#e8b04b;
+  --glow:0 0 26px rgba(232,176,75,.30); --shade:0 1px 12px rgba(0,0,0,.5);
+  --panel-shadow:0 1px 0 rgba(255,255,255,.05) inset, 0 18px 40px -28px rgba(0,0,0,.9);
+  --face-filter:saturate(.92) contrast(1.03) brightness(.97);
+  --face-tint:linear-gradient(180deg,rgba(232,176,75,.10),rgba(20,20,28,.28));
+  --face-blend:normal;
+}
+
+/* ── Papier · das urspruengliche Blatt, aufgeraeumt ────────── */
+body[data-theme="papier"]{
+  --paper:#E8E9E3;
+  --mesh:
+    radial-gradient(900px 620px at 14% -10%, rgba(44,95,138,.10), transparent 60%),
+    radial-gradient(760px 560px at 92% 2%, rgba(181,133,31,.10), transparent 60%),
+    linear-gradient(180deg,#F2F3EE 0%,#E4E5DF 100%);
+  --pattern:none; --grain:.06;
+  --surface:rgba(255,255,255,.66); --surface-2:rgba(255,255,255,.88); --surface-hi:#fff;
+  --ink:#15181B; --muted:#6C7278;
+  --line:rgba(21,24,27,.17); --line-soft:rgba(21,24,27,.08);
+  --accent:#2C5F8A; --accent-2:#A6432C; --accent-ink:#fff;
+  --AUT:#2C5F8A; --SIC:#4B7A54; --STA:#A6432C; --ZUG:#7A548F; --EFF:#B5851F;
+  --glow:0 0 22px rgba(44,95,138,.18); --shade:none;
+  --panel-shadow:0 1px 0 rgba(255,255,255,.7) inset, 0 14px 30px -24px rgba(20,25,30,.55);
+  --face-filter:none; --face-tint:none; --face-blend:normal;
+  --vignette:0;
+}
+
+/* ── Blaupause · technisches Blau mit Raster ───────────────── */
+body[data-theme="blaupause"]{
+  --paper:#08192a;
+  --mesh:
+    radial-gradient(1000px 640px at 20% -10%, rgba(90,190,255,.16), transparent 62%),
+    radial-gradient(760px 560px at 90% 10%, rgba(40,110,190,.20), transparent 62%),
+    linear-gradient(180deg,#0a2036 0%,#071628 60%,#050f1c 100%);
+  --pattern:
+    repeating-linear-gradient(0deg,rgba(150,215,255,.07) 0 1px,transparent 1px 34px),
+    repeating-linear-gradient(90deg,rgba(150,215,255,.07) 0 1px,transparent 1px 34px);
+  --grain:.03;
+  --surface:rgba(160,220,255,.06); --surface-2:rgba(160,220,255,.11); --surface-hi:rgba(160,220,255,.16);
+  --ink:#e2f2ff; --muted:#8fb3cd;
+  --line:rgba(140,205,255,.22); --line-soft:rgba(140,205,255,.11);
+  --accent:#7fd1ff; --accent-2:#ffd479; --accent-ink:#04202f;
+  --AUT:#6cc4ff; --SIC:#5fd0a0; --STA:#ff8a72; --ZUG:#b39bff; --EFF:#ffcc5c;
+  --glow:0 0 26px rgba(127,209,255,.35); --shade:0 1px 12px rgba(0,0,0,.55);
+  --panel-shadow:0 1px 0 rgba(190,230,255,.07) inset, 0 18px 40px -28px rgba(0,10,20,.9);
+  --face-filter:saturate(.8) brightness(.95); --face-tint:linear-gradient(180deg,rgba(90,180,255,.16),rgba(5,25,45,.34)); --face-blend:normal;
+}
+
+/* ── Terminal · Bernstein auf Schwarz, mit Zeilen ──────────── */
+body[data-theme="terminal"]{
+  --paper:#080604;
+  --mesh:
+    radial-gradient(900px 560px at 50% -12%, rgba(255,176,60,.16), transparent 62%),
+    linear-gradient(180deg,#0d0a06 0%,#070502 100%);
+  --pattern:repeating-linear-gradient(0deg,rgba(255,180,70,.055) 0 1px,transparent 1px 4px);
+  --grain:.05;
+  --surface:rgba(255,180,70,.055); --surface-2:rgba(255,180,70,.10); --surface-hi:rgba(255,180,70,.15);
+  --ink:#ffd9a3; --muted:#b0854f;
+  --line:rgba(255,176,60,.22); --line-soft:rgba(255,176,60,.11);
+  --accent:#ffb03c; --accent-2:#7fe0a0; --accent-ink:#160c00;
+  --AUT:#7fb8e8; --SIC:#7fe0a0; --STA:#ff7a52; --ZUG:#c79bf0; --EFF:#ffc94d;
+  --glow:0 0 26px rgba(255,176,60,.40); --shade:0 1px 12px rgba(0,0,0,.7);
+  --panel-shadow:0 1px 0 rgba(255,200,120,.06) inset, 0 18px 40px -28px rgba(0,0,0,.95);
+  --face-filter:sepia(.35) saturate(.85) brightness(.92); --face-tint:linear-gradient(180deg,rgba(255,176,60,.16),rgba(15,8,0,.4)); --face-blend:normal;
+}
+
+/* ── Neon · Pink auf Aubergine ─────────────────────────────── */
+body[data-theme="neon"]{
+  --paper:#0d0511;
+  --mesh:
+    radial-gradient(900px 560px at 50% -10%, rgba(255,46,166,.24), transparent 62%),
+    radial-gradient(700px 560px at 88% 40%, rgba(0,229,255,.12), transparent 62%),
+    linear-gradient(180deg,#170a20 0%,#0d0511 60%,#0a0410 100%);
+  --pattern:none; --grain:.05;
+  --surface:rgba(255,120,205,.075); --surface-2:rgba(255,120,205,.13); --surface-hi:rgba(255,120,205,.18);
+  --ink:#ffe9f8; --muted:#c78bba;
+  --line:rgba(255,90,190,.24); --line-soft:rgba(255,90,190,.12);
+  --accent:#ff2ea6; --accent-2:#00e5ff; --accent-ink:#180010;
+  --AUT:#4fc3f7; --SIC:#4ade80; --STA:#ff5b6e; --ZUG:#c77dff; --EFF:#ffc94d;
+  --glow:0 0 30px rgba(255,46,166,.45); --shade:0 1px 12px rgba(0,0,0,.6);
+  --panel-shadow:0 1px 0 rgba(255,180,230,.07) inset, 0 18px 40px -28px rgba(0,0,0,.9);
+  --face-filter:saturate(.9) contrast(1.05); --face-tint:linear-gradient(180deg,rgba(255,46,166,.16),rgba(20,4,26,.36)); --face-blend:normal;
+}
+
+/* ── Cyberpunk · Cyan und Signalgelb ───────────────────────── */
+body[data-theme="cyberpunk"]{
+  --paper:#0a0a12;
+  --mesh:
+    radial-gradient(900px 560px at 18% -10%, rgba(0,240,255,.18), transparent 62%),
+    radial-gradient(760px 560px at 86% 14%, rgba(252,238,10,.10), transparent 62%),
+    linear-gradient(180deg,#0e1020 0%,#0a0a12 60%,#08080f 100%);
+  --pattern:repeating-linear-gradient(90deg,rgba(0,240,255,.05) 0 1px,transparent 1px 40px);
+  --grain:.045;
+  --surface:rgba(0,240,255,.06); --surface-2:rgba(0,240,255,.11); --surface-hi:rgba(0,240,255,.16);
+  --ink:#eafcff; --muted:#8fa0bd;
+  --line:rgba(0,240,255,.22); --line-soft:rgba(0,240,255,.10);
+  --accent:#00f0ff; --accent-2:#fcee0a; --accent-ink:#00181c;
+  --AUT:#4fd8ff; --SIC:#3ddc97; --STA:#ff5c6e; --ZUG:#b98cff; --EFF:#fcee0a;
+  --glow:0 0 30px rgba(0,240,255,.40); --shade:0 1px 12px rgba(0,0,0,.6);
+  --panel-shadow:0 1px 0 rgba(160,250,255,.07) inset, 0 18px 40px -28px rgba(0,0,0,.9);
+  --face-filter:saturate(.85) contrast(1.06); --face-tint:linear-gradient(180deg,rgba(0,240,255,.14),rgba(6,10,20,.38)); --face-blend:normal;
+}
+
+/* ── Synthwave · Horizont in Violett ───────────────────────── */
+body[data-theme="synthwave"]{
+  --paper:#16072e;
+  --mesh:
+    radial-gradient(900px 520px at 50% 100%, rgba(255,92,141,.30), transparent 66%),
+    radial-gradient(800px 560px at 20% -10%, rgba(122,92,255,.24), transparent 62%),
+    linear-gradient(180deg,#1d0940 0%,#16072e 55%,#100322 100%);
+  --pattern:none; --grain:.05;
+  --surface:rgba(190,140,255,.08); --surface-2:rgba(190,140,255,.14); --surface-hi:rgba(190,140,255,.19);
+  --ink:#ffeaf6; --muted:#c69ee6;
+  --line:rgba(200,150,255,.24); --line-soft:rgba(200,150,255,.12);
+  --accent:#ff5c8d; --accent-2:#7a5cff; --accent-ink:#26030f;
+  --AUT:#5cc8ff; --SIC:#54dba0; --STA:#ff5c8d; --ZUG:#9b7cff; --EFF:#ffcf5c;
+  --glow:0 0 30px rgba(255,92,141,.42); --shade:0 1px 12px rgba(0,0,0,.6);
+  --panel-shadow:0 1px 0 rgba(255,200,240,.07) inset, 0 18px 40px -28px rgba(0,0,0,.9);
+  --face-filter:saturate(.95) contrast(1.04); --face-tint:linear-gradient(180deg,rgba(122,92,255,.18),rgba(30,6,50,.36)); --face-blend:normal;
+}
+
+/* ── Miami · Koralle und Tuerkis ───────────────────────────── */
+body[data-theme="miami"]{
+  --paper:#140a1e;
+  --mesh:
+    radial-gradient(900px 560px at 16% -10%, rgba(255,111,97,.24), transparent 62%),
+    radial-gradient(800px 560px at 88% 24%, rgba(45,226,230,.16), transparent 62%),
+    linear-gradient(180deg,#1c0f2a 0%,#140a1e 60%,#0f0718 100%);
+  --pattern:none; --grain:.05;
+  --surface:rgba(255,150,140,.075); --surface-2:rgba(255,150,140,.13); --surface-hi:rgba(255,150,140,.18);
+  --ink:#fff0ea; --muted:#d0a5bd;
+  --line:rgba(255,140,130,.24); --line-soft:rgba(255,140,130,.11);
+  --accent:#ff6f61; --accent-2:#2de2e6; --accent-ink:#2a0b06;
+  --AUT:#2de2e6; --SIC:#5fd98a; --STA:#ff6f61; --ZUG:#c48cff; --EFF:#ffc85c;
+  --glow:0 0 30px rgba(255,111,97,.38); --shade:0 1px 12px rgba(0,0,0,.6);
+  --panel-shadow:0 1px 0 rgba(255,210,200,.07) inset, 0 18px 40px -28px rgba(0,0,0,.9);
+  --face-filter:saturate(1) contrast(1.03); --face-tint:linear-gradient(180deg,rgba(255,111,97,.14),rgba(20,10,30,.36)); --face-blend:normal;
+}
+
+/* ── Sakura · helles Rosa, heller Schleier ─────────────────── */
+body[data-theme="sakura"]{
+  --paper:#fff3f8;
+  --mesh:
+    radial-gradient(900px 600px at 20% -10%, rgba(255,122,182,.26), transparent 62%),
+    radial-gradient(760px 560px at 90% 6%, rgba(168,85,247,.14), transparent 62%),
+    linear-gradient(180deg,#fff7fb 0%,#ffeaf3 100%);
+  --pattern:none; --grain:.05;
+  --surface:rgba(255,255,255,.68); --surface-2:rgba(255,255,255,.9); --surface-hi:#fff;
+  --ink:#45122c; --muted:#a05c80;
+  --line:rgba(180,60,120,.20); --line-soft:rgba(180,60,120,.10);
+  --accent:#e0357f; --accent-2:#8b45d6; --accent-ink:#fff;
+  --AUT:#2f7fc4; --SIC:#3f9a68; --STA:#d6402f; --ZUG:#8b45d6; --EFF:#c08313;
+  --glow:0 0 24px rgba(224,53,127,.22); --shade:none;
+  --panel-shadow:0 1px 0 rgba(255,255,255,.8) inset, 0 14px 30px -24px rgba(120,30,70,.4);
+  --face-filter:saturate(1.02); --face-tint:linear-gradient(180deg,rgba(255,140,190,.10),transparent); --face-blend:normal;
+  --vignette:0;
+}
+
+/* ── Dschungel · Blattgruen mit Safrangelb ─────────────────── */
+body[data-theme="dschungel"]{
+  --paper:#08130b;
+  --mesh:
+    radial-gradient(900px 600px at 22% -10%, rgba(74,222,128,.16), transparent 62%),
+    radial-gradient(760px 560px at 86% 20%, rgba(250,204,21,.10), transparent 62%),
+    linear-gradient(180deg,#0c1c11 0%,#08130b 60%,#050f08 100%);
+  --pattern:none; --grain:.05;
+  --surface:rgba(120,220,150,.06); --surface-2:rgba(120,220,150,.11); --surface-hi:rgba(120,220,150,.16);
+  --ink:#e8f8ec; --muted:#8ebd9b;
+  --line:rgba(110,210,145,.22); --line-soft:rgba(110,210,145,.10);
+  --accent:#4ade80; --accent-2:#facc15; --accent-ink:#04150a;
+  --AUT:#5cb8e8; --SIC:#4ade80; --STA:#f0715c; --ZUG:#bb8ce0; --EFF:#facc15;
+  --glow:0 0 28px rgba(74,222,128,.32); --shade:0 1px 12px rgba(0,0,0,.6);
+  --panel-shadow:0 1px 0 rgba(180,255,205,.06) inset, 0 18px 40px -28px rgba(0,0,0,.9);
+  --face-filter:saturate(.88) brightness(.95); --face-tint:linear-gradient(180deg,rgba(74,222,128,.12),rgba(5,20,10,.38)); --face-blend:normal;
+}
+
+/* ── Matrix · nur Gruen, Zeilenraster ──────────────────────── */
+body[data-theme="matrix"]{
+  --paper:#000600;
+  --mesh:
+    radial-gradient(900px 560px at 50% -12%, rgba(0,255,65,.14), transparent 62%),
+    linear-gradient(180deg,#021003 0%,#000600 100%);
+  --pattern:repeating-linear-gradient(0deg,rgba(0,255,65,.06) 0 1px,transparent 1px 4px);
+  --grain:.05;
+  --surface:rgba(0,255,65,.05); --surface-2:rgba(0,255,65,.10); --surface-hi:rgba(0,255,65,.15);
+  --ink:#c8ffd6; --muted:#5fb374;
+  --line:rgba(0,255,65,.22); --line-soft:rgba(0,255,65,.10);
+  --accent:#00ff41; --accent-2:#9dffb8; --accent-ink:#001404;
+  --AUT:#4fe0ff; --SIC:#00ff41; --STA:#ff6a5c; --ZUG:#c08cff; --EFF:#e8ff5c;
+  --glow:0 0 30px rgba(0,255,65,.40); --shade:0 1px 12px rgba(0,0,0,.75);
+  --panel-shadow:0 1px 0 rgba(150,255,180,.06) inset, 0 18px 40px -28px rgba(0,0,0,.95);
+  --face-filter:grayscale(.45) sepia(.4) hue-rotate(60deg) saturate(1.4) brightness(.86);
+  --face-tint:linear-gradient(180deg,rgba(0,255,65,.14),rgba(0,10,2,.45)); --face-blend:normal;
+}
+
+/* ── Ozean · Tiefblau mit Jade ─────────────────────────────── */
+body[data-theme="ozean"]{
+  --paper:#03101c;
+  --mesh:
+    radial-gradient(900px 620px at 18% -10%, rgba(56,189,248,.20), transparent 62%),
+    radial-gradient(800px 600px at 88% 26%, rgba(52,211,153,.14), transparent 62%),
+    linear-gradient(180deg,#06192b 0%,#03101c 60%,#020b14 100%);
+  --pattern:none; --grain:.04;
+  --surface:rgba(90,190,240,.07); --surface-2:rgba(90,190,240,.12); --surface-hi:rgba(90,190,240,.17);
+  --ink:#e6f6ff; --muted:#85b4cf;
+  --line:rgba(90,190,240,.22); --line-soft:rgba(90,190,240,.10);
+  --accent:#38bdf8; --accent-2:#34d399; --accent-ink:#02131d;
+  --AUT:#38bdf8; --SIC:#34d399; --STA:#fb7185; --ZUG:#a78bfa; --EFF:#fbbf24;
+  --glow:0 0 28px rgba(56,189,248,.34); --shade:0 1px 12px rgba(0,0,0,.6);
+  --panel-shadow:0 1px 0 rgba(180,230,255,.06) inset, 0 18px 40px -28px rgba(0,0,0,.9);
+  --face-filter:saturate(.85) brightness(.96); --face-tint:linear-gradient(180deg,rgba(56,189,248,.14),rgba(2,16,28,.38)); --face-blend:normal;
+}
+
+/* ── Kosmos · Nebel in Violett ─────────────────────────────── */
+body[data-theme="kosmos"]{
+  --paper:#05040e;
+  --mesh:
+    radial-gradient(760px 700px at 26% 18%, rgba(126,96,255,.26), transparent 66%),
+    radial-gradient(660px 620px at 78% 58%, rgba(255,92,168,.18), transparent 66%),
+    radial-gradient(900px 520px at 50% 108%, rgba(24,22,74,.6), transparent 68%),
+    linear-gradient(160deg,#07061a 0%,#0d0a24 50%,#05040e 100%);
+  --pattern:none; --grain:.055;
+  --surface:rgba(150,140,255,.075); --surface-2:rgba(150,140,255,.13); --surface-hi:rgba(150,140,255,.18);
+  --ink:#ece9ff; --muted:#9c98c8;
+  --line:rgba(150,140,255,.24); --line-soft:rgba(150,140,255,.11);
+  --accent:#9d8cff; --accent-2:#ff7ab8; --accent-ink:#0a0718;
+  --AUT:#6fb6ff; --SIC:#5fd8a8; --STA:#ff7a8c; --ZUG:#b49bff; --EFF:#ffd166;
+  --glow:0 0 30px rgba(157,140,255,.38); --shade:0 1px 12px rgba(0,0,0,.7);
+  --panel-shadow:0 1px 0 rgba(200,190,255,.07) inset, 0 18px 40px -28px rgba(0,0,0,.95);
+  --face-filter:saturate(.9) contrast(1.04) brightness(.95); --face-tint:linear-gradient(180deg,rgba(126,96,255,.18),rgba(8,6,20,.42)); --face-blend:normal;
+}
+
+/* ── Ekko · Zaun-Teal auf warmem Rost ──────────────────────── */
+body[data-theme="ekko"]{
+  --paper:#0d0a0b;
+  --mesh:
+    radial-gradient(820px 660px at 20% 22%, rgba(46,230,196,.22), transparent 66%),
+    radial-gradient(700px 620px at 80% 62%, rgba(178,12,89,.24), transparent 66%),
+    radial-gradient(900px 520px at 50% 108%, rgba(92,42,31,.5), transparent 68%),
+    linear-gradient(150deg,#16100f 0%,#241715 45%,#0e1416 100%);
+  --pattern:none; --grain:.05;
+  --surface:rgba(46,230,196,.07); --surface-2:rgba(46,230,196,.12); --surface-hi:rgba(46,230,196,.17);
+  --ink:#eaf7f3; --muted:#93b0aa;
+  --line:rgba(46,230,196,.22); --line-soft:rgba(46,230,196,.10);
+  --accent:#2ee6c4; --accent-2:#ff3d7f; --accent-ink:#04140f;
+  --AUT:#4fc8f0; --SIC:#2ee6c4; --STA:#ff3d7f; --ZUG:#b98cf0; --EFF:#ffc247;
+  --glow:0 0 30px rgba(46,230,196,.36); --shade:0 1px 12px rgba(0,0,0,.65);
+  --panel-shadow:0 1px 0 rgba(160,255,235,.06) inset, 0 18px 40px -28px rgba(0,0,0,.9);
+  --face-filter:saturate(.9) contrast(1.04); --face-tint:linear-gradient(180deg,rgba(46,230,196,.13),rgba(20,12,10,.4)); --face-blend:normal;
+}
+
+/* ── LCARS · Schwarz, Orange, weiche Ecken ─────────────────── */
+body[data-theme="lcars"]{
+  --paper:#000000;
+  --mesh:
+    radial-gradient(900px 560px at 14% -10%, rgba(255,156,0,.16), transparent 60%),
+    radial-gradient(700px 520px at 88% 18%, rgba(204,153,204,.12), transparent 60%),
+    linear-gradient(180deg,#0b0906 0%,#000 100%);
+  --pattern:none; --grain:.03;
+  --surface:rgba(255,180,90,.07); --surface-2:rgba(255,180,90,.12); --surface-hi:rgba(255,180,90,.17);
+  --ink:#ffffff; --muted:#b9a9d6;
+  --line:rgba(255,180,90,.24); --line-soft:rgba(255,180,90,.11);
+  --accent:#ff9c00; --accent-2:#cc99cc; --accent-ink:#1a0f00;
+  --AUT:#7fa9ff; --SIC:#66cc99; --STA:#ff6f5c; --ZUG:#cc99cc; --EFF:#ff9c00;
+  --glow:0 0 28px rgba(255,156,0,.34); --shade:0 1px 12px rgba(0,0,0,.7);
+  --panel-shadow:0 1px 0 rgba(255,210,150,.07) inset, 0 18px 40px -28px rgba(0,0,0,.95);
+  --face-filter:saturate(.85) contrast(1.05); --face-tint:linear-gradient(180deg,rgba(255,156,0,.12),rgba(0,0,0,.4)); --face-blend:normal;
+  --r:20px;
+}

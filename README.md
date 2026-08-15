@@ -4,6 +4,10 @@
 
 ### ▶ [Hier spielen](https://mendeltem.github.io/menschenlesen/) — im Browser, ohne Installation, ohne Konto
 
+*Wer hier weiterbaut, fängt unten bei **[Weiterbauen](#weiterbauen)** an:
+dort steht, welche Datei man anfasst, wie gebaut wird, was entschieden
+ist und was noch offen.*
+
 Du besuchst einen Mann, den du nicht kennst, und willst ihm irgendwann
 etwas verkaufen. Nur klappt das nicht am ersten Tag. Beim ersten Besuch
 lernst du ihn kennen; was danach zwischen euch steht, entscheidet, ob er
@@ -139,10 +143,13 @@ die alles mitbringen: Texte, Fragen, Zustände, Bilder, Farbschema.
 | `bilder/` | zehn Stimmungen und der Raum |
 | `musik/` | fünf Spuren: Menü, Laden, Gespräch, gewonnen, verloren |
 | `balance.py` | spielt sechshundert Besuchsreihen je Spielweise und misst, wann er kauft |
+| `quelle/spiel.html` | **die Vorlage, an der man arbeitet** — Menü, Mechanik, Anzeige |
+| `quelle/themes.css` | die fünfzehn Farbschemata |
+| `quelle/bauen.py` | setzt beides zu `index.html` zusammen |
 
 **Eine Person ergänzen** heißt: `personen/baumgartner.js` kopieren, `id`,
-Namen und Texte ändern, Bilder danebenlegen, im `index.html` eine Zeile
-`<script src="personen/…">` anfügen. Am Skelett ändert sich nichts.
+Namen und Texte ändern, Bilder danebenlegen, neu bauen. Am Skelett ändert
+sich nichts, die `<script>`-Zeile setzt `bauen.py` selbst.
 
 Die Personendateien sind JSON in der Form, aber JavaScript in der
 Verpackung — mit Absicht: Browser verbieten `fetch()` auf `file://`, per
@@ -193,3 +200,109 @@ stark wie Motivpassung. Das ist keine Designlaune, sondern der Stand der
 Belege: g = 0,84 über 74 Interventionsstudien gegen r = 0,11 über 41
 Studien, in kontrollierten Designs meist nicht signifikant. Die Items
 selbst sind erfunden — Näheres in `wissenschaftliche_pruefung.md`.
+
+## Weiterbauen
+
+**`index.html` wird nicht bearbeitet.** Sie entsteht aus der Vorlage und
+wird beim nächsten Bauen überschrieben. Angefasst wird
+`quelle/spiel.html`.
+
+```bash
+python quelle/bauen.py
+```
+
+Das ist der ganze Bauvorgang: Vorlage plus Farbschemata plus eine
+`<script>`-Zeile je Datei in `personen/`, fertig ist `index.html`. Kein
+Bundler, keine Abhängigkeiten — mit Absicht: das Spiel soll sich per
+Doppelklick öffnen lassen, und auf `file://` verbietet der Browser
+`fetch()`. Deshalb liegen `welt.js` und `personen/*.js` daneben statt
+nachgeladen zu werden.
+
+**Die Zahlen prüfen:**
+
+```bash
+python balance.py n=600
+```
+
+`balance.py` liest die Gewichte aus `quelle/spiel.html` und die Inhalte
+aus `welt.js` und `personen/`. Es rechnet nichts nach, was im Spiel
+anders wäre — wenn eine Konstante wandert, wandert die Messung mit. Wer
+an Gewichten dreht, dreht sie in `quelle/spiel.html` und lässt das hier
+gegenrechnen, bevor er committet.
+
+**Örtlich ansehen:**
+
+```bash
+python -m http.server 8731
+```
+
+Dann `http://127.0.0.1:8731/`. Ohne Server geht es auch — `index.html`
+doppelklicken —, nur bleibt die Musik dann je nach Browser stumm, bis
+man einmal klickt.
+
+## Was entschieden ist, und warum
+
+Kurz, damit niemand es zweimal entscheiden muss:
+
+- **Fünf Merkmale bayessch, zwei Waagen für die Motive.** Die fünf Motive
+  waren genauer und unlesbar. Zwei Achsen kann man ansehen und versteht
+  sie; fünf muss man studieren.
+- **Die Waagen haben eine eigene, flachere Verteilung** (`mglocke`). Ein
+  Merkmal ist normalverteilt, ein Entweder-Oder nicht. Mit der
+  Merkmalsglocke landete das Modell praktisch nie auf einem Außenpol.
+- **Der Spieler sieht die Wahrheit nie.** Keine Auflösung, keine Tabelle
+  mit den echten Werten — auch nicht am Ende. Rückmeldung kommt nur über
+  ihn: bestätigt, schränkt ein, widerspricht.
+- **Der Abschluss ist ein Wurf, keine Schwelle.** Der Bedarf ist die
+  Bedingung, die Freundschaft der Zuschlag. Freundschaft macht aus einem
+  Vielleicht ein Ja und aus einem Nein nichts.
+- **Fragen kosten zunehmend.** Sonst wäre es immer richtig, alles zu
+  fragen, und die Lesephasen hätten keine Entscheidung mehr, nur Arbeit.
+- **Der Fehlgriff wiegt doppelt so schwer wie der Treffer.** Das ist eine
+  Vermutung und keine Messung; siehe `wissenschaftliche_pruefung.md`.
+- **Eine Datei je Person, per `<script>` geladen.** Siehe oben: `file://`.
+
+## Was offen ist
+
+**Zwei Merkmale sind praktisch nicht zu treffen.** Bei den fünf Merkmalen
+gilt weiter die Glockenkurve, und Baumgartner steht bei Extraversion auf
++2 und bei Neurotizismus auf −2 — beide am Außenpol. Gemessen über 500
+Durchläufe mit jeweils optimaler Fragenwahl, Anteil genau getroffen:
+
+| | O (+2) | C (−1) | E (+2) | A (+1) | N (−2) |
+|---|---|---|---|---|---|
+| nach 6 Fragen | 52 % | 61 % | **0 %** | 27 % | **2 %** |
+| nach 9 Fragen | 57 % | 83 % | **20 %** | 27 % | **17 %** |
+
+Wer perfekt spielt, bekommt auf zwei von fünf Merkmalen fast immer ein
+*eingeschränkt* statt eines *bestätigt* — und das kostet Freundschaft.
+Das ist keine Schwierigkeit, das ist eine kaputte Rückmeldung. Drei Wege
+hinaus, keiner davon entschieden:
+
+1. Den Merkmalen dieselbe Behandlung geben wie den Waagen, also eine
+   flachere Kurve. Macht alle fünf lesbarer und verschiebt die Balance.
+2. Baumgartners Profil von den Außenpolen wegrücken (E +1, N −1). Ändert
+   die Figur.
+3. So lassen und die Wertung ändern: *eingeschränkt* nicht mehr fast
+   wertlos machen, sondern die Punkte je Merkmal daran messen, wie weit
+   der Außenpol überhaupt erreichbar ist.
+
+**Die zweite Waage ist deutlich schwerer als die erste.** Freiheit wird
+nach fünf Fragen zu 54 % genau getroffen, Geltung nur zu 29 %. Grund:
+seine Freiheit ist so ausgeprägt, dass er meistens die Freiheitsantwort
+wählt — die Geltungsantworten kommen selten dran und liefern deshalb
+wenig. Behebbar über Fragen, die nur eine Waage abstufen; das macht sie
+aber leicht (99 %) und nimmt ihnen den Reiz. Bisher unangetastet.
+
+**Nur eine Person.** Das Skelett trägt beliebig viele, Baumgartner ist
+die einzige. Eine zweite wäre der beste Test dafür, ob die Trennung
+zwischen Welt und Person wirklich sauber ist.
+
+**Kein Bildschirmfoto in der README.** Der Spielknopf oben führt zur
+Demo, aber ein Bild vom laufenden Spiel fehlt.
+
+## Woher die Bilder und die Musik kommen
+
+`BILDER_PROMPTS.md` und `MUSIK.md` halten fest, womit die zehn
+Stimmungsbilder, der Raum und die fünf Spuren erzeugt wurden — damit
+sich Nachschub im selben Stil machen lässt.
