@@ -8,8 +8,8 @@
    wird, koennen Messung und Wirklichkeit nicht auseinanderlaufen.
 
    Ziel: wer blind draufloslaeuft, kommt nie zum Abschluss; wer zuhoert,
-   braucht zwei bis drei Besuche; wer alles ausfragt, verbrennt sich die
-   Beziehung, bevor der Koffer aufgeht."""
+   braucht zwei bis drei Besuche; und wer die falsche Ware hinlegt,
+   verkauft sie auch dem besten Freund nicht."""
 import io, re, math, random, sys
 import numpy as np
 from itertools import product as kartesisch
@@ -32,11 +32,12 @@ def fragen(key, feld):
         if antworten: aus.append(antworten)
     return aus
 
-T = ["O","C","E","A","N"]; M = ["AUT","SIC","STA","ZUG","EFF"]
+T = ["O","C","E","A","N"]          # fuenf Merkmale
+M = ["FRE","GEL"]                  # zwei Waagen
 BF, MO = fragen("bigfive", "l"), fragen("motivfragen", "aff")
 SHARP = float(re.search(r"sharpness:\s*([\d.]+)", QUELLE).group(1))
 HZ = gewichte(re.search(r"z:\s*\{([^}]*)\}", QUELLE).group(1))
-HM = gewichte(re.search(r"m:\s*\{([^}]*)\}", QUELLE).group(1))
+HM = gewichte(re.search(r"m:\s*\{\s*(FRE[^}]*)\}", QUELLE).group(1))
 ROLLE = gewichte(re.search(r"rollenprior:\s*\{([^}]*)\}", QUELLE).group(1))
 
 PROD = []
@@ -57,9 +58,6 @@ for zug in re.split(r"\n    \{ (?:frage|regie):", block("verkauf"))[1:]:
     if opts: ZUEGE.append(opts)
 
 # ---------- Was gerade bei ihm los ist ----------
-# Je Zustand: der Bedarf, den er aufdeckt, und die Wege hinein. Jeder Weg
-# unterstellt eine Persoenlichkeit (liest); verrechnet mit der wahren
-# entscheidet das Vorzeichen, ob er darauf eingeht.
 ZUST = []
 for roh in re.split(r"\n\{ id:`", block("zustaende"))[1:]:
     bed = re.search(r"bedarf:\{[^}]*braucht:\{([^}]*)\}", roh)
@@ -84,9 +82,12 @@ def nach_laune(w, st):
     f = LAUNE.get(st, 1.0)
     return w * f if w >= 0 else w / f
 
-BEZ = {k: float(v) for k, v in
-       re.findall(r"(start|verkaufSchwelle|verbrannt|verkaufKosten|uebertrag|aufUebertrag):\s*(-?[\d.]+)",
-                  block("beziehung"))}
+FR = {k: float(v) for k, v in
+      re.findall(r"(start|verkaufSchwelle|verbrannt|verkaufKosten|uebertrag|geduldUebertrag):\s*(-?[\d.]+)",
+                 block("freundschaft"))}
+AB = {k: float(v) for k, v in
+      re.findall(r"(bedarfNoetig|vonBereit|bisBereit|ausBereit|ausFreundschaft|deckel):\s*(-?[\d.]+)",
+                 block("abschluss"))}
 
 # ---------- Gewichte: direkt aus dem Spiel gelesen ----------
 SPIEL = io.open("spiel.html", encoding="utf-8").read()
@@ -100,24 +101,32 @@ G = dict(auto=konst("W_AUTO"), treffer=konst("W_TREFFER"), fehlgriff=konst("W_FE
          rueckgriff=konst("W_RUECKGRIFF"), produkt=konst("W_PRODUKT"), privat=konst("W_PRIVAT"),
          bedarf=konst("W_BEDARF"), rauswurf=konst("W_RAUSWURF"),
          rtreffer=konst("W_RATE_TREFFER"), rnah=konst("W_RATE_NAH"), rdaneben=konst("W_RATE_DANEBEN"),
-         frage=konst("W_FRAGE"), frageauf=konst("W_FRAGE_AUF"),
-         fragesteig=konst("W_FRAGE_STEIG"))
-JA, OFFEN, GRENZE = 72, 48, 10.0
+         frage=konst("W_FRAGE"), fragesteig=konst("W_FRAGE_STEIG"),
+         gfrage=konst("W_GEDULD_FRAGE"), gprivat=konst("W_GEDULD_PRIVAT"),
+         ggut=konst("W_GEDULD_GUT"), gschlecht=konst("W_GEDULD_SCHLECHT"),
+         gfest=konst("W_GEDULD_FEST"))
 
 STUFEN = np.array([-2,-1,0,1,2])
 GLOCKE = {-2:0.10, -1:0.22, 0:0.36, 1:0.22, 2:0.10}
-STATES = np.array(list(kartesisch(STUFEN, repeat=5)))
+_RAEUME = {}
+def raum(n):
+    """Der Zustandsraum je Achsenzahl: 3125 fuer die Merkmale, 25 fuer
+       die zwei Waagen."""
+    if n not in _RAEUME: _RAEUME[n] = np.array(list(kartesisch(STUFEN, repeat=n)))
+    return _RAEUME[n]
 
 def prior(dims, shift):
-    p = np.ones(len(STATES))
-    for d in range(5):
-        g = np.array([GLOCKE[int(v)] for v in STATES[:, d]])
-        p *= g * np.exp(shift.get(dims[d], 0.0) * STATES[:, d])
+    ST = raum(len(dims))
+    p = np.ones(len(ST))
+    for d in range(len(dims)):
+        g = np.array([GLOCKE[int(v)] for v in ST[:, d]])
+        p *= g * np.exp(shift.get(dims[d], 0.0) * ST[:, d])
     return p / p.sum()
 
 def lik(antworten, dims):
+    ST = raum(len(dims))
     lad = np.array([[a.get(d, 0.0) for d in dims] for a in antworten])
-    sc = SHARP * STATES @ lad.T
+    sc = SHARP * ST @ lad.T
     sc -= sc.max(axis=1, keepdims=True)
     e = np.exp(sc)
     return (e / e.sum(axis=1, keepdims=True)).T
@@ -137,15 +146,15 @@ def antwort_ziehen(antworten, wahr, dims):
     sc = np.array([SHARP*sum(wahr[d]*a.get(d,0.0) for d in dims) for a in antworten])
     e = np.exp(sc - sc.max()); pr = e/e.sum()
     return int(np.random.choice(len(pr), p=pr))
-def randverteilung(pr, d):
-    return np.array([pr[STATES[:, d] == v].sum() for v in STUFEN])
-def modus(pr, d):
-    return int(STUFEN[randverteilung(pr, d).argmax()])
-def erwartung(pr, d):
-    return float((randverteilung(pr, d) * STUFEN).sum())
+def randverteilung(pr, d, n):
+    ST = raum(n)
+    return np.array([pr[ST[:, d] == v].sum() for v in STUFEN])
+def modus(pr, d, n):
+    return int(STUFEN[randverteilung(pr, d, n).argmax()])
+def erwartung(pr, d, n):
+    return float((randverteilung(pr, d, n) * STUFEN).sum())
 
 # ---------- Die Spielweisen ----------
-# Wie viele Fragen je Besuch, wie sicher die Wahl, wann der Koffer aufgeht.
 GUETE = {"zufall":0.0, "mittel":0.5, "gut":0.85, "perfekt":1.0}
 
 def fragenplan(art, besuch, nbf, nmo):
@@ -154,39 +163,44 @@ def fragenplan(art, besuch, nbf, nmo):
     if art == "mittel":  return (3 if besuch <= 2 else 0), (2 if besuch <= 2 else 0)
     return random.randint(0, 3), random.randint(0, 3)
 
-def besuche(art, max_besuche=4):
+def besuche(art, max_besuche=6):
     """Spielt eine Person ueber mehrere Besuche. Gibt zurueck, ob und im
        wievielten Besuch er kauft, und wie ihr am Ende steht."""
-    bez = BEZ["start"]
+    frd = FR["start"]
     pr = {"bf": prior(T, ROLLE), "mo": prior(M, {})}
     offen = {"bf": list(range(len(BF))), "mo": list(range(len(MO)))}
     stand = {"bf": 0, "mo": 0}; gefragt = {"bf": 0, "mo": 0}
-    fakten = 0; auf_rest = 0.0
+    fakten = 0; geduld_weg = 0.0
     gesehen = []
     g = GUETE[art]
 
     for besuch in range(1, max_besuche+1):
-        if bez < BEZ["verbrannt"]: return (False, besuch-1, bez, "verbrannt")
-        auf = auf_rest * BEZ["aufUebertrag"]; heute = 0
+        if frd < FR["verbrannt"]: return (False, besuch-1, frd, "verbrannt")
+        geduld = 100.0 - geduld_weg * FR["geduldUebertrag"]
+        heute = 0
         nbf, nmo = fragenplan(art, besuch, len(offen["bf"]), len(offen["mo"]))
         for key, wieviel, LIKS, ROH, wahr, dims in (
                 ("bf", nbf, LIK_BF, BF, HZ, T), ("mo", nmo, LIK_MO, MO, HM, M)):
             for _ in range(min(wieviel, len(offen[key]))):
+                if geduld <= 0: break
                 i = (max(offen[key], key=lambda j: eig(pr[key], LIKS[j]))
                      if random.random() < g else random.choice(offen[key]))
                 offen[key].remove(i)
                 a = antwort_ziehen(ROH[i], wahr, dims)
                 pr[key] = LIKS[i][a] * pr[key]; pr[key] /= pr[key].sum()
-                bez += G["frage"] * (1 + heute*G["fragesteig"])
-                heute += 1; auf += G["frageauf"]; gefragt[key] += 1
-            # Festlegen, sobald es seit dem letzten Mal Neues zu hoeren gab
+                frd += G["frage"] * (1 + heute*G["fragesteig"])
+                geduld -= G["gfrage"] * (1 + heute*G["fragesteig"])
+                heute += 1; gefragt[key] += 1
             if gefragt[key] > stand[key]:
                 stand[key] = gefragt[key]
-                for d in range(5):
-                    tipp = modus(pr[key], d) if random.random() < g else int(random.choice(STUFEN))
+                punkte = 0.0
+                for d in range(len(dims)):
+                    tipp = (modus(pr[key], d, len(dims)) if random.random() < g
+                            else int(random.choice(STUFEN)))
                     dist = abs(tipp - int(wahr[dims[d]]))
-                    bez += G["rtreffer"] if dist == 0 else (G["rnah"] if dist == 1 else G["rdaneben"])
-                bez = min(100.0, max(0.0, bez))
+                    punkte += G["rtreffer"] if dist == 0 else (G["rnah"] if dist == 1 else G["rdaneben"])
+                frd = min(100.0, max(0.0, frd + punkte))
+                geduld = min(100.0, max(0.0, geduld + punkte*G["gfest"]))
 
         # Was gerade bei ihm los ist
         braucht = {}
@@ -194,45 +208,49 @@ def besuche(art, max_besuche=4):
         zi = random.choice(rest); gesehen.append(zi)
         z = ZUST[zi]; laune = "neutral"
         for f in z["fragen"]:
-            erw = sum(w*erwartung(pr["bf"], T.index(d)) for d, w in f["liest"].items() if d in T)
+            if geduld <= 0: break
+            erw = sum(w*erwartung(pr["bf"], T.index(d), 5) for d, w in f["liest"].items() if d in T)
             if random.random() < g:
-                if erw < 0: continue          # wer sein Bild liest, laesst die Mine liegen
+                if erw < 0: continue
             elif random.random() < 0.5:
                 continue
             trifft = sum(w*HZ[d] for d, w in f["liest"].items() if d in HZ) > 0
-            bez += nach_laune(f["gut_bez"] if trifft else f["zu_bez"], laune)
+            frd += nach_laune(f["gut_bez"] if trifft else f["zu_bez"], laune)
+            geduld += G["ggut"] if trifft else -G["gschlecht"]
             laune = f["gut_st"] if trifft else f["zu_st"]
             if trifft: braucht = z["braucht"]
-        bez = min(100.0, max(0.0, bez))
+        frd = min(100.0, max(0.0, frd)); geduld = min(100.0, geduld)
 
-        # Ihn persoenlich ausfragen, solange die Auffaelligkeit es zulaesst
+        # Ihn persoenlich ausfragen, solange die Geduld es zulaesst
         preis = {"perfekt":1.0, "gut":1.2, "mittel":1.9, "zufall":2.6}[art]
-        vorsicht = {"perfekt":9.0, "gut":8.5, "mittel":8.0, "zufall":11.0}[art]
-        while fakten < 4 and auf + preis <= vorsicht:
-            auf += preis
+        polster = {"perfekt":12.0, "gut":16.0, "mittel":20.0, "zufall":0.0}[art]
+        while fakten < 4 and geduld - preis*G["gprivat"] >= polster:
+            geduld -= preis * G["gprivat"]
             if random.random() < {"perfekt":1.0, "gut":0.85, "mittel":0.6, "zufall":0.35}[art]:
                 fakten += 1
             else:
-                auf += 1.0
-            if auf >= GRENZE:
-                bez = max(0.0, bez + G["rauswurf"])
+                geduld -= G["gprivat"]
+            if geduld <= 0:
+                frd = max(0.0, frd + G["rauswurf"])
                 break
-        auf_rest = auf
-        if auf >= GRENZE: continue            # rausgeworfen, der Besuch ist vorbei
+        geduld_weg = max(0.0, 100.0 - geduld)
+        if geduld <= 0: continue          # rausgeworfen, der Besuch ist vorbei
 
-        # Der Koffer. Wer blind spielt, macht ihn sofort auf.
-        will = (besuch == 1) if art == "zufall" else (bez >= BEZ["verkaufSchwelle"])
+        # Der Koffer
+        will = (besuch == 1) if art == "zufall" else (frd >= FR["verkaufSchwelle"])
         if not will:
-            bez = min(100.0, bez + 1)         # rechtzeitig gegangen
+            frd = min(100.0, frd + 1)
             continue
-        if bez < BEZ["verkaufSchwelle"]:
-            bez = max(0.0, bez - 2*BEZ["verkaufKosten"])
+        if frd < FR["verkaufSchwelle"]:
+            frd = max(0.0, frd - 2*FR["verkaufKosten"])
             continue
-        bez -= BEZ["verkaufKosten"]
-        bereit = round(bez * BEZ["uebertrag"])
+        frd -= FR["verkaufKosten"]
+        bereit = round(frd * FR["uebertrag"])
 
-        best = max(PROD, key=lambda q: sum(q["passt"].get(m,0)*HM[m] for m in HM)
-                                       + G["bedarf"]/G["produkt"]*sum(q["passt"].get(m,0)*braucht.get(m,0) for m in braucht))
+        def wert(q):
+            return (sum(q["passt"].get(m,0)*HM[m] for m in HM)
+                    + G["bedarf"]/G["produkt"]*sum(q["passt"].get(m,0)*braucht.get(m,0) for m in braucht))
+        best = max(PROD, key=wert)
         p = best if random.random() < g else random.choice(PROD)
         passung = sum(p["passt"].get(m,0)*HM[m] for m in HM)
         bedarf  = sum(p["passt"].get(m,0)*braucht.get(m,0) for m in braucht)
@@ -248,20 +266,27 @@ def besuche(art, max_besuche=4):
             bereit += nach_laune(roh, laune)
             laune = o["stimmung"]
 
-        if bereit >= JA:   return (True,  besuch, min(100.0, bez+6), "kauft")
-        if bereit >= OFFEN: bez = max(0.0, bez); ausgang = "offen"
-        else:               bez = max(0.0, bez-8); ausgang = "nein"
-        return (False, besuch, bez, ausgang)
+        # Kein Schwellenwert, sondern ein Wurf. Ohne Bedarf kein Kauf.
+        braucht_wert = min(1.0, (G["produkt"]*passung + G["bedarf"]*bedarf) / (4*G["produkt"]))
+        spanne = max(0.0, min(1.0, (bereit - AB["vonBereit"]) / (AB["bisBereit"] - AB["vonBereit"])))
+        chance = 0.0 if braucht_wert < AB["bedarfNoetig"] else min(
+            AB["deckel"], AB["ausBereit"]*spanne + AB["ausFreundschaft"]*(frd/100))
+        if random.random() < chance:
+            return (True, besuch, min(100.0, frd+6), "kauft")
+        # Ein Nein beendet den Besuch, nicht die Bekanntschaft: man kommt
+        # wieder. Nur kostet jeder Versuch, und das summiert sich.
+        if not (bereit >= 48 and braucht_wert >= AB["bedarfNoetig"]):
+            frd = max(0.0, frd - 8)
 
-    return (False, max_besuche, bez, "kein Versuch")
+    return (False, max_besuche, frd, "kein Versuch")
 
 def lauf(art, n):
     r = [besuche(art) for _ in range(n)]
     kauft = np.array([x[0] for x in r])
     wann  = np.array([x[1] for x in r if x[0]])
-    bez   = np.array([x[2] for x in r])
-    tot   = np.array([x[3] == "verbrannt" or x[2] < BEZ["verbrannt"] for x in r])
-    return kauft.mean(), (wann.mean() if len(wann) else float("nan")), bez.mean(), tot.mean()
+    frd   = np.array([x[2] for x in r])
+    tot   = np.array([x[3] == "verbrannt" or x[2] < FR["verbrannt"] for x in r])
+    return kauft.mean(), (wann.mean() if len(wann) else float("nan")), frd.mean(), tot.mean()
 
 if __name__ == "__main__":
     N = 400
@@ -270,11 +295,11 @@ if __name__ == "__main__":
         if k == "n": N = int(v)
         else: G[k] = float(v)
     random.seed(7); np.random.seed(7)
-    print("geparst: %d BF, %d Motiv, %d Waren, %d Zuege, %d Zustaende"
+    print("geparst: %d BF, %d Waagenfragen, %d Waren, %d Zuege, %d Zustaende"
           % (len(BF), len(MO), len(PROD), len(ZUEGE), len(ZUST)))
-    print("Beziehung:", BEZ)
-    print("Gewichte:", G, " n =", N)
-    print("%-8s %8s %9s %9s %9s" % ("", "kauft", "im Besuch", "Beziehung", "verbrannt"))
+    print("Freundschaft:", FR, "\nAbschluss:", AB)
+    print("Waren gegen ihn:", {q["id"]: round(sum(q["passt"].get(m,0)*HM[m] for m in HM), 2) for q in PROD})
+    print("%-8s %8s %9s %12s %10s" % ("", "kauft", "im Besuch", "Freundschaft", "verbrannt"))
     for art in ("zufall", "mittel", "gut", "perfekt"):
         ja, wann, bz, tot = lauf(art, N)
-        print("%-8s %7.1f%% %9.1f %9.1f %8.1f%%" % (art, 100*ja, wann, bz, 100*tot))
+        print("%-8s %7.1f%% %9.1f %12.1f %9.1f%%" % (art, 100*ja, wann, bz, 100*tot))

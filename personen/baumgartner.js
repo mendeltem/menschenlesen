@@ -28,7 +28,7 @@ hero: {
   /* Die wahre Ausprägung, −2 bis +2. Danach antwortet er, und das ist
      die Lösung, die am Ende aufgedeckt wird. */
   z: { O: 2, C: -1, E: 2, A: 1, N: -2 },
-  m: { AUT: 2, EFF: 2, SIC: -1, ZUG: -1, STA: -2 }
+  m: { FRE: 2, GEL: -1 }
 },
 
 rollenprior: { C: 0.55, O: 0.2, E: -0.45 },
@@ -224,74 +224,152 @@ bigfive: [
     ]}
 ],
 
-/* --- Akt 3: sieben Fragen zum Antrieb, du stellst vier. ----------- */
+/* --- Akt 3: sieben Fragen auf zwei Waagen.
+
+       Jede Frage bietet vier Antworten, eine je Pol: selbst bestimmen,
+       sicher sein, gesehen werden, dazugehören. Dadurch trennt jede
+       Frage beide Waagen auf einmal, und man braucht weniger davon.
+
+       Die Antworten sind absichtlich lang. Sie sollen nicht nur einen
+       Wert setzen, sondern einen Menschen zeigen: eine Zahl, ein Jahr,
+       ein Name — irgendetwas, das man sich merkt und worauf man im
+       Verkauf zurückgreifen kann. ---------------------------------- */
 
 motivfragen: [
   { id:`zusage`, q:`Was müsste ein Projekt haben, damit Sie zusagen?`,
     an:{ 'allein:laut': `Sie brauchen jemanden, der widerspricht. Was müsste ein Projekt sonst noch haben, damit Sie zusagen?`,
          'methode:neugier': `Wenn Neugier reicht, um ein Verfahren zu probieren: was müsste ein ganzes Projekt haben, damit Sie zusagen?` },
     a:[
-      {id:`freihand`, wie:`langsam, jedes Wort gewogen`, stimmung:`interessiert`, t:`Dass mir keiner reinredet, wie ich es rechne. Über das Was kann man streiten, über das Wie nicht.`, aff:{AUT:2.2}, fakt:`will über das Wie allein entscheiden`},
-      {id:`kurz`, wie:`schnell, ungeduldig`, stimmung:`gereizt`,     t:`Dass nicht sechs Monate Vorlauf sind, bevor der erste Datensatz da ist.`, aff:{EFF:2.0}, fakt:`erträgt keinen Vorlauf ohne Daten`},
-      {id:`sichtbar`, wie:`halb im Scherz, halb nicht`, stimmung:`freundlich`, t:`Dass am Ende mein Name draufsteht.`, aff:{STA:2.2}},
-      {id:`leute`, wie:`warm, unangestrengt`, stimmung:`freundlich`,    t:`Dass ich die Leute mag. Alles andere findet sich.`, aff:{ZUG:2.0}},
-      {id:`bestand`, wie:`vorsichtig, gedämpft`, stimmung:`nachdenklich`,  t:`Dass es nicht nach einem Jahr eingestellt wird.`, aff:{SIC:2.0}}
+      {id:`freihand`, wie:`langsam, jedes Wort gewogen`, stimmung:`interessiert`,
+       t:`Dass mir keiner reinredet, wie ich es rechne. Über das Was können wir streiten, gern lange. Über das Wie nicht.`,
+       nachRegie:`Er legt beide Hände flach auf den Tisch, als wäre damit etwas abgeschlossen.`,
+       nachEr:`Ich habe zweimal Projekte abgesagt, bei denen die Methode im Antrag schon feststand. Beide sind gescheitert. Das ist kein Beweis, aber es hilft mir beim Schlafen.`,
+       aff:{FRE:2.4}, fakt:`hat zwei Projekte abgesagt, weil die Methode schon feststand`},
+      {id:`bestand`, wie:`vorsichtig, gedämpft`, stimmung:`nachdenklich`,
+       t:`Dass es nicht nach einem Jahr eingestellt wird. Ich habe hier vier Vorhaben begraben, die gut waren und trotzdem weg sind.`,
+       nachEr:`Man gewöhnt sich das Anfangen ab, wenn das Aufhören immer von woanders kommt.`,
+       aff:{FRE:-2.2}, fakt:`hat vier gute Vorhaben einstellen sehen und ist seither vorsichtig`},
+      {id:`sichtbar`, wie:`halb im Scherz, halb nicht`, stimmung:`freundlich`,
+       t:`Dass am Ende mein Name draufsteht. An erster Stelle, wenn wir schon ehrlich sind.`,
+       aff:{GEL:2.2}},
+      {id:`leute`, wie:`warm, unangestrengt`, stimmung:`freundlich`,
+       t:`Dass ich die Leute mag. Klingt weich, ist es nicht: mit jemandem, den ich nicht leiden kann, rechne ich schlechter. Das habe ich an mir gemessen.`,
+       aff:{GEL:-2.0}, fakt:`rechnet nach eigener Messung schlechter mit Leuten, die er nicht mag`}
     ]},
 
   { id:`lohnt`, q:`Woran merken Sie am Ende, dass es sich gelohnt hat?`,
-    an:{ 'zusage:freihand': `Angenommen, keiner redet Ihnen rein. Woran merken Sie dann am Ende, dass es sich gelohnt hat?` },
+    an:{ 'zusage:freihand': `Angenommen, keiner redet Ihnen rein. Woran merken Sie dann am Ende, dass es sich gelohnt hat?`,
+         'zusage:bestand':  `Angenommen, es wird nicht eingestellt. Woran merken Sie dann, dass es sich gelohnt hat?` },
     a:[
-      {id:`verstanden`, wie:`erst zögernd, dann fest`, stimmung:`nachdenklich`, t:`Wenn ich hinterher etwas verstanden habe, das ich vorher nicht wusste. Klingt banal, ist der ganze Punkt.`, aff:{AUT:1.6,EFF:0.4}, fakt:`misst Erfolg daran, ob er etwas verstanden hat`},
-      {id:`weniger`, wie:`knapp, mit Nachdruck auf dem letzten Wort`, stimmung:`interessiert`,    t:`Wenn die Sache danach weniger Arbeit macht als vorher. Nicht mehr.`, aff:{EFF:2.2}, fakt:`Erfolg heißt für ihn: danach weniger Arbeit`},
-      {id:`zitiert`, wie:`leichthin, fast verlegen`, stimmung:`freundlich`,    t:`Wenn es zitiert wird.`, aff:{STA:2.0}},
-      {id:`benutzt`, wie:`ruhig, zufrieden`, stimmung:`freundlich`,    t:`Wenn die Leute im Haus es benutzen, ohne dass ich danebenstehe.`, aff:{ZUG:1.2,EFF:0.8}}
+      {id:`verstanden`, wie:`erst zögernd, dann fest`, stimmung:`nachdenklich`,
+       t:`Wenn ich hinterher etwas verstanden habe, das ich vorher nicht wusste. Klingt banal. Ist der ganze Punkt.`,
+       nachEr:`Zweimal in dreißig Jahren ist mir das richtig passiert. Beide Male stand nichts davon im Abschlussbericht.`,
+       aff:{FRE:2.0}, fakt:`hat zweimal in dreißig Jahren wirklich etwas verstanden, beides steht in keinem Bericht`},
+      {id:`belastbar`, wie:`nüchtern, sehr bestimmt`, stimmung:`neutral`,
+       t:`Wenn die Zahl in fünf Jahren noch stimmt. Alles andere ist Tagesgeschäft.`,
+       nachEr:`Ich habe eine Schätzung von 2013, die hält bis heute. Die ist mir lieber als alles, was ich seither veröffentlicht habe.`,
+       aff:{FRE:-1.9}, fakt:`ist auf eine Schätzung von 2013 stolz, weil sie bis heute hält`},
+      {id:`zitiert`, wie:`leichthin, fast verlegen`, stimmung:`freundlich`,
+       t:`Wenn es zitiert wird. Und ja, ich schaue nach. Nicht täglich.`,
+       aff:{GEL:2.0}},
+      {id:`benutzt`, wie:`ruhig, zufrieden`, stimmung:`freundlich`,
+       t:`Wenn die Leute im Haus es benutzen, ohne dass ich danebenstehe. Am besten, ohne dass sie wissen, dass es von mir ist.`,
+       aff:{GEL:-1.9}, fakt:`will, dass seine Verfahren benutzt werden, ohne dass sein Name dransteht`}
     ]},
 
   { id:`nervt`, q:`Was nervt Sie hier am meisten?`,
     an:{ 'schreibtisch:such': `Zehn Sekunden für ein Blatt. Was dauert hier zu lange? Was nervt Sie am meisten?`,
          'schlampig:hin':     `Sie sagen so etwas direkt. Dann sagen Sie es mir auch: was nervt Sie hier am meisten?` },
     a:[
-      {id:`gremien`, wie:`hörbar aufgebracht, die Zahl betont`, stimmung:`gereizt`,    t:`Dass ich für eine Methodenänderung drei Unterschriften brauche. Drei. Für etwas, das ich besser beurteilen kann als alle drei zusammen.`, aff:{AUT:2.4}, fakt:`braucht drei Unterschriften für eine Methodenänderung`, nachEr:`Eine davon von jemandem, der mich einmal im Jahr sieht.`},
-      {id:`doppelt`, wie:`müde, wie oft gesagt`, stimmung:`gereizt`,    t:`Dass ich dieselbe Zahl viermal im Jahr in vier Formaten liefere.`, aff:{EFF:2.2}, fakt:`liefert dieselbe Zahl viermal im Jahr in vier Formaten`},
-      {id:`uebersehen`, wie:`kühl, verletzt darunter`, stimmung:`verschlossen`, t:`Dass Leute Entscheidungen treffen und mich hinterher fragen.`, aff:{STA:1.4,AUT:0.8}},
-      {id:`mittag`, wie:`leise, unerwartet weich`, stimmung:`nachdenklich`,     t:`Dass keiner mehr zusammen Mittag isst.`, aff:{ZUG:2.0}}
+      {id:`gremien`, wie:`hörbar aufgebracht, die Zahl betont`, stimmung:`gereizt`,
+       t:`Dass ich für eine Methodenänderung drei Unterschriften brauche. Drei. Für etwas, das ich besser beurteilen kann als alle drei zusammen.`,
+       nachEr:`Eine davon von jemandem, der mich einmal im Jahr sieht und mich beim Vornamen meiner Vorgängerin nennt.`,
+       aff:{FRE:2.4}, fakt:`braucht drei Unterschriften für eine Methodenänderung`},
+      {id:`umbau`, wie:`müde, gedehnt`, stimmung:`verschlossen`,
+       t:`Der Umbau. Alle zwei Jahre eine neue Struktur, ein neues Kürzel, ein neues Formular. Ich sitze seit neunzehn Jahren im selben Zimmer und war in sechs verschiedenen Abteilungen.`,
+       aff:{FRE:-2.1}, fakt:`war in neunzehn Jahren im selben Zimmer in sechs Abteilungen`},
+      {id:`uebersehen`, wie:`kühl, und darunter verletzt`, stimmung:`verschlossen`,
+       t:`Dass Leute entscheiden und mich hinterher fragen. Nicht weil sie mich ärgern wollen. Sie denken einfach nicht an mich.`,
+       aff:{GEL:1.8}},
+      {id:`mittag`, wie:`leise, unerwartet weich`, stimmung:`nachdenklich`,
+       t:`Dass keiner mehr zusammen Mittag isst. Wir waren mal neun. Jetzt bringt jeder etwas mit und isst vor dem Bildschirm.`,
+       nachRegie:`Er sagt es und wischt es im selben Atemzug mit der Hand weg, als wäre es nichts.`,
+       aff:{GEL:-2.1}, fakt:`vermisst, dass die Abteilung zusammen Mittag gegessen hat`}
     ]},
 
   { id:`aendern`, q:`Wenn Sie hier morgen eine Sache ändern dürften — welche?`,
     an:{ 'nervt:gremien': `Und wenn Sie die drei Unterschriften abschaffen dürften: was käme als Nächstes?`,
-         'nervt:doppelt': `Und wenn die vier Formate wegfielen: was käme als Nächstes?` },
+         'nervt:umbau':   `Und wenn zwei Jahre lang niemand umbaut: was käme als Nächstes?` },
     a:[
-      {id:`entscheiden`, wie:`langsam, sehr bestimmt`, stimmung:`interessiert`, t:`Ich würde entscheiden dürfen, welche Fragen ich rechne. Nicht was dabei herauskommt, sondern welche.`, aff:{AUT:2.2}, fakt:`will entscheiden, welche Fragen er rechnet`},
-      {id:`pipeline`, wie:`nüchtern, wie eine abgelesene Zahl`, stimmung:`nachdenklich`,    t:`Eine ordentliche Datenleitung. Ich verbringe sechzig Prozent meiner Zeit mit Putzen, nicht mit Rechnen.`, aff:{EFF:2.4}, fakt:`sechzig Prozent seiner Zeit gehen fürs Datenputzen drauf`, nachRegie:`Er sagt die Zahl ohne Bitterkeit, so wie man eine Zahl abliest.`},
-      {id:`titel`, wie:`mit einem schiefen Grinsen`, stimmung:`amuesiert`,       t:`Einen anderen Titel an der Tür.`, aff:{STA:2.2}},
-      {id:`umbau`, wie:`müde, gedehnt`, stimmung:`verschlossen`,       t:`Weniger Umbau. Alle zwei Jahre eine neue Struktur, das hält niemand aus.`, aff:{SIC:2.2}}
+      {id:`pipeline`, wie:`nüchtern, wie eine abgelesene Zahl`, stimmung:`nachdenklich`,
+       t:`Eine ordentliche Datenleitung. Ich verbringe sechzig Prozent meiner Zeit mit Putzen, nicht mit Rechnen.`,
+       nachRegie:`Er sagt die Zahl ohne Bitterkeit, so wie man eine Zahl abliest.`,
+       nachEr:`Das sind, auf ein Berufsleben hochgerechnet, elf Jahre. Ich habe es einmal ausgerechnet und danach nie wieder.`,
+       aff:{FRE:2.0}, fakt:`sechzig Prozent seiner Zeit gehen fürs Datenputzen drauf, hochgerechnet elf Jahre`},
+      {id:`ruhe`, wie:`bestimmt, ohne Klage`, stimmung:`neutral`,
+       t:`Zwei Jahre, in denen niemand etwas umbaut. Kein neues System, keine neue Struktur, kein neuer Name für dieselbe Abteilung.`,
+       aff:{FRE:-2.2}},
+      {id:`titel`, wie:`mit einem schiefen Grinsen`, stimmung:`amuesiert`,
+       t:`Einen anderen Titel an der Tür. Da steht Sachbearbeitung Methoden. Ich mache seit zwölf Jahren etwas anderes.`,
+       aff:{GEL:2.2}, fakt:`stört sich am Türschild Sachbearbeitung Methoden`},
+      {id:`tueren`, wie:`beiläufig, aber ernst gemeint`, stimmung:`freundlich`,
+       t:`Dass die Türen wieder aufbleiben dürfen. Brandschutz, sagt man mir. Seitdem redet keiner mehr im Gehen miteinander.`,
+       aff:{GEL:-1.9}}
     ]},
 
   { id:`nichtstun`, q:`Und wenn Sie gar nichts ändern?`,
-    an:{ 'aendern:pipeline': `Und wenn die Datenleitung nie kommt?` },
+    an:{ 'aendern:pipeline': `Und wenn die Datenleitung nie kommt?`,
+         'aendern:ruhe':     `Und wenn stattdessen nächstes Jahr wieder umgebaut wird?` },
     a:[
-      {id:`hochrechnung`, wie:`trocken, ohne Bitterkeit`, stimmung:`nachdenklich`, t:`Dann verbrenne ich weiter zwei Tage die Woche mit Formatierung, bis ich in Rente gehe. Das ist keine Drohung, das ist eine Hochrechnung.`, aff:{EFF:2.2,AUT:0.6}, fakt:`rechnet hoch, was ihn Nichtstun kostet`},
-      {id:`auszuhalten`, wie:`achselzuckend, gleichgültig`, stimmung:`verschlossen`,  t:`Dann bleibt es, wie es ist. Ist auszuhalten.`, aff:{SIC:1.8}},
-      {id:`weg`, wie:`ruhig, ohne Drohung, gerade deshalb ernst`, stimmung:`neutral`,          t:`Dann bin ich in zwei Jahren woanders.`, aff:{AUT:1.6,STA:0.6}}
+      {id:`hochrechnung`, wie:`trocken, ohne Bitterkeit`, stimmung:`nachdenklich`,
+       t:`Dann verbrenne ich weiter zwei Tage die Woche mit Formatierung, bis ich in Rente gehe. Das ist keine Drohung, das ist eine Hochrechnung.`,
+       aff:{FRE:1.9}, fakt:`rechnet hoch, was ihn Nichtstun kostet`},
+      {id:`auszuhalten`, wie:`achselzuckend, gleichgültig`, stimmung:`verschlossen`,
+       t:`Dann bleibt es, wie es ist. Ist auszuhalten. Ich habe Schlimmeres ausgehalten und dabei zugenommen.`,
+       aff:{FRE:-2.0}},
+      {id:`weg`, wie:`ruhig, ohne Drohung, und gerade deshalb ernst`, stimmung:`neutral`,
+       t:`Dann bin ich in zwei Jahren woanders. Ich bekomme dreimal im Jahr Anrufe. Bisher habe ich immer abgelehnt.`,
+       aff:{GEL:1.3, FRE:1.0}, fakt:`bekommt dreimal im Jahr Angebote und lehnt bisher ab`},
+      {id:`bleiben`, wie:`warm, ein wenig resigniert`, stimmung:`nachdenklich`,
+       t:`Dann bleibe ich. Wegen der Leute, nicht wegen der Arbeit. Das ist ein schlechter Grund und der einzige, der bisher gehalten hat.`,
+       aff:{GEL:-1.8}, fakt:`bleibt wegen der Leute, nicht wegen der Arbeit`}
     ]},
 
   { id:`zustimmung`, q:`Wer muss zustimmen, wenn Sie ein Verfahren wechseln wollen?`,
     an:{ 'schlampig:hin':   `Unter vier Augen, ohne Publikum. Und wer muss zustimmen, wenn Sie ein Verfahren wechseln wollen?`,
          'schlampig:chef':  `Sie gehen zur Leitung. Muss die auch zustimmen, wenn Sie ein Verfahren wechseln wollen?` },
     a:[
-      {id:`formalweg`, wie:`gerade heraus, ein wenig stolz`, stimmung:`interessiert`, t:`Formal die Leitung. Faktisch keiner, wenn ich es nicht aufschreibe. Ich schreibe es aber auf, weil ich kein Feigling bin.`, aff:{AUT:2.0,SIC:-0.4}, fakt:`geht den formalen Weg, obwohl er ihn umgehen könnte`},
-      {id:`betroffene`, wie:`bedächtig`, stimmung:`neutral`,t:`Alle, die betroffen sind. Sonst gibt es Ärger.`, aff:{ZUG:1.8,SIC:0.8}},
-      {id:`keiner`, wie:`knapp, mit Betonung auf mein`, stimmung:`skeptisch`,    t:`Keiner. Das ist mein Bereich.`, aff:{AUT:1.8,STA:1.0}}
+      {id:`formalweg`, wie:`gerade heraus, ein wenig stolz`, stimmung:`interessiert`,
+       t:`Formal die Leitung. Faktisch keiner, wenn ich es nicht aufschreibe. Ich schreibe es aber auf, weil ich kein Feigling bin.`,
+       aff:{FRE:2.0}, fakt:`geht den formalen Weg, obwohl er ihn umgehen könnte`},
+      {id:`leitung`, wie:`sachlich, ohne Groll`, stimmung:`neutral`,
+       t:`Die Leitung, und das ist auch richtig so. Wenn jeder wechselt, wie er will, vergleicht hinterher keiner mehr etwas mit irgendwas.`,
+       aff:{FRE:-2.0}},
+      {id:`keiner`, wie:`knapp, mit Betonung auf mein`, stimmung:`skeptisch`,
+       t:`Keiner. Das ist mein Bereich.`,
+       nachEr:`Das sage ich seit elf Jahren, und seit elf Jahren hat es niemand geprüft.`,
+       aff:{FRE:1.5, GEL:1.2}},
+      {id:`betroffene`, wie:`bedächtig`, stimmung:`neutral`,
+       t:`Alle, die betroffen sind. Ich gehe die vier Zimmer ab und frage. Dauert einen Vormittag und spart mir ein halbes Jahr.`,
+       aff:{GEL:-1.9, FRE:-0.6}, fakt:`geht vor jeder Änderung die betroffenen Zimmer ab`}
     ]},
 
   { id:`entscheidung`, q:`Wie treffen Sie eine Entscheidung dieser Größenordnung?`,
     an:{ 'frist:spaet':  `Spät anfangen und trotzdem fertig werden: wie treffen Sie dann eine Entscheidung dieser Größenordnung?`,
          'frist:puffer': `Puffer von hinten. Wie treffen Sie eine Entscheidung dieser Größenordnung?` },
     a:[
-      {id:`schnell`, wie:`zügig, sehr sicher`, stimmung:`interessiert`,  t:`Schnell. Ich habe die Erfahrung gemacht, dass die zweite Woche Nachdenken nichts hinzufügt.`, aff:{EFF:2.0,AUT:0.8}, fakt:`entscheidet schnell, hält lange Bedenkzeit für verschwendet`},
-      {id:`vertraute`, wie:`wärmer`, stimmung:`freundlich`,t:`Ich rede mit drei Leuten, denen ich vertraue.`, aff:{ZUG:1.8}},
-      {id:`rechnen`, wie:`sachlich`, stimmung:`neutral`,  t:`Ich rechne es durch.`, aff:{EFF:1.2,SIC:0.8}},
-      {id:`schlafen`, wie:`langsam, bedacht`, stimmung:`nachdenklich`, t:`Ich schlafe zwei Nächte drüber. Mindestens.`, aff:{SIC:1.8}}
+      {id:`schnell`, wie:`zügig, sehr sicher`, stimmung:`interessiert`,
+       t:`Schnell. Ich habe die Erfahrung gemacht, dass die zweite Woche Nachdenken nichts hinzufügt außer der Möglichkeit, es sich anders zu überlegen.`,
+       aff:{FRE:2.0}, fakt:`entscheidet schnell, hält lange Bedenkzeit für verschwendet`},
+      {id:`schlafen`, wie:`langsam, bedacht`, stimmung:`nachdenklich`,
+       t:`Ich schlafe zwei Nächte drüber. Mindestens. Was nach zwei Nächten noch gut aussieht, ist meistens gut.`,
+       aff:{FRE:-1.9}},
+      {id:`notiz`, wie:`sachlich, mit einem Blick auf den Block`, stimmung:`neutral`,
+       t:`Ich schreibe auf, wer wann was entschieden hat. Nicht aus Misstrauen. Weil hinterher immer gefragt wird, und weil ich dann derjenige bin, der es weiß.`,
+       aff:{GEL:1.5}, fakt:`führt Buch darüber, wer wann was entschieden hat`},
+      {id:`vertraute`, wie:`wärmer`, stimmung:`freundlich`,
+       t:`Ich rede mit drei Leuten, denen ich vertraue. Zwei davon arbeiten hier nicht mehr, und ich rufe sie trotzdem an.`,
+       aff:{GEL:-2.0}, fakt:`fragt bei Entscheidungen zwei ehemalige Kollegen an`}
     ]}
 ],
 
@@ -403,7 +481,7 @@ verkauf: {
           er2:`Dann sind Sie hier falsch. Ich bin nicht jeder, dafür sitzen Sie zu lange hier.`,
           wie2:`trocken`, stimmung:`skeptisch` },
         { id:`zugehoert`, t:`Weil Sie mir vierzig Minuten lang gesagt haben, was Ihnen fehlt. Wenn ich falsch liege, sagen Sie es, und ich packe wieder ein.`,
-          wie:`ruhig, ohne Druck`, auto:2, aff:{AUT:1.6},
+          wie:`ruhig, ohne Druck`, auto:2, aff:{FRE:1.6},
           an:{ plan60:`Sie wollen ab sechzig auf vier Tage. Das hier ist der einzige Weg, den ich kenne, wie das geht, ohne dass jemand anders Ihre Arbeit macht. Wenn ich falsch liege, sagen Sie es, und ich packe ein.`,
                pipeline:`Sie sagten, sechzig Prozent Ihrer Zeit gehen fürs Putzen drauf. Deshalb dieses und nichts anderes. Wenn ich falsch liege, packe ich ein.`,
                werkstatt:`Wer eine Brunsviga in Teilen im Keller hat, verliert ungern eine Notiz. Deshalb dieses hier. Wenn ich falsch liege, sagen Sie es.`,
@@ -411,7 +489,7 @@ verkauf: {
           erRegieVor:`Er sagt eine Sekunde lang nichts.`,
           er:`Das ist der erste ehrliche Satz seit dem Kaffee. Weiter.`, wie2:`langsamer`, stimmung:`interessiert` },
         { id:`beste`, t:`Weil es das Beste ist, was ich dabei habe.`,
-          wie:`bestimmt, ein wenig zu glatt`, auto:0, aff:{STA:1.2},
+          wie:`bestimmt, ein wenig zu glatt`, auto:0, aff:{GEL:1.2},
           er:`Das Beste, was Sie dabei haben, ist eine Aussage über Ihren Koffer, nicht über mich.`,
           wie2:`freundlich, aber unnachgiebig`, stimmung:`skeptisch` }
       ]},
@@ -423,12 +501,12 @@ verkauf: {
           er:`Es gibt immer einen. Dass Sie ihn nicht nennen, heißt nur, dass ich ihn allein finden muss.`,
           wie2:`kühl`, stimmung:`gereizt` },
         { id:`nennen`, t:`__HAKEN__`,
-          wie:`ruhig, ohne Beschönigung`, auto:2, aff:{AUT:1.2},
+          wie:`ruhig, ohne Beschönigung`, auto:2, aff:{FRE:1.2},
           erRegieVor:`Er sieht dich zum ersten Mal länger an.`,
           er:`Das hätten Sie mir nicht sagen müssen.`, erRegie:`Er nickt einmal.`,
           er2:`Genau deshalb glaube ich Ihnen den Rest.`, wie2:`langsam, ernst`, stimmung:`interessiert` },
         { id:`spaeter`, t:`Darüber reden wir, wenn Sie sich entschieden haben.`,
-          wie:`ausweichend`, auto:-2, aff:{SIC:0.6},
+          wie:`ausweichend`, auto:-2, aff:{FRE:-0.6},
           er:`Nein. Darüber reden wir jetzt, oder wir reden gar nicht mehr.`,
           wie2:`hart`, stimmung:`gereizt` }
       ]},
@@ -436,14 +514,14 @@ verkauf: {
     { frage: `Und woher weiß ich, dass das stimmt?`, wie:`prüfend`, stimmung:`skeptisch`,
       opt: [
         { id:`probieren`, t:`Sie behalten es zwei Wochen. Wenn es nicht tut, was ich gesagt habe, hole ich es ab, und Sie sagen kein Wort dazu.`,
-          wie:`konkret, ohne Bedingung`, auto:2, aff:{AUT:1.4,EFF:0.6},
+          wie:`konkret, ohne Bedingung`, auto:2, aff:{FRE:2.0},
           an:{ schnell:`Sie sagten, die zweite Woche Nachdenken bringt nichts. Also nehmen Sie es zwei Wochen mit. Danach entscheiden Sie in fünf Minuten, und wenn es Nein wird, hole ich es ab.`,
                komma:`Sie haben 2019 wegen eines Kommas eine Mail an alle geschrieben. Dann prüfen Sie es selbst: zwei Wochen, und wenn es nicht tut, was ich gesagt habe, hole ich es ab.` },
           er:`Zwei Wochen.`, erRegie:`Er zieht den Block heran und schreibt ein Datum an den Rand.`,
           er2:`Das ist ein Angebot, bei dem ich nichts verlieren kann. Das ist selten.`,
           wie2:`arbeitsbereit`, stimmung:`interessiert` },
         { id:`referenzen`, t:`Ich habe Referenzen. Drei Häuser arbeiten schon damit.`,
-          wie:`routiniert`, auto:0, aff:{SIC:1.0,STA:0.8},
+          wie:`routiniert`, auto:0, aff:{FRE:-1.0,GEL:0.8},
           er:`Drei Häuser.`, erRegie:`Er zuckt kaum merklich mit einer Schulter.`,
           er2:`Ich kenne die Häuser nicht und weiß nicht, wie sorgfältig sie prüfen. Das ist kein Argument, das ist ein Gefühl.`,
           wie2:`sachlich`, stimmung:`skeptisch` },
@@ -456,7 +534,7 @@ verkauf: {
     { regie: `Er sieht in den offenen Koffer und dann auf die Uhr an der Wand.`,
       opt: [
         { id:`neinistnein`, t:`Überlegen Sie es sich. Wenn Sie Nein sagen, ist das ein Nein und kein Zwischenstand.`,
-          wie:`ruhig, ohne Nachdruck`, auto:2, aff:{AUT:1.4},
+          wie:`ruhig, ohne Nachdruck`, auto:2, aff:{FRE:1.4},
           an:{ sagen:`Sie sagen so etwas am ersten Tag und nicht am letzten. Also sagen Sie mir, wann Sie so weit sind — und wenn es ein Nein wird, ist es ein Nein und kein Zwischenstand.`,
                musik:`Schlafen Sie eine Nacht drüber, oder spielen Sie eine. Und wenn es ein Nein wird, ist es ein Nein und kein Zwischenstand.` },
           er:`Ein Nein, das ein Nein sein darf.`, erRegie:`Er nickt.`,
@@ -508,7 +586,7 @@ zustaende: [
   regie:`Neben dem Regal stehen drei gefaltete Umzugskisten, Banderole noch dran.`,
   er:`Wir ziehen. Neubau, dritter Stock, Glas, offene Fläche. Im Februar.`,
   wie:`beiläufig, ohne jede Freude`, stimmung:`neutral`,
-  bedarf:{ id:`umzug_aut`, was:`will im Neubau nicht verplant werden`, braucht:{AUT:1.4, SIC:0.4} },
+  bedarf:{ id:`umzug_aut`, was:`will im Neubau nicht verplant werden`, braucht:{FRE:1.2} },
   fragen:[
     { id:`tafel`, t:`Offene Fläche. Wo stellen Sie da Ihre Tafel hin?`, wie:`trocken, mit einem Blick zur Wand`,
       liest:{O:0.8, C:-0.6, E:0.5},
@@ -542,7 +620,7 @@ zustaende: [
   regie:`An der Wand hängt ein Kalenderblatt, auf dem elf Tage durchgestrichen sind. Der zwölfte ist rot umrandet.`,
   er:`Elf Tage. Dann muss ein Gutachten raus, für das mir die halben Daten fehlen.`,
   wie:`schnell, angespannt`, stimmung:`neutral`,
-  bedarf:{ id:`frist_eff`, was:`verliert die Frist an Datenaufbereitung`, braucht:{EFF:1.6} },
+  bedarf:{ id:`frist_eff`, was:`verliert die Frist an Datenaufbereitung`, braucht:{FRE:1.4} },
   fragen:[
     { id:`wohin`, t:`Wo gehen die elf Tage hin? Rechnen oder Aufräumen?`, wie:`direkt, ohne Umschweife`,
       liest:{E:0.7, O:0.5, N:-0.5},
@@ -572,7 +650,7 @@ zustaende: [
   regie:`Auf dem Tisch liegt ein Formular mit dem Titel Wochenbericht. Es ist leer und hat einen Kaffeering.`,
   er:`Wir haben seit April eine neue Leitung. Vierunddreißig. Sie will Wochenberichte.`,
   wie:`sehr gleichmäßig, was schon etwas heißt`, stimmung:`neutral`,
-  bedarf:{ id:`chef_aut`, was:`erträgt keine Rechenschaft über sein Vorgehen`, braucht:{AUT:1.8} },
+  bedarf:{ id:`chef_aut`, was:`erträgt keine Rechenschaft über sein Vorgehen`, braucht:{FRE:1.6} },
   fragen:[
     { id:`schreiben`, t:`Und? Schreiben Sie sie?`, wie:`beiläufig, aber genau hinsehend`,
       liest:{E:0.6, O:0.6, C:-0.7},
@@ -604,7 +682,7 @@ zustaende: [
   regie:`Neben dem Bildschirm liegt ein Aktenordner mit der Jahreszahl 2021 auf dem Rücken. Er ist aufgeschlagen.`,
   er:`Eine Revision sieht sich meine Zahlen von 2021 an. Nichts Persönliches, sagt man mir.`,
   wie:`ruhig, mit einer Betonung auf dem letzten Wort`, stimmung:`neutral`,
-  bedarf:{ id:`rev_sic`, was:`muss Rechenwege von vor vier Jahren belegen können`, braucht:{SIC:1.2, EFF:0.6} },
+  bedarf:{ id:`rev_sic`, was:`muss Rechenwege von vor vier Jahren belegen können`, braucht:{FRE:-1.2} },
   fragen:[
     { id:`finden`, t:`Finden die etwas?`, wie:`geradeheraus`,
       liest:{E:0.6, N:-0.8, O:0.4},
@@ -635,7 +713,7 @@ zustaende: [
   regie:`Ein zweiter Stuhl steht an der Schmalseite des Tisches. Er ist neu und passt nicht zum Rest.`,
   er:`Ich bekomme eine Doktorandin. Ab Oktober, halbe Stelle, mein Thema.`,
   wie:`neutral, ohne erkennbare Richtung`, stimmung:`neutral`,
-  bedarf:{ id:`nach_zug`, was:`muss zum ersten Mal jemanden anlernen`, braucht:{ZUG:0.8, EFF:0.8} },
+  bedarf:{ id:`nach_zug`, was:`muss zum ersten Mal jemanden anlernen`, braucht:{GEL:-1.0} },
   fragen:[
     { id:`freude`, t:`Und? Freut Sie das oder nicht?`, wie:`direkt, fast herausfordernd`,
       liest:{E:0.8, A:-0.3, O:0.5},
@@ -667,7 +745,7 @@ zustaende: [
   regie:`Er steht, als du hereinkommst, und er setzt sich nicht. Der Stuhl ist auf die höchste Stufe gedreht.`,
   er:`Bleiben Sie sitzen. Ich stehe gerade lieber.`,
   wie:`beiläufig, mit einer Hand im Kreuz`, stimmung:`neutral`,
-  bedarf:{ id:`ruecken_eff`, was:`arbeitet im Stehen und verliert dabei Zeit`, braucht:{EFF:1.0, SIC:0.8} },
+  bedarf:{ id:`ruecken_eff`, was:`arbeitet im Stehen und verliert dabei Zeit`, braucht:{FRE:1.0} },
   fragen:[
     { id:`seitwann`, t:`Seit wann?`, wie:`kurz, ohne Mitleid`,
       liest:{E:0.5, N:-0.7, A:-0.2},
@@ -700,7 +778,7 @@ zustaende: [
   regie:`Auf dem Bildschirm steht ein Fenster mit einem Fortschrittsbalken, der sich nicht bewegt.`,
   er:`Das Haus wechselt das Rechensystem. Alles, was ich in zwölf Jahren geschrieben habe, läuft nicht mehr.`,
   wie:`sehr ruhig, was hier nichts Gutes bedeutet`, stimmung:`neutral`,
-  bedarf:{ id:`soft_eff`, was:`muss zwölf Jahre eigenen Code retten`, braucht:{EFF:1.4, AUT:0.8} },
+  bedarf:{ id:`soft_eff`, was:`muss zwölf Jahre eigenen Code retten`, braucht:{FRE:1.4} },
   fragen:[
     { id:`selbst`, t:`Schreiben Sie es neu oder lassen Sie es liegen?`, wie:`direkt`,
       liest:{O:0.6, E:0.5, C:-0.4},
@@ -733,7 +811,7 @@ zustaende: [
   regie:`An der Pinnwand hängt ein Brief mit einem geprägten Kopf. Er hängt schief und halb hinter einem Zettel.`,
   er:`Man hat mich für einen Preis vorgeschlagen. Verleihung im November, Berlin, Abendgarderobe.`,
   wie:`als läse er eine fremde Meldung vor`, stimmung:`neutral`,
-  bedarf:{ id:`preis_aut`, was:`will nicht herausgestellt werden`, braucht:{AUT:1.2, STA:-0.6} },
+  bedarf:{ id:`preis_aut`, was:`will nicht herausgestellt werden`, braucht:{FRE:1.0, GEL:-0.8} },
   fragen:[
     { id:`hin`, t:`Und Sie gehen nicht hin.`, wie:`keine Frage, eine Feststellung`,
       liest:{E:0.5, O:0.5, A:-0.4},
@@ -765,7 +843,7 @@ zustaende: [
   regie:`Die Tafel an der Wand ist zum ersten Mal leer. Der Schwamm liegt noch auf der Ablage.`,
   er:`Der Kollege, mit dem ich mich über die Korrektur gestritten habe, geht Ende des Monats.`,
   wie:`ruhig, mit einem Blick zur leeren Tafel`, stimmung:`nachdenklich`,
-  bedarf:{ id:`koll_zug`, was:`verliert seinen einzigen echten Gegenspieler`, braucht:{ZUG:1.0, AUT:0.4} },
+  bedarf:{ id:`koll_zug`, was:`verliert seinen einzigen echten Gegenspieler`, braucht:{GEL:-1.2} },
   fragen:[
     { id:`wer`, t:`Und wer widerspricht Ihnen jetzt?`, wie:`ruhig, ohne Ironie`,
       liest:{E:0.6, O:0.7, N:-0.3},
@@ -798,7 +876,7 @@ zustaende: [
   regie:`In der Ecke steht ein zweiter Schreibtisch, noch in Folie. Der Raum wirkt dadurch halb so groß.`,
   er:`Ab Mai teile ich das Zimmer. Man hat es mir per Rundmail mitgeteilt.`,
   wie:`beherrscht, mit einer Pause vor dem letzten Wort`, stimmung:`neutral`,
-  bedarf:{ id:`teil_aut`, was:`verliert den einzigen Raum, über den er bestimmt`, braucht:{AUT:1.6, SIC:0.4} },
+  bedarf:{ id:`teil_aut`, was:`verliert den einzigen Raum, über den er bestimmt`, braucht:{FRE:1.4} },
   fragen:[
     { id:`rundmail`, t:`Per Rundmail.`, wie:`nur die zwei Worte, sonst nichts`,
       liest:{E:0.5, O:0.4, A:-0.5},
@@ -853,21 +931,12 @@ reaktion: {
          zuTief:{ er:`Ganz kalt lässt mich auch nicht alles.`, wie:`leiser` } }
   },
   m: {
-    AUT: { genau:{ er:`Richtig. Sagen Sie mir, wie ich etwas zu tun habe, und ich mache es anders. Nicht aus Trotz. Aus Gewohnheit.`, wie:`sehr klar` },
-           zuHoch:{ er:`So eigen bin ich nicht. Wenn jemand einen besseren Weg kennt, nehme ich ihn.`, wie:`einschränkend` },
-           zuTief:{ er:`Führung.`, erRegie:`Er lehnt sich zurück.`, er2:`Ich habe drei Vorgesetzte überstanden, indem ich sie nicht gefragt habe.`, wie:`gedehnt`, wie2:`trocken` } },
-    SIC: { genau:{ er:`Garantien sind Sätze von Leuten, die nicht haften. Ich arbeite mit Konfidenzintervallen.`, wie:`nüchtern` },
-           zuHoch:{ er:`Verlässlichkeit.`, erRegie:`Er zieht einen Mundwinkel hoch.`, er2:`Mein ganzer Beruf besteht darin, auszurechnen, wie unsicher etwas ist. Ich weiß, was Sicherheit wert ist.`, wie:`amüsiert`, wie2:`bestimmt` },
-           zuTief:{ er:`So sorglos bin ich nicht. Ich sichere, was zu sichern ist.`, wie:`richtigstellend` } },
-    STA: { genau:{ er:`Mein Name steht auf Papieren, die niemand liest. Das reicht mir vollkommen.`, wie:`gleichmütig` },
-           zuHoch:{ er:`Wenn Sie mir schmeicheln wollen, sparen Sie es sich. Der Brief da hängt schief, und zwar mit Absicht.`, wie:`sehr trocken` },
-           zuTief:{ er:`Ganz gleich ist es mir nicht. Ich möchte schon, dass die Richtigen es merken.`, wie:`leiser` } },
-    ZUG: { genau:{ er:`Ich komme allein zurecht. Das ist keine Klage, das ist eine Beschreibung.`, wie:`ruhig` },
-           zuHoch:{ er:`Das Team.`, erRegie:`Er sieht zur Tür.`, er2:`Ich sitze am Ende des Ganges. Das hat Gründe, und keiner davon ist baulich.`, wie:`trocken`, wie2:`sachlich` },
-           zuTief:{ er:`Ganz ohne Leute geht es auch nicht. Ich spiele seit dreißig Jahren mit denselben vieren.`, wie:`einschränkend` } },
-    EFF: { genau:{ er:`Jede Stunde, die für das Aufräumen von Daten draufgeht, kommt nicht wieder. Das ist mein Hauptproblem.`, wie:`bestimmt` },
-           zuHoch:{ er:`Ich bin kein Sparfuchs. Wenn eine Sache drei Jahre braucht, dann braucht sie drei Jahre.`, wie:`einschränkend` },
-           zuTief:{ er:`Aufwand ist mir nicht gleich.`, erRegie:`Er tippt auf den Bildschirm.`, er2:`Sechzig Prozent meiner Zeit gehen fürs Putzen drauf. Fragen Sie mich, was mich das im Jahr kostet.`, wie:`sofort`, wie2:`aufgebracht` } }
+    FRE: { genau:{ er:`Richtig. Sagen Sie mir, wie ich etwas zu tun habe, und ich mache es anders. Nicht aus Trotz. Aus Gewohnheit.`, wie:`sehr klar` },
+           zuHoch:{ er:`So eigen bin ich nicht. Wenn jemand einen besseren Weg kennt, nehme ich ihn. Er muss ihn nur zeigen und nicht anordnen.`, wie:`einschränkend` },
+           zuTief:{ er:`Verlässlichkeit.`, erRegie:`Er zieht einen Mundwinkel hoch.`, er2:`Mein ganzer Beruf besteht darin auszurechnen, wie unsicher etwas ist. Ich weiß ziemlich genau, was eine Garantie wert ist.`, wie:`amüsiert`, wie2:`bestimmt` } },
+    GEL: { genau:{ er:`Ungefähr. Ich brauche keine Bühne. Ich brauche zwei Leute, die es merken, wenn ich Unsinn rechne.`, wie:`ruhig` },
+           zuHoch:{ er:`Wenn Sie mir schmeicheln wollen, sparen Sie es sich.`, erRegie:`Er sieht zur Pinnwand.`, er2:`Der Brief da hängt schief, und zwar mit Absicht.`, wie:`sehr trocken`, wie2:`beiläufig` },
+           zuTief:{ er:`Ganz ohne Eitelkeit bin ich auch nicht. Ich schaue nach, ob es zitiert wird.`, wie:`leiser, ertappt` } }
   }
 },
 

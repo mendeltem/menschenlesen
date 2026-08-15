@@ -370,12 +370,16 @@ main{min-height:0; display:flex; flex-direction:column}
 .side::-webkit-scrollbar-thumb,.talk::-webkit-scrollbar-thumb{background:var(--line); border-radius:6px}
 .side,.talk{scrollbar-width:thin; scrollbar-color:var(--line) transparent}
 
-/* ── Der Raum als Kopfbild, nur wenn die Datei da ist ── */
-.raum{height:74px; border-radius:var(--r); border:1px solid var(--line); background-size:cover;
-  background-position:center 58%; filter:var(--face-filter,none); position:relative; flex:0 0 auto}
-.raum:after{content:""; position:absolute; inset:0; border-radius:inherit;
-  background:linear-gradient(transparent 30%, var(--paper)); opacity:.7}
+/* ── Der Raum liegt hinter dem Kopf der Seite, nicht in der Spalte.
+      So bekommt das Gespräch die Höhe, die das Bild vorher hatte, und
+      man sitzt trotzdem sichtbar in seinem Zimmer. ── */
+.raum{position:fixed; left:0; right:0; top:0; z-index:-1; pointer-events:none;
+  height:min(42vh, 340px); background-size:cover; background-position:center 42%;
+  filter:var(--face-filter,none); opacity:.42}
+.raum:after{content:""; position:absolute; inset:0;
+  background:linear-gradient(transparent 0%, var(--paper) 88%)}
 .raum[hidden]{display:none}
+body.imMenue .raum{display:none}
 
 /* ── Gespräch ── */
 .chat{position:relative; flex:1; min-height:0; display:flex; flex-direction:column}
@@ -576,7 +580,9 @@ body.raten .zahlen{padding:10px 14px}
   overflow:hidden; margin-top:9px}
 .meter i{display:block; height:100%; border-radius:99px; transition:width .6s cubic-bezier(.4,0,.15,1)}
 .meter.bereit i{background:linear-gradient(90deg,var(--STA),var(--EFF),var(--SIC))}
-.meter.auf i{background:linear-gradient(90deg,var(--SIC),var(--EFF),var(--STA))}
+.meter.geduld i{background:var(--SIC)}
+.meter.geduld i.mittel{background:var(--EFF)}
+.meter.geduld i.schlecht{background:var(--STA)}
 .meter.bez i{background:linear-gradient(90deg,var(--STA),var(--EFF),var(--SIC))}
 /* Die zwei Achsensaetze teilen sich eine Spalte; oben steht, welcher. */
 .bandwahl{display:flex; gap:4px}
@@ -694,7 +700,7 @@ table.bil tr.hi td.n{color:var(--accent); font-weight:600}
   .line.er .txt{font-size:17px}
   .akte .akt:not(.now){display:none}
   #choices{max-height:52vh}
-  .raum{height:80px}
+  .raum{height:min(30vh, 220px)}
 }
 @media (prefers-reduced-motion:reduce){ *{animation-duration:.001s !important; transition-duration:.001s !important} }
 </style>
@@ -703,11 +709,12 @@ table.bil tr.hi td.n{color:var(--accent); font-weight:600}
 <div class="bg" aria-hidden="true"></div>
 <div class="bg-pattern" aria-hidden="true"></div>
 <div class="bg-grain" aria-hidden="true"></div>
+<div class="raum" id="raum" hidden aria-hidden="true"></div>
 
 <div class="wrap">
   <header class="top">
     <div>
-      <div class="eyebrow">Ein Gespräch · fünf Phasen</div>
+      <div class="eyebrow">Besuche bei einem Fremden</div>
       <h1>Vierzig Minuten für einen Fremden</h1>
     </div>
     <div class="tools">
@@ -742,7 +749,6 @@ table.bil tr.hi td.n{color:var(--accent); font-weight:600}
 
   <div class="grid">
     <main>
-      <div class="raum" id="raum" hidden aria-hidden="true"></div>
       <div class="chat">
         <div class="talk" id="talk"></div>
         <div class="ratefeld" id="ratefeld" hidden></div>
@@ -764,7 +770,7 @@ table.bil tr.hi td.n{color:var(--accent); font-weight:600}
 
       <section class="panel zahlen">
         <div class="zrow" id="bezRow">
-          <span class="zlab">Beziehung</span><span class="znum" id="bezVal">35</span>
+          <span class="zlab">Freundschaft</span><span class="znum" id="bezVal">35</span>
           <div class="meter bez"><i id="bezBar" style="width:35%"></i></div>
           <div class="zhinweis" id="bezText"></div>
         </div>
@@ -772,9 +778,9 @@ table.bil tr.hi td.n{color:var(--accent); font-weight:600}
           <span class="zlab">Bereitschaft</span><span class="znum" id="bereitVal">30</span>
           <div class="meter bereit"><i id="bereitBar" style="width:30%"></i></div>
         </div>
-        <div class="zrow" id="aufRow" hidden>
-          <span class="zlab">Auffälligkeit</span><span class="znum" id="aufVal">0</span>
-          <div class="meter auf"><i id="aufBar" style="width:0%"></i></div>
+        <div class="zrow" id="aufRow">
+          <span class="zlab">Geduld heute</span><span class="znum" id="aufVal">100</span>
+          <div class="meter geduld"><i id="aufBar" style="width:100%"></i></div>
           <div class="zhinweis" id="aufText"></div>
         </div>
       </section>
@@ -824,19 +830,25 @@ table.bil tr.hi td.n{color:var(--accent); font-weight:600}
     <p><b>Fünf Merkmale, fünf Stufen.</b> Jedes Persönlichkeitsmerkmal kann −2 bis +2 stehen. Das sind 5⁵ = 3125
     mögliche Personen. Vor dem ersten Wort verteilt sich dein Glaube nach einer Glockenkurve auf diese 3125,
     verschoben durch ein Rollenklischee. Jede Antwort ist ein Datenpunkt: P(Person | Antwort) ∝
-    P(Antwort | Person) · P(Person). Dasselbe noch einmal für die Motive.</p>
-    <p><b>Entropie</b> misst, wie unentschieden dein Bild ist: 11,61 bit bei völliger Ratlosigkeit, 0 bei Gewissheit.
-    Über jeder Frage steht, wie viel sie verspricht. Der ganze Sinn der zweiten und dritten Phase ist, mit möglichst
-    wenigen Fragen möglichst weit zu kommen — deshalb kannst du jederzeit abbrechen und weitergehen.</p>
+    P(Antwort | Person) · P(Person).</p>
+    <p><b>Zwei Waagen für das, was er will.</b> Früher waren es fünf Motive; das war genauer und unlesbar. Jetzt
+    gibt es zwei Fragen mit je zwei Seiten: selbst bestimmen oder sicher sein, dazugehören oder gesehen werden.
+    Das sind 25 mögliche Menschen statt 3125, dieselbe Rechnung, und man kann den Balken ansehen und weiß Bescheid.</p>
+    <p><b>Entropie</b> misst, wie unentschieden dein Bild ist: 11,61 bit bei völliger Ratlosigkeit über die
+    Merkmale, 4,64 über die zwei Waagen, 0 bei Gewissheit. Über jeder Frage steht, wie viel sie verspricht.</p>
     <p><b>Die Person steht fest.</b> Sie wird nicht aus dem Prior gezogen. Das Rollenklischee, mit dem du startest,
-    ist deshalb genau das: ein Klischee, und bei ihm ist es überwiegend falsch.</p>
-    <p><b>Die vierte Phase</b> hat keine Bits. Privates lässt sich nicht ausrechnen, nur erfragen, und Fragen kosten.
-    Jede hat einen Preis in Auffälligkeit; eine, die an etwas anknüpft, das er selbst erzählt hat, kostet weniger.
-    Bei zehn steht er auf. Ob er sich öffnet, hängt an deiner Auffälligkeit und an seiner Stimmung, nicht am Zufall
-    allein.</p>
-    <p><b>Der Verkauf</b> trennt zwei Dinge. <i>Was</i> du anbietest, misst sich an seinen Motiven und an dem, was du
-    privat erfahren hast. <i>Wie</i> du es anbietest, misst sich an seiner Persönlichkeit. Die Wertung gewichtet
-    Autonomieunterstützung rund dreimal so stark wie Motivpassung. <span id="belegA"></span></p>
+    ist deshalb genau das: ein Klischee, und bei ihm ist es überwiegend falsch. Seine wahren Werte bekommst du
+    in diesem Spiel nie zu sehen — nur ihn.</p>
+    <p><b>Zwei Balken.</b> Die <i>Geduld</i> gilt für diesen Nachmittag: sie fällt bei jeder Frage, und zwar
+    zunehmend, und sie steigt wieder, wenn ein Gespräch trifft. Bei null steht er auf. Die <i>Freundschaft</i>
+    bleibt über die Besuche: sie wächst, wenn du ihn richtig liest, und fällt, wenn du danebengreifst.</p>
+    <p><b>Ob er kauft, ist ein Wurf.</b> Der Bedarf ist die Bedingung — was er nicht braucht, kauft er auch
+    beim besten Verhältnis nicht. Die Freundschaft ist der Zuschlag: bis zu fünfzehn Punkte auf die Aussicht,
+    genug, um aus einem Vielleicht ein Ja zu machen, nie genug für ein Nein. Die Aussicht steht vor dem Wurf
+    auf dem Schirm.</p>
+    <p><b>Der Verkauf</b> trennt zwei Dinge. <i>Was</i> du anbietest, misst sich an den zwei Waagen und an dem,
+    was gerade bei ihm los ist. <i>Wie</i> du es anbietest, misst sich an seiner Persönlichkeit. Die Wertung
+    gewichtet Autonomieunterstützung rund dreimal so stark wie Motivpassung. <span id="belegA"></span></p>
     <p><span id="belegC"></span></p>
     <p><span id="belegAsym"></span></p>
     <p><b>Wo es dünn bleibt.</b> <span id="belegItems"></span></p>
@@ -987,8 +999,15 @@ function waehleSpur(){
 /* ═══════════════ Zustandsraum ═══════════════ */
 const STUFEN = [-2,-1,0,1,2];
 const GLOCKE = {"-2":0.10,"-1":0.22,"0":0.36,"1":0.22,"2":0.10};
-function baueZustaende(){ let o=[[]]; for(let d=0;d<5;d++){ const n=[]; o.forEach(s=>STUFEN.forEach(v=>n.push(s.concat(v)))); o=n; } return o; }
-const STATES = baueZustaende(), NS = STATES.length, MAXH = Math.log2(NS);
+/* Der Zustandsraum wird je Achsenzahl einmal gebaut und gemerkt: die
+   fünf Merkmale spannen 3125 Zustände auf, die zwei Waagen nur 25. */
+const RAEUME = {};
+function raum(n){
+  if(!RAEUME[n]){ let o=[[]];
+    for(let d=0;d<n;d++){ const x=[]; o.forEach(t=>STUFEN.forEach(v=>x.push(t.concat(v)))); o=x; }
+    RAEUME[n] = o; }
+  return RAEUME[n];
+}
 const norm = v => { const s=v.reduce((a,b)=>a+b,0); return v.map(x=>x/s); };
 const H = p => -p.reduce((a,x)=> x>0 ? a + x*Math.log2(x) : a, 0);
 const nk = (x,d) => x.toFixed(d===undefined?2:d).replace(".", ",");
@@ -1002,17 +1021,18 @@ const ord = n => ORD[n] !== undefined ? ORD[n] : (n + ".");
 const gross = s => s.charAt(0).toUpperCase()+s.slice(1);
 
 function startPrior(dims, shift){
-  return norm(STATES.map(s => { let p=1;
-    for(let d=0; d<5; d++){ const v=s[d]; p *= GLOCKE[String(v)]*Math.exp((shift&&shift[dims[d]]?shift[dims[d]]:0)*v); }
+  return norm(raum(dims.length).map(s => { let p=1;
+    for(let d=0; d<dims.length; d++){ const v=s[d]; p *= GLOCKE[String(v)]*Math.exp((shift&&shift[dims[d]]?shift[dims[d]]:0)*v); }
     return p; }));
 }
 function likelihood(frage, dims, feld){
+  const ST = raum(dims.length), NS = ST.length;
   const A = frage.a.length, L = [];
   for(let i=0;i<A;i++) L.push(new Float64Array(NS));
   const lad = frage.a.map(a => dims.map(d => (a[feld] && a[feld][d]) || 0));
   for(let k=0;k<NS;k++){
-    const s = STATES[k]; let mx=-1e9; const sc=[];
-    for(let i=0;i<A;i++){ let v=0; for(let d=0;d<5;d++) v += s[d]*lad[i][d];
+    const s = ST[k]; let mx=-1e9; const sc=[];
+    for(let i=0;i<A;i++){ let v=0; for(let d=0;d<dims.length;d++) v += s[d]*lad[i][d];
       v *= DATA.sharpness; sc.push(v); if(v>mx) mx=v; }
     let sum=0; for(let i=0;i<A;i++){ sc[i]=Math.exp(sc[i]-mx); sum+=sc[i]; }
     for(let i=0;i<A;i++) L[i][k]=sc[i]/sum;
@@ -1024,7 +1044,7 @@ function lik(f, dims, feld){ if(!LIK[f.id]) LIK[f.id] = likelihood(f, dims, feld
 function eig(prior, f, dims, feld){
   const L = lik(f, dims, feld); let hp = 0;
   for(let i=0;i<L.length;i++){
-    let pa=0; for(let k=0;k<NS;k++) pa += L[i][k]*prior[k];
+    let pa=0; for(let k=0;k<L[i].length;k++) pa += L[i][k]*prior[k];
     if(pa < 1e-12) continue;
     hp += pa*H(norm(Array.from(L[i], (l,k)=> l*prior[k])));
   }
@@ -1039,10 +1059,11 @@ function seineAntwort(f, wahr, dims, feld){
   for(let i=0;i<pr.length;i++){ c+=pr[i]; if(r<c) return i; }
   return pr.length-1;
 }
-function marginal(prior, d){ const m=[0,0,0,0,0]; for(let k=0;k<NS;k++) m[STATES[k][d]+2] += prior[k]; return m; }
+function marginal(prior, d, n){ const ST = raum(n || 5), m=[0,0,0,0,0];
+  for(let k=0;k<ST.length;k++) m[ST[k][d]+2] += prior[k]; return m; }
 const erwartung = m => m.reduce((a,x,i)=> a + x*STUFEN[i], 0);
 function modus(m){ let b=0; for(let i=1;i<5;i++) if(m[i]>m[b]) b=i; return STUFEN[b]; }
-function abstand(g, i, wahr){ return Math.abs(modus(marginal(g,i)) - wahr); }
+
 
 /* ═══════════════ Spielzustand ═══════════════
    DATA ist die Welt plus die gerade besuchte Person. Was du besitzt,
@@ -1088,10 +1109,10 @@ function akteSichern(){ try{ localStorage.setItem("akte", JSON.stringify(AKTE));
   try{ Object.assign(AKTE, JSON.parse(localStorage.getItem("akte") || "{}")); }catch(e){}
 })();
 function frischeAkte(){
-  return { besuche:0, bez:WELT.beziehung.start, bfVerlauf:[], moVerlauf:[],
+  return { besuche:0, bez:WELT.freundschaft.start, bfVerlauf:[], moVerlauf:[],
            bfGestellt:[], moGestellt:[], privGestellt:[], zGesehen:[],
            fakten:[], spuren:[], gesagt:[], gefunden:[], bedarf:[],
-           auf:0, fest:{}, verkauft:[], letzter:null };
+           geduldWeg:0, fest:{}, verkauft:[], letzter:null };
 }
 /* Ältere Stände bekommen fehlende Felder nachgereicht, statt dass das
    Spiel an einem undefined stirbt. */
@@ -1101,8 +1122,8 @@ function akteVon(id){
   for(const k in f) if(a[k] === undefined) a[k] = f[k];
   return a;
 }
-const stufeZu = w => WELT.beziehung.stufen.find(x => w >= x.ab);
-/* Jede Änderung an der Beziehung geht hier durch und wird sofort
+const stufeZu = w => WELT.freundschaft.stufen.find(x => w >= x.ab);
+/* Jede Änderung an der Freundschaft geht hier durch und wird sofort
    gesichert — ein geschlossener Browser darf keinen Besuch verschlucken. */
 function bezPlus(w){
   S.bez = Math.max(0, Math.min(100, S.bez + w));
@@ -1119,7 +1140,8 @@ function neuerZustand(){
     stimmung:"neutral", bez:A.bez, bezStart:A.bez,
     bfGlaube:null, bfGestellt:A.bfGestellt.slice(), bfLog:[],
     moGlaube:null, moGestellt:A.moGestellt.slice(), moLog:[],
-    auf:(A.auf || 0) * (WELT.beziehung.aufUebertrag || 0), privGestellt:A.privGestellt.slice(), privLog:[],
+    geduld:100 - (A.geduldWeg || 0) * (WELT.freundschaft.geduldUebertrag || 0),
+    privGestellt:A.privGestellt.slice(), privLog:[],
     zustand:null, zGestellt:[], zLog:[], zAn:false, bedarf:[],
     produkt:null, zug:0, zugLog:[], verkauft:null, rateLog:[],
     raus:false, angeboten:false, ende:null, faktenStart:A.fakten.length, fragenHeute:0
@@ -1294,7 +1316,7 @@ function zeichneLeseband(){
     b.onclick = () => { S.band = b.dataset.band; zeichneLeseband(); });
   document.getElementById("hval").innerHTML = nk(H(glaube)) + "<span>BIT</span>";
   document.getElementById("dims").innerHTML = dims.map((d,i) => {
-    const m = marginal(glaube,i), mx = Math.max(...m), ev = erwartung(m);
+    const m = marginal(glaube,i,dims.length), mx = Math.max(...m), ev = erwartung(m);
     const zellen = m.map((p,j) => `<i class="${j===2?"mid":""}" style="height:${Math.max(6,100*p/mx).toFixed(1)}%"></i>`).join("");
     /* Worauf du dich festgelegt hast, steht als Strich in der Reihe —
        damit du siehst, wo du dich gegen dein eigenes Modell entschieden
@@ -1339,13 +1361,15 @@ function zeichneBalken(){
   document.getElementById("bezText").textContent = st.text;
   document.getElementById("bereitRow").hidden = S.phase !== 4;
 
-  const ar = document.getElementById("aufRow"); ar.hidden = S.auf <= 0;
-  const a = Math.max(0, Math.min(DATA.privat.grenze, S.auf));
-  document.getElementById("aufVal").textContent = nk(a,1).replace(",0","") + " / " + DATA.privat.grenze;
-  document.getElementById("aufBar").style.width = (100*a/DATA.privat.grenze) + "%";
+  const gd = Math.round(S.geduld);
+  document.getElementById("aufVal").textContent = gd + " / 100";
+  const gb = document.getElementById("aufBar");
+  gb.style.width = gd + "%";
+  gb.className = gd > 55 ? "" : (gd > 25 ? "mittel" : "schlecht");
   document.getElementById("aufText").textContent =
-    a < 3 ? "Er merkt nichts." : a < 6 ? "Er merkt, dass du fragst." :
-    a < 8 ? "Er weiß, dass du ihn ausfragst." : "Gleich steht er auf.";
+    gd > 75 ? "Er hat Zeit und zeigt es." : gd > 55 ? "Er ist noch dabei." :
+    gd > 35 ? "Er sieht öfter auf den Bildschirm." :
+    gd > 15 ? "Er hört zu, aber er wartet auf ein Ende." : "Gleich steht er auf.";
 
   const v = Math.max(0, Math.min(100, Math.round(S.bereit)));
   document.getElementById("bereitVal").textContent = v + " / 100";
@@ -1355,7 +1379,9 @@ function zeichneBalken(){
 function zeichne(){ zeichneAkte(); zeichneTalk(); zeichneKopf(); zeichneLeseband(); zeichneNotizen();
   zeichneBalken(); zeichneWaren(); waehleSpur(); }
 
-const R = { aktiv:null, tipps:[null,null,null,null,null] };
+/* Wie viele Zeilen das Ratefeld hat, sagt der Achsensatz — fünf für
+   die Merkmale, zwei für die Waagen. */
+const R = { aktiv:null, tipps:[] };
 let gewaehlt = false;
 function sperre(){ if(gewaehlt) return true; gewaehlt = true;
   choicesEl.querySelectorAll("button").forEach(b => b.disabled = true); return false; }
@@ -1413,8 +1439,8 @@ function ankunft(){
   const w = (DATA.wiedersehen || []).find(x => S.bez >= x.ab);
   sag("regie", `Dein ${ord(A.besuche)} Besuch. Vierter Stock, letzte Tür.`);
   if(w){ sag("regie", w.regie); erSagt(w); }
-  if(S.auf >= 2) sag("meta", `Er hat noch im Kopf, wie viel du letztes Mal gefragt hast · Auffälligkeit <b>${
-    nk(S.auf,1).replace(",0","")}</b> von ${DATA.privat.grenze}`, {warn:true});
+  if(S.geduld < 92) sag("meta", `Er hat noch im Kopf, wie viel du letztes Mal gefragt hast · Geduld <b>${
+    Math.round(S.geduld)}</b> statt hundert`, {warn:true});
   zeichne();
   knopf("Hereinkommen", () => drehscheibe());
 }
@@ -1449,7 +1475,7 @@ function uebergang1(){
 function drehscheibe(){
   if(S.ende) return;
   S.phase = 0;
-  const kopf = `Was tust du? · Beziehung ${Math.round(S.bez)} · ${stufeZu(S.bez).name}`;
+  const kopf = `Was tust du? · Freundschaft ${Math.round(S.bez)} · ${stufeZu(S.bez).name}`;
   const items = [];
   const bfOffen = DATA.bigfive.filter(f => !S.bfGestellt.includes(f.id)).length;
   const moOffen = DATA.motivfragen.filter(f => !S.moGestellt.includes(f.id)).length;
@@ -1487,12 +1513,12 @@ function drehscheibe(){
     && !(f.gibt && S.gefunden.includes(f.gibt)));
   if(privRest.length && S.gefunden.length < DATA.privat.felder.length)
     items.push({ t:`Ihn nach sich selbst ausfragen`, tag:kopf,
-      klasse: S.auf >= DATA.privat.grenze - 3 ? "riskant" : "",
-      rechts:`privat · Auffälligkeit ${nk(S.auf,1).replace(",0","")} von ${DATA.privat.grenze}`,
+      klasse: S.geduld <= 30 ? "riskant" : "",
+      rechts:`privat · kostet am meisten Geduld`,
       go(){ S.phase = 3; zeichne(); privatRunde(); } });
 
   if(!S.angeboten){
-    const B = WELT.beziehung, kann = S.bez >= B.verkaufSchwelle;
+    const B = WELT.freundschaft, kann = S.bez >= B.verkaufSchwelle;
     items.push({ t:`Den Koffer aufmachen`, tag:kopf, klasse: kann ? "weiter" : "riskant",
       rechts: kann
         ? `kostet <i style="color:var(--STA)">${vzk(-B.verkaufKosten,0)}</i> · Bereitschaft startet bei ${Math.round(S.bez*B.uebertrag)}`
@@ -1532,7 +1558,7 @@ function leseRunde(cfg){
   const glaube = S[cfg.glaube];
   /* Der Preis der naechsten Frage steht ueber der Auswahl, damit man
      sieht, wann es Zeit wird, wiederzukommen. */
-  const kopf = `Frage ${S[cfg.gestellt].length+1} · kostet ${nk(-fragepreis(),1).replace(",0","")} Beziehung`
+  const kopf = `Frage ${S[cfg.gestellt].length+1} · kostet ${nk(-fragepreis(),1).replace(",0","")} Freundschaft`
     + (S.fragenHeute >= 5 ? ` · er wird ungeduldig` : ``)
     + ` · noch ${nk(H(glaube))} bit im Dunkeln`;
   const items = biete(cfg.pool, S[cfg.gestellt]).map(f => {
@@ -1563,14 +1589,14 @@ function stelle(frage, an, cfg){
   setzeStimmung(antwort.stimmung);
   if(antwort.nachRegie) sag("regie", antwort.nachRegie);
   if(antwort.nachEr) sag("er", antwort.nachEr, {wie:antwort.wie});
-  sag("meta", `<b>${gewinn>=0?"+":""}${nk(gewinn)}</b> bit · Beziehung <b>${vzk(nachStimmung(preis))}</b> · Auffälligkeit <b>${vzk(W_FRAGE_AUF,2)}</b>`,
+  sag("meta", `<b>${gewinn>=0?"+":""}${nk(gewinn)}</b> bit · Freundschaft <b>${vzk(nachStimmung(preis))}</b> · Geduld <b>${vzk(-geduldpreis(),0)}</b>`,
     {lang: `erwartet hatte die Frage ${nk(erwartet)} bit`
       + (beste.id !== frage.id ? `, stärker gewesen wäre <s>${esc(beste.q)}</s> mit ${nk(besteEig)} bit`
                                : `, und das war die stärkste offene Frage`) + `.`});
 
   bezPlus(nachStimmung(preis));
+  geduldPlus(-geduldpreis());
   S.fragenHeute++;
-  S.auf += W_FRAGE_AUF;
   S[cfg.gestellt].push(frage.id);
   A[cfg.gestellt].push(frage.id);
   /* In die Akte wandert die Antwort, nicht das Ergebnis: beim nächsten
@@ -1596,7 +1622,7 @@ function stelle(frage, an, cfg){
 const W_RATE_TREFFER = 5, W_RATE_NAH = 1, W_RATE_DANEBEN = -3;
 
 function rateRunde(cfg){
-  R.aktiv = cfg; R.tipps = [null,null,null,null,null];
+  R.aktiv = cfg; R.tipps = cfg.dims.map(() => null);
   sag("regie", cfg.aufforderung);
   zeichne();
   /* Der Verlauf tritt zur Seite, das Ratefeld nimmt seinen Platz ein.
@@ -1611,7 +1637,7 @@ function zeichneRatefeld(){
   if(!R.aktiv) return;
   const cfg = R.aktiv, glaube = cfg.key === "bf" ? S.bfGlaube : S.moGlaube;
   document.getElementById("ratefeld").innerHTML = cfg.dims.map((d,i) => {
-    const m = marginal(glaube, i), mx = Math.max(...m);
+    const m = marginal(glaube, i, cfg.dims.length), mx = Math.max(...m);
     const zellen = m.map((p,j) => `<i class="${j===2?"mid":""}" style="height:${Math.max(6,100*p/mx).toFixed(1)}%"></i>`).join("");
     return `<div class="rz" data-i="${i}">
       <div class="rz-name"><b>${cfg.labels[d]}</b><span>${esc(cfg.poles[d][0])} ⟷ ${esc(cfg.poles[d][1])}</span></div>
@@ -1649,7 +1675,7 @@ function zeichneRateHinweis(){
 function werteRaten(cfg, tipps){
   const glaube = cfg.key === "bf" ? S.bfGlaube : S.moGlaube;
   const zeilen = cfg.dims.map((d,i) => {
-    const m = marginal(glaube, i);
+    const m = marginal(glaube, i, cfg.dims.length);
     const dist = Math.abs(tipps[i] - cfg.wahr[d]);
     const stufe = tipps[i] > 0 ? "hoch" : (tipps[i] < 0 ? "tief" : "mitte");
     return { d, i, label:cfg.labels[d], tipp:tipps[i], dist,
@@ -1666,6 +1692,7 @@ function werteRaten(cfg, tipps){
   const knapp = zeilen.filter(z => z.dist===1).length;
   const weit  = zeilen.filter(z => z.dist>1).length;
   const wirkung = bezPlus(punkte);
+  geduldPlus(punkte * W_GEDULD_FEST);
 
   A.fest[cfg.key] = tipps.slice();
   A.fest[cfg.key + "Stand"] = (cfg.key === "bf" ? A.bfVerlauf : A.moVerlauf).length;
@@ -1701,7 +1728,7 @@ function werteRaten(cfg, tipps){
     <div class="fkopf">
       <div><div class="eyebrow">Festgelegt · ${esc(cfg.titel)}</div>
         <div class="furteil">${urteil}</div></div>
-      <div class="fpunkte ${wirkung>=0?"plus":"minus"}">${vzk(wirkung,1)}<small>Beziehung</small></div>
+      <div class="fpunkte ${wirkung>=0?"plus":"minus"}">${vzk(wirkung,1)}<small>Freundschaft</small></div>
     </div>
     <div class="fbilanz">${gross(wort(genau))} ${genau===1?"Punkt hat er bestätigt":"Punkte hat er bestätigt"}${
       knapp?`, bei ${wort(knapp)} hat er eingeschränkt`:``}${weit?`, bei ${wort(weit)} deutlich widersprochen`:``}.
@@ -1721,9 +1748,9 @@ function werteRaten(cfg, tipps){
 }
 
 /* ═══════════════ Phase 4: was ihn privat bewegt ═══════════════
-   Kein bit, sondern ein Preis. Jede Frage kostet Auffälligkeit; eine,
+   Kein bit, sondern ein Preis. Jede Frage kostet Geduld; eine,
    die an etwas anknüpft, das er selbst erzählt hat, kostet weniger und
-   trifft öfter. Ob er sich öffnet, hängt an Auffälligkeit und Stimmung. */
+   trifft öfter. Ob er sich öffnet, hängt an Geduld und Stimmung. */
 const WAERME = { geruehrt:2, freundlich:1.5, amuesiert:1.5, interessiert:1.2, neutral:0,
                  nachdenklich:0.5, skeptisch:-1, verschlossen:-1.5, gereizt:-2.5, abweisend:-4 };
 
@@ -1734,7 +1761,7 @@ function privAnker(f){
 }
 function oeffnetSich(f, anker){
   const w = WAERME[S.stimmung] || 0;
-  return (6 - S.auf - f.auf*1.4 + w + (anker ? 2.5 : 0)) > 0;
+  return (S.geduld/16 - f.auf*1.4 + w + (anker ? 2.5 : 0)) > 0;
 }
 
 function privatRunde(){
@@ -1749,14 +1776,14 @@ function privatRunde(){
   ohne.forEach(f => { if(aus.length < NOFF) aus.push(f); });
   misch.forEach(f => { if(aus.length < NOFF && !aus.includes(f)) aus.push(f); });
 
-  const kopf = `Auffälligkeit ${nk(S.auf,1).replace(",0","")} von ${DATA.privat.grenze}`
+  const kopf = `Geduld ${Math.round(S.geduld)} von hundert`
     + ` · ${wort(S.gefunden.length)} von ${wort(DATA.privat.felder.length)} Dingen weißt du`;
   const items = aus.map(f => {
     const a = privAnker(f), kosten = Math.max(0, f.auf - (a ? 1 : 0));
-    const ziel = S.auf + kosten, warn = ziel >= DATA.privat.grenze - 2;
+    const weg = kosten * W_GEDULD_PRIVAT, ziel = S.geduld - weg, warn = ziel <= 12;
     const farbe = kosten <= 1 ? "var(--SIC)" : (kosten <= 2 ? "var(--EFF)" : "var(--STA)");
     return { t: a ? a.text : f.q, tag: kopf, klasse: warn ? "riskant" : "",
-      rechts: `<i style="color:${farbe}">+${nk(kosten,1).replace(",0","")} → ${nk(ziel,1).replace(",0","")}</i>`
+      rechts: `<i style="color:${farbe}">−${Math.round(weg)} Geduld → ${Math.round(ziel)}</i>`
             + (a ? ` · <i style="color:var(--accent)">Anschluss</i>` : "")
             + (f.plump ? ` · <i>plump</i>` : ""),
       go(){ frageprivat(f, a, kosten); } };
@@ -1767,7 +1794,7 @@ function privatRunde(){
 
 function frageprivat(f, anker, kosten){
   const oeffnet = oeffnetSich(f, anker);
-  S.auf += kosten + (oeffnet ? 0 : 1);
+  geduldPlus(-(kosten + (oeffnet ? 0 : 1)) * W_GEDULD_PRIVAT);
   const o = oeffnet ? f.offen : f.zu;
 
   sag("du", anker ? anker.text : f.q);
@@ -1778,12 +1805,12 @@ function frageprivat(f, anker, kosten){
   S.privLog.push({id:f.id, q:f.q, kosten, oeffnet, anker: anker ? anker.k : null});
 
   sag("meta", oeffnet
-    ? `er öffnet sich · Auffälligkeit <b>+${nk(kosten,1).replace(",0","")}</b> auf ${nk(S.auf,1).replace(",0","")}`
-    : `er weicht aus · Auffälligkeit <b>+${nk(kosten+1,1).replace(",0","")}</b> auf ${nk(S.auf,1).replace(",0","")}`,
+    ? `er öffnet sich · Geduld <b>−${Math.round(kosten*W_GEDULD_PRIVAT)}</b> auf ${Math.round(S.geduld)}`
+    : `er weicht aus · Geduld <b>−${Math.round((kosten+1)*W_GEDULD_PRIVAT)}</b> auf ${Math.round(S.geduld)}`,
     {warn: !oeffnet});
   zeichne();
 
-  if(S.auf >= DATA.privat.grenze){ S.raus = true; return setTimeout(rausgeworfen, 400); }
+  if(S.geduld <= 0){ S.raus = true; return setTimeout(rausgeworfen, 400); }
   setTimeout(privatRunde, 60);
 }
 
@@ -1796,7 +1823,7 @@ function frageprivat(f, anker, kosten){
    Ist dein Bild falsch, führt dich genau diese Zahl in die Mine. */
 function erwarteterWert(liest, glaube, dims){
   let v = 0;
-  dims.forEach((d,i) => { if(liest[d]) v += liest[d] * erwartung(marginal(glaube,i)); });
+  dims.forEach((d,i) => { if(liest[d]) v += liest[d] * erwartung(marginal(glaube,i,dims.length)); });
   return v;
 }
 function wahrerWert(liest){ let v = 0; for(const d in liest) v += liest[d]*HERO.z[d]; return v; }
@@ -1832,6 +1859,9 @@ function zustandZug(z, f){
   sag("du", f.t, {wie:f.wie});
   erSagt(o); merke(o);
   const wirkung = bezPlus(nachStimmung(o.bez || 0));
+  /* Ein Gespräch, das trifft, gibt ihm Geduld zurück. Eines, das
+     danebengeht, kostet zusätzlich. */
+  geduldPlus(trifft ? W_GEDULD_GUT : -W_GEDULD_SCHLECHT);
   let neu = false;
   if(trifft && z.bedarf && !S.bedarf.includes(z.bedarf.id)){
     S.bedarf.push(z.bedarf.id);
@@ -1840,7 +1870,7 @@ function zustandZug(z, f){
   S.zGestellt.push(f.id);
   S.zLog.push({id:f.id, t:f.t, trifft, wirkung});
   akteSichern();
-  sag("meta", `${trifft ? "er geht darauf ein" : "du greifst daneben"} · Beziehung <b>${vzk(wirkung)}</b> auf ${Math.round(S.bez)}`,
+  sag("meta", `${trifft ? "er geht darauf ein" : "du greifst daneben"} · Freundschaft <b>${vzk(wirkung)}</b> auf ${Math.round(S.bez)}`,
     {warn: !trifft,
      lang: neu ? `Du weißt jetzt, was er deswegen braucht: ${esc(z.bedarf.was)}. Das zählt gleich für das, was du ihm hinlegst.`
                 : (trifft ? `` : `Dein Zug hat eine Persönlichkeit unterstellt, die er nicht hat. Das merkt er sofort.`)});
@@ -1852,7 +1882,7 @@ function rausgeworfen(){
   const h = DATA.hinausgeworfen;
   sag("regie", h.regie); erSagt(h);
   const w = bezPlus(W_RAUSWURF);
-  sag("meta", `Beziehung <b>${vzk(w)}</b> auf ${Math.round(S.bez)}`, {warn:true});
+  sag("meta", `Freundschaft <b>${vzk(w)}</b> auf ${Math.round(S.bez)}`, {warn:true});
   S.ende = "raus";
   besuchEnde(null);
 }
@@ -1865,7 +1895,7 @@ function abschied(){
   if(a){
     sag("regie", a.regie); erSagt(a);
     const w = bezPlus(a.bez || 0);
-    if(w) sag("meta", `Beziehung <b>${vzk(w)}</b> auf ${Math.round(S.bez)}`);
+    if(w) sag("meta", `Freundschaft <b>${vzk(w)}</b> auf ${Math.round(S.bez)}`);
   }
   S.ende = "abschied";
   besuchEnde(null);
@@ -1877,13 +1907,13 @@ function abschied(){
    dauert nicht lange. Der Versuch allein kostet: du hast dich zu
    erkennen gegeben, und das nimmst du nicht zurück. */
 function verkaufStart(){
-  const B = WELT.beziehung;
+  const B = WELT.freundschaft;
   S.angeboten = true;
   if(S.bez < B.verkaufSchwelle){
     const ab = DATA.abfuhr;
     sag("regie", ab.regie); erSagt(ab);
     const w = bezPlus(-B.verkaufKosten * 2);
-    sag("meta", `Er macht den Koffer nicht auf · Beziehung <b>${vzk(w)}</b> auf ${Math.round(S.bez)}`,
+    sag("meta", `Er macht den Koffer nicht auf · Freundschaft <b>${vzk(w)}</b> auf ${Math.round(S.bez)}`,
       {warn:true, lang:`Ab ${B.verkaufSchwelle} sieht er hinein. Du standest bei ${Math.round(S.bez - w)}.`});
     S.ende = "abfuhr";
     return besuchEnde(null);
@@ -1896,7 +1926,7 @@ function verkaufStart(){
   sag("regie", v.reaktionRegie);
   sag("er", v.reaktion, {wie:v.reaktionWie});
   setzeStimmung("neutral");
-  sag("meta", `Der Koffer kostet <b>${vzk(-B.verkaufKosten,0)}</b> Beziehung · Bereitschaft startet bei <b>${S.bereit}</b>`,
+  sag("meta", `Der Koffer kostet <b>${vzk(-B.verkaufKosten,0)}</b> Freundschaft · Bereitschaft startet bei <b>${S.bereit}</b>`,
     {lang:`Die Bereitschaft ist keine eigene Währung, sondern das, was aus eurem Verhältnis geworden ist: ${
       Math.round(S.bez)} mal ${nk(B.uebertrag)}.`});
   zeichne();
@@ -1970,9 +2000,17 @@ const W_FRAGE = -1;
    das ist der Sinn der Sache. */
 const W_FRAGE_STEIG = 0.12;
 const fragepreis = () => W_FRAGE * (1 + S.fragenHeute * W_FRAGE_STEIG);
-/* Und jede Frage macht ihn ein wenig wachsamer. Wer alles ausfragt,
-   betritt den privaten Teil schon halb verbrannt. */
-const W_FRAGE_AUF = 0.55;
+/* Die Geduld ist der zweite Balken: sie gilt nur für diesen Nachmittag,
+   sie fällt bei jeder Frage und steigt wieder, wenn ein Gespräch gut
+   läuft. Bei null steht er auf. */
+const W_GEDULD_FRAGE = 6, W_GEDULD_PRIVAT = 8,
+      W_GEDULD_GUT = 8, W_GEDULD_SCHLECHT = 12, W_GEDULD_FEST = 0.5;
+const geduldpreis = () => W_GEDULD_FRAGE * (1 + S.fragenHeute * W_FRAGE_STEIG);
+function geduldPlus(w){
+  S.geduld = Math.max(0, Math.min(100, S.geduld + w));
+  return w;
+}
+
 
 function nimmProdukt(p){
   S.produkt = p;
@@ -2046,10 +2084,36 @@ function ziehe(o, text, rueck){
 
 function schluss(){
   S.phase = 5;
-  const aus = DATA.verkauf.ausgang.find(a => S.bereit >= a.ab);
+  /* Kein Schwellenwert mehr, sondern eine Aussicht.
+
+     Der Bedarf ist die Bedingung: was er nicht braucht, kauft er nicht,
+     und da hilft auch die beste Freundschaft nichts. Ist der Bedarf da,
+     macht die Bereitschaft den Hauptteil der Aussicht und die
+     Freundschaft legt bis zu fünfzehn Punkte drauf. Danach wird
+     gewürfelt, und zwar einmal. */
+  const AB = WELT.abschluss;
+  const braucht = Math.min(1, (S.produktPassung + (S.produktBedarf || 0)) / 4);
+  const spanne = Math.max(0, Math.min(1, (S.bereit - AB.vonBereit) / (AB.bisBereit - AB.vonBereit)));
+  const ausFreund = AB.ausFreundschaft * (S.bez / 100);
+  const chance = braucht < AB.bedarfNoetig ? 0
+    : Math.min(AB.deckel, AB.ausBereit * spanne + ausFreund);
+  const kauft = Math.random() < chance;
+  S.aussicht = {braucht, spanne, ausFreund, chance, kauft};
+
+  sag("meta", `Aussicht <b>${Math.round(chance*100)} %</b>`, {warn: chance < 0.25,
+    lang: braucht < AB.bedarfNoetig
+      ? `Er braucht das Ding nicht. Was jemand nicht braucht, kauft er auch dann nicht, wenn er dich mag —
+         die Freundschaft ist ein Zuschlag und kein Ersatz.`
+      : `Bedarf ${Math.round(braucht*100)} von hundert, daraus Bereitschaft ${Math.round(S.bereit)}
+         (macht ${Math.round(AB.ausBereit*spanne*100)} Punkte), dazu eure Freundschaft
+         ${Math.round(S.bez)} (macht ${Math.round(ausFreund*100)} Punkte).`});
+
+  const aus = kauft ? DATA.verkauf.ausgang[0]
+    : DATA.verkauf.ausgang.slice(1).find(a => braucht >= AB.bedarfNoetig && S.bereit >= a.ab)
+      || DATA.verkauf.ausgang[DATA.verkauf.ausgang.length - 1];
   /* Beim Abschluss nimmt er ein bis drei Stück, so viele wie du dabei
      hast. Das füllt die Kasse und leert den Koffer. */
-  if(aus.ab >= 72 && S.produkt){
+  if(kauft && S.produkt){
     const menge = Math.min(1 + Math.floor(Math.random()*3), KONTO.bestand[S.produkt.id]);
     const erloes = menge * S.produkt.preis;
     KONTO.bestand[S.produkt.id] -= menge;
@@ -2069,21 +2133,21 @@ function schluss(){
   }
   /* Ein Abschluss ist ein Vertrauensbeweis und wirkt nach; ein klares
      Nein auch, nur andersherum. */
-  const dz = bezPlus(aus.ab >= 72 ? 6 : (aus.ab >= 48 ? 0 : -8));
-  if(dz) sag("meta", `Beziehung <b>${vzk(dz)}</b> auf ${Math.round(S.bez)}`, {warn: dz < 0});
+  const dz = bezPlus(kauft ? 6 : (aus.ab >= 48 ? 0 : -8));
+  if(dz) sag("meta", `Freundschaft <b>${vzk(dz)}</b> auf ${Math.round(S.bez)}`, {warn: dz < 0});
   S.ende = "verkauf";
   besuchEnde(aus);
 }
 
 /* ═══════════════ Ende eines Besuchs ═══════════════
-   Alles, was bleibt, steht in der Akte: die Beziehung, was du gehört
+   Alles, was bleibt, steht in der Akte: die Freundschaft, was du gehört
    hast, worauf du dich festgelegt hast. Beim nächsten Mal geht es
    von hier weiter. */
 function besuchEnde(aus){
   S.phase = 5;
   A.letzter = S.ende;
   A.bez = S.bez;
-  A.auf = S.auf;
+  A.geduldWeg = 100 - S.geduld;
   akteSichern();
   zeichne();
   sag("verdict", bilanz(aus));
@@ -2093,11 +2157,11 @@ function besuchEnde(aus){
 
 /* ═══════════════ Bilanz eines Besuchs ═══════════════
    Was hier steht, ist deine Seite: was du getan hast, worauf du dich
-   festgelegt hast und was es die Beziehung gekostet oder gebracht hat.
+   festgelegt hast und was es die Freundschaft gekostet oder gebracht hat.
    Seine wahren Werte stehen nicht darin und werden es nie. Wer wissen
    will, ob er richtig lag, muss wiederkommen und zuhören. */
 function bilanz(aus){
-  const B = WELT.beziehung;
+  const B = WELT.freundschaft;
   const dz = S.bez - S.bezStart, st = stufeZu(S.bez);
   const neueFakten = S.fakten.slice(S.faktenStart);
   const fragen = S.bfLog.concat(S.moLog);
@@ -2116,7 +2180,7 @@ function bilanz(aus){
       <td class="n"><span class="treffer ${z.dist===0?"ja":(z.dist===1?"nah":"nein")}">${
         z.dist===0?"bestätigt":(z.dist===1?"eingeschränkt":"widersprochen")}</span> ${vzk(z.p,1)}</td></tr>`).join("")}
     </table>
-    <p class="small dim" style="margin-top:8px">Zusammen ${vzk(r.punkte,1)} Beziehung. Was er bestätigt hat, heißt
+    <p class="small dim" style="margin-top:8px">Zusammen ${vzk(r.punkte,1)} Freundschaft. Was er bestätigt hat, heißt
     nicht, dass du recht hattest — nur, dass er nicht widersprochen hat.</p>`).join("") : "";
 
   const lage = S.zLog.length ? `<h2>Was gerade bei ihm los ist</h2>
@@ -2138,6 +2202,20 @@ function bilanz(aus){
       <td class="n"><span class="treffer ${da?"ja":"nein"}">${da?"weißt du":"weißt du nicht"}</span></td></tr>`;
   }).join("");
 
+  const wurf = S.aussicht ? `<h2>Der Wurf</h2>
+    <table class="bil">
+      <tr class="${S.aussicht.braucht >= WELT.abschluss.bedarfNoetig ? "hi" : ""}">
+        <td>Braucht er es?</td><td class="n">${Math.round(S.aussicht.braucht*100)} von hundert
+          <span class="treffer ${S.aussicht.braucht >= WELT.abschluss.bedarfNoetig ? "ja":"nein"}">${
+          S.aussicht.braucht >= WELT.abschluss.bedarfNoetig ? "ja" : "nein — dann kauft er nicht"}</span></td></tr>
+      <tr><td>Aus der Bereitschaft</td><td class="n">${Math.round(WELT.abschluss.ausBereit*S.aussicht.spanne*100)} Punkte</td></tr>
+      <tr><td>Aus eurer Freundschaft</td><td class="n">${Math.round(S.aussicht.ausFreund*100)} Punkte</td></tr>
+      <tr class="hi"><td><b>Aussicht</b></td><td class="n"><b>${Math.round(S.aussicht.chance*100)} %</b>
+        <span class="treffer ${S.aussicht.kauft?"ja":"nein"}">${S.aussicht.kauft?"gefallen":"nicht gefallen"}</span></td></tr>
+    </table>
+    <p class="small dim" style="margin-top:8px">Die Freundschaft macht aus einem Vielleicht ein Ja. Aus einem
+    Nein macht sie nichts: was er nicht braucht, kauft er auch dann nicht, wenn er dich mag.</p>` : "";
+
   const produktZeile = S.produkt
     ? `<h2>Was du ihm hingelegt hast</h2>
        <table class="bil"><tr class="${S.produktPassung>0?"hi":""}">
@@ -2158,7 +2236,7 @@ function bilanz(aus){
   return `<section class="panel verdict" style="margin-top:20px">
     <div class="eyebrow">${ord(A.besuche)} Besuch · Ende</div>
     <div class="big" style="color:${farbe}">${esc(titel)}</div>
-    <p class="small dim" style="margin-top:10px">Beziehung ${Math.round(S.bezStart)} →
+    <p class="small dim" style="margin-top:10px">Freundschaft ${Math.round(S.bezStart)} →
       <b>${Math.round(S.bez)}</b> (${vzk(dz,0)}), Stufe <b>${st.name}</b>. ${esc(st.text)}</p>
 
     ${notiert}
@@ -2167,17 +2245,18 @@ function bilanz(aus){
 
     <h2>Was du über ihn persönlich weißt</h2>
     <table class="bil">${privZeilen}</table>
-    ${S.auf ? `<p class="small dim" style="margin-top:8px">Auffälligkeit in diesem Besuch:
-      ${nk(S.auf,1).replace(",0","")} von ${DATA.privat.grenze}.</p>` : ""}
+    <p class="small dim" style="margin-top:8px">Geduld am Ende des Besuchs:
+      ${Math.round(S.geduld)} von hundert.${S.geduld < 40 ? " Ein Drittel davon fehlt ihm beim nächsten Mal." : ""}</p>
 
     ${fragen.length ? `<h2>Deine Fragen</h2>
     <table class="bil">${fragen.map(f => `<tr class="hi"><td>${esc(f.q)}</td>
       <td class="n">${f.gewinn>=0?"+":""}${nk(f.gewinn)} bit</td></tr>`).join("")}</table>
     <p class="small dim" style="margin-top:8px">Zusammen ${nk(bit)} bit in ${wort(fragen.length)}
-    ${fragen.length===1?"Frage":"Fragen"}, und ${nk(-W_FRAGE*fragen.length)} Beziehung dafür.</p>` : ""}
+    ${fragen.length===1?"Frage":"Fragen"}, und ${nk(-W_FRAGE*fragen.length)} Freundschaft dafür.</p>` : ""}
 
     ${produktZeile}
     ${zuege}
+    ${wurf}
 
     <p class="small dim" style="margin-top:16px">Wie er wirklich ist, steht hier nicht und wird hier nie stehen.
     Du hast sein Verhalten, deine Notizen und dein Modell. Mehr hat man bei einem Menschen auch sonst nicht.</p>
@@ -2191,13 +2270,13 @@ function bilanz(aus){
 function zeigeMenue(){
   document.body.classList.add("imMenue");
   document.getElementById("mkarten").innerHTML = PERSONEN.map(pp => {
-    const a = akteVon(pp.id), st = stufeZu(a.bez), zu = a.bez < WELT.beziehung.verbrannt;
+    const a = akteVon(pp.id), st = stufeZu(a.bez), zu = a.bez < WELT.freundschaft.verbrannt;
     /* Beim ersten Mal steht da, wen du besuchst. Danach steht da, wie
        ihr auseinandergegangen seid. */
     const unten = zu
       ? `<i style="color:var(--STA)">verbrannt · er lässt dich nicht mehr herein</i>`
       : a.besuche
-        ? `${a.besuche===1 ? "ein Besuch" : wort(a.besuche)+" Besuche"} · Beziehung ${Math.round(a.bez)} · ${st.name}`
+        ? `${a.besuche===1 ? "ein Besuch" : wort(a.besuche)+" Besuche"} · Freundschaft ${Math.round(a.bez)} · ${st.name}`
         : esc(pp.kurz || pp.hero.job);
     return `<button class="mkarte" data-person="${pp.id}"${zu?" disabled":""}>
       <span class="mbild" style="background-image:url('${pp.menubild || ""}')"></span>

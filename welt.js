@@ -19,16 +19,23 @@ tpoles: {
   N: [`ruhig, robust`, `dünnhäutig, grüblerisch`]
 },
 
-motives: [`AUT`,`SIC`,`STA`,`ZUG`,`EFF`],
+/* --- Die zwei Waagen. Frueher waren es fuenf Motive; das war genauer
+       und unlesbar. Jetzt gibt es zwei Fragen, und auf jede gibt es
+       nur eine Antwort mit zwei Seiten:
 
-mlabels: { AUT:`Autonomie`, SIC:`Sicherheit`, STA:`Status`, ZUG:`Zugehörigkeit`, EFF:`Effizienz` },
+         Will er lieber selbst bestimmen oder lieber sicher sein?
+         Will er lieber dazugehoeren oder lieber gesehen werden?
+
+       Minus ist die linke Seite, Plus die rechte. Wer in der Mitte
+       steht, will beides ein bisschen und keines sehr. ------------- */
+
+motives: [`FRE`,`GEL`],
+
+mlabels: { FRE:`Sicherheit ⟷ Freiheit`, GEL:`Nähe ⟷ Geltung` },
 
 mpoles: {
-  AUT: [`egal, wer bestimmt`, `will selbst bestimmen`],
-  SIC: [`Risiko stört nicht`, `will Verlässlichkeit`],
-  STA: [`Sichtbarkeit egal`, `will gesehen werden`],
-  ZUG: [`kommt allein klar`, `will dazugehören`],
-  EFF: [`Aufwand egal`, `will Aufwand senken`]
+  FRE: [`will Verlässlichkeit`, `will selbst bestimmen`],
+  GEL: [`will dazugehören`, `will gesehen werden`]
 },
 
 /* Startbild vor dem ersten Wort: ein Rollenklischee, keine Messung.
@@ -52,7 +59,7 @@ stimmungswirkung: {
        Fragen kosten Geduld. Was ihr aufbaut, kommt daher, dass du ihn
        richtig liest — beim Festlegen und in dem, was gerade bei ihm
        los ist. Wer sofort verkaufen will, zahlt dafür. --------------- */
-beziehung: {
+freundschaft: {
   start: 35,
   /* Darunter macht er den Koffer nicht mehr auf. */
   verkaufSchwelle: 55,
@@ -63,10 +70,10 @@ beziehung: {
   verkaufKosten: 6,
   /* Woraus die Bereitschaft im Verkauf startet. */
   uebertrag: 0.85,
-  /* Wie viel von der Auffälligkeit er ins nächste Mal mitnimmt. Wer
-     ihn an einem Nachmittag ausquetscht, sitzt beim nächsten Besuch
-     einem Mann gegenüber, der schon weiß, wie das läuft. */
-  aufUebertrag: 0.5,
+  /* Wie viel von der verbrauchten Geduld er ins nächste Mal mitnimmt.
+     Wer ihn an einem Nachmittag ausquetscht, sitzt beim nächsten
+     Besuch einem Mann gegenüber, der schon weiß, wie das läuft. */
+  geduldUebertrag: 0.35,
   stufen: [
     { ab:80, name:`verbündet`,
       text:`Er hält dir den Rücken frei. Was du sagst, gilt bei ihm, bis das Gegenteil bewiesen ist.` },
@@ -105,21 +112,33 @@ deutung: {
 },
 
 mdeutung: {
-  AUT: { hoch: `Er will selbst bestimmen. Jede Vorgabe, wie er etwas zu tun hat, kostet dich mehr, als dein Angebot einbringt.`,
-         mitte:`Wer entscheidet, ist ihm weder wichtig noch gleich.`,
-         tief: `Wer entscheidet, ist ihm gleich. Führung nimmt er an, wenn sie ihm Arbeit spart.` },
-  SIC: { hoch: `Er will Verlässlichkeit. Referenzen, Garantien und Bestand wirken bei ihm.`,
-         mitte:`Sicherheiten nimmt er mit, sucht sie aber nicht.`,
-         tief: `Sicherheiten interessieren ihn nicht. Garantien klingen für ihn nach Füllmaterial.` },
-  STA: { hoch: `Er will gesehen werden. Sichtbarkeit, Titel und Namen ziehen.`,
-         mitte:`Sichtbarkeit nimmt er hin.`,
-         tief: `Schmeichelei kostet dich. Wer ihn heraushebt, klingt für ihn unehrlich.` },
-  ZUG: { hoch: `Er will dazugehören. Wer sonst noch mitmacht, ist ein Argument.`,
-         mitte:`Das Team zählt, entscheidet aber nicht.`,
-         tief: `Das Team ist kein Argument. Er kommt allein klar und weiß das.` },
-  EFF: { hoch: `Er will Aufwand senken. Rechne ihm vor, was er spart, nicht was er gewinnt.`,
-         mitte:`Aufwand ist ein Faktor unter mehreren.`,
-         tief: `Aufwand ist ihm gleich. Zeitersparnis zieht bei ihm nicht.` }
+  FRE: { hoch: `Er will selbst bestimmen. Jede Vorgabe, wie er etwas zu tun hat, kostet dich mehr, als dein Angebot einbringt — auch die gut gemeinte. Gib ihm die Wahl und halt den Mund.`,
+         mitte:`Er will beides und keines sehr. Freiheit nimmt er, wenn sie da ist, Sicherheit auch. Über diese Waage gewinnst du ihn nicht.`,
+         tief: `Er will Verlässlichkeit. Referenzen, Garantien, ein Ding, das morgen noch da ist. Freiheit klingt für ihn nach Arbeit, die keiner abnimmt.` },
+  GEL: { hoch: `Er will gesehen werden. Sein Name, sein Verdienst, sein Platz auf dem Papier. Wer ihn heraushebt, hat ihn.`,
+         mitte:`Weder Bühne noch Tisch entscheiden bei ihm. Sag ihm, was die Sache kann, nicht wer sonst noch dabei ist.`,
+         tief: `Er will dazugehören. Wer sonst mitmacht, ist ein Argument; Schmeichelei ist keins und kostet dich sofort.` }
+},
+
+/* --- Wann er kauft. Keine Schwelle mehr, sondern eine Wahrscheinlich-
+       keit — und zwei Dinge, die sie machen:
+
+       Der Bedarf ist die Bedingung. Was er nicht braucht, kauft er
+       nicht, und zwar bei keiner Freundschaft der Welt.
+
+       Die Freundschaft ist der Zuschlag. Wer ihm nahesteht, bekommt
+       ein Ja auch dann, wenn die Sache nur halb passt — bis zu
+       fuenfzehn Punkte, nie mehr. Freundschaft macht aus einem
+       Vielleicht ein Ja und aus einem Nein nichts. ------------------ */
+
+abschluss: {
+  /* Darunter braucht er die Ware schlicht nicht. */
+  bedarfNoetig: 0.2,
+  /* Zwischen diesen Ständen steigt die Aussicht von null auf achtzig
+     Prozent. */
+  vonBereit: 35, bisBereit: 88, ausBereit: 0.80,
+  ausFreundschaft: 0.15,
+  deckel: 0.93
 },
 
 
@@ -134,7 +153,7 @@ produkte: [
     kurz:`Eine Stunde daran gedreht, und du hast einen Tag mehr, den nur du erlebst.`,
     text:`Eine Taschenuhr, Messing, abgegriffen. Wer die Krone einmal ganz herumdreht, bekommt vierundzwanzig Stunden, in denen die Welt stillsteht und er allein weiterarbeitet. Danach geht es weiter, als wäre nichts gewesen. Niemand außer ihm merkt etwas.`,
     haken:`Die Stunden, die Sie gewinnen, altern Sie mit. Ein Tag ist ein Tag, auch wenn ihn keiner sieht.`,
-    passt:{ EFF:1.5, AUT:0.8 }, spricht:[`plan60`,`musik`],
+    passt:{ FRE:1.6 }, spricht:[`plan60`,`musik`],
     erRegieVor:`Er nimmt sie aus der Mulde und wiegt sie in der Hand, ohne zu fragen, ob er darf.`,
     er:`Zeit.`, erRegie:`Er dreht die Krone eine halbe Umdrehung und hält an.`,
     er2:`Zeigen Sie mir, wie sie geht.`, wie:`leise, sehr aufmerksam`, wie2:`fordernd`, stimmung:`interessiert` },
@@ -143,7 +162,7 @@ produkte: [
     kurz:`Was du damit schreibst, vergisst du nie wieder.`,
     text:`Ein Füllhalter, schwarz, ohne Aufschrift. Jeder Satz, den man damit auf Papier bringt, bleibt vollständig im Gedächtnis — Wortlaut, Seite, Tag. Kein Nachschlagen mehr, kein Suchen, kein zweites Mal lesen.`,
     haken:`Sie vergessen auch das nie wieder, was Sie lieber vergessen würden. Schreiben Sie nichts damit auf, was Sie loswerden wollen.`,
-    passt:{ AUT:0.7, SIC:0.8, ZUG:0.3 }, spricht:[`werkstatt`],
+    passt:{ FRE:-1.0, GEL:-0.3 }, spricht:[`werkstatt`],
     er:`Ein Stift.`, erRegie:`Er nimmt ihn, dreht ihn einmal und legt ihn zurück in die Mulde.`,
     er2:`Ich schreibe wenig. Ich rechne.`, wie:`trocken`, wie2:`abschließend`, stimmung:`skeptisch` },
 
@@ -151,7 +170,7 @@ produkte: [
     kurz:`Wer sie aufsetzt, sieht jedem Text an, wo er nicht stimmt.`,
     text:`Ein schmales Gestell mit klaren Gläsern. Wer sie trägt, sieht in jedem geschriebenen Text die Stellen aufleuchten, an denen etwas falsch ist — der Rechenfehler, die geschönte Zahl, der Satz, den jemand gegen besseres Wissen geschrieben hat.`,
     haken:`Sie sehen die Fehler auch in dem, was Sie selbst geschrieben haben. Alle davon.`,
-    passt:{ SIC:1.2, STA:1.2 }, spricht:[],
+    passt:{ FRE:-0.6, GEL:1.4 }, spricht:[],
     er:`Eine Brille, die Fehler zeigt.`,
     erRegie:`Er setzt sie auf, sieht auf den obersten Ausdruck seines Stapels und nimmt sie wieder ab.`,
     er2:`Meine Fehler finde ich selbst. Das ist der Job.`, wie:`gedehnt`, wie2:`kühl`, stimmung:`skeptisch` }

@@ -10,17 +10,27 @@ genügt.
 
 ## Was drin steckt
 
-**Ein bayessches Modell über 3125 Zustände.** Fünf Persönlichkeitsmerkmale
-mit je fünf Stufen. Vor dem ersten Wort verteilt sich der Glaube nach
-einer Glockenkurve, verschoben durch ein Rollenklischee — das bei dieser
-Person überwiegend falsch ist. Jede Antwort ist ein Datenpunkt,
-P(Person | Antwort) ∝ P(Antwort | Person) · P(Person). Über jeder Frage
-steht, wie viele bit sie verspricht.
+**Fünf Merkmale, fünf Stufen.** Die Persönlichkeit bleibt bayessch:
+3125 mögliche Menschen, ein Rollenklischee als Startbild, jede Antwort
+ein Datenpunkt, P(Person | Antwort) ∝ P(Antwort | Person) · P(Person).
+Über jeder Frage steht, wie viele bit sie verspricht.
 
-**Besuche statt einer Partie.** Zwischen zwei Besuchen bleibt die
-Beziehung und alles, was du gehört hast. Gespeichert werden dabei nicht
-die 3125 Wahrscheinlichkeiten, sondern seine Antworten; beim nächsten Mal
-wird daraus dasselbe Bild neu gerechnet.
+**Zwei Waagen für das, was er will.** Früher waren es fünf Motive — das
+war genauer und unlesbar. Jetzt gibt es zwei Fragen mit je zwei Seiten:
+
+| | |
+|---|---|
+| Sicherheit ⟷ Freiheit | will Verlässlichkeit ⟷ will selbst bestimmen |
+| Nähe ⟷ Geltung | will dazugehören ⟷ will gesehen werden |
+
+Fünfundzwanzig mögliche Menschen statt 3125, dieselbe Rechnung, und man
+kann den Balken ansehen und weiß Bescheid. Jede der sieben Fragen bietet
+vier Antworten, eine je Pol, und trennt damit beide Waagen auf einmal.
+
+**Besuche statt einer Partie.** Zwischen zwei Besuchen bleibt, was du
+gehört hast, und wie ihr steht. Gespeichert werden nicht die
+Wahrscheinlichkeiten, sondern seine Antworten; beim nächsten Mal wird
+daraus dasselbe Bild neu gerechnet.
 
 **Eine Drehscheibe statt einer Reihenfolge.** Nach jedem Schritt
 entscheidest du neu: ihn über sich reden lassen, herausfinden, worauf er
@@ -34,9 +44,15 @@ antwortet: bei einem Treffer bestätigt er, bei einem Fehlgriff
 widerspricht er. Aus der Richtung seines Widerspruchs kannst du
 schließen, wohin du danebenlagst. Mehr Hilfe gibt es nicht.
 
-## Die Beziehung
+## Zwei Balken
 
-Sie beginnt bei 35 und ist das einzige, was bleibt.
+**Geduld** gilt für diesen Nachmittag und beginnt bei hundert. Jede Frage
+kostet, und zwar zunehmend: die erste sechs, die siebte gut zehn — er
+merkt, wenn er verhört wird. Ein Gespräch, das trifft, gibt ihm Geduld
+zurück; eines, das danebengeht, kostet zusätzlich. Bei null steht er auf.
+Ein Drittel des Verbrauchs nimmt er mit ins nächste Mal.
+
+**Freundschaft** beginnt bei 35 und ist das einzige, was wirklich bleibt.
 
 | | |
 |---|---|
@@ -46,27 +62,39 @@ Sie beginnt bei 35 und ist das einzige, was bleibt.
 | ab 20 | fremd |
 | unter 8 | verbrannt — er lässt dich nicht mehr herein |
 
-**Was sie kostet:** jede Frage, und zwar zunehmend. Die erste kostet 1,
-die siebte schon 1,7 — er merkt, wenn er verhört wird. Wer sich die
-Fragen über mehrere Besuche einteilt, kommt billiger davon. Auch die
-Auffälligkeit nimmt er zur Hälfte mit ins nächste Mal.
-
-**Was sie bringt:** ihn richtig zu lesen. Ein Festlegen, bei dem er nicht
-widerspricht, ist bis zu 25 wert; ein Gespräch über seine Lage, das
-trifft, bis zu 8.
+Sie wächst, wenn du ihn richtig liest: ein Festlegen ohne Widerspruch ist
+bis zu 25 wert, ein Gespräch über seine Lage bis zu 8. Sie fällt bei
+jeder Frage und bei jedem Fehlgriff.
 
 **Der Koffer** geht erst ab 55 auf. Darunter sieht er hinein, sieht dich
 an und schiebt ihn zurück — das kostet 12. Auch ein geglückter Versuch
-kostet 6: du hast dich zu erkennen gegeben, und das nimmst du nicht
-zurück.
+kostet 6: du hast dich zu erkennen gegeben.
+
+## Ob er kauft, ist ein Wurf
+
+Keine Schwelle mehr, sondern eine Aussicht — und sie steht vor dem Wurf
+auf dem Schirm.
+
+**Der Bedarf ist die Bedingung.** Was er nicht braucht, kauft er nicht.
+Bei ihm gilt das hart:
+
+| | Passung | beste Aussicht |
+|---|---|---|
+| Die Uhr | +3,2 | 93 % |
+| Der Stift | −1,7 | **0 %** |
+| Die Brille | −2,6 | **0 %** |
+
+**Die Freundschaft ist der Zuschlag,** nicht der Ersatz: bis zu fünfzehn
+Punkte auf die Aussicht. Genug, um aus einem Vielleicht ein Ja zu machen.
+Nie genug, um aus einem Nein etwas zu machen.
 
 ## Seine Lage
 
 Bei jedem Besuch ist etwas anderes los — zehn Zustände, jeder mit drei
 Wegen hinein: der Umzug in den Neubau, elf Tage bis zum Gutachten, eine
 Leitung von vierunddreißig, die Revision, die erste Doktorandin, der
-Rücken, das neue Rechensystem, ein Preis, zu dem er nicht will, der
-Kollege, der geht, der Mitbewohner ab Mai.
+Rücken, das neue Rechensystem, ein Preis zu dem er nicht will, der
+Kollege der geht, der Mitbewohner ab Mai.
 
 Jeder Weg hinein unterstellt eine Persönlichkeit — teilnehmend, nüchtern,
 ordnungsliebend. Verrechnet wird er mit der, die er wirklich hat. Vor der
@@ -78,8 +106,8 @@ führt dich genau diese Zahl in die Mine:
 Ohne eine einzige Frage sieht das harmlos aus. Nach neun Fragen steht da
 *gegen dein Bild −0,8*, und das stimmt: er lacht kurz und ohne Freude.
 
-Wer trifft, erfährt außerdem, was er deswegen gerade braucht. Das zählt,
-wenn du ihm etwas hinlegst.
+Wer trifft, erfährt außerdem, was er deswegen gerade braucht — und das
+verschiebt, welche Ware diese Woche die richtige ist.
 
 ## Wie es gebaut ist
 
@@ -89,7 +117,7 @@ die alles mitbringen: Texte, Fragen, Zustände, Bilder, Farbschema.
 | | |
 |---|---|
 | `index.html` | Menü und Mechanik. Weiß nichts über Baumgartner. |
-| `welt.js` | was für jede Person gilt: die zehn Achsen, die Beziehungsstufen, dein Koffer, die Belege |
+| `welt.js` | was für jede Person gilt: die Achsen, die Freundschaftsstufen, die Abschlussrechnung, dein Koffer, die Belege |
 | `personen/baumgartner.js` | eine Person: Wahrheit, Fragen, Zustände, seine Widerworte, Stimmungen, Verkaufszüge |
 | `bilder/` | zehn Stimmungen und der Raum |
 | `musik/` | fünf Spuren: Menü, Laden, Gespräch, gewonnen, verloren |
@@ -113,29 +141,29 @@ dich jede Person wieder nicht.
 Wie er dasitzt, entscheidet mit. Jeder Zug wird mit einem Faktor
 verrechnet, der an seiner Laune hängt: gerührt ×1,3, interessiert ×1,2,
 neutral ×1, skeptisch ×0,85, gereizt ×0,55. Fehlgriffe wirken umgekehrt —
-in schlechter Laune tun sie mehr weh, nicht weniger. Wer ihn verstimmt,
-macht sich den ganzen Rest schwer.
+in schlechter Laune tun sie mehr weh, nicht weniger.
 
 ## Die Balance
 
 `python balance.py` liest die Gewichte aus `spiel.html`, die Fragen und
 Zustände aus `welt.js` und `personen/`, und spielt sechshundert
-Besuchsreihen je Spielweise. Weil die Zahlen aus dem Spiel selbst kommen,
-können Messung und Wirklichkeit nicht auseinanderlaufen. Der Stand — in
-welchem Besuch er kauft:
+Besuchsreihen je Spielweise über bis zu sechs Besuche. Weil die Zahlen
+aus dem Spiel selbst kommen, können Messung und Wirklichkeit nicht
+auseinanderlaufen. In welchem Besuch er kauft:
 
-| | 1. | 2. | 3. | 4. | kauft | verbrannt |
-|---|---|---|---|---|---|---|
-| Zufall | 0 % | 0 % | 0 % | 0 % | **0 %** | 89 % |
-| Mittelmaß | 0 % | 6 % | 10 % | 9 % | **26 %** | 1 % |
-| gutes Zuhören | 1 % | 27 % | 41 % | 20 % | **89 %** | 0 % |
-| alles ausfragen | 0 % | 2 % | 46 % | 46 % | **93 %** | 0 % |
+| | 1. | 2. | 3. | 4. | 5. | 6. | kauft | verbrannt |
+|---|---|---|---|---|---|---|---|---|
+| Zufall | 0 % | 0 % | 0 % | 0 % | 0 % | 0 % | **0 %** | 74 % |
+| Mittelmaß | 1 % | 8 % | 12 % | 11 % | 16 % | 13 % | **59 %** | 0 % |
+| gutes Zuhören | 1 % | 33 % | 37 % | 20 % | 7 % | 2 % | **99 %** | 0 % |
+| alles ausfragen | 0 % | 1 % | 43 % | 41 % | 14 % | 1 % | **99 %** | 0 % |
 
-Blind raten gewinnt nie und verbrennt in neun von zehn Fällen die
-Beziehung so weit, dass er nicht mehr aufmacht. Am ersten Tag zu
-verkaufen ist möglich, aber selten — auch bei gutem Spiel nur in einem
-von hundert Durchgängen. Wer alles ausfragt, kommt am Ende auch hin,
-braucht dafür aber einen Besuch länger als der, der gezielt fragt.
+Blind raten gewinnt nie und verbrennt in drei von vier Fällen die
+Freundschaft so weit, dass er nicht mehr aufmacht. Am ersten Tag zu
+verkaufen ist möglich, aber selten. Wer alles ausfragt, kommt auch hin —
+braucht dafür aber einen Besuch länger als der, der gezielt fragt, weil
+die Geduld schneller aufgebraucht ist und ein Drittel davon mit ins
+nächste Mal geht.
 
 ## Ehrlichkeit
 
