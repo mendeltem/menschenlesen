@@ -139,6 +139,41 @@ Hierhin gehören die Gegenstände aus der Tabelle oben.
 
 ---
 
+## Ganz ohne Handarbeit
+
+Liegt ein Gemini-Schlüssel in der Umgebung, läuft die ganze Kette als
+drei Befehle — dann muss niemand mehr ein Bild herunterladen und
+herumschieben:
+
+```
+setx GEMINI_API_KEY "..."                              einmalig, danach neue Konsole
+python werkzeug/bild_erzeugen.py --prompt-datei bogen.txt --aus bogen.png
+python werkzeug/kontaktbogen_schneiden.py bogen.png annika
+python werkzeug/person_pruefen.py reuter
+```
+
+`bild_erzeugen.py` hängt nur an der Standardbibliothek, es ist also
+nichts zu installieren. Mit `--vorlage bilder/annika_neutral.webp` nimmt
+es ein vorhandenes Porträt als Referenz, was die Ähnlichkeit deutlich
+besser hält als eine Beschreibung.
+
+Der Schlüssel steht **nur** in der Umgebungsvariablen und nie in einer
+Datei im Projekt — sonst liegt er beim nächsten Push öffentlich auf
+GitHub.
+
+## Der Prüfer
+
+`person_pruefen.py` beantwortet die drei Fragen, die man sonst erst im
+Spiel merkt: Ist jeder Abschnitt da? Zeigen die Bildpfade ins Leere?
+Und — das Wichtigste — lässt sich die Person überhaupt lesen?
+
+Er misst, wie oft ein Merkmal nach sechs Fragen genau getroffen wird.
+Steht dort unter fünfzehn Prozent, ist das keine Schwierigkeit, sondern
+eine Rückmeldung, die nicht funktioniert: der Spieler kann dieses
+Merkmal nicht gewinnen, egal wie gut er zuhört. Er zeigt außerdem, ob
+überhaupt eine Ware zu der Person passt, und ob in jedem Zustand ein Weg
+trägt, einer eine Mine ist und einer ein Münzwurf.
+
 ## Das Schneiden
 
     python werkzeug/kontaktbogen_schneiden.py bogen.png annika
