@@ -196,6 +196,10 @@ def besuche(art, max_besuche=6):
                 geduld -= G["gfrage"] * (1 + heute*G["fragesteig"])
                 heute += 1; gefragt[key] += 1
             if gefragt[key] > stand[key]:
+                # Wie im Spiel: volle Wertung erst, wenn auf jede Achse
+                # eine neue Antwort kommt
+                neues = gefragt[key] - stand[key]
+                anteil = 1.0 if stand[key] == 0 else max(0.0, min(1.0, neues/len(dims)))
                 stand[key] = gefragt[key]
                 punkte = 0.0
                 for d in range(len(dims)):
@@ -203,6 +207,7 @@ def besuche(art, max_besuche=6):
                             else int(random.choice(STUFEN)))
                     dist = abs(tipp - int(wahr[dims[d]]))
                     punkte += G["rtreffer"] if dist == 0 else (G["rnah"] if dist == 1 else G["rdaneben"])
+                punkte *= anteil
                 frd = min(100.0, max(0.0, frd + punkte))
                 geduld = min(100.0, max(0.0, geduld + punkte*G["gfest"]))
 

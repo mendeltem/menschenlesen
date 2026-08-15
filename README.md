@@ -58,6 +58,15 @@ entscheidest du neu: ihn über sich reden lassen, herausfinden, worauf er
 anspringt, dich festlegen, fragen was gerade los ist, den Koffer
 aufmachen, gehen. Alles ist immer erlaubt. Nur kostet alles etwas.
 
+**Das Festlegen ist der Kern.** Aus dem Gespräch schließt du, wer er
+ist — und irgendwann sagst du es ihm ins Gesicht: für jedes Merkmal eine
+Stufe, für jede Waage eine Seite. Es steht immer oben in der Übersicht,
+es liegt als Knopf neben deinem Bild von ihm, und wenn du eine Fragerunde
+beendest, wirst du direkt gefragt. Auch neu festlegen darfst du dich
+jederzeit — nur zählt das erst wieder, wenn du seither Neues gehört hast:
+volle Wertung ab einer neuen Antwort je Achse. Wer dieselbe Vorstellung
+zweimal abgibt, bekommt nichts dafür und kostet ihn Geduld.
+
 **Die Wahrheit siehst du nie.** Es gibt keine Auflösung, in der seine
 wahren Werte in einer Tabelle stehen. Du hast dein Modell, deine Notizen
 und ihn. Wenn du dich festlegst, sagst du es ihm ins Gesicht, und er

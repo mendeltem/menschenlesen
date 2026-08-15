@@ -357,6 +357,11 @@ body.raten .zahlen{padding:10px 14px}
   text-transform:uppercase; color:var(--muted); margin-bottom:9px; line-height:1.7}
 .ratehinweis b{color:var(--ink)}
 button.pick.riskant{border-color:var(--STA)}
+/* Das Festlegen ist der Zug, um den es geht. Es steht oben und sieht
+   nicht aus wie eine Zeile unter sieben. */
+button.pick.haupt{border-color:var(--accent); background:var(--surface-2); box-shadow:var(--glow)}
+button.pick.haupt .txtwrap{color:var(--ink); font-weight:600}
+button.pick.haupt:before{content:"◆"; color:var(--accent); margin-right:9px; font-size:10px}
 .ratezeile button.an{background:var(--accent); border-color:var(--accent); color:var(--accent-ink); font-weight:600}
 button.act[disabled]{opacity:.4; cursor:default; box-shadow:none; transform:none}
 
@@ -536,6 +541,8 @@ table.bil tr.hi td.n{color:var(--accent); font-weight:600}
         <div class="lesekopf"><span class="bandwahl" id="bandwahl"></span>
           <span class="hval" id="hval">–<span>BIT</span></span></div>
         <div class="dims" id="dims"></div>
+        <div class="row" style="margin-top:11px">
+          <button class="act" id="festJetzt">Festlegen</button></div>
       </section>
 
       <section class="panel">
@@ -766,6 +773,9 @@ const ORD = ["nullter","erster","zweiter","dritter","vierter","fünfter","sechst
              "siebter","achter","neunter","zehnter"];
 const ord = n => ORD[n] !== undefined ? ORD[n] : (n + ".");
 const gross = s => s.charAt(0).toUpperCase()+s.slice(1);
+/* Eins beugt sich, der Rest nicht: einen Punkt, bei einem Punkt. */
+const akk = n => n === 1 ? "Einen" : gross(wort(n));
+const dat = n => n === 1 ? "einem" : wort(n);
 
 /* Die Verteilung ist nicht für jeden Achsensatz dieselbe: die Merkmale
    folgen einer Glocke, die zwei Waagen einer flacheren Kurve. */
@@ -937,9 +947,9 @@ function ladePerson(person){
   A = akteVon(person.id);
   neuerZustand();
   cfgBF = { key:"bf", pool:DATA.bigfive, glaube:"bfGlaube", gestellt:"bfGestellt", log:"bfLog",
-    dims:T, feld:"l", wahr:HERO.z, band:"bf", weiterText:"Genug davon.", fertig:() => drehscheibe() };
+    dims:T, feld:"l", wahr:HERO.z, band:"bf", weiterText:"Genug davon.", fertig:() => nachDemLesen("bf") };
   cfgMO = { key:"mo", pool:DATA.motivfragen, glaube:"moGlaube", gestellt:"moGestellt", log:"moLog",
-    dims:M, feld:"aff", wahr:HERO.m, band:"mo", weiterText:"Genug davon.", fertig:() => drehscheibe() };
+    dims:M, feld:"aff", wahr:HERO.m, band:"mo", weiterText:"Genug davon.", fertig:() => nachDemLesen("mo") };
   rateBF = { key:"bf", dims:T, labels:DATA.tlabels, poles:DATA.tpoles, wahr:HERO.z,
     titel:"Sein Wesen", deutung:DATA.deutung, reaktion:(DATA.reaktion||{}).z || {},
     kopf:`Festlegen · für jedes Merkmal eine Stufe`,
@@ -1137,6 +1147,16 @@ function zeichneLeseband(){
   document.querySelectorAll("#bandwahl button").forEach(b =>
     b.onclick = () => { S.band = b.dataset.band; zeichneLeseband(); });
   document.getElementById("hval").innerHTML = nk(H(glaube)) + "<span>BIT</span>";
+  /* Derselbe Zug wie oben in der Übersicht, nur direkt am Balken: wer
+     hier hinsieht, hat gerade den Gedanken, sich festzulegen. */
+  const knopf = document.getElementById("festJetzt");
+  const zahl = (motiv ? A.moVerlauf : A.bfVerlauf).length;
+  knopf.textContent = (fest ? "Neu festlegen: " : "Festlegen: ")
+    + (motiv ? "was ihn treibt" : "wer er ist");
+  knopf.disabled = !!R.aktiv || S.phase === 4 || !!S.ende;
+  knopf.title = zahl ? `Aus ${wort(zahl)} ${zahl===1?"Antwort":"Antworten"}. Er antwortet dir darauf.`
+                     : `Du hast ihn noch nichts gefragt — du würdest raten.`;
+  knopf.onclick = () => { if(knopf.disabled) return; rateRunde(motiv ? rateMO : rateBF); };
   document.getElementById("dims").innerHTML = dims.map((d,i) => {
     const m = marginal(glaube,i,dims.length), mx = Math.max(...m), ev = erwartung(m);
     const zellen = m.map((p,j) => `<i class="${j===2?"mid":""}" style="height:${Math.max(6,100*p/mx).toFixed(1)}%"></i>`).join("");
@@ -1290,6 +1310,27 @@ function uebergang1(){
   drehscheibe();
 }
 
+/* Wer eine Leserunde beendet, wird gefragt, ob er sich jetzt festlegt.
+   Das ist der Augenblick, in dem man es tun will — und wer es hier
+   überspringt, findet es oben in der Übersicht wieder. */
+function nachDemLesen(k){
+  const zahl = (k === "bf" ? A.bfVerlauf : A.moVerlauf).length;
+  const stand = A.fest[k + "Stand"] || 0;
+  if(!zahl || stand >= zahl) return drehscheibe();
+  const cfg = k === "bf" ? rateBF : rateMO;
+  const was = k === "bf" ? `wer er ist` : `was ihn treibt`;
+  zeichne();
+  waehle([
+    { t:`Dich festlegen: ` + was, klasse:"haupt",
+      tag:`Du hast genug gehört. Legst du dich fest?`,
+      rechts:`aus ${wort(zahl)} ${zahl===1?"Antwort":"Antworten"} · er antwortet dir darauf`,
+      go(){ rateRunde(cfg); } },
+    { t:`Noch nicht.`, klasse:"weiter",
+      tag:`Du hast genug gehört. Legst du dich fest?`,
+      rechts:`zurück zur Übersicht`, go(){ drehscheibe(); } }
+  ]);
+}
+
 /* ═══════════════ Die Drehscheibe ═══════════════
    Nach jedem Schritt landest du wieder hier. Was du tust, ist deine
    Sache: du kannst sofort den Koffer aufmachen, und du kannst jederzeit
@@ -1299,6 +1340,24 @@ function drehscheibe(){
   S.phase = 0;
   const kopf = `Was tust du? · Freundschaft ${Math.round(S.bez)} · ${stufeZu(S.bez).name}`;
   const items = [];
+
+  /* Das Festlegen steht oben und ist immer erreichbar — auch bevor du
+     etwas gefragt hast, und auch dann noch, wenn du dich schon einmal
+     festgelegt hast. Wer sich revidiert, wird erneut bewertet; das ist
+     der Weg, einen Fehlgriff später gutzumachen. */
+  [["bf", rateBF, `wer er ist`], ["mo", rateMO, `was ihn treibt`]].forEach(pa => {
+    const k = pa[0], cfg = pa[1], was = pa[2];
+    const zahl = (k === "bf" ? A.bfVerlauf : A.moVerlauf).length;
+    const fest = A.fest[k], stand = A.fest[k + "Stand"] || 0;
+    const neues = zahl - stand;
+    items.push({ t:(fest ? `Dich neu festlegen: ` : `Dich festlegen: `) + was, tag:kopf, klasse:"haupt",
+      rechts: !zahl ? `<i style="color:var(--STA)">du hast ihn noch nichts gefragt</i>`
+        : fest && neues <= 0 ? `<i>nichts Neues gehört — er wird trotzdem antworten</i>`
+        : `aus ${wort(zahl)} ${zahl===1?"Antwort":"Antworten"}${
+            fest ? `, ${wort(neues)} davon neu` : ``} · er antwortet dir darauf`,
+      go(){ rateRunde(cfg); } });
+  });
+
   const bfOffen = DATA.bigfive.filter(f => !S.bfGestellt.includes(f.id)).length;
   const moOffen = DATA.motivfragen.filter(f => !S.moGestellt.includes(f.id)).length;
   /* Ein Preis wie -1,72 liest sich schlecht; eine Stelle reicht. */
@@ -1312,19 +1371,6 @@ function drehscheibe(){
   if(moOffen) items.push({ t:`Herausfinden, worauf er anspringt`, tag:kopf,
     rechts:`Antriebe · ${wort(moOffen)} offen · ${kosten}`,
     go(){ S.phase = 2; S.band = "mo"; zeichne(); leseRunde(cfgMO); } });
-
-  /* Festlegen kannst du dich erst, wenn du ihn etwas gefragt hast — und
-     wieder, sobald du seither Neues gehört hast. Wer sich revidiert,
-     wird erneut bewertet. */
-  [["bf", rateBF, `wer er ist`], ["mo", rateMO, `was ihn treibt`]].forEach(pa => {
-    const k = pa[0], cfg = pa[1], was = pa[2];
-    const zahl = (k === "bf" ? A.bfVerlauf : A.moVerlauf).length;
-    const fest = A.fest[k], stand = A.fest[k + "Stand"] || 0;
-    if(!zahl || (fest && stand >= zahl)) return;
-    items.push({ t:(fest ? `Dich neu festlegen: ` : `Dich festlegen: `) + was, tag:kopf, klasse:"weiter",
-      rechts:`aus ${wort(zahl)} ${zahl===1?"Antwort":"Antworten"} · er antwortet dir darauf`,
-      go(){ rateRunde(cfg); } });
-  });
 
   if(S.zustand && S.zustand.fragen.some(f => !S.zGestellt.includes(f.id)))
     items.push({ t:`Fragen, was gerade bei ihm los ist`, tag:kopf,
@@ -1442,6 +1488,8 @@ function stelle(frage, an, cfg){
    Die Gewichte sind durchgerechnet: blindes Raten kostet im Mittel,
    gutes Zuhören zahlt sich aus. Siehe balance.py. */
 const W_RATE_TREFFER = 5, W_RATE_NAH = 1, W_RATE_DANEBEN = -3;
+/* Was es ihn kostet, dieselbe Vorstellung ein zweites Mal anzuhören. */
+const W_GEDULD_WIEDERHOLT = 8;
 
 function rateRunde(cfg){
   R.aktiv = cfg; R.tipps = cfg.dims.map(() => null);
@@ -1509,23 +1557,36 @@ function werteRaten(cfg, tipps){
       deutung: (cfg.deutung[d] || {})[stufe] || "",
       p: dist===0 ? W_RATE_TREFFER : (dist===1 ? W_RATE_NAH : W_RATE_DANEBEN) };
   });
-  const punkte = zeilen.reduce((a,z) => a + z.p, 0);
+  const roh = zeilen.reduce((a,z) => a + z.p, 0);
   const genau = zeilen.filter(z => z.dist===0).length;
   const knapp = zeilen.filter(z => z.dist===1).length;
   const weit  = zeilen.filter(z => z.dist>1).length;
+
+  /* Dieselbe Einschätzung zweimal abzugeben ist keine Leistung. Ein
+     Festlegen zählt nur so weit, wie du seither Neues gehört hast:
+     volle Wertung erst, wenn auf jede Achse eine neue Antwort kommt. */
+  const zahl = (cfg.key === "bf" ? A.bfVerlauf : A.moVerlauf).length;
+  const alt = A.fest[cfg.key], stand = A.fest[cfg.key + "Stand"] || 0;
+  const neues = zahl - stand;
+  const anteil = !alt ? 1 : Math.max(0, Math.min(1, neues / cfg.dims.length));
+  const punkte = roh * anteil;
   const wirkung = bezPlus(punkte);
-  geduldPlus(punkte * W_GEDULD_FEST);
+  geduldPlus(anteil > 0 ? punkte * W_GEDULD_FEST : -W_GEDULD_WIEDERHOLT);
 
   A.fest[cfg.key] = tipps.slice();
   A.fest[cfg.key + "Stand"] = (cfg.key === "bf" ? A.bfVerlauf : A.moVerlauf).length;
   akteSichern();
-  S.rateLog.push({key:cfg.key, titel:cfg.titel, zeilen, punkte:wirkung, genau, knapp, weit});
+  S.rateLog.push({key:cfg.key, titel:cfg.titel, zeilen, punkte:wirkung, genau, knapp, weit, anteil, roh});
 
   /* Er hört sich das an und antwortet. Auf einen Treffer, wenn es einen
      gibt, und auf den gröbsten Fehlgriff. Zwei Sätze, nicht fünf —
      sonst wird aus der Szene eine Tabelle mit Anführungszeichen. */
-  sag("du", `Darf ich Ihnen sagen, für wen ich Sie halte?`, {wie:`ruhig, ohne Anlauf`});
-  sag("er", `Bitte.`, {wie:`abwartend, nicht unfreundlich`});
+  sag("du", alt ? `Darf ich das noch einmal sagen, für wen ich Sie halte?`
+                : `Darf ich Ihnen sagen, für wen ich Sie halte?`,
+    {wie:`ruhig, ohne Anlauf`});
+  sag("er", anteil <= 0 ? `Sie haben es mir vorhin schon gesagt. Aber bitte.`
+    : alt ? `Noch einmal. Gut.` : `Bitte.`,
+    {wie: anteil <= 0 ? `geduldig, mit einem Blick auf die Uhr` : `abwartend, nicht unfreundlich`});
   sag("regie", `Du nennst ihm fünf Sätze über ihn. Er hört zu, ohne zu unterbrechen.`);
 
   const treffer = zeilen.filter(z => z.dist === 0).sort((x,y) => y.sicher - x.sicher)[0];
@@ -1552,8 +1613,17 @@ function werteRaten(cfg, tipps){
         <div class="furteil">${urteil}</div></div>
       <div class="fpunkte ${wirkung>=0?"plus":"minus"}">${vzk(wirkung,1)}<small>Freundschaft</small></div>
     </div>
-    <div class="fbilanz">${gross(wort(genau))} ${genau===1?"Punkt hat er bestätigt":"Punkte hat er bestätigt"}${
-      knapp?`, bei ${wort(knapp)} hat er eingeschränkt`:``}${weit?`, bei ${wort(weit)} deutlich widersprochen`:``}.
+    ${alt ? `<div class="fbilanz" style="margin-bottom:0">${
+      anteil <= 0
+        ? `Du hast seit dem letzten Mal nichts Neues gehört, also zählt es nicht — und ihn kostet es Geduld,
+           dieselbe Vorstellung zweimal anzuhören. Frag ihn etwas, dann lohnt es sich wieder.`
+        : anteil < 1
+          ? `Seit dem letzten Festlegen hast du ${wort(neues)} ${neues===1?"Antwort":"Antworten"} gehört.
+             Für die volle Wertung wären es ${wort(cfg.dims.length)} — deshalb zählt es zu
+             ${Math.round(anteil*100)} Prozent, aus ${vzk(roh,1)} wird ${vzk(wirkung,1)}.`
+          : `Du hast seither genug Neues gehört, das zählt voll.`}</div>` : ``}
+    <div class="fbilanz">${akk(genau)} ${genau===1?"Punkt":"Punkte"} hat er bestätigt${
+      knapp?`, bei ${dat(knapp)} eingeschränkt`:``}${weit?`, bei ${dat(weit)} deutlich widersprochen`:``}.
       Wie er wirklich ist, wirst du nie schwarz auf weiß sehen — nur, wie er darauf reagiert.</div>
     <table class="ftab">${zeilen.map(z => `
       <tr class="fzeile ${z.dist===0?"ja":(z.dist===1?"nah":"nein")}">
