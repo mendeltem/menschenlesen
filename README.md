@@ -121,14 +121,16 @@ Nie genug, um aus einem Nein etwas zu machen.
 ## Zwei Menschen, die sich widersprechen
 
 Baumgartner ist laut, offen, unordentlich und nicht umzuwerfen; er will
-selbst bestimmen und auf keine Bühne. Annika Reuter ist still, genau,
-dünnhäutig und zugewandt; sie will Verlässlichkeit und einen zweiten
-Menschen im Raum.
+selbst bestimmen und auf keine Bühne. Annika Reuter ist eher still, sehr
+genau und sehr zugewandt; sie will Verlässlichkeit und einen zweiten
+Menschen im Raum. Ruhig sind beide — ihn wirft nichts um, und sie
+arbeitet mit Dingen, die vierhundert Jahre überstanden haben.
 
 Das ist kein Beiwerk, sondern der Prüfstein. Wer aus dem ersten Gespräch
-Gewohnheiten mitbringt, tritt beim zweiten in jede zweite Mine: bei ihm
-trägt der trockene, direkte Weg und das Mitgefühl geht daneben, bei ihr
-ist es genau umgekehrt. Und die richtige Ware dreht sich mit:
+Gewohnheiten mitbringt, tritt beim zweiten in Minen: bei ihm trägt der
+trockene, direkte Weg, bei ihr der behutsame — und wer ihr fröhlich
+widerspricht, bekommt keinen Streit, sondern ein sehr höfliches Ende.
+Und die richtige Ware dreht sich mit:
 
 | | Baumgartner | Reuter |
 |---|---|---|

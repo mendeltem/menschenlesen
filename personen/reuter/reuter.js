@@ -2,10 +2,12 @@
    Annika Reuter, Papierrestauratorin.
 
    Die zweite Person, und in fast allem die Gegenprobe zu Baumgartner:
-   wo er laut, offen, schlampig und unerschütterlich ist, ist sie still,
-   genau, dünnhäutig und zugewandt. Wer aus dem ersten Gespräch Gewohn-
-   heiten mitbringt, tritt bei ihr in jede zweite Mine — genau dafür
-   ist sie da.
+   wo er laut, offen und schlampig ist, ist sie eher still, sehr genau
+   und sehr zugewandt. Ruhig sind beide, nur aus verschiedenen Gründen:
+   ihn wirft nichts um, und sie arbeitet mit Dingen, die schon
+   vierhundert Jahre überstanden haben. Der Unterschied liegt bei ihr in
+   der Verträglichkeit — wer ihr widerspricht, bekommt keinen Streit,
+   sondern ein sehr höfliches Ende.
 
    Ihre vier privaten Felder tragen dieselben Kennungen wie seine
    (musik, werkstatt, tochter, plan60), weil die Waren in welt.js
@@ -23,16 +25,21 @@ menubild: `personen/reuter/bilder/freundlich.webp`,
 hero: {
   name: `Annika Reuter`, age: 38, job: `Papierrestauratorin`,
   ort: `Untergeschoss, Werkstatt drei, kein Fenster`,
-  /* Stark introvertiert, sehr gewissenhaft, sehr verträglich, dünnhäutig,
-     mäßig neugierig. Sie will Verlässlichkeit und Nähe, nicht Freiheit
-     und nicht Geltung. */
-  z: { O: 1, C: 2, E: -2, A: 2, N: 2 },
+  /* Eher still, sehr gewissenhaft, sehr verträglich, robust, mäßig
+     neugierig. Sie will Verlässlichkeit und Nähe, nicht Freiheit und
+     nicht Geltung.
+
+     Robust heißt bei ihr nicht gleichgültig: sie arbeitet mit Dingen,
+     die vierhundert Jahre überstanden haben, und das nimmt vielem die
+     Dringlichkeit. Der ungeöffnete Umschlag bleibt trotzdem liegen. */
+  z: { O: 1, C: 2, E: -1, A: 2, N: -1 },
   m: { FRE: -2, GEL: -2 }
 },
 
 /* Das Klischee über Restauratorinnen: gründlich, still, altmodisch, und
-   die Ruhe selbst. Zwei Annahmen stimmen, zwei sind falsch — sie ist
-   neugieriger und dünnhäutiger, als das Klischee erlaubt. */
+   die Ruhe selbst. Bei ihr trifft es weitgehend — nur die Neugier
+   unterschätzt es. Damit ist sie von Anfang an leichter zu lesen als
+   er, bei dem das Klischee überwiegend danebenliegt. */
 rollenprior: { C: 0.6, E: -0.5, N: -0.4, O: -0.3 },
 
 /* Die Anzeige spricht über sie in der weiblichen Form. */
@@ -622,14 +629,19 @@ zustaende: [
       zu:{ er:`Das ist nur eine Anmerkung.`, wie:`abwiegelnd`, stimmung:`verschlossen`, bez:-2 } },
 
     { id:`fortschritt`, t:`Ist das nicht auch ein Fortschritt?`, wie:`munter, ein wenig herausfordernd`,
-      liest:{E:0.8, O:0.4, N:-0.8},
+      /* Der Widerspruch prallt nicht an ihrer Ruhe ab, sondern an ihrer
+         Verträglichkeit: sie streitet nicht, sie gibt nach und macht zu.
+         Vorher hing das an ihrem Neurotizismus und wäre mit ihm gekippt. */
+      liest:{E:0.8, O:0.4, A:-0.9},
       gut:{ er:`Doch. Ich bin nicht gegen Scanner, ich habe selbst zwei bedient.`, wie:`sachlich`, stimmung:`neutral`, bez:2 },
       zu:{ er:`Ja, natürlich.`, erRegie:`Sie legt das Blatt hin und streicht es glatt.`,
            er2:`Sie haben ganz recht, und ich möchte darüber gerade nicht diskutieren. Entschuldigen Sie.`,
            wie:`sofort zustimmend`, wie2:`ausgesucht höflich und vollkommen zu`, stimmung:`gereizt`, bez:-7 } },
 
     { id:`ihrestelle`, t:`Was heißt das für Ihre Stelle?`, wie:`geradeheraus`,
-      liest:{A:0.5, N:0.5, E:0.5, C:-0.3},
+      /* Die ruhige, ernste Frage an eine gründliche und zugewandte
+         Person — nicht an eine ängstliche. */
+      liest:{A:0.7, C:0.5, E:-0.3},
       gut:{ er:`Das ist die Frage, die im Umschlag steht.`,
             erRegie:`Sie sieht zu dem Umschlag auf dem Tisch, ohne den Kopf zu drehen.`,
             er2:`Ich habe es noch niemandem gesagt. Es ist mir auch unangenehm, dass ich es Ihnen sage.`,
@@ -775,15 +787,15 @@ reaktion: {
     C: { genau:{ er:`Ja. Ich weiß, wie das auf andere wirkt, und ich kann es trotzdem nicht anders.`, wie:`ohne Scham` },
          zuHoch:{ er:`So genau nun auch wieder nicht. Zu Hause sieht es anders aus als hier.`, wie:`einschränkend, verlegen` },
          zuTief:{ er:`Nachlässig.`, erRegie:`Sie sieht zum Werkzeugbrett mit den Umrissen.`, er2:`Ich merke, wenn ein Falzbein fehlt, seit Montag. Sagen Sie das noch mal.`, wie:`gedehnt`, wie2:`trocken` } },
-    E: { genau:{ er:`Ja. Ich habe vier Stunden allein mit einem Blatt lieber als vier Minuten in der Teeküche.`, wie:`ruhig, ohne Entschuldigung` },
+    E: { genau:{ er:`Ungefähr. Ich kann Menschen gut, ich brauche danach nur länger als andere, bis ich wieder ich bin.`, wie:`ruhig, ohne Entschuldigung` },
          zuHoch:{ er:`Gesellig.`, erRegie:`Sie lacht einmal kurz in die Hand.`, er2:`Ich sitze im Untergeschoss mit dem Rücken zur Tür. Das ist keine Übergangslösung.`, wie:`ungläubig`, wie2:`vergnügt` },
          zuTief:{ er:`Ganz so schlimm ist es nicht. Ich singe mittwochs mit vierzig Leuten in einem Raum.`, wie:`richtigstellend` } },
     A: { genau:{ er:`Das stimmt, und es ist nicht nur eine gute Eigenschaft. Ich gebe auch nach, wenn ich recht habe.`, wie:`selbstkritisch` },
          zuHoch:{ er:`Nachgiebig bin ich nicht überall. Beim Objekt bin ich unangenehm, fragen Sie oben nach.`, wie:`fester als erwartet` },
          zuTief:{ er:`Hart.`, erRegie:`Sie sieht ehrlich überrascht aus.`, er2:`Entschuldigung, aber das hat noch nie jemand über mich gesagt.`, wie:`verblüfft`, wie2:`leise` } },
-    N: { genau:{ er:`Ja. Ich liege wach, ich rechne nach, ich frage dreimal. Das gehört zu mir wie die Hände.`, wie:`offen, ohne Selbstmitleid` },
+    N: { genau:{ er:`Ja.`, erRegie:`Sie legt die Hand flach auf das Blatt unter den Gewichten.`, er2:`Ich arbeite mit Sachen, die vierhundert Jahre überstanden haben, davon die Hälfte im Feuchten. Das nimmt einer Umstrukturierung viel von ihrer Dringlichkeit.`, wie:`ruhig`, wie2:`trocken, fast heiter` },
          zuHoch:{ er:`So dünnhäutig bin ich auch nicht. Ich habe neun befristete Verträge überstanden und arbeite immer noch.`, wie:`einschränkend` },
-         zuTief:{ er:`Robust.`, erRegie:`Sie sieht auf den ungeöffneten Umschlag.`, er2:`Der liegt seit Dienstag da. Sehen Sie ihn an und sagen Sie es noch einmal.`, wie:`sehr leise`, wie2:`ohne Vorwurf` } }
+         zuTief:{ er:`Ganz kalt lässt mich auch nicht alles.`, erRegie:`Sie sieht auf den ungeöffneten Umschlag.`, er2:`Der liegt seit Dienstag da. So gleichgültig bin ich also auch wieder nicht.`, wie:`sehr leise`, wie2:`ohne Vorwurf` } }
   },
   m: {
     FRE: { genau:{ er:`Ja. Sagen Sie mir, worauf es hinauslaufen soll, und ich mache den Rest allein. Umgekehrt geht es bei mir nicht.`, wie:`erleichtert, gehört zu werden` },
