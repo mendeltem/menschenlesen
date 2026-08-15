@@ -107,6 +107,14 @@ freundschaft: {
   ]
 },
 
+/* --- Wie die Anzeige über die Person redet. Jede Person darf das
+       überschreiben; hier stehen die männlichen Formen als Vorgabe,
+       weil die Anzeige sonst über jede Frau als Er spräche. ---------- */
+anrede: {
+  er:`er`,   Er:`Er`,   ihn:`ihn`,   Ihn:`Ihn`,   ihm:`ihm`,
+  sein:`sein`, Sein:`Sein`, seine:`seine`, Seine:`Seine`, seiner:`seiner`
+},
+
 sharpness: 1.15,
 
 /* --- Was die wahren Werte für dich bedeuten. Wird nach jedem

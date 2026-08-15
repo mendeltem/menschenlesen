@@ -118,6 +118,28 @@ Bei ihm gilt das hart:
 Punkte auf die Aussicht. Genug, um aus einem Vielleicht ein Ja zu machen.
 Nie genug, um aus einem Nein etwas zu machen.
 
+## Zwei Menschen, die sich widersprechen
+
+Baumgartner ist laut, offen, unordentlich und nicht umzuwerfen; er will
+selbst bestimmen und auf keine Bühne. Annika Reuter ist still, genau,
+dünnhäutig und zugewandt; sie will Verlässlichkeit und einen zweiten
+Menschen im Raum.
+
+Das ist kein Beiwerk, sondern der Prüfstein. Wer aus dem ersten Gespräch
+Gewohnheiten mitbringt, tritt beim zweiten in jede zweite Mine: bei ihm
+trägt der trockene, direkte Weg und das Mitgefühl geht daneben, bei ihr
+ist es genau umgekehrt. Und die richtige Ware dreht sich mit:
+
+| | Baumgartner | Reuter |
+|---|---|---|
+| Die Uhr | **+3,2** | −3,2 |
+| Der Stift | −1,4 | **+2,6** |
+| Die Brille | −4,0 | −1,6 |
+
+Auch die Anzeige redet über jede Person in ihrer Form — *Sein Wesen*
+gegen *Ihr Wesen*, *er antwortet dir darauf* gegen *sie antwortet dir
+darauf*. Die Formen stehen als Tabelle in der Personendatei.
+
 ## Seine Lage
 
 Bei jedem Besuch ist etwas anderes los — zehn Zustände, jeder mit drei
@@ -146,9 +168,11 @@ die alles mitbringen: Texte, Fragen, Zustände, Bilder, Farbschema.
 
 | | |
 |---|---|
-| `index.html` | Menü und Mechanik. Weiß nichts über Baumgartner. |
+| `index.html` | Menü und Mechanik. Weiß nichts über eine bestimmte Person. |
 | `welt.js` | was für jede Person gilt: die Achsen, die Freundschaftsstufen, die Abschlussrechnung, dein Koffer, die Belege |
-| `personen/baumgartner.js` | eine Person: Wahrheit, Fragen, Zustände, seine Widerworte, Stimmungen, Verkaufszüge |
+| `personen/baumgartner.js` | Tobias Baumgartner, Statistiker: Wahrheit, Fragen, Zustände, Widerworte, Stimmungen, Verkaufszüge |
+| `personen/reuter.js` | Annika Reuter, Papierrestauratorin — dasselbe noch einmal, und in fast allem seine Gegenprobe |
+| `PROMPTS.md` | ein Prompt, aus dem jede weitere Person entsteht, plus das Werkzeug, das den Bogen zerlegt |
 | `bilder/` | zehn Stimmungen und der Raum |
 | `musik/` | fünf Spuren: Menü, Laden, Gespräch, gewonnen, verloren |
 | `balance.py` | spielt sechshundert Besuchsreihen je Spielweise und misst, wann er kauft |

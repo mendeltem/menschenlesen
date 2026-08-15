@@ -55,8 +55,8 @@ Beispiele aus dem Spiel:
 > hair, thick amber-brown rectangular glasses, dark grey blazer over a
 > brick-red shirt, large over-ear headphones around his neck.
 
-> 38 years old, very fair skin, dark hair in a chin-length bob, small
-> silver studs, a blue-grey knitted jumper over a patterned collared
+> 38 years old, fair skin, dark hair in a chin-length bob, dark brows,
+> small silver studs, a blue-grey knitted jumper over a patterned collared
 > shirt, no make-up, narrow-shouldered.
 
 **Ein warmer Akzent je Person**, und bei jeder ein anderer — bei ihm das

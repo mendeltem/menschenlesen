@@ -468,7 +468,7 @@ table.bil tr.hi td.n{color:var(--accent); font-weight:600}
       <h1>Vierzig Minuten für einen Fremden</h1>
     </div>
     <div class="tools">
-      <button class="tool nurschmal" id="sideToggle">Dein Bild von ihm</button>
+      <button class="tool nurschmal" id="sideToggle">Dein Bild</button>
       <button class="tool" id="kofferToggle">Koffer <b class="zahl" id="warenZahl">3</b></button>
       <button class="tool" id="musikToggle" title="Hintergrundmusik">♪ <span id="musikText">an</span></button>
       <button class="tool" id="infoToggle">Was das Modell tut</button>
@@ -777,6 +777,9 @@ const ORD = ["nullter","erster","zweiter","dritter","vierter","fünfter","sechst
              "siebter","achter","neunter","zehnter"];
 const ord = n => ORD[n] !== undefined ? ORD[n] : (n + ".");
 const gross = s => s.charAt(0).toUpperCase()+s.slice(1);
+/* Über wen hier geredet wird, ist nicht immer ein Er. Jede sichtbare
+   Form läuft durch diese Tabelle; fehlt sie, gilt die männliche. */
+const AN = k => (((typeof DATA !== "undefined" && DATA && DATA.anrede) || WELT.anrede || {})[k]) || k;
 /* Eins beugt sich, der Rest nicht: einen Punkt, bei einem Punkt. */
 const akk = n => n === 1 ? "Einen" : gross(wort(n));
 const dat = n => n === 1 ? "einem" : wort(n);
@@ -855,9 +858,9 @@ function kontoSichern(){
 const NOFF = 3;
 const stueck = () => WELT.produkte.reduce((a,p) => a + KONTO.bestand[p.id], 0);
 const geld = n => n.toLocaleString('de-DE') + ' €';
-const PHASEN = [
-  {n:"Ankunft", t:"Wer sitzt da?"}, {n:"Sein Wesen", t:"Wie er tickt"},
-  {n:"Seine Antriebe", t:"Worauf er anspringt"}, {n:"Seine Lage", t:"Was gerade ist"},
+const PHASEN = () => [
+  {n:"Ankunft", t:"Wer sitzt da?"}, {n:AN("Sein")+" Wesen", t:"Wie "+AN("er")+" tickt"},
+  {n:AN("Seine")+" Antriebe", t:"Worauf "+AN("er")+" anspringt"}, {n:AN("Seine")+" Lage", t:"Was gerade ist"},
   {n:"Der Koffer", t:"Der Verkauf"}, {n:"Abschied", t:"Was bleibt"}
 ];
 
@@ -910,7 +913,7 @@ function neuerZustand(){
     produkt:null, zug:0, zugLog:[], verkauft:null, rateLog:[],
     raus:false, angeboten:false, ende:null, faktenStart:A.fakten.length, fragenHeute:0
   };
-  S.bfPrior = startPrior(T, DATA.rollenprior);
+  S.bfPrior = startPrior(T, DATA.rollenprior, DATA.zglocke);
   S.moPrior = startPrior(M, null, DATA.mglocke);
   S.bfGlaube = spieleNach(S.bfPrior, A.bfVerlauf, DATA.bigfive,    T, "l");
   S.moGlaube = spieleNach(S.moPrior, A.moVerlauf, DATA.motivfragen, M, "aff");
@@ -955,14 +958,14 @@ function ladePerson(person){
   cfgMO = { key:"mo", pool:DATA.motivfragen, glaube:"moGlaube", gestellt:"moGestellt", log:"moLog",
     dims:M, feld:"aff", wahr:HERO.m, band:"mo", weiterText:"Genug davon.", fertig:() => nachDemLesen("mo") };
   rateBF = { key:"bf", dims:T, labels:DATA.tlabels, poles:DATA.tpoles, wahr:HERO.z,
-    titel:"Sein Wesen", deutung:DATA.deutung, reaktion:(DATA.reaktion||{}).z || {},
+    titel:AN("Sein")+" Wesen", deutung:DATA.deutung, reaktion:(DATA.reaktion||{}).z || {},
     kopf:`Festlegen · für jedes Merkmal eine Stufe`,
-    aufforderung:`Du gehst die fünf Merkmale im Kopf durch — und sagst ihm dann auf den Kopf zu, für wen du ihn hältst.`,
+    aufforderung:`Du gehst die fünf Merkmale im Kopf durch — und sagst ${AN("ihm")} dann auf den Kopf zu, für wen du ${AN("ihn")} hältst.`,
     weiter:() => drehscheibe() };
   rateMO = { key:"mo", dims:M, labels:DATA.mlabels, poles:DATA.mpoles, wahr:HERO.m,
-    titel:"Seine Antriebe", deutung:DATA.mdeutung, reaktion:(DATA.reaktion||{}).m || {},
+    titel:AN("Seine")+" Antriebe", deutung:DATA.mdeutung, reaktion:(DATA.reaktion||{}).m || {},
     kopf:`Festlegen · für jedes Motiv eine Stufe`,
-    aufforderung:`Du sagst ihm, worauf er deiner Meinung nach anspringt.`,
+    aufforderung:`Du sagst ${AN("ihm")}, worauf ${AN("er")} deiner Meinung nach anspringt.`,
     weiter:() => drehscheibe() };
   ladeBilder();
   document.getElementById("whoName").textContent = HERO.name + ", " + HERO.age;
@@ -1139,7 +1142,7 @@ function zeichneKopf(){
 }
 
 function zeichneAkte(){
-  document.getElementById("akte").innerHTML = PHASEN.map((a,i) =>
+  document.getElementById("akte").innerHTML = PHASEN().map((a,i) =>
     `<div class="akt ${i===S.phase?"now":(i<S.phase?"done":"")}">${a.n}<b>${a.t}</b></div>`).join("");
 }
 
@@ -1162,10 +1165,10 @@ function zeichneLeseband(){
   const knopf = document.getElementById("festJetzt");
   const zahl = (motiv ? A.moVerlauf : A.bfVerlauf).length;
   knopf.textContent = (fest ? "Neu festlegen: " : "Festlegen: ")
-    + (motiv ? "was ihn treibt" : "wer er ist");
+    + (motiv ? `was ${AN("ihn")} treibt` : `wer ${AN("er")} ist`);
   knopf.disabled = !!R.aktiv || S.phase === 4 || !!S.ende;
-  knopf.title = zahl ? `Aus ${wort(zahl)} ${zahl===1?"Antwort":"Antworten"}. Er antwortet dir darauf.`
-                     : `Du hast ihn noch nichts gefragt — du würdest raten.`;
+  knopf.title = zahl ? `Aus ${wort(zahl)} ${zahl===1?"Antwort":"Antworten"}. ${AN("Er")} antwortet dir darauf.`
+                     : `Du hast ${AN("ihn")} noch nichts gefragt — du würdest raten.`;
   knopf.onclick = () => { if(knopf.disabled) return; rateRunde(motiv ? rateMO : rateBF); };
   document.getElementById("dims").innerHTML = dims.map((d,i) => {
     const m = marginal(glaube,i,dims.length), mx = Math.max(...m), ev = erwartung(m);
@@ -1219,9 +1222,9 @@ function zeichneBalken(){
   gb.style.width = gd + "%";
   gb.className = gd > 55 ? "" : (gd > 25 ? "mittel" : "schlecht");
   document.getElementById("aufText").textContent =
-    gd > 75 ? "Er hat Zeit und zeigt es." : gd > 55 ? "Er ist noch dabei." :
-    gd > 35 ? "Er sieht öfter auf den Bildschirm." :
-    gd > 15 ? "Er hört zu, aber er wartet auf ein Ende." : "Gleich steht er auf.";
+    gd > 75 ? `${AN("Er")} hat Zeit und zeigt es.` : gd > 55 ? `${AN("Er")} ist noch dabei.` :
+    gd > 35 ? `${AN("Er")} sieht öfter auf den Bildschirm.` :
+    gd > 15 ? `${AN("Er")} hört zu, aber wartet auf ein Ende.` : `Gleich steht ${AN("er")} auf.`;
 
   const v = Math.max(0, Math.min(100, Math.round(S.bereit)));
   document.getElementById("bereitVal").textContent = v + " / 100";
@@ -1295,7 +1298,7 @@ function ankunft(){
   const w = (DATA.wiedersehen || []).find(x => S.bez >= x.ab);
   sag("regie", `Dein ${ord(A.besuche)} Besuch. Vierter Stock, letzte Tür.`);
   if(w){ sag("regie", w.regie); erSagt(w); }
-  if(S.geduld < 92) sag("meta", `Er hat noch im Kopf, wie viel du letztes Mal gefragt hast · Geduld <b>${
+  if(S.geduld < 92) sag("meta", `${AN("Er")} hat noch im Kopf, wie viel du letztes Mal gefragt hast · Geduld <b>${
     Math.round(S.geduld)}</b> statt hundert`, {warn:true});
   zeichne();
   knopf("Hereinkommen", () => drehscheibe());
@@ -1332,12 +1335,12 @@ function nachDemLesen(k){
   const stand = A.fest[k + "Stand"] || 0;
   if(!zahl || stand >= zahl) return drehscheibe();
   const cfg = k === "bf" ? rateBF : rateMO;
-  const was = k === "bf" ? `wer er ist` : `was ihn treibt`;
+  const was = k === "bf" ? `wer ${AN("er")} ist` : `was ${AN("ihn")} treibt`;
   zeichne();
   waehle([
     { t:`Dich festlegen: ` + was, klasse:"haupt",
       tag:`Du hast genug gehört. Legst du dich fest?`,
-      rechts:`aus ${wort(zahl)} ${zahl===1?"Antwort":"Antworten"} · er antwortet dir darauf`,
+      rechts:`aus ${wort(zahl)} ${zahl===1?"Antwort":"Antworten"} · ${AN("er")} antwortet dir darauf`,
       go(){ rateRunde(cfg); } },
     { t:`Noch nicht.`, klasse:"weiter",
       tag:`Du hast genug gehört. Legst du dich fest?`,
@@ -1359,16 +1362,16 @@ function drehscheibe(){
      etwas gefragt hast, und auch dann noch, wenn du dich schon einmal
      festgelegt hast. Wer sich revidiert, wird erneut bewertet; das ist
      der Weg, einen Fehlgriff später gutzumachen. */
-  [["bf", rateBF, `wer er ist`], ["mo", rateMO, `was ihn treibt`]].forEach(pa => {
+  [["bf", rateBF, `wer ${AN("er")} ist`], ["mo", rateMO, `was ${AN("ihn")} treibt`]].forEach(pa => {
     const k = pa[0], cfg = pa[1], was = pa[2];
     const zahl = (k === "bf" ? A.bfVerlauf : A.moVerlauf).length;
     const fest = A.fest[k], stand = A.fest[k + "Stand"] || 0;
     const neues = zahl - stand;
     items.push({ t:(fest ? `Dich neu festlegen: ` : `Dich festlegen: `) + was, tag:kopf, klasse:"haupt",
-      rechts: !zahl ? `<i style="color:var(--STA)">du hast ihn noch nichts gefragt</i>`
-        : fest && neues <= 0 ? `<i>nichts Neues gehört — er wird trotzdem antworten</i>`
+      rechts: !zahl ? `<i style="color:var(--STA)">du hast ${AN("ihn")} noch nichts gefragt</i>`
+        : fest && neues <= 0 ? `<i>nichts Neues gehört — ${AN("er")} wird trotzdem antworten</i>`
         : `aus ${wort(zahl)} ${zahl===1?"Antwort":"Antworten"}${
-            fest ? `, ${wort(neues)} davon neu` : ``} · er antwortet dir darauf`,
+            fest ? `, ${wort(neues)} davon neu` : ``} · ${AN("er")} antwortet dir darauf`,
       go(){ rateRunde(cfg); } });
   });
 
@@ -1378,23 +1381,23 @@ function drehscheibe(){
   const preis1 = x => nk(x,1).replace(",0","");
   const kosten = `<i style="color:var(--STA)">${preis1(fragepreis())}</i> die nächste`;
 
-  if(bfOffen) items.push({ t:`Ihn über sich selbst reden lassen`, tag:kopf,
+  if(bfOffen) items.push({ t:`${AN("Ihn")} über sich selbst reden lassen`, tag:kopf,
     rechts:`Wesen · ${wort(bfOffen)} offen · ${kosten}`,
     go(){ S.phase = 1; S.band = "bf"; zeichne(); leseRunde(cfgBF); } });
 
-  if(moOffen) items.push({ t:`Herausfinden, worauf er anspringt`, tag:kopf,
+  if(moOffen) items.push({ t:`Herausfinden, worauf ${AN("er")} anspringt`, tag:kopf,
     rechts:`Antriebe · ${wort(moOffen)} offen · ${kosten}`,
     go(){ S.phase = 2; S.band = "mo"; zeichne(); leseRunde(cfgMO); } });
 
   if(S.zustand && S.zustand.fragen.some(f => !S.zGestellt.includes(f.id)))
-    items.push({ t:`Fragen, was gerade bei ihm los ist`, tag:kopf,
-      rechts: S.zAn ? esc(S.zustand.titel) : `seine Lage · du weißt noch nichts davon`,
+    items.push({ t:`Fragen, was gerade bei ${AN("ihm")} los ist`, tag:kopf,
+      rechts: S.zAn ? esc(S.zustand.titel) : `${AN("seine")} Lage · du weißt noch nichts davon`,
       go(){ S.phase = 3; zeichne(); zustandRunde(); } });
 
   const privRest = DATA.privatfragen.filter(f => !S.privGestellt.includes(f.id)
     && !(f.gibt && S.gefunden.includes(f.gibt)));
   if(privRest.length && S.gefunden.length < DATA.privat.felder.length)
-    items.push({ t:`Ihn nach sich selbst ausfragen`, tag:kopf,
+    items.push({ t:`${AN("Ihn")} nach sich selbst ausfragen`, tag:kopf,
       klasse: S.geduld <= 30 ? "riskant" : "",
       rechts:`privat · kostet am meisten Geduld`,
       go(){ S.phase = 3; zeichne(); privatRunde(); } });
@@ -1404,7 +1407,7 @@ function drehscheibe(){
     items.push({ t:`Den Koffer aufmachen`, tag:kopf, klasse: kann ? "weiter" : "riskant",
       rechts: kann
         ? `kostet <i style="color:var(--STA)">${vzk(-B.verkaufKosten,0)}</i> · Bereitschaft startet bei ${Math.round(S.bez*B.uebertrag)}`
-        : `<i style="color:var(--STA)">er kennt dich zu wenig — ab ${B.verkaufSchwelle}</i>`,
+        : `<i style="color:var(--STA)">${AN("er")} kennt dich zu wenig — ab ${B.verkaufSchwelle}</i>`,
       go(){ verkaufStart(); } });
   }
 
@@ -1601,7 +1604,7 @@ function werteRaten(cfg, tipps){
   sag("er", anteil <= 0 ? `Sie haben es mir vorhin schon gesagt. Aber bitte.`
     : alt ? `Noch einmal. Gut.` : `Bitte.`,
     {wie: anteil <= 0 ? `geduldig, mit einem Blick auf die Uhr` : `abwartend, nicht unfreundlich`});
-  sag("regie", `Du nennst ihm fünf Sätze über ihn. Er hört zu, ohne zu unterbrechen.`);
+  sag("regie", `Du nennst ${AN("ihm")} fünf Sätze über ${AN("ihn")}. ${AN("Er")} hört zu, ohne zu unterbrechen.`);
 
   const treffer = zeilen.filter(z => z.dist === 0).sort((x,y) => y.sicher - x.sicher)[0];
   const fehl    = zeilen.filter(z => z.dist > 0).sort((x,y) => y.dist - x.dist)[0];
@@ -1614,11 +1617,11 @@ function werteRaten(cfg, tipps){
   setzeStimmung(punkte >= 12 ? "interessiert" : punkte >= 0 ? "nachdenklich"
               : punkte >= -8 ? "skeptisch" : "verschlossen");
 
-  const urteil = punkte >= 20 ? "Er widerspricht kein einziges Mal."
-    : punkte >= 12 ? "Er nickt öfter, als er den Kopf schüttelt."
-    : punkte >= 4  ? "Er lässt das meiste stehen."
-    : punkte >= -4 ? "Er hält so oft dagegen, wie er zustimmt."
-    : punkte >= -10 ? "Er widerspricht dir öfter, als dir lieb ist."
+  const urteil = punkte >= 20 ? `${AN("Er")} widerspricht kein einziges Mal.`
+    : punkte >= 12 ? `${AN("Er")} nickt öfter, als ${AN("er")} den Kopf schüttelt.`
+    : punkte >= 4  ? `${AN("Er")} lässt das meiste stehen.`
+    : punkte >= -4 ? `${AN("Er")} hält so oft dagegen, wie ${AN("er")} zustimmt.`
+    : punkte >= -10 ? `${AN("Er")} widerspricht dir öfter, als dir lieb ist.`
     : "Er widerspricht fast durchgehend. Ihr redet über zwei verschiedene Menschen.";
 
   sag("ergebnis", `<section class="panel festlegung">
@@ -1704,15 +1707,17 @@ function frageprivat(f, anker, kosten){
   const o = oeffnet ? f.offen : f.zu;
 
   sag("du", anker ? anker.text : f.q);
-  erSagt(o);
+  /* Die privaten Antworten stehen unter t:, die übrigen unter er:.
+     Beides gilt, sonst verschluckt das Spiel seine Antwort. */
+  erSagt(o.er ? o : Object.assign({}, o, {er:o.t}));
   if(oeffnet && f.gibt && !S.gefunden.includes(f.gibt)){ S.gefunden.push(f.gibt); A.gefunden.push(f.gibt); }
   S.privGestellt.push(f.id); A.privGestellt.push(f.id); akteSichern();
   merke(o);
   S.privLog.push({id:f.id, q:f.q, kosten, oeffnet, anker: anker ? anker.k : null});
 
   sag("meta", oeffnet
-    ? `er öffnet sich · Geduld <b>−${Math.round(kosten*W_GEDULD_PRIVAT)}</b> auf ${Math.round(S.geduld)}`
-    : `er weicht aus · Geduld <b>−${Math.round((kosten+1)*W_GEDULD_PRIVAT)}</b> auf ${Math.round(S.geduld)}`,
+    ? `${AN("er")} öffnet sich · Geduld <b>−${Math.round(kosten*W_GEDULD_PRIVAT)}</b> auf ${Math.round(S.geduld)}`
+    : `${AN("er")} weicht aus · Geduld <b>−${Math.round((kosten+1)*W_GEDULD_PRIVAT)}</b> auf ${Math.round(S.geduld)}`,
     {warn: !oeffnet});
   zeichne();
 
@@ -1776,7 +1781,7 @@ function zustandZug(z, f){
   S.zGestellt.push(f.id);
   S.zLog.push({id:f.id, t:f.t, trifft, wirkung});
   akteSichern();
-  sag("meta", `${trifft ? "er geht darauf ein" : "du greifst daneben"} · Freundschaft <b>${vzk(wirkung)}</b> auf ${Math.round(S.bez)}`,
+  sag("meta", `${trifft ? AN("er")+" geht darauf ein" : "du greifst daneben"} · Freundschaft <b>${vzk(wirkung)}</b> auf ${Math.round(S.bez)}`,
     {warn: !trifft,
      lang: neu ? `Du weißt jetzt, was er deswegen braucht: ${esc(z.bedarf.was)}. Das zählt gleich für das, was du ihm hinlegst.`
                 : (trifft ? `` : `Dein Zug hat eine Persönlichkeit unterstellt, die er nicht hat. Das merkt er sofort.`)});
@@ -1819,7 +1824,7 @@ function verkaufStart(){
     const ab = DATA.abfuhr;
     sag("regie", ab.regie); erSagt(ab);
     const w = bezPlus(-B.verkaufKosten * 2);
-    sag("meta", `Er macht den Koffer nicht auf · Freundschaft <b>${vzk(w)}</b> auf ${Math.round(S.bez)}`,
+    sag("meta", `${AN("Er")} macht den Koffer nicht auf · Freundschaft <b>${vzk(w)}</b> auf ${Math.round(S.bez)}`,
       {warn:true, lang:`Ab ${B.verkaufSchwelle} sieht er hinein. Du standest bei ${Math.round(S.bez - w)}.`});
     S.ende = "abfuhr";
     return besuchEnde(null);

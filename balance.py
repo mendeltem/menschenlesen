@@ -14,8 +14,14 @@ import io, re, math, random, sys
 import numpy as np
 from itertools import product as kartesisch
 
-QUELLE = (io.open("welt.js", encoding="utf-8").read() + "\n"
-          + io.open("personen/baumgartner.js", encoding="utf-8").read())
+# Welche Person gemessen wird, steht als erstes Wort in der Befehlszeile:
+#     python balance.py            -> baumgartner
+#     python balance.py reuter     -> reuter
+WER = "baumgartner"
+for _a in sys.argv[1:]:
+    if "=" not in _a: WER = _a
+QUELLE = (io.open("welt.js", encoding="utf-8").read() + chr(10)
+          + io.open("personen/%s.js" % WER, encoding="utf-8").read())
 
 def block(key):
     a = QUELLE.index("\n" + key + ":")
@@ -107,10 +113,13 @@ G = dict(auto=konst("W_AUTO"), treffer=konst("W_TREFFER"), fehlgriff=konst("W_FE
          gfest=konst("W_GEDULD_FEST"))
 
 STUFEN = np.array([-2,-1,0,1,2])
-GLOCKE = {-2:0.10, -1:0.22, 0:0.36, 1:0.22, 2:0.10}
+def _kurve(name, standard):
+    m = re.search(name + r":\s*\{([^}]*)\}", QUELLE)
+    if not m: return standard
+    return {int(k): float(v) for k, v in re.findall(r'"(-?\d)":([\d.]+)', m.group(1))}
+GLOCKE = _kurve("zglocke", {-2:0.10, -1:0.22, 0:0.36, 1:0.22, 2:0.10})
 # Die zwei Waagen verteilen sich flacher als die fuenf Merkmale
-MGLOCKE = {int(k): float(v) for k, v in
-           re.findall(r'"(-?\d)":([\d.]+)', re.search(r"mglocke:\s*\{([^}]*)\}", QUELLE).group(1))}
+MGLOCKE = _kurve("mglocke", GLOCKE)
 _RAEUME = {}
 def raum(n):
     """Der Zustandsraum je Achsenzahl: 3125 fuer die Merkmale, 25 fuer
@@ -300,10 +309,12 @@ def lauf(art, n):
 if __name__ == "__main__":
     N = 400
     for arg in sys.argv[1:]:
+        if "=" not in arg: continue
         k, v = arg.split("=")
         if k == "n": N = int(v)
         else: G[k] = float(v)
     random.seed(7); np.random.seed(7)
+    print("Person: %s" % WER)
     print("geparst: %d BF, %d Waagenfragen, %d Waren, %d Zuege, %d Zustaende"
           % (len(BF), len(MO), len(PROD), len(ZUEGE), len(ZUST)))
     print("Freundschaft:", FR, "\nAbschluss:", AB)

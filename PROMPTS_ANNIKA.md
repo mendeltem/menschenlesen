@@ -85,7 +85,7 @@ Ein Bild, zehn Felder, danach zerschneiden. So ist auch Tobias entstanden.
 > whole sheet.
 >
 > The woman, identical in all ten panels: 38 years old, very fair skin,
-> faint pink around the nose and eyelids, pale ash-blond hair, fine and
+> faint pink around the nose and eyelids, dark hair in a chin-length bob, fine and
 > grown out, gathered in a low practical knot with two strands escaped at
 > the temples. Very light eyebrows and lashes, no make-up. A magnifying
 > loupe headband pushed up onto her hair, lenses flipped up. A light grey
@@ -146,8 +146,7 @@ Absatz ist in allen zehn wortgleich — nicht kürzen, davon lebt die
 > soft cel shading, muted natural palette, warm skin tones, plain light grey
 > background (#e2e2e0), centred head-and-shoulders, front view, square 1:1,
 > no text, no border. A 38-year-old woman with very fair skin and faint pink
-> around the nose and eyelids, pale ash-blond hair, fine and grown out,
-> gathered in a low practical knot with two strands escaped at the temples,
+> around the nose and eyelids, dark hair in a chin-length bob with a side parting,
 > very light eyebrows and lashes, no make-up, a magnifying loupe headband
 > pushed up onto her hair with the lenses flipped up, a light grey cotton
 > conservator's coat with sleeves pushed to the elbow over a soft
