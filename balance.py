@@ -10,7 +10,7 @@
    Ziel: wer blind draufloslaeuft, kommt nie zum Abschluss; wer zuhoert,
    braucht zwei bis drei Besuche; und wer die falsche Ware hinlegt,
    verkauft sie auch dem besten Freund nicht."""
-import io, re, math, random, sys
+import io, os, re, math, random, sys
 import numpy as np
 from itertools import product as kartesisch
 
@@ -20,8 +20,13 @@ from itertools import product as kartesisch
 WER = "baumgartner"
 for _a in sys.argv[1:]:
     if "=" not in _a: WER = _a
+# Die Personendatei liegt in ihrem Ordner; wie sie heisst, ist egal.
+_ORDNER = os.path.join("personen", WER)
+assert os.path.isdir(_ORDNER), "kein Ordner personen/%s" % WER
+_DATEI = sorted(f for f in os.listdir(_ORDNER) if f.endswith(".js"))
+assert _DATEI, "keine Personendatei in %s" % _ORDNER
 QUELLE = (io.open("welt.js", encoding="utf-8").read() + chr(10)
-          + io.open("personen/%s.js" % WER, encoding="utf-8").read())
+          + io.open(os.path.join(_ORDNER, _DATEI[0]), encoding="utf-8").read())
 
 def block(key):
     a = QUELLE.index("\n" + key + ":")
