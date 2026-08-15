@@ -166,9 +166,10 @@ Verpackung — mit Absicht: Browser verbieten `fetch()` auf `file://`, per
 genauso wie auf einem Server.
 
 **Was bleibt** — Kasse, Bestand und die Akte jeder Person — liegt im
-Speicher des Browsers. **Zurücksetzen** steht oben in der Leiste und ist
-aus dem Menü wie aus jedem laufenden Gespräch erreichbar; es fragt einmal
-nach und räumt dann alles weg: Kasse, Koffer, alle Akten, Farbschema,
+Speicher des Browsers. **Zurücksetzen** steht oben in der Leiste, liegt
+auf <kbd>Umschalt</kbd>+<kbd>R</kbd> und ist aus dem Menü wie aus jedem
+laufenden Gespräch erreichbar; es fragt einmal nach und räumt dann alles
+weg: Kasse, Koffer, alle Akten, Farbschema,
 Musik und die aufgeklappten Kästen. Danach kennt dich jede Person wieder
 nicht.
 

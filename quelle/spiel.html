@@ -472,7 +472,7 @@ table.bil tr.hi td.n{color:var(--accent); font-weight:600}
       <button class="tool" id="kofferToggle">Koffer <b class="zahl" id="warenZahl">3</b></button>
       <button class="tool" id="musikToggle" title="Hintergrundmusik">♪ <span id="musikText">an</span></button>
       <button class="tool" id="infoToggle">Was das Modell tut</button>
-      <button class="tool warnung" id="resetToggle" title="Kasse, Bestand, alle Akten und alle Einstellungen löschen">Zurücksetzen</button>
+      <button class="tool warnung" id="resetToggle" title="Kasse, Bestand, alle Akten und alle Einstellungen löschen · Umschalt + R">Zurücksetzen</button>
       <div class="themepick">
         <button class="tool" id="themeToggle" aria-haspopup="true" aria-expanded="false">
           <span class="theme-dot" id="themeDot"></span><span id="themeName">Tinte</span><span class="caret">▾</span>
@@ -1000,6 +1000,9 @@ const amBoden = () => talkEl.scrollHeight - talkEl.scrollTop - talkEl.clientHeig
 let leserOben = false;
 talkEl.addEventListener("scroll", () => { leserOben = !amBoden(); runterBtn.classList.toggle("zeig", leserOben); });
 function pinneUnten(){
+  /* Solange das Ratefeld steht, ist der Verlauf weggeklappt — dann hat
+     auch der Sprung ans Ende nichts anzuzeigen. */
+  if(R.aktiv){ runterBtn.classList.remove("zeig"); return; }
   /* Wer blättert, will den gewählten Wortwechsel sehen und nicht das
      Ende. Erst wenn er wieder bei jetzt steht, hängt der Verlauf unten. */
   if(S && S.fokus > 0){
@@ -1098,8 +1101,11 @@ function zeichneTalk(){
    überhaupt etwas zu blättern gibt. */
 function zeichneBlaetterer(n){
   const kasten = document.getElementById("blaettern");
-  kasten.hidden = n < 2;
-  if(n < 2) return;
+  /* Beim Festlegen liegt das Ratefeld auf der Fläche des Verlaufs. Dort
+     gibt es nichts zu blättern, und der Kasten läge über der obersten
+     Reihe der Stufenknöpfe. */
+  kasten.hidden = n < 2 || !!R.aktiv;
+  if(kasten.hidden) return;
   document.getElementById("fokusText").textContent = S.fokus === 0 ? "jetzt" : "−" + S.fokus;
   document.getElementById("zurueck").disabled = S.fokus >= n - 1;
   document.getElementById("vor").disabled = S.fokus <= 0;
@@ -2233,13 +2239,17 @@ document.getElementById("belegA").textContent = WELT.belege.A;
 document.getElementById("belegC").textContent = WELT.belege.C;
 document.getElementById("belegAsym").textContent = WELT.belege.asym;
 document.getElementById("belegItems").textContent = WELT.belege.items;
-document.getElementById("keys").innerHTML = "<b>1</b>–<b>4</b> wählen · <b>↑↓</b> blättern · <b>T</b> nächstes Theme · <b>Esc</b> schließen";
+document.getElementById("keys").innerHTML = "<b>1</b>–<b>4</b> wählen · <b>↑↓</b> blättern · <b>T</b> nächstes Theme · <b>Esc</b> schließen · <b>⇧R</b> zurücksetzen";
 
 document.getElementById("resetToggle").onclick = () => zuruecksetzen();
 
 document.addEventListener("keydown", e => {
   if(e.ctrlKey || e.altKey || e.metaKey) return;
   const k = e.key.toLowerCase();
+  /* Umschalt und R setzt zurück. Zwei Finger mit Absicht: ein einzelner
+     Anschlag, der alles wegwirft, geht zu leicht daneben. Die Rückfrage
+     kommt trotzdem. */
+  if(e.shiftKey && k === "r"){ e.preventDefault(); return zuruecksetzen(); }
   if(k >= "1" && k <= "9"){
     const b = choicesEl.querySelectorAll("button.pick, button.prod")[Number(k)-1];
     if(b){ e.preventDefault(); b.click(); }
