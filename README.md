@@ -170,18 +170,36 @@ die alles mitbringen: Texte, Fragen, Zustände, Bilder, Farbschema.
 |---|---|
 | `index.html` | Menü und Mechanik. Weiß nichts über eine bestimmte Person. |
 | `welt.js` | was für jede Person gilt: die Achsen, die Freundschaftsstufen, die Abschlussrechnung, dein Koffer, die Belege |
-| `personen/baumgartner.js` | Tobias Baumgartner, Statistiker: Wahrheit, Fragen, Zustände, Widerworte, Stimmungen, Verkaufszüge |
-| `personen/reuter.js` | Annika Reuter, Papierrestauratorin — dasselbe noch einmal, und in fast allem seine Gegenprobe |
-| `PROMPTS.md` | ein Prompt, aus dem jede weitere Person entsteht, plus das Werkzeug, das den Bogen zerlegt |
-| `bilder/` | zehn Stimmungen und der Raum |
+| `personen/baumgartner/` | Tobias Baumgartner, Statistiker: seine Datei und seine Bilder |
+| `personen/reuter/` | Annika Reuter, Papierrestauratorin — dasselbe noch einmal, und in fast allem seine Gegenprobe |
+| `PROMPTS.md` | ein Prompt, aus dem jede weitere Person entsteht |
+| `werkzeug/` | zerlegt einen Kontaktbogen in die zehn Stimmungsbilder |
 | `musik/` | fünf Spuren: Menü, Laden, Gespräch, gewonnen, verloren |
 | `balance.py` | spielt sechshundert Besuchsreihen je Spielweise und misst, wann er kauft |
 | `quelle/spiel.html` | **die Vorlage, an der man arbeitet** — Menü, Mechanik, Anzeige |
 | `quelle/themes.css` | die fünfzehn Farbschemata |
 | `quelle/bauen.py` | setzt beides zu `index.html` zusammen |
 
-**Eine Person ergänzen** heißt: `personen/baumgartner.js` kopieren, `id`,
-Namen und Texte ändern, Bilder danebenlegen, neu bauen. Am Skelett ändert
+**Jede Person hat einen Ordner**, und darin liegt alles, was zu ihr
+gehört:
+
+```
+personen/reuter/
+  reuter.js            Wahrheit, Fragen, Zustände, Widerworte, Verkaufszüge
+  kontaktbogen.jpg     der erzeugte Bogen, aus dem die Bilder kommen
+  bilder/              neutral.webp, freundlich.webp … abweisend.webp
+```
+
+**Eine Person ergänzen** heißt: Ordner anlegen, die Datei einer
+bestehenden Person hineinkopieren, `id`, Namen und Texte ändern — und den
+Bogen zerschneiden:
+
+```bash
+python werkzeug/kontaktbogen_schneiden.py personen/reuter/kontaktbogen.jpg reuter
+```
+
+Das legt die zehn Bilder in `personen/reuter/bilder/` und druckt die
+Zeilen aus, die unter `stimmungen` einzutragen sind. Am Skelett ändert
 sich nichts, die `<script>`-Zeile setzt `bauen.py` selbst.
 
 Die Personendateien sind JSON in der Form, aber JavaScript in der
@@ -249,10 +267,10 @@ python quelle/bauen.py
 ```
 
 Das ist der ganze Bauvorgang: Vorlage plus Farbschemata plus eine
-`<script>`-Zeile je Datei in `personen/`, fertig ist `index.html`. Kein
+`<script>`-Zeile je Person, fertig ist `index.html`. Kein
 Bundler, keine Abhängigkeiten — mit Absicht: das Spiel soll sich per
 Doppelklick öffnen lassen, und auf `file://` verbietet der Browser
-`fetch()`. Deshalb liegen `welt.js` und `personen/*.js` daneben statt
+`fetch()`. Deshalb liegen `welt.js` und die Personendateien daneben statt
 nachgeladen zu werden.
 
 **Die Zahlen prüfen:**

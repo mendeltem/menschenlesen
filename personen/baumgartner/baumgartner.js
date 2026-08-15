@@ -21,7 +21,7 @@ id: `baumgartner`,
 kurz: `Statistiker, 52. Wilder grauer Schopf, Kopfhörer um den Hals,
        ein Schreibtisch, der seit Jahren nicht aufgeräumt wurde.`,
 theme: `tinte`,
-menubild: `bilder/tobias_freundlich.webp`,
+menubild: `personen/baumgartner/bilder/freundlich.webp`,
 
 hero: {
   name: `Tobias Baumgartner`, age: 52, job: `Statistiker`,
@@ -37,19 +37,19 @@ rollenprior: { C: 0.55, O: 0.2, E: -0.45 },
 rollentext: `Statistiker: das Klischee sagt gründlich, eher still, mäßig neugierig.`,
 
 stimmungen: {
-  neutral:      { t:`sachlich`,     bild:`bilder/tobias_neutral.webp` },
-  freundlich:   { t:`freundlich`,   bild:`bilder/tobias_freundlich.webp` },
-  amuesiert:    { t:`amüsiert`,     bild:`bilder/tobias_amuesiert.webp` },
-  interessiert: { t:`interessiert`, bild:`bilder/tobias_interessiert.webp` },
-  nachdenklich: { t:`nachdenklich`, bild:`bilder/tobias_nachdenklich.webp` },
-  skeptisch:    { t:`skeptisch`,    bild:`bilder/tobias_skeptisch.webp` },
-  gereizt:      { t:`gereizt`,      bild:`bilder/tobias_gereizt.webp` },
-  verschlossen: { t:`verschlossen`, bild:`bilder/tobias_verschlossen.webp` },
-  geruehrt:     { t:`berührt`,      bild:`bilder/tobias_geruehrt.webp` },
-  abweisend:    { t:`abweisend`,    bild:`bilder/tobias_abweisend.webp` }
+  neutral:      { t:`sachlich`,     bild:`personen/baumgartner/bilder/neutral.webp` },
+  freundlich:   { t:`freundlich`,   bild:`personen/baumgartner/bilder/freundlich.webp` },
+  amuesiert:    { t:`amüsiert`,     bild:`personen/baumgartner/bilder/amuesiert.webp` },
+  interessiert: { t:`interessiert`, bild:`personen/baumgartner/bilder/interessiert.webp` },
+  nachdenklich: { t:`nachdenklich`, bild:`personen/baumgartner/bilder/nachdenklich.webp` },
+  skeptisch:    { t:`skeptisch`,    bild:`personen/baumgartner/bilder/skeptisch.webp` },
+  gereizt:      { t:`gereizt`,      bild:`personen/baumgartner/bilder/gereizt.webp` },
+  verschlossen: { t:`verschlossen`, bild:`personen/baumgartner/bilder/verschlossen.webp` },
+  geruehrt:     { t:`berührt`,      bild:`personen/baumgartner/bilder/geruehrt.webp` },
+  abweisend:    { t:`abweisend`,    bild:`personen/baumgartner/bilder/abweisend.webp` }
 },
 
-raumbild: `bilder/raum.webp`,
+raumbild: `personen/baumgartner/bilder/raum.webp`,
 
 /* --- Akt 1: Ankunft als Baum. Höchstens drei Wortwechsel, dann geht es
        weiter. Jede Wahl führt auf einen anderen Knoten, deshalb ist der

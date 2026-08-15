@@ -10,11 +10,13 @@
        quelle/spiel.html   die Vorlage: Menue, Mechanik, Anzeige.
                            Zwei Platzhalter, sonst fertig.
        quelle/themes.css   die fuenfzehn Farbschemata
-       personen/*.js       je Datei eine Person; alle werden per
-                           script-Tag eingebunden
+       personen/<name>/    ein Ordner je Person: die Personendatei und
+                           ihre Bilder liegen beieinander. Alle .js
+                           darin werden per script-Tag eingebunden
 
    Was herauskommt: index.html im Wurzelverzeichnis. Sonst nichts —
    welt.js und personen/ liegen daneben und werden nicht angefasst.
+   Die Reihenfolge im Menue ist die der Ordnernamen.
 
    Absichtlich kein fetch und kein Bundler: auf file:// verbietet der
    Browser fetch, und das Spiel soll sich auch per Doppelklick oeffnen
@@ -31,8 +33,15 @@ WURZEL = os.path.dirname(HIER)
 vorlage = io.open(os.path.join(HIER, "spiel.html"), encoding="utf-8").read()
 themes = io.open(os.path.join(HIER, "themes.css"), encoding="utf-8").read()
 
-personen = sorted(f for f in os.listdir(os.path.join(WURZEL, "personen"))
-                  if f.endswith(".js"))
+LEUTE = os.path.join(WURZEL, "personen")
+personen = []
+for ordner in sorted(os.listdir(LEUTE)):
+    if not os.path.isdir(os.path.join(LEUTE, ordner)):
+        continue
+    for f in sorted(os.listdir(os.path.join(LEUTE, ordner))):
+        if f.endswith(".js"):
+            personen.append("%s/%s" % (ordner, f))
+assert personen, "keine Person unter personen/ gefunden"
 tags = "\n".join('<script src="personen/%s"></script>' % f for f in personen)
 
 for platz in ("/*__THEMES__*/", "/*__PERSONEN__*/"):

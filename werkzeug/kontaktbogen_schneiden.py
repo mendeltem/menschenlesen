@@ -3,10 +3,12 @@
 
    Aufruf aus dem Wurzelverzeichnis des Projekts:
 
-       python werkzeug/kontaktbogen_schneiden.py bogen.png annika
+       python werkzeug/kontaktbogen_schneiden.py bogen.png reuter
 
-   Daraus werden bilder/annika_neutral.webp bis bilder/annika_abweisend.webp,
-   in der Reihenfolge, in der die Felder im Prompt stehen.
+   Daraus werden personen/reuter/bilder/neutral.webp bis abweisend.webp,
+   in der Reihenfolge, in der die Felder im Prompt stehen. Die Kennung
+   ist der Ordnername der Person; ein Praefix im Dateinamen braucht es
+   nicht, der Ordner sagt schon, wer gemeint ist.
 
    Die Trennlinien findet das Skript selbst: es sucht die Spalten und
    Zeilen, die ueber die ganze Breite beziehungsweise Hoehe dunkel sind,
@@ -80,13 +82,15 @@ def gleichmaessig(laenge, anzahl):
 def main():
     p = argparse.ArgumentParser(description="Kontaktbogen in Stimmungsbilder zerlegen")
     p.add_argument("bogen", help="die erzeugte Rasterdatei")
-    p.add_argument("kennung", help="Kennung der Person, etwa annika")
+    p.add_argument("kennung", help="Ordnername der Person, etwa reuter")
     p.add_argument("--spalten", type=int, default=5)
     p.add_argument("--reihen", type=int, default=2)
     p.add_argument("--rand", type=int, default=6, help="Pixel je Seite zusätzlich wegschneiden")
-    p.add_argument("--ziel", default="bilder")
+    p.add_argument("--ziel", default=None, help="Standard: personen/<kennung>/bilder")
     p.add_argument("--pruefen", action="store_true", help="nur anzeigen, nichts schreiben")
     a = p.parse_args()
+    if a.ziel is None:
+        a.ziel = os.path.join("personen", a.kennung, "bilder")
 
     if not os.path.exists(a.bogen):
         sys.exit("Datei nicht gefunden: " + a.bogen)
@@ -110,7 +114,7 @@ def main():
             if n >= len(STIMMUNGEN):
                 break
             kasten = (x[c] + a.rand, y[r] + a.rand, x[c+1] - a.rand, y[r+1] - a.rand)
-            name = os.path.join(a.ziel, "%s_%s.webp" % (a.kennung, STIMMUNGEN[n]))
+            name = os.path.join(a.ziel, "%s.webp" % STIMMUNGEN[n])
             if a.pruefen:
                 print("  %-34s %s  %dx%d" % (name, kasten,
                                              kasten[2]-kasten[0], kasten[3]-kasten[1]))
@@ -121,7 +125,7 @@ def main():
     if not a.pruefen:
         print("Fertig. In der Personendatei unter stimmungen eintragen:")
         for s in STIMMUNGEN:
-            print("  %-13s bild:`bilder/%s_%s.webp`" % (s + ":", a.kennung, s))
+            print("  %-13s bild:`%s/%s.webp`" % (s + ":", a.ziel.replace(os.sep, "/"), s))
 
 
 if __name__ == "__main__":

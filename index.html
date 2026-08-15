@@ -904,8 +904,8 @@ table.bil tr.hi td.n{color:var(--accent); font-weight:600}
 
 <script>const PERSONEN = [];</script>
 <script src="welt.js"></script>
-<script src="personen/baumgartner.js"></script>
-<script src="personen/reuter.js"></script>
+<script src="personen/baumgartner/baumgartner.js"></script>
+<script src="personen/reuter/reuter.js"></script>
 <script>
 /* ═══════════════ Themes ═══════════════ */
 const THEMES = [
@@ -1259,7 +1259,8 @@ function ladePerson(person){
 }
 
 /* ═══════════════ Bilder ═══════════════
-   Jede Stimmung sucht ihre Datei in bilder/. Was fehlt, fällt auf das
+   Jede Stimmung nennt ihre Datei selbst, meist in personen/<name>/
+   bilder/. Was fehlt, fällt auf das
    eingebettete Grundporträt zurück; die Stimmung steht dann nur als
    Wort im Rahmen. Nichts davon ist Pflicht. */
 /* Rückfall, wenn eine Person kein Bild mitbringt: eine Silhouette,

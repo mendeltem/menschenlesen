@@ -18,7 +18,7 @@ id: `reuter`,
 kurz: `Papierrestauratorin, 38. Dunkler Bob, Kittel über dem Pullover,
        ein Tisch, auf dem jedes Werkzeug parallel liegt.`,
 theme: `papier`,
-menubild: `bilder/annika_freundlich.webp`,
+menubild: `personen/reuter/bilder/freundlich.webp`,
 
 hero: {
   name: `Annika Reuter`, age: 38, job: `Papierrestauratorin`,
@@ -44,19 +44,21 @@ anrede: {
 rollentext: `Restauratorin: das Klischee sagt gründlich, still, eher altmodisch und nervlich unerschütterlich.`,
 
 stimmungen: {
-  neutral:      { t:`sachlich`,     bild:`bilder/annika_neutral.webp` },
-  freundlich:   { t:`freundlich`,   bild:`bilder/annika_freundlich.webp` },
-  amuesiert:    { t:`amüsiert`,     bild:`bilder/annika_amuesiert.webp` },
-  interessiert: { t:`interessiert`, bild:`bilder/annika_interessiert.webp` },
-  nachdenklich: { t:`nachdenklich`, bild:`bilder/annika_nachdenklich.webp` },
-  skeptisch:    { t:`skeptisch`,    bild:`bilder/annika_skeptisch.webp` },
-  gereizt:      { t:`sehr höflich`, bild:`bilder/annika_gereizt.webp` },
-  verschlossen: { t:`verschlossen`, bild:`bilder/annika_verschlossen.webp` },
-  geruehrt:     { t:`berührt`,      bild:`bilder/annika_geruehrt.webp` },
-  abweisend:    { t:`abweisend`,    bild:`bilder/annika_abweisend.webp` }
+  neutral:      { t:`sachlich`,     bild:`personen/reuter/bilder/neutral.webp` },
+  freundlich:   { t:`freundlich`,   bild:`personen/reuter/bilder/freundlich.webp` },
+  amuesiert:    { t:`amüsiert`,     bild:`personen/reuter/bilder/amuesiert.webp` },
+  interessiert: { t:`interessiert`, bild:`personen/reuter/bilder/interessiert.webp` },
+  nachdenklich: { t:`nachdenklich`, bild:`personen/reuter/bilder/nachdenklich.webp` },
+  skeptisch:    { t:`skeptisch`,    bild:`personen/reuter/bilder/skeptisch.webp` },
+  gereizt:      { t:`sehr höflich`, bild:`personen/reuter/bilder/gereizt.webp` },
+  verschlossen: { t:`verschlossen`, bild:`personen/reuter/bilder/verschlossen.webp` },
+  geruehrt:     { t:`berührt`,      bild:`personen/reuter/bilder/geruehrt.webp` },
+  abweisend:    { t:`abweisend`,    bild:`personen/reuter/bilder/abweisend.webp` }
 },
 
-raumbild: `bilder/raum_annika.webp`,
+/* Ihr Zimmer ist noch nicht gezeichnet. Ohne Datei bleibt der
+   Streifen oben einfach leer, das Spiel läuft trotzdem. */
+raumbild: ``,
 
 /* --- Ankunft. Bei ihr steht keine Tür offen: du klopfst, es dauert,
        dann macht sie auf und bleibt erst einmal im Rahmen stehen. ---- */
