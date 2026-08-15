@@ -9,7 +9,8 @@
      er       was er oder sie sagt
      erRegie  Beschreibung mitten in der Rede
      er2      was danach weiter gesagt wird
-     du / t   was du sagst
+     du / t   was du sagst — seine Rede steht immer unter er,
+              auch in offen und zu
      wie      wie es gesagt wird, Vorlage für die Stimme
      stimmung welches Bild danach im Rahmen steht
    ═══════════════════════════════════════════════════════════════════ */
@@ -400,53 +401,53 @@ privatfragen: [
   { id:`feierabend`, gibt:`musik`, auf:1,
     q:`Was machen Sie eigentlich, wenn Sie hier rausgehen?`,
     an:{ musik:`Sie sagten, die Kopfhörer sind eine andere Baustelle. Was für eine?` },
-    offen: { t:`Ich spiele Kontrabass. Keller, vier Leute, seit dreißig Jahren dieselben. Wir sind nicht gut, aber wir sind pünktlich.`,
+    offen: { er:`Ich spiele Kontrabass. Keller, vier Leute, seit dreißig Jahren dieselben. Wir sind nicht gut, aber wir sind pünktlich.`,
              wie:`erst zögernd, dann schneller, mit Wärme`, stimmung:`freundlich`,
              fakt:`spielt Kontrabass in einer Kellerband, seit dreißig Jahren` },
-    zu:    { t:`Rausgehen. Interessantes Konzept.`, wie:`ausweichend, mit einem Blick auf den Bildschirm`, stimmung:`verschlossen` } },
+    zu:    { er:`Rausgehen. Interessantes Konzept.`, wie:`ausweichend, mit einem Blick auf den Bildschirm`, stimmung:`verschlossen` } },
 
   { id:`haende`, gibt:`werkstatt`, auf:1,
     q:`Sie haben Werkstatthände. Schrauben Sie an etwas?`,
     an:{ such:`Wer in zehn Sekunden alles findet, hat das geübt. Woran denn?` },
-    offen: { t:`Eine Brunsviga von 1954. Mechanische Rechenmaschine, Kurbel, Zahnräder. Sie lag in Teilen im Keller meines Schwiegervaters. Ich weiß noch nicht, ob ich sie wieder zusammenkriege.`,
+    offen: { er:`Eine Brunsviga von 1954. Mechanische Rechenmaschine, Kurbel, Zahnräder. Sie lag in Teilen im Keller meines Schwiegervaters. Ich weiß noch nicht, ob ich sie wieder zusammenkriege.`,
              wie:`begeistert, deutlich schneller`, stimmung:`interessiert`,
              fakt:`zerlegt eine mechanische Rechenmaschine von 1954` },
-    zu:    { t:`Ich habe Hände wie jeder andere.`, wie:`abweisend, kurz`, stimmung:`skeptisch` } },
+    zu:    { er:`Ich habe Hände wie jeder andere.`, wie:`abweisend, kurz`, stimmung:`skeptisch` } },
 
   { id:`sonntag`, gibt:`tochter`, auf:2,
     q:`Haben Sie sonntags auch schon mal frei?`,
-    offen: { t:`Sonntags telefoniere ich mit meiner Tochter. Die studiert in Lissabon und ruft nie an, also rufe ich an. Elf Uhr, jede Woche.`,
+    offen: { er:`Sonntags telefoniere ich mit meiner Tochter. Die studiert in Lissabon und ruft nie an, also rufe ich an. Elf Uhr, jede Woche.`,
              wie:`weicher, langsamer`, stimmung:`geruehrt`,
              fakt:`Tochter studiert in Lissabon, telefoniert sonntags` },
-    zu:    { t:`Sonntag ist Sonntag.`, wie:`knapp, mit einer Handbewegung, die das Thema wegwischt`, stimmung:`verschlossen` } },
+    zu:    { er:`Sonntag ist Sonntag.`, wie:`knapp, mit einer Handbewegung, die das Thema wegwischt`, stimmung:`verschlossen` } },
 
   { id:`weiter`, gibt:`plan60`, auf:2,
     q:`Sehen Sie sich hier noch in zehn Jahren?`,
     an:{ hochrechnung:`Sie haben vorhin hochgerechnet, bis zur Rente. Ist die Zahl, die dabei rauskommt, eine, die Ihnen gefällt?` },
-    offen: { t:`In zehn Jahren bin ich zweiundsechzig. Ich will ab sechzig auf vier Tage. Das habe ich hier noch niemandem gesagt, also behalten Sie es bitte für sich.`,
+    offen: { er:`In zehn Jahren bin ich zweiundsechzig. Ich will ab sechzig auf vier Tage. Das habe ich hier noch niemandem gesagt, also behalten Sie es bitte für sich.`,
              wie:`leise, sehr direkt`, stimmung:`nachdenklich`,
              fakt:`will ab sechzig auf vier Tage runter` },
-    zu:    { t:`Ich sehe mich schon Freitag kaum.`, wie:`ausweichend, mit einem halben Lachen`, stimmung:`skeptisch` } },
+    zu:    { er:`Ich sehe mich schon Freitag kaum.`, wie:`ausweichend, mit einem halben Lachen`, stimmung:`skeptisch` } },
 
   /* Die plumpen Fragen. Sie liefern fast sicher, kosten aber das Dreifache. */
   { id:`direkt`, gibt:`musik`, auf:3, plump:true,
     q:`Erzählen Sie doch mal was von sich privat.`,
-    offen: { t:`Privat.`, wie:`gedehnt, sehr kühl`, stimmung:`gereizt`,
+    offen: { er:`Privat.`, wie:`gedehnt, sehr kühl`, stimmung:`gereizt`,
              nachEr:`Kontrabass. Reicht das?`, fakt:`spielt Kontrabass in einer Kellerband, seit dreißig Jahren` },
-    zu:    { t:`Privat heißt privat. Deshalb heißt es so.`, wie:`hart, ohne Pause`, stimmung:`gereizt` } },
+    zu:    { er:`Privat heißt privat. Deshalb heißt es so.`, wie:`hart, ohne Pause`, stimmung:`gereizt` } },
 
   { id:`familie`, gibt:`tochter`, auf:3, plump:true,
     q:`Sind Sie verheiratet? Kinder?`,
-    offen: { t:`Eine Tochter. Lissabon.`, wie:`knapp, abschließend`, stimmung:`verschlossen`,
+    offen: { er:`Eine Tochter. Lissabon.`, wie:`knapp, abschließend`, stimmung:`verschlossen`,
              fakt:`Tochter studiert in Lissabon, telefoniert sonntags` },
-    zu:    { t:`Wir kennen uns seit vierzig Minuten.`, wie:`scharf`, stimmung:`gereizt` } },
+    zu:    { er:`Wir kennen uns seit vierzig Minuten.`, wie:`scharf`, stimmung:`gereizt` } },
 
   { id:`geld`, gibt:`plan60`, auf:3, plump:true,
     q:`Verdient man hier eigentlich genug?`,
-    offen: { t:`Genug wofür? Für vier Tage die Woche ab sechzig reicht es. Gerade so.`,
+    offen: { er:`Genug wofür? Für vier Tage die Woche ab sechzig reicht es. Gerade so.`,
              wie:`überrascht, dann offen`, stimmung:`nachdenklich`,
              fakt:`will ab sechzig auf vier Tage runter` },
-    zu:    { t:`Das fragt man nicht, und Sie wissen das.`, wie:`sehr kühl`, stimmung:`gereizt` } }
+    zu:    { er:`Das fragt man nicht, und Sie wissen das.`, wie:`sehr kühl`, stimmung:`gereizt` } }
 ],
 
 hinausgeworfen: {

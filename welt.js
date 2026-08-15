@@ -45,6 +45,14 @@ mpoles: {
    Mit der Merkmalsglocke landete das Modell praktisch nie auf einem
    Außenpol, und wer richtig gelesen hatte, bekam trotzdem nur ein
    Knapp. */
+/* Wie sich die Menschen auf einem Merkmal verteilen. Eine Glocke, aber
+   eine flachere als die ursprüngliche: mit {0.10 .. 0.36 .. 0.10} zog
+   die Mitte den Modus so stark an, dass ein wahres +2 praktisch nie
+   getroffen wurde — wer perfekt zuhörte, bekam bei Extraversion in null
+   von hundert Durchläufen ein Getroffen. Das war keine Schwierigkeit,
+   sondern eine Rückmeldung, die nicht funktioniert. */
+zglocke: { "-2":0.15, "-1":0.23, "0":0.24, "1":0.23, "2":0.15 },
+
 mglocke: { "-2":0.18, "-1":0.21, "0":0.22, "1":0.21, "2":0.18 },
 
 /* Startbild vor dem ersten Wort: ein Rollenklischee, keine Messung.
@@ -92,6 +100,8 @@ freundschaft: {
       text:`Er weiß, wer du bist, und nimmt sich Zeit. Mehr aber auch nicht.` },
     { ab:20, name:`fremd`,
       text:`Ein Termin unter anderen. Er ist höflich, und Höflichkeit ist hier kein gutes Zeichen.` },
+    { ab:8, name:`abgekühlt`,
+      text:`Er lässt dich noch herein. Viel fehlt nicht mehr, und das tut er nicht mehr.` },
     { ab:-999, name:`verbrannt`,
       text:`Er hat dich abgeschrieben. Ein Besuch mehr ändert daran nichts.` }
   ]
