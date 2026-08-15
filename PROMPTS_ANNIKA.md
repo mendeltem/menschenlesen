@@ -3,9 +3,10 @@
 Papierrestauratorin, 38. Die zweite Person. Alles hier ist zum Einsetzen
 gedacht: jeder Prompt steht für sich, du musst nichts zusammensetzen.
 
-**Am besten gibst du ein fertiges Tobias-Bild als Stilreferenz mit** —
-dann trifft der Strich sicher. Ohne Referenz genügen die Prompts auch,
-sie beschreiben den Stil vollständig.
+Es gibt drei Wege, von kurz nach lang: **ein Referenzbild hineingeben und
+alle zehn erzeugen lassen**, ein Kontaktbogen aus reinem Text, oder zehn
+einzelne Prompts. Der erste ist der beste, sobald es ein Bild von ihr
+gibt — die Ähnlichkeit hält dann von selbst.
 
 Dateien gehören nach `bilder/` und heißen genau so, wie sie unten stehen.
 Fehlt eine, zeigt das Spiel das Grundporträt und die Stimmung als Wort —
@@ -13,7 +14,61 @@ kaputt geht nichts.
 
 ---
 
-## Der schnelle Weg: ein Kontaktbogen für alle zehn
+## Der kürzeste Weg: ein Bild hinein, zehn heraus
+
+Du hängst **ein einziges Porträt von ihr** an — am besten ein ruhiges,
+frontales — und lässt daraus alle zehn Stimmungen erzeugen. Die Person
+muss dann nicht mehr beschrieben werden; das Bild ist die Beschreibung.
+
+> Use the attached portrait as the exact reference for the character.
+> Keep her identity, face shape, hair colour and hairstyle, skin tone,
+> eyebrows, accessories, clothing, colours, line style, shading, framing
+> and the plain light grey background **identical** in every panel. Do not
+> restyle, do not age her, do not change the palette, do not add anything
+> she is not already wearing.
+>
+> Produce a contact sheet of ten head-and-shoulders panels in a 5 by 2
+> grid, thin even gutters, no text, no labels, no numbers, no borders.
+> The panels differ **only** in facial expression and upper-body posture,
+> in this order, left to right, top row first:
+>
+> 1 — attentive and very still, mouth closed, eyes directed slightly past
+> the viewer rather than at them.
+> 2 — a small closed-lip smile, eyes warm and briefly meeting the viewer,
+> one shoulder relaxing.
+> 3 — laughing, covering her mouth with the back of her hand, eyes creased
+> shut, shoulders pulled up towards her ears.
+> 4 — leaning in towards the viewer, both eyebrows raised, fully absorbed,
+> lips slightly parted as if about to ask something.
+> 5 — looking down at her own hands, mouth closed, brows even, thinking.
+> 6 — brows drawn very slightly together, head angled away while her eyes
+> stay on the viewer, lips pressed thin, one hand at her collar.
+> 7 — rigidly polite: jaw tight, high colour on both cheeks, eyes cast
+> down, chin level; annoyance held in, not shown.
+> 8 — shoulders drawn in, arms held close to her body, chin lowered so
+> loose strands of hair fall forward, gaze turned away to the side.
+> 9 — eyes wet and bright, a quick involuntary smile, already looking down
+> and tucking a loose strand behind her ear to cover it.
+> 10 — standing, half turned away in three-quarter view, both palms flat
+> on a table, eyes down on the paper in front of her, not on the viewer.
+
+Wenn das Werkzeug keine Kontaktbögen mag, gib dasselbe Bild zehnmal
+einzeln hinein und hänge je einen Satz an:
+
+> Use the attached portrait as the exact reference. Keep her identity,
+> hair, clothing, colours, line style, shading, framing and the plain light
+> grey background identical. Change **only** the facial expression and
+> upper-body posture. Square 1:1, head-and-shoulders, no text.
+>
+> New expression: *(hier einen der zehn Sätze von oben einsetzen)*
+
+**Für jede weitere Person gilt derselbe Prompt.** Nur die zehn Sätze
+tauschst du gegen ihre Art aus — Tobias lacht mit zurückgelegtem Kopf,
+Annika lacht in die Hand. Die Person selbst beschreibt das Bild.
+
+---
+
+## Ohne Referenzbild: ein Kontaktbogen aus Text
 
 Ein Bild, zehn Felder, danach zerschneiden. So ist auch Tobias entstanden.
 
