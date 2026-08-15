@@ -392,6 +392,29 @@ body.imMenue .raum{display:none}
   background:var(--surface-2); color:var(--ink); border:1px solid var(--accent); border-radius:999px;
   padding:7px 13px; cursor:pointer; box-shadow:var(--glow)}
 .runter.zeig{display:inline-flex}
+
+/* Eine Marke je Wortwechsel: Trennstrich und Nummer. Der gewählte
+   trägt sie in der Akzentfarbe und ausgeschrieben, alle anderen nur
+   als Kürzel — so sieht man auf einen Blick, wo einer aufhört. */
+.wwmarke{display:flex; align-items:center; gap:9px; margin:10px 0 2px}
+.wwmarke:before{content:""; flex:1; height:1px; background:var(--line-soft)}
+.wwmarke b{font-family:var(--mono); font-size:9px; font-weight:500; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--muted); border:1px solid var(--line-soft);
+  border-radius:999px; padding:2px 9px; white-space:nowrap}
+.wwmarke.hier:before{background:var(--accent); opacity:.45}
+.wwmarke.hier b{color:var(--accent); border-color:var(--accent); box-shadow:var(--glow)}
+
+/* Der Blätterer sitzt oben rechts im Gespräch, über dem Verlauf. */
+.blaettern{position:absolute; right:20px; top:6px; z-index:4; display:flex; align-items:center; gap:4px;
+  background:var(--surface-2); border:1px solid var(--line); border-radius:999px; padding:3px 5px;
+  box-shadow:0 10px 24px -14px rgba(0,0,0,.8)}
+.blaettern[hidden]{display:none}
+.blaettern button{width:22px; height:22px; display:grid; place-items:center; cursor:pointer;
+  background:none; border:none; border-radius:50%; color:var(--muted); font-size:10px; line-height:1}
+.blaettern button:hover:not(:disabled){color:var(--ink); background:var(--surface-hi)}
+.blaettern button:disabled{opacity:.3; cursor:default}
+.blaettern span{font-family:var(--mono); font-size:9px; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--muted); min-width:52px; text-align:center}
 .line{max-width:62ch}
 .line.regie{font-family:var(--serif); font-style:italic; font-size:13.5px; color:var(--muted); line-height:1.5;
   border-left:2px solid var(--line-soft); padding-left:13px; max-width:68ch}
@@ -752,6 +775,11 @@ table.bil tr.hi td.n{color:var(--accent); font-weight:600}
       <div class="chat">
         <div class="talk" id="talk"></div>
         <div class="ratefeld" id="ratefeld" hidden></div>
+        <div class="blaettern" id="blaettern" hidden>
+          <button id="zurueck" title="Einen Wortwechsel zurück (Pfeil hoch)" aria-label="Einen Wortwechsel zurück">▲</button>
+          <span id="fokusText">jetzt</span>
+          <button id="vor" title="Einen Wortwechsel vor (Pfeil runter)" aria-label="Einen Wortwechsel vor">▼</button>
+        </div>
         <button class="runter" id="runter">↓ Neueste</button>
       </div>
       <div id="choices"></div>
@@ -1020,9 +1048,12 @@ const ORD = ["nullter","erster","zweiter","dritter","vierter","fünfter","sechst
 const ord = n => ORD[n] !== undefined ? ORD[n] : (n + ".");
 const gross = s => s.charAt(0).toUpperCase()+s.slice(1);
 
-function startPrior(dims, shift){
+/* Die Verteilung ist nicht für jeden Achsensatz dieselbe: die Merkmale
+   folgen einer Glocke, die zwei Waagen einer flacheren Kurve. */
+function startPrior(dims, shift, kurve){
+  const K = kurve || GLOCKE;
   return norm(raum(dims.length).map(s => { let p=1;
-    for(let d=0; d<dims.length; d++){ const v=s[d]; p *= GLOCKE[String(v)]*Math.exp((shift&&shift[dims[d]]?shift[dims[d]]:0)*v); }
+    for(let d=0; d<dims.length; d++){ const v=s[d]; p *= K[String(v)]*Math.exp((shift&&shift[dims[d]]?shift[dims[d]]:0)*v); }
     return p; }));
 }
 function likelihood(frage, dims, feld){
@@ -1133,7 +1164,7 @@ function bezPlus(w){
 
 function neuerZustand(){
   S = {
-    phase:0, knoten:"start", band:"bf",
+    phase:0, knoten:"start", band:"bf", fokus:0,
     talk:[], neu:0, verlauf:[],
     fakten:A.fakten.slice(), gesagt:A.gesagt.slice(),
     spuren:A.spuren.slice(), gefunden:A.gefunden.slice(),
@@ -1147,7 +1178,7 @@ function neuerZustand(){
     raus:false, angeboten:false, ende:null, faktenStart:A.fakten.length, fragenHeute:0
   };
   S.bfPrior = startPrior(T, DATA.rollenprior);
-  S.moPrior = startPrior(M, null);
+  S.moPrior = startPrior(M, null, DATA.mglocke);
   S.bfGlaube = spieleNach(S.bfPrior, A.bfVerlauf, DATA.bigfive,    T, "l");
   S.moGlaube = spieleNach(S.moPrior, A.moVerlauf, DATA.motivfragen, M, "aff");
   S.bereit = 0;
@@ -1235,47 +1266,119 @@ const runterBtn = document.getElementById("runter");
 const amBoden = () => talkEl.scrollHeight - talkEl.scrollTop - talkEl.clientHeight < 90;
 let leserOben = false;
 talkEl.addEventListener("scroll", () => { leserOben = !amBoden(); runterBtn.classList.toggle("zeig", leserOben); });
-function pinneUnten(){ if(leserOben){ runterBtn.classList.add("zeig"); return; }
-  talkEl.scrollTop = talkEl.scrollHeight; runterBtn.classList.remove("zeig"); }
-runterBtn.onclick = () => { leserOben = false; talkEl.scrollTo({top:talkEl.scrollHeight, behavior:"smooth"});
-  runterBtn.classList.remove("zeig"); };
-
-function sag(who, text, o){ S.talk.push(Object.assign({who, text}, o||{})); S.neu++; }
-function zeichneTalk(){
-  /* Ein Wortwechsel beginnt bei deiner Zeile. Der laufende steht groß,
-     der davor kleiner, alles ältere klein und blass — sonst schreit die
-     ganze Wand gleich laut. */
-  let jetztAb = 0, davorAb = 0, gesehen = 0, letzterEr = -1;
-  for(let i = S.talk.length - 1; i >= 0; i--){
-    if(letzterEr < 0 && S.talk[i].who === "er") letzterEr = i;
-    if(S.talk[i].who === "du"){
-      gesehen++;
-      if(gesehen === 1) jetztAb = i;
-      else { davorAb = i; break; }
-    }
+function pinneUnten(){
+  /* Wer blättert, will den gewählten Wortwechsel sehen und nicht das
+     Ende. Erst wenn er wieder bei jetzt steht, hängt der Verlauf unten. */
+  if(S && S.fokus > 0){
+    const m = talkEl.querySelector(".wwmarke.hier");
+    if(m) talkEl.scrollTop = Math.max(0, m.offsetTop - 8);
+    runterBtn.classList.add("zeig");
+    return;
   }
+  if(leserOben){ runterBtn.classList.add("zeig"); return; }
+  talkEl.scrollTop = talkEl.scrollHeight; runterBtn.classList.remove("zeig"); }
+runterBtn.onclick = () => { leserOben = false;
+  if(S && S.fokus){ S.fokus = 0; zeichneTalk(); }
+  talkEl.scrollTo({top:talkEl.scrollHeight, behavior:"smooth"});
+  runterBtn.classList.remove("zeig"); };
+document.getElementById("zurueck").onclick = () => blaettere(+1);
+document.getElementById("vor").onclick     = () => blaettere(-1);
+
+/* Am oberen Rand weiterdrehen heißt: einen Wortwechsel zurück. Am
+   unteren wieder vor. Die Sperre sorgt dafür, dass eine Drehung einen
+   Schritt macht und nicht das halbe Gespräch überspringt. */
+let radSperre = 0;
+talkEl.addEventListener("wheel", e => {
+  if(!S || !S.talk) return;
+  const oben = talkEl.scrollTop <= 1;
+  const unten = talkEl.scrollHeight - talkEl.scrollTop - talkEl.clientHeight <= 1;
+  const zurueck = e.deltaY < 0 && oben, vor = e.deltaY > 0 && unten && S.fokus > 0;
+  if(!zurueck && !vor) return;
+  const jetzt = performance.now();
+  if(jetzt - radSperre < 320) { e.preventDefault(); return; }
+  radSperre = jetzt;
+  e.preventDefault();
+  blaettere(zurueck ? +1 : -1);
+}, {passive:false});
+
+function sag(who, text, o){ S.talk.push(Object.assign({who, text}, o||{})); S.neu++; S.fokus = 0; }
+
+/* Ein Wortwechsel beginnt bei deiner Zeile; was davor steht, gehört
+   zum ersten. Zurück gibt es die Anfangszeile je Wortwechsel. */
+function wortwechsel(){
+  const a = [0];
+  S.talk.forEach((l,i) => { if(i > 0 && l.who === "du") a.push(i); });
+  return a;
+}
+function zeichneTalk(){
+  /* Genau ein Wortwechsel steht groß — normalerweise der letzte, nach
+     dem Blättern ein früherer. Alles andere steht klein und blass,
+     sonst schreit die ganze Wand gleich laut. */
+  const start = wortwechsel(), n = start.length;
+  S.fokus = Math.max(0, Math.min(n - 1, S.fokus || 0));
+  const ziel = n - 1 - S.fokus;
+  /* Welcher Wortwechsel zu einer Zeile gehört */
+  const wwZu = new Array(S.talk.length).fill(0);
+  for(let k = 0, j = 0; j < S.talk.length; j++){
+    while(k + 1 < n && start[k+1] <= j) k++;
+    wwZu[j] = k;
+  }
+  let letzterEr = -1;
+  for(let i = S.talk.length - 1; i >= 0; i--)
+    if(S.talk[i].who === "er" && wwZu[i] === ziel){ letzterEr = i; break; }
+
+  const marke = k => {
+    const ab = n - 1 - k;
+    const kurz = ab === 0 ? "jetzt" : "−" + ab;
+    const lang = ab === 0 ? "jetzt"
+      : `−${ab} · ${ab === 1 ? "eine Unterhaltung" : wort(ab) + " Unterhaltungen"} davor`;
+    return `<div class="wwmarke${k === ziel ? " hier" : ""}"><b>${k === ziel ? lang : kurz}</b></div>`;
+  };
+
   talkEl.innerHTML = S.talk.map((l,i) => {
+    const kopf = (i > 0 && start.indexOf(i) >= 0) ? marke(wwZu[i]) : "";
     const neu = (i >= S.talk.length - S.neu ? " neu" : "")
-      + " " + (l.who === "verdict" || l.who === "ergebnis" || i >= jetztAb ? "jetzt" : (i >= davorAb ? "davor" : "frueher"))
+      + " " + (l.who === "verdict" || l.who === "ergebnis" || wwZu[i] === ziel ? "jetzt" : "frueher")
       + (i === letzterEr ? " wichtig" : "");
-    if(l.who === "verdict" || l.who === "ergebnis") return `<div class="line${neu}">${l.text}</div>`;
+    if(l.who === "verdict" || l.who === "ergebnis") return kopf + `<div class="line${neu}">${l.text}</div>`;
     if(l.who === "meta"){
-      if(!l.lang) return `<div class="line meta${l.warn?" warn":""}${neu}">${l.text}</div>`;
-      return `<div class="line meta${l.warn?" warn":""}${neu}">
+      if(!l.lang) return kopf + `<div class="line meta${l.warn?" warn":""}${neu}">${l.text}</div>`;
+      return kopf + `<div class="line meta${l.warn?" warn":""}${neu}">
         <button class="meta-kopf" data-i="${i}">${l.auf?"▾":"▸"} ${l.text}</button>
         ${l.auf ? `<div class="meta-lang">${l.lang}</div>` : ""}</div>`;
     }
-    if(l.who === "regie") return `<div class="line regie${neu}">${esc(l.text)}</div>`;
+    if(l.who === "regie") return kopf + `<div class="line regie${neu}">${esc(l.text)}</div>`;
     const lab = l.who === "er" ? HERO.name.split(" ")[0].toUpperCase() : "DU";
     const wie = l.wie ? `<em class="wie">(${esc(l.wie)})</em>` : "";
-    return `<div class="line ${l.who}${neu}"><span class="lab">${lab}${wie}</span>
+    return kopf + `<div class="line ${l.who}${neu}"><span class="lab">${lab}${wie}</span>
       <div class="txt">„${esc(l.text)}“</div></div>`;
   }).join("");
   S.neu = 0;
   talkEl.querySelectorAll(".meta-kopf").forEach(b => b.onclick = () => {
     const l = S.talk[+b.dataset.i]; l.auf = !l.auf; zeichneTalk();
   });
+  zeichneBlaetterer(n);
   pinneUnten();
+}
+
+/* Der Blätterer: zwei Knöpfe und der Stand. Er erscheint erst, wenn es
+   überhaupt etwas zu blättern gibt. */
+function zeichneBlaetterer(n){
+  const kasten = document.getElementById("blaettern");
+  kasten.hidden = n < 2;
+  if(n < 2) return;
+  document.getElementById("fokusText").textContent = S.fokus === 0 ? "jetzt" : "−" + S.fokus;
+  document.getElementById("zurueck").disabled = S.fokus >= n - 1;
+  document.getElementById("vor").disabled = S.fokus <= 0;
+}
+function blaettere(um){
+  if(!S || !S.talk) return;
+  const n = wortwechsel().length;
+  const neu = Math.max(0, Math.min(n - 1, S.fokus + um));
+  if(neu === S.fokus) return;
+  S.fokus = neu;
+  leserOben = S.fokus > 0;
+  zeichneTalk();
 }
 
 function setzeStimmung(s){ if(s && DATA.stimmungen[s]) S.stimmung = s; }
@@ -2323,7 +2426,7 @@ document.getElementById("belegA").textContent = WELT.belege.A;
 document.getElementById("belegC").textContent = WELT.belege.C;
 document.getElementById("belegAsym").textContent = WELT.belege.asym;
 document.getElementById("belegItems").textContent = WELT.belege.items;
-document.getElementById("keys").innerHTML = "<b>1</b>–<b>4</b> wählen · <b>T</b> nächstes Theme · <b>Esc</b> schließen";
+document.getElementById("keys").innerHTML = "<b>1</b>–<b>4</b> wählen · <b>↑↓</b> blättern · <b>T</b> nächstes Theme · <b>Esc</b> schließen";
 
 document.addEventListener("keydown", e => {
   if(e.ctrlKey || e.altKey || e.metaKey) return;
@@ -2334,6 +2437,9 @@ document.addEventListener("keydown", e => {
   } else if(k === "t"){
     const i = THEMES.findIndex(t => t.id === document.body.dataset.theme);
     setTheme(THEMES[(i+1) % THEMES.length].id);
+  } else if(e.key === "ArrowUp" || e.key === "ArrowDown"){
+    if(!S || document.body.classList.contains("imMenue")) return;
+    e.preventDefault(); blaettere(e.key === "ArrowUp" ? +1 : -1);
   } else if(k === "escape"){ themeMenu(false); zeigeInfo(false); zeigeKoffer(false); zeigeLaden(false); zeigeSeite(false); }
   else if(k === "enter"){ const b = choicesEl.querySelector("button.act"); if(b) b.click(); }
 });

@@ -28,7 +28,7 @@ hero: {
   /* Die wahre Ausprägung, −2 bis +2. Danach antwortet er, und das ist
      die Lösung, die am Ende aufgedeckt wird. */
   z: { O: 2, C: -1, E: 2, A: 1, N: -2 },
-  m: { FRE: 2, GEL: -1 }
+  m: { FRE: 2, GEL: -2 }
 },
 
 rollenprior: { C: 0.55, O: 0.2, E: -0.45 },
@@ -934,7 +934,7 @@ reaktion: {
     FRE: { genau:{ er:`Richtig. Sagen Sie mir, wie ich etwas zu tun habe, und ich mache es anders. Nicht aus Trotz. Aus Gewohnheit.`, wie:`sehr klar` },
            zuHoch:{ er:`So eigen bin ich nicht. Wenn jemand einen besseren Weg kennt, nehme ich ihn. Er muss ihn nur zeigen und nicht anordnen.`, wie:`einschränkend` },
            zuTief:{ er:`Verlässlichkeit.`, erRegie:`Er zieht einen Mundwinkel hoch.`, er2:`Mein ganzer Beruf besteht darin auszurechnen, wie unsicher etwas ist. Ich weiß ziemlich genau, was eine Garantie wert ist.`, wie:`amüsiert`, wie2:`bestimmt` } },
-    GEL: { genau:{ er:`Ungefähr. Ich brauche keine Bühne. Ich brauche zwei Leute, die es merken, wenn ich Unsinn rechne.`, wie:`ruhig` },
+    GEL: { genau:{ er:`Stimmt.`, erRegie:`Er nickt, ohne zu zögern.`, er2:`Ich sitze lieber mit vier Leuten in einem Keller als allein auf einer Bühne. Das ist keine Bescheidenheit, das ist Geschmack.`, wie:`sofort`, wie2:`ruhig und sehr sicher` },
            zuHoch:{ er:`Wenn Sie mir schmeicheln wollen, sparen Sie es sich.`, erRegie:`Er sieht zur Pinnwand.`, er2:`Der Brief da hängt schief, und zwar mit Absicht.`, wie:`sehr trocken`, wie2:`beiläufig` },
            zuTief:{ er:`Ganz ohne Eitelkeit bin ich auch nicht. Ich schaue nach, ob es zitiert wird.`, wie:`leiser, ertappt` } }
   }

@@ -38,6 +38,15 @@ mpoles: {
   GEL: [`will dazugehören`, `will gesehen werden`]
 },
 
+/* Wie sich die Menschen auf einer Waage verteilen — flacher als bei den
+   Merkmalen. Ein Merkmal ist normalverteilt, die meisten sind mittel
+   verträglich. Eine Waage mit zwei Seiten ist das nicht: wer selbst
+   bestimmen will, will es, und die Mitte ist der seltenere Fall.
+   Mit der Merkmalsglocke landete das Modell praktisch nie auf einem
+   Außenpol, und wer richtig gelesen hatte, bekam trotzdem nur ein
+   Knapp. */
+mglocke: { "-2":0.18, "-1":0.21, "0":0.22, "1":0.21, "2":0.18 },
+
 /* Startbild vor dem ersten Wort: ein Rollenklischee, keine Messung.
    Zwei der drei Annahmen sind bei ihm falsch. Das ist Absicht. */
 

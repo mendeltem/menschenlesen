@@ -33,10 +33,21 @@ Fünfundzwanzig mögliche Menschen statt 3125, dieselbe Rechnung, und man
 kann den Balken ansehen und weiß Bescheid. Jede der sieben Fragen bietet
 vier Antworten, eine je Pol, und trennt damit beide Waagen auf einmal.
 
+Die Waagen verteilen sich flacher als die Merkmale: ein Merkmal ist
+normalverteilt, die meisten Menschen sind mittel verträglich. Eine Waage
+mit zwei Seiten ist das nicht — wer selbst bestimmen will, will es, und
+die Mitte ist der seltenere Fall.
+
 **Besuche statt einer Partie.** Zwischen zwei Besuchen bleibt, was du
 gehört hast, und wie ihr steht. Gespeichert werden nicht die
 Wahrscheinlichkeiten, sondern seine Antworten; beim nächsten Mal wird
 daraus dasselbe Bild neu gerechnet.
+
+**Ein blätterbarer Verlauf.** Jeder Wortwechsel trägt eine Marke mit
+Nummer — *jetzt*, *−1*, *−2* —, und genau einer steht groß. Mit den
+Pfeiltasten, den zwei Knöpfen oben rechts oder dem Mausrad am oberen
+Rand springt man zurück; der gewählte wird groß, alles andere klein, und
+daneben steht ausgeschrieben, wie weit man zurück ist.
 
 **Eine Drehscheibe statt einer Reihenfolge.** Nach jedem Schritt
 entscheidest du neu: ihn über sich reden lassen, herausfinden, worauf er
@@ -87,8 +98,8 @@ Bei ihm gilt das hart:
 | | Passung | beste Aussicht |
 |---|---|---|
 | Die Uhr | +3,2 | 93 % |
-| Der Stift | −1,7 | **0 %** |
-| Die Brille | −2,6 | **0 %** |
+| Der Stift | −1,4 | **0 %** |
+| Die Brille | −4,0 | **0 %** |
 
 **Die Freundschaft ist der Zuschlag,** nicht der Ersatz: bis zu fünfzehn
 Punkte auf die Aussicht. Genug, um aus einem Vielleicht ein Ja zu machen.
@@ -159,10 +170,10 @@ auseinanderlaufen. In welchem Besuch er kauft:
 
 | | 1. | 2. | 3. | 4. | 5. | 6. | kauft | verbrannt |
 |---|---|---|---|---|---|---|---|---|
-| Zufall | 0 % | 0 % | 0 % | 0 % | 0 % | 0 % | **0 %** | 74 % |
-| Mittelmaß | 1 % | 8 % | 12 % | 11 % | 16 % | 13 % | **59 %** | 0 % |
-| gutes Zuhören | 1 % | 33 % | 37 % | 20 % | 7 % | 2 % | **99 %** | 0 % |
-| alles ausfragen | 0 % | 1 % | 43 % | 41 % | 14 % | 1 % | **99 %** | 0 % |
+| Zufall | 0 % | 0 % | 0 % | 0 % | 0 % | 0 % | **0 %** | 76 % |
+| Mittelmaß | 1 % | 7 % | 12 % | 13 % | 15 % | 13 % | **61 %** | 0 % |
+| gutes Zuhören | 1 % | 28 % | 36 % | 22 % | 9 % | 2 % | **98 %** | 0 % |
+| alles ausfragen | 0 % | 1 % | 34 % | 43 % | 19 % | 3 % | **100 %** | 0 % |
 
 Blind raten gewinnt nie und verbrennt in drei von vier Fällen die
 Freundschaft so weit, dass er nicht mehr aufmacht. Am ersten Tag zu

@@ -108,6 +108,9 @@ G = dict(auto=konst("W_AUTO"), treffer=konst("W_TREFFER"), fehlgriff=konst("W_FE
 
 STUFEN = np.array([-2,-1,0,1,2])
 GLOCKE = {-2:0.10, -1:0.22, 0:0.36, 1:0.22, 2:0.10}
+# Die zwei Waagen verteilen sich flacher als die fuenf Merkmale
+MGLOCKE = {int(k): float(v) for k, v in
+           re.findall(r'"(-?\d)":([\d.]+)', re.search(r"mglocke:\s*\{([^}]*)\}", QUELLE).group(1))}
 _RAEUME = {}
 def raum(n):
     """Der Zustandsraum je Achsenzahl: 3125 fuer die Merkmale, 25 fuer
@@ -115,11 +118,12 @@ def raum(n):
     if n not in _RAEUME: _RAEUME[n] = np.array(list(kartesisch(STUFEN, repeat=n)))
     return _RAEUME[n]
 
-def prior(dims, shift):
+def prior(dims, shift, kurve=None):
     ST = raum(len(dims))
+    K = kurve or GLOCKE
     p = np.ones(len(ST))
     for d in range(len(dims)):
-        g = np.array([GLOCKE[int(v)] for v in ST[:, d]])
+        g = np.array([K[int(v)] for v in ST[:, d]])
         p *= g * np.exp(shift.get(dims[d], 0.0) * ST[:, d])
     return p / p.sum()
 
@@ -167,7 +171,7 @@ def besuche(art, max_besuche=6):
     """Spielt eine Person ueber mehrere Besuche. Gibt zurueck, ob und im
        wievielten Besuch er kauft, und wie ihr am Ende steht."""
     frd = FR["start"]
-    pr = {"bf": prior(T, ROLLE), "mo": prior(M, {})}
+    pr = {"bf": prior(T, ROLLE), "mo": prior(M, {}, MGLOCKE)}
     offen = {"bf": list(range(len(BF))), "mo": list(range(len(MO)))}
     stand = {"bf": 0, "mo": 0}; gefragt = {"bf": 0, "mo": 0}
     fakten = 0; geduld_weg = 0.0
