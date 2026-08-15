@@ -164,6 +164,11 @@ Lachen ist kleiner als seins.
 **Ihr Menübild** — `bilder/annika_freundlich.webp` wird auch im Menü
 verwendet; ein eigenes brauchst du nicht.
 
+**Zum Einsetzen** liegen ihre Prompts ausgeschrieben in
+[`PROMPTS_ANNIKA.md`](PROMPTS_ANNIKA.md): einmal als Kontaktbogen für
+alle zehn auf einmal, einmal als zehn einzelne, jeder für sich
+vollständig.
+
 ---
 
 ## Eine weitere Person
