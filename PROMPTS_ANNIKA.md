@@ -1,4 +1,9 @@
-# Annika Reuter — fertige Prompts
+# Annika Reuter — das ausgearbeitete Beispiel
+
+*Der allgemeine Weg steht in [`PROMPTS.md`](PROMPTS.md): ein Prompt, in
+den man jede Person einsetzt, und ein Werkzeug, das den Bogen zerlegt.
+Diese Datei zeigt ihn an einer konkreten Person durchgespielt.*
+
 
 Papierrestauratorin, 38. Die zweite Person. Alles hier ist zum Einsetzen
 gedacht: jeder Prompt steht für sich, du musst nichts zusammensetzen.
