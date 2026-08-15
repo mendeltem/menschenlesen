@@ -58,6 +58,9 @@ p{margin:0 0 12px}
   transition:color .15s,border-color .15s}
 .tool:hover{color:var(--ink); border-color:var(--accent)}
 .tool .caret{font-size:9px; opacity:.7}
+/* Der einzige Knopf, der etwas wegwirft. Er steht ruhig da und färbt
+   sich erst, wenn die Hand darauf liegt. */
+.tool.warnung:hover{color:var(--STA); border-color:var(--STA)}
 .themepick{position:relative}
 .theme-menu{position:absolute; right:0; top:calc(100% + 8px); z-index:60; width:min(430px, calc(100vw - 40px));
   display:flex; flex-wrap:wrap; gap:7px; background:var(--surface-2); border:1px solid var(--line);
@@ -469,6 +472,7 @@ table.bil tr.hi td.n{color:var(--accent); font-weight:600}
       <button class="tool" id="kofferToggle">Koffer <b class="zahl" id="warenZahl">3</b></button>
       <button class="tool" id="musikToggle" title="Hintergrundmusik">♪ <span id="musikText">an</span></button>
       <button class="tool" id="infoToggle">Was das Modell tut</button>
+      <button class="tool warnung" id="resetToggle" title="Kasse, Bestand, alle Akten und alle Einstellungen löschen">Zurücksetzen</button>
       <div class="themepick">
         <button class="tool" id="themeToggle" aria-haspopup="true" aria-expanded="false">
           <span class="theme-dot" id="themeDot"></span><span id="themeName">Tinte</span><span class="caret">▾</span>
@@ -1218,7 +1222,11 @@ function zeichneBalken(){
   document.getElementById("bereitBar").style.width = v + "%";
 }
 
-function zeichne(){ zeichneAkte(); zeichneTalk(); zeichneKopf(); zeichneLeseband(); zeichneNotizen();
+function zeichne(){
+  /* Ein Zeitgeber aus einem abgebrochenen Gespräch darf hier nicht
+     mehr durchkommen. */
+  if(!S || !A || document.body.classList.contains("imMenue")){ zeichneWaren(); waehleSpur(); return; }
+  zeichneAkte(); zeichneTalk(); zeichneKopf(); zeichneLeseband(); zeichneNotizen();
   zeichneBalken(); zeichneWaren(); waehleSpur(); }
 
 /* Wie viele Zeilen das Ratefeld hat, sagt der Achsensatz — fünf für
@@ -2187,19 +2195,29 @@ function zeigeMenue(){
   waehleSpur();
 }
 
+/* Alles zurück auf Anfang. Erreichbar aus dem Menü und aus jedem
+   laufenden Gespräch — wer sich die Freundschaft verbrannt hat, soll
+   nicht erst zu Ende spielen müssen. */
 function zuruecksetzen(){
-  if(!confirm("Kasse, Bestand, alle Akten und alle Einstellungen löschen?\n\nJede Person kennt dich danach wieder nicht.")) return;
+  const wo = document.body.classList.contains("imMenue") ? "" :
+    "\n\nDas laufende Gespräch wird dabei abgebrochen.";
+  if(!confirm("Wirklich alles zurücksetzen?\n\n"
+    + "· Kasse und Koffer\n· alle Akten — jede Person kennt dich danach wieder nicht\n"
+    + "· Farbschema und Musik\n· die aufgeklappten Kästen" + wo)) return;
   try{
-    localStorage.removeItem("konto");
-    localStorage.removeItem("akte");
-    localStorage.removeItem("gespraech-theme");
-    localStorage.removeItem("musik");
+    ["konto","akte","gespraech-theme","musik"].forEach(k => localStorage.removeItem(k));
     Object.keys(localStorage).filter(k => k.indexOf("falt-") === 0)
       .forEach(k => localStorage.removeItem(k));
   }catch(e){}
   KONTO.kasse = 0;
   WELT.produkte.forEach(p => { KONTO.bestand[p.id] = p.bestand; });
   Object.keys(AKTE).forEach(k => delete AKTE[k]);
+  /* Ein laufender Besuch darf nicht weiterlaufen: was noch in einem
+     Zeitgeber hängt, findet ein beendetes Spiel vor und tut nichts. */
+  if(S) S.ende = "abgebrochen";
+  setTheme(THEMES[0].id);
+  musikSchalten(true);
+  zeigeInfo(false); zeigeKoffer(false); zeigeLaden(false); zeigeSeite(false); themeMenu(false);
   zeigeMenue();
 }
 
@@ -2216,6 +2234,8 @@ document.getElementById("belegC").textContent = WELT.belege.C;
 document.getElementById("belegAsym").textContent = WELT.belege.asym;
 document.getElementById("belegItems").textContent = WELT.belege.items;
 document.getElementById("keys").innerHTML = "<b>1</b>–<b>4</b> wählen · <b>↑↓</b> blättern · <b>T</b> nächstes Theme · <b>Esc</b> schließen";
+
+document.getElementById("resetToggle").onclick = () => zuruecksetzen();
 
 document.addEventListener("keydown", e => {
   if(e.ctrlKey || e.altKey || e.metaKey) return;
