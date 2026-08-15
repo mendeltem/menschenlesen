@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="150" viewBox="0 0 880 150" role="img"
+     aria-label="Vierzig Minuten für einen Fremden — jetzt im Browser spielen">
+  <defs>
+    <linearGradient id="grund" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#141720"/>
+      <stop offset="0.55" stop-color="#0b0c10"/>
+      <stop offset="1" stop-color="#0e0f12"/>
+    </linearGradient>
+    <radialGradient id="warm" cx="0.12" cy="-0.08" r="0.9">
+      <stop offset="0" stop-color="#e8b04b" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#e8b04b" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="kalt" cx="0.9" cy="0.1" r="0.85">
+      <stop offset="0" stop-color="#6092c4" stop-opacity="0.20"/>
+      <stop offset="1" stop-color="#6092c4" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="880" height="150" rx="16" fill="url(#grund)"/>
+  <rect width="880" height="150" rx="16" fill="url(#warm)"/>
+  <rect width="880" height="150" rx="16" fill="url(#kalt)"/>
+  <rect x="0.75" y="0.75" width="878.5" height="148.5" rx="15.25" fill="none" stroke="rgba(255,255,255,.13)"/>
+
+  <text x="40" y="46" fill="#9aa1aa" font-family="ui-monospace,SFMono-Regular,Menlo,monospace"
+        font-size="11" letter-spacing="3.4">BESUCHE BEI EINEM FREMDEN</text>
+  <text x="40" y="86" fill="#edeae3" font-family="Georgia,'Iowan Old Style',serif"
+        font-size="34" font-weight="600">Vierzig Minuten für einen Fremden</text>
+  <text x="40" y="115" fill="#9aa1aa" font-family="system-ui,-apple-system,Segoe UI,sans-serif"
+        font-size="14.5">Lies ihn richtig, bevor du den Koffer aufmachst.</text>
+
+  <g transform="translate(650,52)">
+    <rect width="196" height="46" rx="23" fill="rgba(232,176,75,.14)" stroke="#e8b04b"/>
+    <text x="30" y="29" fill="#e8b04b" font-family="system-ui,-apple-system,Segoe UI,sans-serif"
+          font-size="15.5" font-weight="600">Jetzt spielen</text>
+    <path d="M155 15 L169 23 L155 31 Z" fill="#e8b04b"/>
+  </g>
+</svg>

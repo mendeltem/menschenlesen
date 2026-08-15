@@ -1,12 +1,18 @@
 # Vierzig Minuten für einen Fremden
 
+[![Vierzig Minuten für einen Fremden — jetzt im Browser spielen](bilder/spielen.svg)](https://mendeltem.github.io/menschenlesen/)
+
+### ▶ [Hier spielen](https://mendeltem.github.io/menschenlesen/) — im Browser, ohne Installation, ohne Konto
+
 Du besuchst einen Mann, den du nicht kennst, und willst ihm irgendwann
 etwas verkaufen. Nur klappt das nicht am ersten Tag. Beim ersten Besuch
 lernst du ihn kennen; was danach zwischen euch steht, entscheidet, ob er
 den Koffer überhaupt ansieht.
 
-Alles läuft im Browser, ohne Server und ohne Netz. `index.html` öffnen
-genügt.
+Es läuft vollständig im Browser: kein Server, kein Konto, nichts wird
+gesendet. Der Knopf oben startet die gespielte Fassung; wer das Zeug
+lieber lokal hat, lädt das Verzeichnis herunter und öffnet `index.html`
+per Doppelklick. Beides ist dieselbe Datei.
 
 ## Was drin steckt
 
