@@ -51,7 +51,14 @@ def stege(werte, anzahl, laenge):
     if len(innen) != anzahl - 1:
         return None
     mitten = [sum(g) / len(g) for g in innen]
-    return [0] + [int(round(m)) for m in mitten] + [laenge]
+    schnitte = [0] + [int(round(m)) for m in mitten] + [laenge]
+    # Gegenprobe: ein Kontaktbogen hat gleich grosse Felder. Sind die
+    # gefundenen sehr verschieden, war das kein Steg, sondern Bildinhalt —
+    # dann lieber gleichmaessig teilen als still falsch schneiden.
+    breiten = [schnitte[i+1] - schnitte[i] for i in range(anzahl)]
+    if min(breiten) < 0.85 * (laenge / anzahl):
+        return None
+    return schnitte
 
 
 def helligkeit(bild, richtung):
