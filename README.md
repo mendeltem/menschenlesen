@@ -187,7 +187,8 @@ die alles mitbringen: Texte, Fragen, Zustände, Bilder, Farbschema.
 | `welt.js` | was für jede Person gilt: die Achsen, die Freundschaftsstufen, die Abschlussrechnung, dein Koffer, die Belege |
 | `personen/baumgartner/` | Tobias Baumgartner, Statistiker: seine Datei und seine Bilder |
 | `personen/reuter/` | Annika Reuter, Papierrestauratorin — dasselbe noch einmal, und in fast allem seine Gegenprobe |
-| `personen/sartori/` | Luigi Sartori, Kantinenkoch, samt `prompt.md` für seine Bilder |
+| `personen/sartori/` | Luigi Sartori, Kantinenkoch |
+| `PROMPTS_ANNIKA.md`, `PROMPTS_LUIGI.md` | der Personengenerator an einer Person durchgespielt, fertig zum Kopieren |
 | `PROMPTS.md` | ein Prompt, aus dem jede weitere Person entsteht |
 | `werkzeug/` | zerlegt einen Kontaktbogen in die zehn Stimmungsbilder |
 | `musik/` | fünf Spuren: Menü, Laden, Gespräch, gewonnen, verloren |
