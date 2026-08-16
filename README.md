@@ -118,7 +118,7 @@ Bei ihm gilt das hart:
 Punkte auf die Aussicht. Genug, um aus einem Vielleicht ein Ja zu machen.
 Nie genug, um aus einem Nein etwas zu machen.
 
-## Zwei Menschen, die sich widersprechen
+## Drei Menschen, die sich widersprechen
 
 Baumgartner ist laut, offen, unordentlich und nicht umzuwerfen; er will
 selbst bestimmen und auf keine Bühne. Annika Reuter ist eher still, sehr
@@ -132,11 +132,24 @@ trockene, direkte Weg, bei ihr der behutsame — und wer ihr fröhlich
 widerspricht, bekommt keinen Streit, sondern ein sehr höfliches Ende.
 Und die richtige Ware dreht sich mit:
 
-| | Baumgartner | Reuter |
-|---|---|---|
-| Die Uhr | **+3,2** | −3,2 |
-| Der Stift | −1,4 | **+2,6** |
-| Die Brille | −4,0 | −1,6 |
+Der dritte ist Luigi Sartori, Kantinenkoch, einundsechzig, seit
+vierunddreißig Jahren dasselbe Haus. Er ist zugewandt wie sonst niemand
+und trotzdem lieber allein: er kocht für zweihundert Leute und geht nie
+in den Speisesaal. Wer ihn für den lauten, herzlichen Koch hält, den das
+Klischee verspricht, redet an ihm vorbei — und merkt es nicht, weil er
+freundlich bleibt. Sein Ärger sieht aus wie Zustimmung.
+
+| | Baumgartner | Reuter | Sartori |
+|---|---|---|---|
+| Die Uhr | **+3,2** | −3,2 | −1,6 |
+| Der Stift | −1,4 | **+2,6** | **+1,6** |
+| Die Brille | −4,0 | −1,6 | −2,2 |
+
+Bei Reuter und Sartori trägt dieselbe Ware aus verschiedenen Gründen:
+sie will nichts verlieren, er will nichts vergessen. Wer die Ware nach
+dem Menschen wählt, merkt den Unterschied nicht einmal. Wer sie nach dem
+letzten Gespräch wählt, hat zufällig recht — und beim nächsten zufällig
+unrecht.
 
 Auch die Anzeige redet über jede Person in ihrer Form — *Sein Wesen*
 gegen *Ihr Wesen*, *er antwortet dir darauf* gegen *sie antwortet dir
@@ -174,6 +187,7 @@ die alles mitbringen: Texte, Fragen, Zustände, Bilder, Farbschema.
 | `welt.js` | was für jede Person gilt: die Achsen, die Freundschaftsstufen, die Abschlussrechnung, dein Koffer, die Belege |
 | `personen/baumgartner/` | Tobias Baumgartner, Statistiker: seine Datei und seine Bilder |
 | `personen/reuter/` | Annika Reuter, Papierrestauratorin — dasselbe noch einmal, und in fast allem seine Gegenprobe |
+| `personen/sartori/` | Luigi Sartori, Kantinenkoch, samt `prompt.md` für seine Bilder |
 | `PROMPTS.md` | ein Prompt, aus dem jede weitere Person entsteht |
 | `werkzeug/` | zerlegt einen Kontaktbogen in die zehn Stimmungsbilder |
 | `musik/` | fünf Spuren: Menü, Laden, Gespräch, gewonnen, verloren |
