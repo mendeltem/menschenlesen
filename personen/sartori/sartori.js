@@ -60,9 +60,7 @@ stimmungen: {
   abweisend:    { t:`abweisend`,    bild:`personen/sartori/bilder/abweisend.webp` }
 },
 
-/* Seine Küche ist noch nicht gezeichnet. Ohne Datei bleibt der Streifen
-   oben leer, das Spiel läuft trotzdem. */
-raumbild: ``,
+raumbild: `personen/sartori/bilder/raum.webp`,
 
 /* --- Ankunft. Der Empfang läuft ab, dann hast du genau eine Frage. -- */
 
