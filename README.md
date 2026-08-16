@@ -18,6 +18,44 @@ gesendet. Der Knopf oben startet die gespielte Fassung; wer das Zeug
 lieber lokal hat, lädt das Verzeichnis herunter und öffnet `index.html`
 per Doppelklick. Beides ist dieselbe Datei.
 
+## Drei Stufen
+
+Das Spiel hatte alles auf einmal: lesen, ausfragen, Freundschaft, Geduld,
+Lagen, Verkauf. Jetzt kommt es in drei Stufen, und die ersten zwei sind
+nichts als zuhören.
+
+| | | |
+|---|---|---|
+| **1** | Sein Wesen | fünf Merkmale, jedes von −2 bis +2 |
+| **2** | Was er braucht | zwei Waagen, jede mit zwei Seiten |
+| **3** | Der Koffer | alles Übrige, und erst jetzt geht es ums Verkaufen |
+
+**In Stufe eins und zwei gibt es keine Balken und kein Modell.** Keine
+Freundschaft, keine Geduld, keine bit-Zahlen, keine
+Wahrscheinlichkeitsbalken — nur das Gespräch, deine Notizen und er. Du
+fragst, so lange du willst; nichts kostet etwas, nichts läuft ab. Wenn du
+meinst, genug zu wissen, legst du dich fest, und damit ist die Stufe
+vorbei.
+
+**Punkte gibt es je Achse:** genau getroffen zählt voll, eine Stufe
+daneben zählt wenig, weiter daneben gar nicht. Hundert Punkte je Stufe,
+zusammen zweihundert — daraus werden die Sterne:
+
+| | | | | |
+|---|---|---|---|---|
+| ★★★★★ | ★★★★ | ★★★ | ★★ | ★ |
+| ab 180 | ab 145 | ab 105 | ab 60 | ab 25 |
+
+Wer fünfzig Punkte schafft, kommt in die nächste Stufe. Wer nicht, spielt
+sie noch einmal — er fängt dann von vorn an, und man weiß mehr als beim
+ersten Mal.
+
+**Stufe drei erbt alles.** Die Festlegungen stehen, die Fragen sind
+gestellt, und die Freundschaft startet danach, wie gut du gelesen hast:
+zweihundert Punkte bringen dich auf 75 statt auf 35. Wer schlecht liest,
+sitzt einem Fremden gegenüber; wer gut liest, jemandem, der ihn für einen
+hält, der zuhört.
+
 ## Was drin steckt
 
 **Fünf Merkmale, fünf Stufen.** Die Persönlichkeit bleibt bayessch:
@@ -74,7 +112,10 @@ antwortet: bei einem Treffer bestätigt er, bei einem Fehlgriff
 widerspricht er. Aus der Richtung seines Widerspruchs kannst du
 schließen, wohin du danebenlagst. Mehr Hilfe gibt es nicht.
 
-## Zwei Balken
+## Zwei Balken — nur in Stufe drei
+
+In den Lesestufen gibt es sie nicht. Erst wenn es ums Verkaufen geht,
+kommen sie dazu.
 
 **Geduld** gilt für diesen Nachmittag und beginnt bei hundert. Jede Frage
 kostet, und zwar zunehmend: die erste sechs, die siebte gut zehn — er

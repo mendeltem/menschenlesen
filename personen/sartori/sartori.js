@@ -20,8 +20,8 @@
 PERSONEN.push({
 
 id: `sartori`,
-kurz: `Kantinenkoch, 61. Seit vierunddreißig Jahren dasselbe Haus,
-       dieselbe Küche, dasselbe Wachstuchheft unter der Kasse.`,
+kurz: `Kantinenkoch, 61. Grauer Schopf und grünes Halstuch,
+       ein Wachstuchheft unter der Kasse, das seit vierunddreißig Jahren mitgeht.`,
 theme: `dschungel`,
 menubild: `personen/sartori/bilder/freundlich.webp`,
 

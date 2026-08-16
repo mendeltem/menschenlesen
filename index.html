@@ -549,6 +549,31 @@ button.act:hover{filter:brightness(1.08); transform:translateY(-2px)}
 .face:after{content:""; position:absolute; inset:0; background:var(--face-tint,none); mix-blend-mode:var(--face-blend,normal)}
 .who-name{font-size:15px; font-weight:600; letter-spacing:-.01em; line-height:1.2}
 .who-job{font-size:13px; color:var(--muted); margin-top:1px}
+/* In den Lesestufen liegt das Modell unter dem Tisch: keine Balken,
+   keine bit, keine Wahrscheinlichkeiten. Nur die Notizen und er. */
+body[data-stufe="lesen"] #lesebandBox,
+body[data-stufe="lesen"] .zahlen,
+body[data-stufe="lesen"] #privatBox{display:none}
+body[data-stufe="lesen"] #ratefeld .cells{display:none}
+body[data-stufe="lesen"] button.pick .rechts{display:none}
+
+/* Der Stufenkopf steht anstelle der Phasenleiste. */
+.stufe-kopf{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap}
+.stufe-kopf .nr{font-family:var(--mono); font-size:9px; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--accent); border:1px solid var(--accent);
+  border-radius:999px; padding:3px 10px}
+.stufe-kopf b{font-size:15px; font-weight:600; color:var(--ink)}
+.stufe-kopf span{font-size:13px; color:var(--muted)}
+
+/* Die Sterne am Ende einer Stufe. */
+.sterne{font-size:30px; letter-spacing:6px; color:var(--accent); line-height:1}
+.sterne i{color:var(--line); font-style:normal}
+.punktzeile{display:flex; gap:22px; flex-wrap:wrap; margin:14px 0 4px}
+.punktzeile div{font-family:var(--mono); font-size:11px; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--muted)}
+.punktzeile b{display:block; font-family:var(--sans); font-size:22px; font-weight:600;
+  letter-spacing:0; text-transform:none; color:var(--ink); margin-top:3px}
+
 .stimmung.gut{color:var(--SIC); border-color:var(--SIC)}
 .stimmung.schlecht{color:var(--STA); border-color:var(--STA)}
 .stimmung b{font-weight:600}
@@ -976,6 +1001,12 @@ document.querySelectorAll(".falt-kopf").forEach(k => {
   falte(k, auf);
   k.onclick = () => falte(k, document.getElementById(k.dataset.ziel).hidden);
 });
+/* In den Lesestufen sind die Notizen das Einzige, was du hast —
+   zugeklappt wäre dort dasselbe wie gar nichts. */
+function notizenAufklappen(){
+  const k = document.querySelector('.falt-kopf[data-ziel="notes"]');
+  if(k && document.getElementById("notes").hidden) falte(k, true);
+}
 
 /* ═══════════════ Musik ═══════════════
    Drei Spuren, je nachdem, wo du gerade bist: im Menü, im Gespräch
@@ -1165,7 +1196,8 @@ function frischeAkte(){
   return { besuche:0, bez:WELT.freundschaft.start, bfVerlauf:[], moVerlauf:[],
            bfGestellt:[], moGestellt:[], privGestellt:[], zGesehen:[],
            fakten:[], spuren:[], gesagt:[], gefunden:[], bedarf:[],
-           geduldWeg:0, fest:{}, verkauft:[], letzter:null };
+           geduldWeg:0, fest:{}, verkauft:[], letzter:null,
+           stufe:1, punkte:{}, sterne:null };
 }
 /* Ältere Stände bekommen fehlende Felder nachgereicht, statt dass das
    Spiel an einem undefined stirbt. */
@@ -1175,6 +1207,8 @@ function akteVon(id){
   for(const k in f) if(a[k] === undefined) a[k] = f[k];
   return a;
 }
+/* Wie viele Punkte in einer Stufe überhaupt zu holen sind. */
+function stufenMax(L){ return L.punkte ? L.punkte.genau * (L.key === "bf" ? 5 : 2) : 0; }
 const stufeZu = w => WELT.freundschaft.stufen.find(x => w >= x.ab);
 /* Jede Änderung an der Freundschaft geht hier durch und wird sofort
    gesichert — ein geschlossener Browser darf keinen Besuch verschlucken. */
@@ -1186,7 +1220,7 @@ function bezPlus(w){
 
 function neuerZustand(){
   S = {
-    phase:0, knoten:"start", band:"bf", fokus:0,
+    phase:0, knoten:"start", band:"bf", fokus:0, stufe:A.stufe,
     talk:[], neu:0, verlauf:[],
     fakten:A.fakten.slice(), gesagt:A.gesagt.slice(),
     spuren:A.spuren.slice(), gefunden:A.gefunden.slice(),
@@ -1429,7 +1463,16 @@ function zeichneKopf(){
 }
 
 function zeichneAkte(){
-  document.getElementById("akte").innerHTML = PHASEN().map((a,i) =>
+  const kasten = document.getElementById("akte");
+  if(S.stufe <= 2){
+    const L = WELT.level[S.stufe-1];
+    kasten.className = "stufe-kopf";
+    kasten.innerHTML = `<span class="nr">Stufe ${S.stufe} von drei</span>
+      <b>${esc(L.name)}</b><span>${esc(L.was)}</span>`;
+    return;
+  }
+  kasten.className = "akte";
+  kasten.innerHTML = PHASEN().map((a,i) =>
     `<div class="akt ${i===S.phase?"now":(i<S.phase?"done":"")}">${a.n}<b>${a.t}</b></div>`).join("");
 }
 
@@ -1588,7 +1631,7 @@ function ankunft(){
   if(S.geduld < 92) sag("meta", `${AN("Er")} hat noch im Kopf, wie viel du letztes Mal gefragt hast · Geduld <b>${
     Math.round(S.geduld)}</b> statt hundert`, {warn:true});
   zeichne();
-  knopf("Hereinkommen", () => drehscheibe());
+  knopf("Hereinkommen", () => weiterNachAnkunft());
 }
 
 function phase1(id){
@@ -1611,6 +1654,12 @@ function phase1(id){
 function uebergang1(){
   const u = DATA.uebergang1;
   sag("regie", u.duFest); erSagt(u);
+  weiterNachAnkunft();
+}
+
+/* Wohin es nach dem Empfang geht, entscheidet die Stufe. */
+function weiterNachAnkunft(){
+  if(S.stufe <= 2) return leseStufe();
   drehscheibe();
 }
 
@@ -1635,6 +1684,28 @@ function nachDemLesen(k){
   ]);
 }
 
+/* ═══════════════ Die Lesestufen ═══════════════
+   Stufe eins und zwei laufen ohne alles: keine Kosten, kein Limit, kein
+   Modell auf dem Schirm. Du fragst, so lange du willst, und hörst auf,
+   wenn du meinst, genug zu wissen. Dann legst du dich fest, und das ist
+   die ganze Stufe. */
+function leseStufe(){
+  const L = WELT.level[S.stufe-1];
+  const cfg = L.key === "bf" ? cfgBF : cfgMO;
+  S.phase = S.stufe;
+  S.band = L.key;
+  zeichne();
+  leseRunde(cfg);
+}
+
+/* Was eine Festlegung in einer Lesestufe wert ist. */
+function stufenPunkte(zeilen, L){
+  return zeilen.reduce((a,z) =>
+    a + (z.dist === 0 ? L.punkte.genau : (z.dist === 1 ? L.punkte.knapp : L.punkte.daneben)), 0);
+}
+const sterneZu = p => WELT.sterne.find(x => p >= x.ab);
+const sterneBild = n => `<span class="sterne">${"★".repeat(n)}<i>${"☆".repeat(5-n)}</i></span>`;
+
 /* ═══════════════ Die Drehscheibe ═══════════════
    Nach jedem Schritt landest du wieder hier. Was du tust, ist deine
    Sache: du kannst sofort den Koffer aufmachen, und du kannst jederzeit
@@ -1645,25 +1716,11 @@ function drehscheibe(){
   const kopf = `Was tust du? · Freundschaft ${Math.round(S.bez)} · ${stufeZu(S.bez).name}`;
   const items = [];
 
-  /* Das Festlegen steht oben und ist immer erreichbar — auch bevor du
-     etwas gefragt hast, und auch dann noch, wenn du dich schon einmal
-     festgelegt hast. Wer sich revidiert, wird erneut bewertet; das ist
-     der Weg, einen Fehlgriff später gutzumachen. */
-  [["bf", rateBF, `wer ${AN("er")} ist`], ["mo", rateMO, `was ${AN("ihn")} treibt`]].forEach(pa => {
-    const k = pa[0], cfg = pa[1], was = pa[2];
-    const zahl = (k === "bf" ? A.bfVerlauf : A.moVerlauf).length;
-    const fest = A.fest[k], stand = A.fest[k + "Stand"] || 0;
-    const neues = zahl - stand;
-    items.push({ t:(fest ? `Dich neu festlegen: ` : `Dich festlegen: `) + was, tag:kopf, klasse:"haupt",
-      rechts: !zahl ? `<i style="color:var(--STA)">du hast ${AN("ihn")} noch nichts gefragt</i>`
-        : fest && neues <= 0 ? `<i>nichts Neues gehört — ${AN("er")} wird trotzdem antworten</i>`
-        : `aus ${wort(zahl)} ${zahl===1?"Antwort":"Antworten"}${
-            fest ? `, ${wort(neues)} davon neu` : ``} · ${AN("er")} antwortet dir darauf`,
-      go(){ rateRunde(cfg); } });
-  });
+  /* Das Festlegen ist in den Stufen eins und zwei gefallen und dort
+     gewertet worden. Hier steht es nicht mehr: was du über ihn denkst,
+     hast du gesagt, und danach richtet sich jetzt alles. */
 
-  const bfOffen = DATA.bigfive.filter(f => !S.bfGestellt.includes(f.id)).length;
-  const moOffen = DATA.motivfragen.filter(f => !S.moGestellt.includes(f.id)).length;
+  const bfOffen = 0, moOffen = 0;
   /* Ein Preis wie -1,72 liest sich schlecht; eine Stelle reicht. */
   const preis1 = x => nk(x,1).replace(",0","");
   const kosten = `<i style="color:var(--STA)">${preis1(fragepreis())}</i> die nächste`;
@@ -1728,18 +1785,22 @@ function leseRunde(cfg){
   const rest = cfg.pool.filter(p => !S[cfg.gestellt].includes(p.id));
   if(!rest.length) return cfg.fertig();
   const glaube = S[cfg.glaube];
-  /* Der Preis der naechsten Frage steht ueber der Auswahl, damit man
-     sieht, wann es Zeit wird, wiederzukommen. */
-  const kopf = `Frage ${S[cfg.gestellt].length+1} · kostet ${nk(-fragepreis(),1).replace(",0","")} Freundschaft`
-    + (S.fragenHeute >= 5 ? ` · er wird ungeduldig` : ``)
-    + ` · noch ${nk(H(glaube))} bit im Dunkeln`;
+  /* In den Lesestufen kostet nichts und läuft nichts ab — es steht nur
+     da, wie viele Fragen du noch hast. In Stufe drei der Preis. */
+  const kopf = S.stufe <= 2
+    ? `Frage ${S[cfg.gestellt].length+1} · ${wort(rest.length)} ${rest.length===1?"Frage":"Fragen"} übrig · frag so lange du willst`
+    : `Frage ${S[cfg.gestellt].length+1} · kostet ${nk(-fragepreis(),1).replace(",0","")} Freundschaft`
+      + (S.fragenHeute >= 5 ? ` · er wird ungeduldig` : ``)
+      + ` · noch ${nk(H(glaube))} bit im Dunkeln`;
   const items = biete(cfg.pool, S[cfg.gestellt]).map(f => {
     const an = anknuepfung(f), g = eig(glaube, f, cfg.dims, cfg.feld);
     return { t: an ? an.text : f.q, tag: kopf,
       rechts: `${nk(g)} bit` + (an ? ` · <i style="color:var(--accent)">Anschluss</i>` : ``),
       go(){ stelle(f, an, cfg); } };
   });
-  items.push({ t: cfg.weiterText, klasse:"weiter", rechts:`0 bit`, go(){ cfg.fertig(); } });
+  items.push(S.stufe <= 2
+    ? { t:`Genug. Ich lege mich fest.`, klasse:"haupt", rechts:``, go(){ rateRunde(cfg.key === "bf" ? rateBF : rateMO); } }
+    : { t: cfg.weiterText, klasse:"weiter", rechts:`0 bit`, go(){ cfg.fertig(); } });
   waehle(items);
 }
 
@@ -1761,13 +1822,13 @@ function stelle(frage, an, cfg){
   setzeStimmung(antwort.stimmung);
   if(antwort.nachRegie) sag("regie", antwort.nachRegie);
   if(antwort.nachEr) sag("er", antwort.nachEr, {wie:antwort.wie});
+  if(S.stufe > 2)
   sag("meta", `<b>${gewinn>=0?"+":""}${nk(gewinn)}</b> bit · Freundschaft <b>${vzk(nachStimmung(preis))}</b> · Geduld <b>${vzk(-geduldpreis(),0)}</b>`,
     {lang: `erwartet hatte die Frage ${nk(erwartet)} bit`
       + (beste.id !== frage.id ? `, stärker gewesen wäre <s>${esc(beste.q)}</s> mit ${nk(besteEig)} bit`
                                : `, und das war die stärkste offene Frage`) + `.`});
 
-  bezPlus(nachStimmung(preis));
-  geduldPlus(-geduldpreis());
+  if(S.stufe > 2){ bezPlus(nachStimmung(preis)); geduldPlus(-geduldpreis()); }
   S.fragenHeute++;
   S[cfg.gestellt].push(frage.id);
   A[cfg.gestellt].push(frage.id);
@@ -1874,8 +1935,10 @@ function werteRaten(cfg, tipps){
   const neues = zahl - stand;
   const anteil = !alt ? 1 : Math.max(0, Math.min(1, neues / cfg.dims.length));
   const punkte = roh * anteil;
-  const wirkung = bezPlus(punkte);
-  geduldPlus(anteil > 0 ? punkte * W_GEDULD_FEST : -W_GEDULD_WIEDERHOLT);
+  /* In den Lesestufen gibt es keine Freundschaft und keine Geduld —
+     dort zählt allein die Punktzahl der Stufe. */
+  const wirkung = S.stufe <= 2 ? punkte : bezPlus(punkte);
+  if(S.stufe > 2) geduldPlus(anteil > 0 ? punkte * W_GEDULD_FEST : -W_GEDULD_WIEDERHOLT);
 
   A.fest[cfg.key] = tipps.slice();
   A.fest[cfg.key + "Stand"] = (cfg.key === "bf" ? A.bfVerlauf : A.moVerlauf).length;
@@ -1940,6 +2003,9 @@ function werteRaten(cfg, tipps){
     </table>
   </section>`);
   zeichne();
+  /* In den Lesestufen ist das Festlegen das Ende der Stufe; in Stufe
+     drei geht es danach weiter wie bisher. */
+  if(S.stufe <= 2) return setTimeout(() => stufenEnde(WELT.level[S.stufe-1], zeilen), 60);
   setTimeout(cfg.weiter, 60);
 }
 
@@ -2337,6 +2403,58 @@ function schluss(){
   besuchEnde(aus);
 }
 
+/* ═══════════════ Ende einer Lesestufe ═══════════════
+   Zwei Zahlen, mehr nicht: was diese Stufe eingebracht hat und was
+   zusammen daraus wird. Die Sterne stehen erst, wenn beide Stufen
+   gelaufen sind. */
+function stufenEnde(L, zeilen){
+  const punkte = stufenPunkte(zeilen, L);
+  A.punkte[L.key] = punkte;
+  A.stufe = punkte >= L.bestehen ? Math.min(3, A.stufe + 1) : A.stufe;
+  const beide = (A.punkte.bf || 0) + (A.punkte.mo || 0);
+  const fertig = A.punkte.bf != null && A.punkte.mo != null;
+  if(fertig){ A.sterne = sterneZu(beide).n; }
+  akteSichern();
+  S.ende = "stufe";
+  S.phase = 5;
+
+  const geschafft = punkte >= L.bestehen;
+  const st = fertig ? sterneZu(beide) : null;
+
+  sag("verdict", `<section class="panel verdict" style="margin-top:20px">
+    <div class="eyebrow">Stufe ${L.nr} · ${esc(L.name)}</div>
+    <div class="big" style="color:${geschafft?"var(--SIC)":"var(--STA)"}">${
+      geschafft ? "Bestanden." : "Nicht bestanden."}</div>
+
+    <div class="punktzeile">
+      <div>diese Stufe<b>${punkte} von ${L.punkte.genau * zeilen.length}</b></div>
+      <div>zum Bestehen<b>${L.bestehen}</b></div>
+      ${A.punkte.bf != null ? `<div>Wesen<b>${A.punkte.bf}</b></div>` : ``}
+      ${A.punkte.mo != null ? `<div>Bedürfnisse<b>${A.punkte.mo}</b></div>` : ``}
+      ${fertig ? `<div>zusammen<b>${beide} von 200</b></div>` : ``}
+    </div>
+
+    ${fertig ? `<div style="margin:16px 0 6px">${sterneBild(st.n)}</div>
+      <p class="small" style="margin-bottom:14px">${esc(st.t)}</p>` : ``}
+
+    <table class="bil">${zeilen.map(z => `<tr class="${z.dist===0?"hi":""}">
+      <td>${z.label}</td>
+      <td class="n">du ${vz(z.tipp)}</td>
+      <td class="n"><span class="treffer ${z.dist===0?"ja":(z.dist===1?"nah":"nein")}">${
+        z.dist===0?"getroffen":(z.dist===1?"eine Stufe daneben":"daneben")}</span>
+        ${z.dist===0?L.punkte.genau:(z.dist===1?L.punkte.knapp:L.punkte.daneben)}</td></tr>`).join("")}
+    </table>
+
+    <p class="small dim" style="margin-top:12px">${
+      geschafft
+        ? (L.nr === 1 ? `Stufe zwei ist offen: was er braucht.`
+           : `Stufe drei ist offen: der Koffer. Dort gilt alles, was du hier gelernt hast.`)
+        : `Du kannst die Stufe noch einmal spielen. Er fängt dann von vorn an, und du weißt mehr als beim ersten Mal.`}</p>
+  </section>`);
+  zeichne();
+  knopf("Zurück ins Menü", () => zeigeMenue());
+}
+
 /* ═══════════════ Ende eines Besuchs ═══════════════
    Alles, was bleibt, steht in der Akte: die Freundschaft, was du gehört
    hast, worauf du dich festgelegt hast. Beim nächsten Mal geht es
@@ -2471,11 +2589,17 @@ function zeigeMenue(){
     const a = akteVon(pp.id), st = stufeZu(a.bez), zu = a.bez < WELT.freundschaft.verbrannt;
     /* Beim ersten Mal steht da, wen du besuchst. Danach steht da, wie
        ihr auseinandergegangen seid. */
+    /* Was auf der Karte steht: beim ersten Mal, wer da sitzt; danach,
+       wie weit du bist und was du bei ihm erreicht hast. */
+    const L = WELT.level[Math.min(2, (a.stufe || 1) - 1)];
+    const beide = (a.punkte.bf || 0) + (a.punkte.mo || 0);
     const unten = zu
       ? `<i style="color:var(--STA)">verbrannt · er lässt dich nicht mehr herein</i>`
-      : a.besuche
-        ? `${a.besuche===1 ? "ein Besuch" : wort(a.besuche)+" Besuche"} · Freundschaft ${Math.round(a.bez)} · ${st.name}`
-        : esc(pp.kurz || pp.hero.job);
+      : (a.punkte.bf == null && a.punkte.mo == null)
+        ? esc(pp.kurz || pp.hero.job)
+        : `Stufe ${a.stufe} · ${esc(L.name)}`
+          + (a.sterne != null ? ` · ${"★".repeat(a.sterne)}${"☆".repeat(5-a.sterne)} ${beide} Punkte`
+             : ` · ${beide} Punkte`);
     return `<button class="mkarte" data-person="${pp.id}"${zu?" disabled":""}>
       <span class="mbild" style="background-image:url('${pp.menubild || ""}')"></span>
       <span><b>${esc(pp.hero.name)}, ${pp.hero.age}</b>
@@ -2522,8 +2646,24 @@ function zuruecksetzen(){
 function starteGespraech(person){
   document.body.classList.remove("imMenue");
   ladePerson(person);
+  /* Die zwei Lesestufen laufen ohne Balken und ohne Modell; erst in
+     Stufe drei kommt der ganze Apparat dazu. */
+  document.body.dataset.stufe = S.stufe <= 2 ? "lesen" : "voll";
+  if(S.stufe <= 2) notizenAufklappen(); else stufeDreiVorbereiten();
   zeichne();
   ankunft();
+}
+
+/* Stufe drei erbt, was in eins und zwei herausgekommen ist. Die
+   Freundschaft startet danach, wie gut du gelesen hast: wer beide
+   Stufen voll bestanden hat, sitzt jemandem gegenüber, der ihn für
+   einen hält, der zuhört. */
+function stufeDreiVorbereiten(){
+  const beide = (A.punkte.bf || 0) + (A.punkte.mo || 0);
+  const B = WELT.freundschaft;
+  S.bez = Math.round(B.start + (beide / 200) * 40);
+  S.bezStart = S.bez;
+  A.bez = S.bez;
 }
 
 /* ═══════════════ Start ═══════════════ */

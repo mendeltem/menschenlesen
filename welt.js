@@ -115,6 +115,38 @@ anrede: {
   sein:`sein`, Sein:`Sein`, seine:`seine`, Seine:`Seine`, seiner:`seiner`
 },
 
+/* --- Die drei Stufen. Die ersten zwei sind reines Lesen: du fragst,
+       so lange du willst, schreibst mit und legst dich fest. Es gibt
+       dabei keine Balken und kein sichtbares Modell — nur deine Notizen
+       und ihn.
+
+       punkte    was eine Achse einbringt: genau getroffen, um eine
+                 Stufe daneben, weiter daneben.
+       bestehen  ab wie vielen Punkten die nächste Stufe aufgeht.
+       ---------------------------------------------------------------- */
+level: [
+  { nr:1, key:`bf`, name:`Sein Wesen`,
+    was:`Finde heraus, wie er tickt: fünf Merkmale, jedes von minus zwei bis plus zwei.`,
+    punkte:{ genau:20, knapp:8, daneben:0 }, bestehen:50 },
+  { nr:2, key:`mo`, name:`Was er braucht`,
+    was:`Zwei Waagen, jede mit zwei Seiten. Sicherheit oder Freiheit, Nähe oder Geltung.`,
+    punkte:{ genau:50, knapp:20, daneben:0 }, bestehen:50 },
+  { nr:3, key:`koffer`, name:`Der Koffer`,
+    was:`Jetzt erst geht es ums Verkaufen — mit allem, was du über ihn weißt.`,
+    punkte:null, bestehen:null }
+],
+
+/* --- Aus den zwei Punktzahlen wird ein Stern-Urteil. Zweihundert sind
+       das Höchste, hundert je Stufe. ------------------------------- */
+sterne: [
+  { ab:180, n:5, t:`Du hast ihn gelesen wie ein offenes Buch.` },
+  { ab:145, n:4, t:`Sehr genau. Ein Merkmal hat dich gefoppt, mehr nicht.` },
+  { ab:105, n:3, t:`Brauchbar. Du kennst ihn, aber nicht gut.` },
+  { ab:60,  n:2, t:`Halb daneben. Vieles war geraten.` },
+  { ab:25,  n:1, t:`Wenig getroffen. Zuhören ist etwas anderes als Fragen.` },
+  { ab:-999, n:0, t:`Du hast einen anderen Menschen beschrieben als den, der dir gegenübersaß.` }
+],
+
 sharpness: 1.15,
 
 /* --- Was die wahren Werte für dich bedeuten. Wird nach jedem

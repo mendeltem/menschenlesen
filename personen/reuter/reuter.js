@@ -17,7 +17,7 @@
 PERSONEN.push({
 
 id: `reuter`,
-kurz: `Papierrestauratorin, 38. Dunkler Bob, Kittel über dem Pullover,
+kurz: `Papierrestauratorin, 38. Dunkler Bob und Kittel über dem Pullover,
        ein Tisch, auf dem jedes Werkzeug parallel liegt.`,
 theme: `papier`,
 menubild: `personen/reuter/bilder/freundlich.webp`,

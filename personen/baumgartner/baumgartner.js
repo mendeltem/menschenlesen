@@ -18,7 +18,7 @@ PERSONEN.push({
 
 id: `baumgartner`,
 /* Womit die Person im Menü steht und welches Farbschema sie mitbringt. */
-kurz: `Statistiker, 52. Wilder grauer Schopf, Kopfhörer um den Hals,
+kurz: `Statistiker, 52. Wilder grauer Schopf und Kopfhörer um den Hals,
        ein Schreibtisch, der seit Jahren nicht aufgeräumt wurde.`,
 theme: `tinte`,
 menubild: `personen/baumgartner/bilder/freundlich.webp`,
