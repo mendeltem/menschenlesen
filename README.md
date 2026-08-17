@@ -186,7 +186,7 @@ freundlich bleibt. Sein Ärger sieht aus wie Zustimmung.
 | Der Stift | −1,4 | **+2,6** | **+1,6** | −1,6 |
 | Die Brille | −4,0 | −1,6 | −2,2 | **+2,2** |
 
-Mit Kerstin Vogt hat jede der drei Waren ihren Menschen. Sie ist auch die
+Mit Angela Vogt hat jede der drei Waren ihren Menschen. Sie ist auch die
 Erste auf der anderen Seite der zweiten Waage: die drei anderen wollen
 alle dazugehören und keiner gesehen werden, sie will beides umgekehrt.
 Damit ist *Nähe oder Geltung* zum ersten Mal eine Frage mit zwei
@@ -235,7 +235,7 @@ die alles mitbringen: Texte, Fragen, Zustände, Bilder, Farbschema.
 | `personen/baumgartner/` | Tobias Baumgartner, Statistiker: seine Datei und seine Bilder |
 | `personen/reuter/` | Annika Reuter, Papierrestauratorin — dasselbe noch einmal, und in fast allem seine Gegenprobe |
 | `personen/sartori/` | Luigi Sartori, Kantinenkoch |
-| `personen/vogt/` | Kerstin Vogt, Hausmeisterin |
+| `personen/vogt/` | Angela Vogt, Hausmeisterin |
 | `PROMPTS_ANNIKA.md`, `PROMPTS_LUIGI.md` | der Personengenerator an einer Person durchgespielt, fertig zum Kopieren |
 | `PROMPTS.md` | ein Prompt, aus dem jede weitere Person entsteht |
 | `werkzeug/` | zerlegt einen Kontaktbogen in die zehn Stimmungsbilder |

@@ -1,7 +1,7 @@
-# Kerstin Vogt — die Bilder
+# Angela Vogt — die Bilder
 
 *Der allgemeine Weg steht in [`PROMPTS.md`](../../PROMPTS.md). Diese
-Datei zeigt ihn an Kerstin durchgespielt, wie
+Datei zeigt ihn an Angela durchgespielt, wie
 [`PROMPTS_LUIGI.md`](../sartori/PROMPTS_LUIGI.md) an Luigi.*
 
 Hausmeisterin und Betriebselektrikerin, 47. Die vierte Person.
@@ -24,7 +24,7 @@ Arbeitsjacke.
 | Tobias Baumgartner | Ziegelrot |
 | Annika Reuter | Blaugrau |
 | Luigi Sartori | Moosgrün |
-| **Kerstin Vogt** | **Signalorange** |
+| **Angela Vogt** | **Signalorange** |
 
 Zwei Dinge machen sie beim Zeichnen aus:
 

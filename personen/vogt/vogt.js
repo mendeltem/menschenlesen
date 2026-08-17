@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════════
-   Kerstin Vogt, Hausmeisterin und Betriebselektrikerin.
+   Angela Vogt, Hausmeisterin und Betriebselektrikerin.
 
    Die vierte Person und die erste, bei der Direktheit sofort trägt.
    Baumgartner redet viel, aber laut nach außen ist hier bisher niemand
@@ -25,7 +25,7 @@ theme: `terminal`,
 menubild: `personen/vogt/bilder/freundlich.webp`,
 
 hero: {
-  name: `Kerstin Vogt`, age: 47, job: `Hausmeisterin und Betriebselektrikerin`,
+  name: `Angela Vogt`, age: 47, job: `Hausmeisterin und Betriebselektrikerin`,
   ort: `Untergeschoss, Werkstatt am Ende des Ganges, Tür immer offen`,
   /* Bodenständig, laut, direkt, unerschütterlich, wenig neugierig auf
      Neues und ordentlich in dem, was zählt.
