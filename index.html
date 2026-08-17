@@ -14,7 +14,7 @@
   --serif:Georgia,"Iowan Old Style","Times New Roman",serif;
   --r:14px;
 }
-/* Die fuenfzehn Farbschemata. bauen.py setzt sie an den Platzhalter
+/* Die dreizehn Farbschemata. bauen.py setzt sie an den Platzhalter
    im Kopf von spiel.html. Eine Person waehlt ihres ueber theme. */
 /* ── Tinte · warmes Anthrazit mit Messing ─────────────────── */
 :root, body[data-theme="tinte"]{
@@ -35,25 +35,6 @@
   --face-filter:saturate(.92) contrast(1.03) brightness(.97);
   --face-tint:linear-gradient(180deg,rgba(232,176,75,.10),rgba(20,20,28,.28));
   --face-blend:normal;
-}
-
-/* ── Papier · das urspruengliche Blatt, aufgeraeumt ────────── */
-body[data-theme="papier"]{
-  --paper:#E8E9E3;
-  --mesh:
-    radial-gradient(900px 620px at 14% -10%, rgba(44,95,138,.10), transparent 60%),
-    radial-gradient(760px 560px at 92% 2%, rgba(181,133,31,.10), transparent 60%),
-    linear-gradient(180deg,#F2F3EE 0%,#E4E5DF 100%);
-  --pattern:none; --grain:.06;
-  --surface:rgba(255,255,255,.66); --surface-2:rgba(255,255,255,.88); --surface-hi:#fff;
-  --ink:#15181B; --muted:#6C7278;
-  --line:rgba(21,24,27,.17); --line-soft:rgba(21,24,27,.08);
-  --accent:#2C5F8A; --accent-2:#A6432C; --accent-ink:#fff;
-  --AUT:#2C5F8A; --SIC:#4B7A54; --STA:#A6432C; --ZUG:#7A548F; --EFF:#B5851F;
-  --glow:0 0 22px rgba(44,95,138,.18); --shade:none;
-  --panel-shadow:0 1px 0 rgba(255,255,255,.7) inset, 0 14px 30px -24px rgba(20,25,30,.55);
-  --face-filter:none; --face-tint:none; --face-blend:normal;
-  --vignette:0;
 }
 
 /* ── Blaupause · technisches Blau mit Raster ───────────────── */
@@ -166,25 +147,6 @@ body[data-theme="miami"]{
   --glow:0 0 30px rgba(255,111,97,.38); --shade:0 1px 12px rgba(0,0,0,.6);
   --panel-shadow:0 1px 0 rgba(255,210,200,.07) inset, 0 18px 40px -28px rgba(0,0,0,.9);
   --face-filter:saturate(1) contrast(1.03); --face-tint:linear-gradient(180deg,rgba(255,111,97,.14),rgba(20,10,30,.36)); --face-blend:normal;
-}
-
-/* ── Sakura · helles Rosa, heller Schleier ─────────────────── */
-body[data-theme="sakura"]{
-  --paper:#fff3f8;
-  --mesh:
-    radial-gradient(900px 600px at 20% -10%, rgba(255,122,182,.26), transparent 62%),
-    radial-gradient(760px 560px at 90% 6%, rgba(168,85,247,.14), transparent 62%),
-    linear-gradient(180deg,#fff7fb 0%,#ffeaf3 100%);
-  --pattern:none; --grain:.05;
-  --surface:rgba(255,255,255,.68); --surface-2:rgba(255,255,255,.9); --surface-hi:#fff;
-  --ink:#45122c; --muted:#a05c80;
-  --line:rgba(180,60,120,.20); --line-soft:rgba(180,60,120,.10);
-  --accent:#e0357f; --accent-2:#8b45d6; --accent-ink:#fff;
-  --AUT:#2f7fc4; --SIC:#3f9a68; --STA:#d6402f; --ZUG:#8b45d6; --EFF:#c08313;
-  --glow:0 0 24px rgba(224,53,127,.22); --shade:none;
-  --panel-shadow:0 1px 0 rgba(255,255,255,.8) inset, 0 14px 30px -24px rgba(120,30,70,.4);
-  --face-filter:saturate(1.02); --face-tint:linear-gradient(180deg,rgba(255,140,190,.10),transparent); --face-blend:normal;
-  --vignette:0;
 }
 
 /* ── Dschungel · Blattgruen mit Safrangelb ─────────────────── */
@@ -935,11 +897,10 @@ table.bil tr.hi td.n{color:var(--accent); font-weight:600}
 <script>
 /* ═══════════════ Themes ═══════════════ */
 const THEMES = [
-  {id:"tinte",label:"Tinte",dot:"#e8b04b"}, {id:"papier",label:"Papier",dot:"#2C5F8A"},
-  {id:"blaupause",label:"Blaupause",dot:"#7fd1ff"}, {id:"terminal",label:"Terminal",dot:"#ffb03c"},
+  {id:"tinte",label:"Tinte",dot:"#e8b04b"}, {id:"blaupause",label:"Blaupause",dot:"#7fd1ff"}, {id:"terminal",label:"Terminal",dot:"#ffb03c"},
   {id:"neon",label:"Neon",dot:"#ff2ea6"}, {id:"cyberpunk",label:"Cyberpunk",dot:"#00f0ff"},
   {id:"synthwave",label:"Synthwave",dot:"#7a5cff"}, {id:"miami",label:"Miami",dot:"#ff6f61"},
-  {id:"sakura",label:"Sakura",dot:"#ff9fc7"}, {id:"dschungel",label:"Dschungel",dot:"#4ade80"},
+  {id:"dschungel",label:"Dschungel",dot:"#4ade80"},
   {id:"matrix",label:"Matrix",dot:"#00ff41"}, {id:"ozean",label:"Ozean",dot:"#38bdf8"},
   {id:"kosmos",label:"Kosmos",dot:"#9d8cff"}, {id:"ekko",label:"Ekko",dot:"#2ee6c4"},
   {id:"lcars",label:"LCARS",dot:"#ff9c00"}

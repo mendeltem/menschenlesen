@@ -235,7 +235,7 @@ die alles mitbringen: Texte, Fragen, Zustände, Bilder, Farbschema.
 | `musik/` | fünf Spuren: Menü, Laden, Gespräch, gewonnen, verloren |
 | `balance.py` | spielt sechshundert Besuchsreihen je Spielweise und misst, wann er kauft |
 | `quelle/spiel.html` | **die Vorlage, an der man arbeitet** — Menü, Mechanik, Anzeige |
-| `quelle/themes.css` | die fünfzehn Farbschemata |
+| `quelle/themes.css` | die dreizehn Farbschemata, alle dunkel |
 | `quelle/bauen.py` | setzt beides zu `index.html` zusammen |
 
 **Jede Person hat einen Ordner**, und darin liegt alles, was zu ihr
