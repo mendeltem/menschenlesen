@@ -16,6 +16,15 @@
    passt fuer Boegen ohne sichtbare Stege.
 
        --spalten / --reihen   Raster erzwingen (Standard 5 und 2)
+       --senkrecht a,b,c      Schnittkanten selbst angeben. Noetig,
+       --waagerecht a,b       wenn der Generator Beschriftungen mit
+                              aufs Blatt gezeichnet hat: dann liegt
+                              zwischen den Reihen kein Steg, sondern
+                              Text, und die Stegsuche schneidet
+                              mitten hinein. Je Feld zwei Zahlen,
+                              also linke und rechte Kante:
+                                --senkrecht 30,555,587,1113,...
+                                --waagerecht 72,675,812,1452
        --rand N               N Pixel je Seite zusaetzlich wegschneiden
        --pruefen              nur anzeigen, wo geschnitten wuerde
 """
@@ -86,6 +95,8 @@ def main():
     p.add_argument("--spalten", type=int, default=5)
     p.add_argument("--reihen", type=int, default=2)
     p.add_argument("--rand", type=int, default=6, help="Pixel je Seite zusätzlich wegschneiden")
+    p.add_argument("--senkrecht", help="Kantenpaare je Spalte, mit Komma getrennt")
+    p.add_argument("--waagerecht", help="Kantenpaare je Reihe, mit Komma getrennt")
     p.add_argument("--ziel", default=None, help="Standard: personen/<kennung>/bilder")
     p.add_argument("--pruefen", action="store_true", help="nur anzeigen, nichts schreiben")
     a = p.parse_args()
@@ -101,27 +112,42 @@ def main():
         print("Achtung: %d Felder, aber %d Stimmungen — es werden nur die ersten %d benannt."
               % (felder, len(STIMMUNGEN), min(felder, len(STIMMUNGEN))))
 
-    x = stege(helligkeit(bild, 0), a.spalten, b) or gleichmaessig(b, a.spalten)
-    y = stege(helligkeit(bild, 1), a.reihen, h) or gleichmaessig(h, a.reihen)
     print("Bogen %dx%d, Raster %dx%d" % (b, h, a.spalten, a.reihen))
-    print("  Schnitte senkrecht:", x)
-    print("  Schnitte waagerecht:", y)
+    def kanten(text, anzahl, name):
+        z = [int(v) for v in text.split(",")]
+        if len(z) != 2 * anzahl:
+            sys.exit("%s: %d Zahlen erwartet (zwei je Feld), %d bekommen"
+                     % (name, 2 * anzahl, len(z)))
+        return list(zip(z[0::2], z[1::2]))
+
+    if a.senkrecht or a.waagerecht:
+        if not (a.senkrecht and a.waagerecht):
+            sys.exit("--senkrecht und --waagerecht gehören zusammen")
+        sx = kanten(a.senkrecht, a.spalten, "--senkrecht")
+        sy = kanten(a.waagerecht, a.reihen, "--waagerecht")
+        print("  Kanten von Hand:", sx, sy)
+        kaesten = [(sx[c][0], sy[r][0], sx[c][1], sy[r][1])
+                   for r in range(a.reihen) for c in range(a.spalten)]
+    else:
+        x = stege(helligkeit(bild, 0), a.spalten, b) or gleichmaessig(b, a.spalten)
+        y = stege(helligkeit(bild, 1), a.reihen, h) or gleichmaessig(h, a.reihen)
+        print("  Schnitte senkrecht:", x)
+        print("  Schnitte waagerecht:", y)
+        kaesten = [(x[c], y[r], x[c+1], y[r+1])
+                   for r in range(a.reihen) for c in range(a.spalten)]
 
     os.makedirs(a.ziel, exist_ok=True)
-    n = 0
-    for r in range(a.reihen):
-        for c in range(a.spalten):
-            if n >= len(STIMMUNGEN):
-                break
-            kasten = (x[c] + a.rand, y[r] + a.rand, x[c+1] - a.rand, y[r+1] - a.rand)
-            name = os.path.join(a.ziel, "%s.webp" % STIMMUNGEN[n])
-            if a.pruefen:
-                print("  %-34s %s  %dx%d" % (name, kasten,
-                                             kasten[2]-kasten[0], kasten[3]-kasten[1]))
-            else:
-                bild.crop(kasten).save(name, "WEBP", quality=88, method=6)
-                print("  %-34s %d KB" % (name, os.path.getsize(name) // 1024))
-            n += 1
+    for n, roh in enumerate(kaesten):
+        if n >= len(STIMMUNGEN):
+            break
+        kasten = (roh[0] + a.rand, roh[1] + a.rand, roh[2] - a.rand, roh[3] - a.rand)
+        name = os.path.join(a.ziel, "%s.webp" % STIMMUNGEN[n])
+        if a.pruefen:
+            print("  %-42s %s  %dx%d" % (name, kasten,
+                                         kasten[2]-kasten[0], kasten[3]-kasten[1]))
+        else:
+            bild.crop(kasten).save(name, "WEBP", quality=88, method=6)
+            print("  %-42s %d KB" % (name, os.path.getsize(name) // 1024))
     if not a.pruefen:
         print("Fertig. In der Personendatei unter stimmungen eintragen:")
         for s in STIMMUNGEN:

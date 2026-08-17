@@ -101,8 +101,22 @@ Zerschneiden in dieser Reihenfolge:
 Von Hand muss das niemand:
 
 ```bash
-python werkzeug/kontaktbogen_schneiden.py personen/vogt/kontaktbogen.png vogt
+python werkzeug/kontaktbogen_schneiden.py personen/vogt/kontaktbogen.jpg vogt
 ```
+
+**Wenn der Bogen beschriftet ist:** Gemini hat beim ersten Versuch die
+Dateinamen über und unter die Felder geschrieben, obwohl im Prompt *no
+text, no labels, no numbers* steht — und die mittlere Zeile war noch
+dazu falsch. Zwischen den Reihen liegt dann kein Steg, sondern Text, und
+die Stegsuche schneidet mitten hinein. Dann liest man die Feldkanten
+einmal ab und gibt sie mit:
+
+```bash
+python werkzeug/kontaktbogen_schneiden.py personen/vogt/kontaktbogen.jpg vogt --rand 4 --senkrecht 30,555,587,1113,1144,1671,1702,2228,2259,2785 --waagerecht 72,675,812,1452
+```
+
+Je Feld zwei Zahlen, linke und rechte Kante. Die Bilder selbst standen
+in der richtigen Reihenfolge, nur die Beschriftung war Unsinn.
 
 ---
 
