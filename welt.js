@@ -125,14 +125,14 @@ anrede: {
        bestehen  ab wie vielen Punkten die nächste Stufe aufgeht.
        ---------------------------------------------------------------- */
 level: [
-  { nr:1, key:`bf`, name:`Sein Wesen`,
-    was:`Finde heraus, wie er tickt: fünf Merkmale, jedes von minus zwei bis plus zwei.`,
+  { nr:1, key:`bf`, name:`{Sein} Wesen`,
+    was:`Finde heraus, wie {er} tickt: fünf Merkmale, jedes von minus zwei bis plus zwei.`,
     punkte:{ genau:20, knapp:8, daneben:0 }, bestehen:50 },
-  { nr:2, key:`mo`, name:`Was er braucht`,
+  { nr:2, key:`mo`, name:`Was {er} braucht`,
     was:`Zwei Waagen, jede mit zwei Seiten. Sicherheit oder Freiheit, Nähe oder Geltung.`,
     punkte:{ genau:50, knapp:20, daneben:0 }, bestehen:50 },
   { nr:3, key:`koffer`, name:`Der Koffer`,
-    was:`Jetzt erst geht es ums Verkaufen — mit allem, was du über ihn weißt.`,
+    was:`Jetzt erst geht es ums Verkaufen — mit allem, was du über {ihn} weißt.`,
     punkte:null, bestehen:null }
 ],
 
