@@ -31,6 +31,8 @@
 PERSONEN.push({
 
 id: `kettner`,
+/* In welcher Etage sie sitzt. Ohne den Schlüssel dafür kommst du nicht hin. */
+etage: 1,
 kurz: `Empfang, 56. Weinroter Strickmantel hinter einer Glasscheibe,
        ein aufgeschlagenes Besucherbuch, und ein Lächeln, das angeht und ausgeht.`,
 theme: `ozean`,
@@ -126,7 +128,7 @@ kennenfrage: [
 ],
 
 uebergang1: {
-  duFest: `Du erzählst in zwei Sätzen, was du machst. Ein Projekt, das dir über den Kopf wächst. Davon später, sagst du.`,
+  duFest: `Du sagst, dass du neu bist und dich im Haus umsehen sollst: wer hier arbeitet, was hier läuft. Warum ausgerechnet du, sagst du nicht. Davon später.`,
   er: `Gut. Dann später. Ich habe bis halb zwölf niemanden angemeldet.`,
   erRegie: `Sie legt den Stift genau parallel zur Kante des Buches und faltet die Hände darüber.`,
   wie: `verbindlich, ohne jede Neugier`, stimmung: `neutral`
@@ -888,121 +890,5 @@ abschied: [
     er:`Wiedersehen.`, wie:`höflich und leer`, stimmung:`verschlossen`, bez:0 }
 ],
 
-abfuhr: {
-  regie:`Du stellst den Koffer auf den Tresen. Sie sieht ihn an und rührt sich nicht.`,
-  er:`Ach so.`,
-  erRegie:`Sie schiebt ihn nicht weg. Sie zieht nur das Buch darunter hervor, damit nichts darauf steht.`,
-  er2:`Sie hätten es gleich sagen können. Ich hätte Sie trotzdem eingetragen, ich trage jeden ein. Nur hätte ich Ihnen dann nicht erzählt, warum die Scheibe da ist. Das erzähle ich sonst niemandem, und jetzt weiß ich auch wieder, warum.`,
-  wie:`freundlich`, wie2:`ausgesucht höflich, und vollkommen zu`, stimmung:`abweisend` },
 
-/* --- Der Verkauf. Bei ihr trägt der Stift, und zwar aus einem Grund,
-       den sie selbst nennen würde, wenn man sie fragte: sie lebt davon,
-       dass sich hinterher nachweisen lässt, was war. Der Haken ist bei
-       ihr der härteste im Spiel, und sie hört ihn sich an. ---------- */
-
-verkauf: {
-  aufschlag: `Achtundzwanzig Minuten sind um. Du hebst den Koffer auf den Tresen, drehst ihn zu ihr und klappst ihn auf. Drei Dinge liegen darin, jedes in seiner Mulde.`,
-  reaktionRegie: `Sie schiebt das Buch zur Seite, damit Platz ist, und faltet die Hände davor.`,
-  reaktion: `Sie verkaufen etwas. Gut, dann sind wir wenigstens fertig mit dem Teil, in dem wir so tun, als wären Sie zum Reden gekommen.`,
-  reaktionWie: `verbindlich, ohne Schärfe, und ohne die kleinste Illusion`,
-  start: 30,
-  zuege: [
-    { frage: `Warum zeigen Sie mir ausgerechnet das?`, wie:`sachlich, prüfend`, stimmung:`neutral`,
-      opt: [
-        { id:`alle`, t:`Weil das jeder brauchen kann.`,
-          wie:`allgemein, ein wenig auswendig`, auto:0, aff:{},
-          er:`Jeder.`, erRegie:`Sie lehnt sich einen Zentimeter zurück.`,
-          er2:`Ich sitze seit zweiundzwanzig Jahren an der Stelle, an der Leute hereinkommen und behaupten, ihre Sache sei für jeden. Sie sind heute der Zweite.`,
-          wie2:`freundlich`, stimmung:`skeptisch` },
-        { id:`zugehoert`, t:`Weil bei Ihnen alles daran hängt, dass sich hinterher nachweisen lässt, was war. Wenn ich falsch liege, sagen Sie es, und ich packe ein.`,
-          wie:`ruhig, ohne Druck`, auto:2, aff:{FRE:-1.3, GEL:0.5},
-          an:{ werkstatt:`Sie nehmen nichts für die Nähmaschinen, damit Sie nichts garantieren müssen. Ich glaube, ich habe verstanden, wie Sie rechnen. Dafür ist das hier.`,
-               plan60:`Sie ziehen jeden Morgen einen Tag ab und wissen die Zahl auswendig. Sie halten fest, was war. Genau dafür ist das hier.`,
-               buch:`Neunzehn Bücher seit 2003, jede Zeile mit Uhrzeit. Deshalb dieses und nichts anderes.` },
-          erRegieVor:`Sie sagt zwei Sekunden nichts, was bei ihr nicht selten ist, aber diesmal sieht sie dabei nicht weg.`,
-          er:`Weiter.`, wie2:`aufmerksam`, stimmung:`interessiert` },
-        { id:`beste`, t:`Weil es das Beste ist, was ich dabei habe.`,
-          wie:`bestimmt`, auto:0, aff:{GEL:0.9},
-          er:`Das Beste wofür?`, erRegie:`Sie nimmt es nicht in die Hand.`,
-          er2:`Sagen Sie mir, wofür, dann sage ich Ihnen, ob ich es brauche. In der Reihenfolge.`,
-          wie2:`sachlich, nicht unfreundlich`, stimmung:`neutral` }
-      ]},
-
-    { frage: `Wo ist der Haken?`, wie:`sofort, ohne Umweg`, stimmung:`skeptisch`,
-      opt: [
-        { id:`keiner`, t:`Es gibt keinen.`,
-          wie:`glatt`, auto:-1, aff:{},
-          er:`Es gibt immer einen.`, erRegie:`Sie legt es zurück in die Mulde.`,
-          er2:`Bei fünf Umstellungen hat mir fünfmal jemand gesagt, es gebe keinen. Ich habe ihn hinterher jedes Mal gefunden, und zwar bei mir am Tresen.`,
-          wie2:`freundlich`, stimmung:`gereizt` },
-        { id:`nennen`, t:`__HAKEN__`,
-          wie:`ruhig, ohne Beschönigung`, auto:2, aff:{FRE:-1.0, GEL:0.5},
-          erRegieVor:`Sie hört auf, den Stift zu richten.`,
-          er:`Sie haben es gesagt, bevor ich gefragt habe.`, erRegie:`Sie nickt einmal, sehr knapp.`,
-          er2:`Das ist mir hier zweimal passiert in zweiundzwanzig Jahren. Reden Sie weiter, ich höre jetzt anders zu.`,
-          wie2:`sachlich, ein wenig überrascht`, stimmung:`interessiert` },
-        { id:`spaeter`, t:`Darüber reden wir, wenn Sie sich entschieden haben.`,
-          wie:`ausweichend`, auto:-2, aff:{},
-          er:`Nein.`, erRegie:`Sie zieht das Buch wieder vor sich.`,
-          er2:`Jetzt oder gar nicht. Was man mir erst nach der Unterschrift sagt, habe ich schon einmal unterschrieben.`,
-          wie2:`ausgesucht höflich`, stimmung:`gereizt` }
-      ]},
-
-    { frage: `Und woher weiß ich, dass das stimmt?`, wie:`prüfend`, stimmung:`skeptisch`,
-      opt: [
-        { id:`schriftlich`, t:`Ich schreibe Ihnen auf, was ich zugesagt habe. Mit Datum, und ich unterschreibe es.`,
-          wie:`konkret, ohne Bedingung`, auto:2, aff:{FRE:-1.5, GEL:0.6},
-          an:{ buch:`Sie tragen alles mit Uhrzeit ein. Dann tragen Sie mich auch ein: was ich zugesagt habe, mit Datum und meiner Unterschrift.` },
-          er:`Mit Datum.`, erRegie:`Sie schiebt dir den Stift durch den Schlitz, bevor du zu Ende gesprochen hast.`,
-          er2:`Sie sind der Erste, der mir das von selbst anbietet. Alle anderen sagen, das sei nicht nötig.`,
-          wie2:`sehr aufmerksam`, stimmung:`interessiert` },
-        { id:`probieren`, t:`Sie behalten es zwei Wochen. Wenn es nichts taugt, hole ich es ab.`,
-          wie:`entgegenkommend`, auto:1, aff:{FRE:-0.5},
-          er:`Und in welcher Form?`, erRegie:`Sie fragt es sofort.`,
-          er2:`Mündlich ist mir das zu wenig. Wenn Sie es aufschreiben, ist es ein Angebot. Sonst ist es eine freundliche Absicht, und die habe ich hier schon oft gehabt.`,
-          wie2:`sachlich`, stimmung:`neutral` },
-        { id:`glauben`, t:`An dieser Stelle müssen Sie mir einfach glauben.`,
-          wie:`beschwörend`, auto:-1.5, aff:{},
-          er:`Müssen.`, erRegie:`Das Lächeln geht an und wieder aus.`,
-          er2:`Ich lasse niemanden ins Haus, weil ich ihm glaube. Ich lasse ihn hinein, weil er auf einer Liste steht. Bei mir ist das kein Misstrauen, das ist der Beruf.`,
-          wie2:`freundlich, schneidend`, stimmung:`gereizt` }
-      ]},
-
-    { regie: `Sie sieht in den offenen Koffer und dann auf die Uhr über der Drehtür.`,
-      opt: [
-        { id:`neinistnein`, t:`Lassen Sie sich Zeit. Wenn Sie Nein sagen, ist das ein Nein und kein Zwischenstand.`,
-          wie:`ruhig, ohne Nachdruck`, auto:2, aff:{FRE:-0.8, GEL:0.6},
-          an:{ tochter:`Entscheiden Sie es am Wochenende oder gar nicht. Und wenn es ein Nein wird, ist es ein Nein — ich frage nicht nach.`,
-               musik:`Denken Sie beim Laufen darüber nach. Und wenn es ein Nein wird, ist es ein Nein und kein Zwischenstand.` },
-          er:`Ein Nein, das ein Nein sein darf.`, erRegie:`Sie sieht dich an und diesmal geht das Lächeln nicht wieder aus.`,
-          er2:`Ich sage dreißigmal am Tag Nein, und dreißigmal am Tag fragt jemand direkt danach noch einmal. Sie haben keine Ahnung, was Sie gerade angeboten haben.`,
-          wie2:`leiser`, stimmung:`geruehrt` },
-        { id:`verpassen`, t:`Wenn Sie jetzt Nein sagen, verpassen Sie etwas.`,
-          wie:`drängend`, auto:-1.5, aff:{},
-          er:`Sicher.`, erRegie:`Sie zieht das Buch vor sich und schlägt die nächste Seite auf.`,
-          er2:`Ich verpasse jeden Mittag, an dem die anderen zusammen essen. Damit kommen Sie bei mir nicht weit.`,
-          wie2:`gleichmütig`, stimmung:`verschlossen` },
-        { id:`freitag`, t:`Der Preis gilt nur bis Freitag.`,
-          wie:`geschäftsmäßig, mit einem Blick auf die Uhr`, auto:-2, aff:{},
-          er:`Freitag.`, erRegie:`Sie klappt den Koffer von ihrer Seite aus zu.`,
-          er2:`Dann bis Freitag, ohne mich. Wer mir eine Frist setzt, will, dass ich unterschreibe, bevor ich nachgelesen habe. Das ist mir einmal passiert.`,
-          wie2:`sehr höflich`, stimmung:`gereizt` }
-      ]}
-  ],
-  ausgang: [
-    { ab:72, titel:`Sie kauft.`, stimmung:`freundlich`,
-      regie:`Sie schlägt das Buch auf einer neuen Seite auf, trägt etwas ein und dreht es dann zu dir.`,
-      er:`Ich nehme es. Und Sie unterschreiben hier, was Sie mir gesagt haben — nicht weil ich Ihnen misstraue, sondern weil ich es dann in vier Jahren noch weiß.`,
-      wie:`sachlich, und darunter etwas, das man kaum hört`,
-      nachRegie:`Sie bringt dich nicht zur Tür — sie steht nie auf. Aber als du in der Drehtür bist, sagt sie deinen Namen, richtig ausgesprochen, und Wiedersehen.` },
-    { ab:48, titel:`Sie lässt es offen.`, stimmung:`nachdenklich`,
-      er:`Lassen Sie es hier. Ich sage nichts zu, und ich schicke es Ihnen auch nicht zurück. Ich sehe es mir an, wenn zwischen zwölf und eins niemand kommt.`,
-      wie:`verbindlich`,
-      nachRegie:`Sie legt es unter den Tresen, neben die Brotdose, nicht in eine Schublade.` },
-    { ab:-999, titel:`Sie kauft nicht.`, stimmung:`verschlossen`,
-      regie:`Sie klappt den Koffer zu und schiebt ihn über den Tresen zurück, sehr gerade.`,
-      er:`Nein. Und damit Sie nicht raten: es lag nicht daran, dass ich Sie nicht mag. Ich mag hier niemanden, das ist keine Auszeichnung und keine Strafe. Es lag daran, dass Sie mir etwas hingelegt haben, das jemand braucht, dem geglaubt wird.`,
-      wie:`freundlich, sehr genau, ohne einen Rest von Bosheit` }
-  ]
-},
 });

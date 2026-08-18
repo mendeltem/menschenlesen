@@ -19,6 +19,8 @@
 PERSONEN.push({
 
 id: `vogt`,
+/* In welcher Etage sie sitzt. Ohne den Schlüssel dafür kommst du nicht hin. */
+etage: 1,
 kurz: `Hausmeisterin, 47. Grauer Zopf und orangefarbene Arbeitsjacke,
        ein Schlüsselbund am Gürtel, an dem einundvierzig Schlüssel hängen.`,
 theme: `terminal`,
@@ -110,7 +112,7 @@ kennenfrage: [
 ],
 
 uebergang1: {
-  duFest: `Du erzählst in zwei Sätzen, was du machst. Ein Projekt, das dir über den Kopf wächst. Davon später, sagst du.`,
+  duFest: `Du sagst, dass du neu bist und dich im Haus umsehen sollst: wer hier arbeitet, was hier läuft. Warum ausgerechnet du, sagst du nicht. Davon später.`,
   er: `Später. Gut. Dann erzählen Sie mir bis dahin was Vernünftiges, ich habe die Hände frei.`,
   erRegie: `Sie greift hinter sich, nimmt einen Schraubenzieher und fängt an, ihn zu putzen, ohne hinzusehen.`,
   wie: `aufgeräumt, sehr direkt`, stimmung: `freundlich`
@@ -857,117 +859,5 @@ abschied: [
     er:`Wiedersehen.`, wie:`höflich und leer`, stimmung:`verschlossen`, bez:0 }
 ],
 
-abfuhr: {
-  regie:`Du stellst den Koffer auf die Werkbank. Sie sieht ihn an, dann dich, und wischt sich langsam die Hände ab.`,
-  er:`Ach so ist das.`,
-  erRegie:`Sie schiebt den Koffer nicht weg. Sie lässt ihn stehen und sieht dich weiter an.`,
-  er2:`Sie hätten es gleich sagen können, ich hätte trotzdem Kaffee gemacht. Jetzt nehme ich nichts, weil ich nicht weiß, was von der letzten halben Stunde echt war. Und das ist schade, ich habe Sie gemocht.`,
-  wie:`trocken`, wie2:`laut, direkt, ohne jede Bosheit`, stimmung:`abweisend` },
 
-/* --- Der Verkauf. Bei ihr trägt die Brille: sie will sehen, wo etwas
-       nicht stimmt, bevor es ein anderer sieht — und will, dass es
-       hinterher jemand weiß. ---------------------------------------- */
-
-verkauf: {
-  aufschlag: `Achtundzwanzig Minuten sind um. Du hebst den Koffer auf die Werkbank, drehst ihn zu ihr und klappst ihn auf. Drei Dinge liegen darin, jedes in seiner Mulde.`,
-  reaktionRegie: `Sie beugt sich sofort darüber, ohne zu fragen, ob sie darf.`,
-  reaktion: `Sie verkaufen was. Gut, dann zeigen Sie mal her.`,
-  reaktionWie: `laut, neugierig, ohne jeden Vorwurf`,
-  start: 30,
-  zuege: [
-    { frage: `Warum zeigen Sie mir ausgerechnet das?`, wie:`direkt, ohne Umschweife`, stimmung:`neutral`,
-      opt: [
-        { id:`alle`, t:`Weil das jeder brauchen kann.`,
-          wie:`allgemein, ein wenig auswendig`, auto:0, aff:{},
-          er:`Jeder.`, erRegie:`Sie lehnt sich zurück.`,
-          er2:`Dann haben Sie mir eine halbe Stunde zugehört, um mir was für jeden zu verkaufen. Das ist schlechtes Handwerk.`,
-          wie2:`trocken`, stimmung:`skeptisch` },
-        { id:`zugehoert`, t:`Weil Sie mir eine halbe Stunde lang gesagt haben, was hier keiner sieht. Wenn ich falsch liege, sagen Sie es, und ich packe ein.`,
-          wie:`ruhig, ohne Druck`, auto:2, aff:{GEL:1.4, FRE:0.6},
-          an:{ rohr:`Sie heben ein aufgeschnittenes Rohr auf, damit Ihnen beim nächsten Mal jemand glaubt. Dafür ist das hier. Wenn ich falsch liege, packe ich ein.`,
-               bericht:`Da hängt ein Blatt, auf dem reibungslos steht, und Sie waren vier Wochenenden hier. Deshalb dieses und nichts anderes.`,
-               plan60:`Sie machen den Meister, weil Ihre Arbeit auf dem Papier nicht vorkommt. Das hier arbeitet in dieselbe Richtung.` },
-          erRegieVor:`Sie sagt zwei Sekunden lang nichts, was bei ihr lange ist.`,
-          er:`So. Weiter.`, wie2:`langsamer, aufmerksam`, stimmung:`interessiert` },
-        { id:`beste`, t:`Weil es das Beste ist, was ich dabei habe.`,
-          wie:`bestimmt`, auto:0, aff:{GEL:1.2},
-          er:`Na, wenigstens ehrlich.`, erRegie:`Sie nimmt es in die Hand und dreht es.`,
-          er2:`Bringt mir nur nichts, solange ich nicht weiß, wofür.`,
-          wie2:`trocken, nicht abweisend`, stimmung:`neutral` }
-      ]},
-
-    { frage: `Wo ist der Haken?`, wie:`sofort, ohne Umweg`, stimmung:`skeptisch`,
-      opt: [
-        { id:`keiner`, t:`Es gibt keinen.`,
-          wie:`glatt`, auto:-1, aff:{},
-          er:`Es gibt immer einen.`, erRegie:`Sie legt es zurück in die Mulde.`,
-          er2:`Ich habe neunundzwanzig Jahre lang Sachen repariert, die angeblich keinen hatten.`,
-          wie2:`sehr bestimmt`, stimmung:`gereizt` },
-        { id:`nennen`, t:`__HAKEN__`,
-          wie:`ruhig, ohne Beschönigung`, auto:2, aff:{FRE:0.8, GEL:0.6},
-          erRegieVor:`Sie hört auf, es zu drehen.`,
-          er:`Das hätten Sie nicht sagen müssen.`, erRegie:`Sie nickt einmal, knapp.`,
-          er2:`Genau deshalb glaube ich Ihnen den Rest.`, wie2:`direkt, ernst`, stimmung:`interessiert` },
-        { id:`spaeter`, t:`Darüber reden wir, wenn Sie sich entschieden haben.`,
-          wie:`ausweichend`, auto:-2, aff:{},
-          er:`Nein. Jetzt, oder Sie klappen den Koffer wieder zu.`,
-          wie2:`laut, endgültig`, stimmung:`gereizt` }
-      ]},
-
-    { frage: `Und woher weiß ich, dass das stimmt?`, wie:`prüfend`, stimmung:`skeptisch`,
-      opt: [
-        { id:`probieren`, t:`Sie behalten es zwei Wochen. Wenn es nicht tut, was ich gesagt habe, hole ich es ab, und Sie sagen kein Wort dazu.`,
-          wie:`konkret, ohne Bedingung`, auto:2, aff:{FRE:1.2, GEL:0.6},
-          an:{ umbau:`Nehmen Sie es zwei Wochen und sehen Sie den Bauplan damit an. Wenn nichts dabei herauskommt, hole ich es ab.`,
-               aufzug:`Zwei Wochen, und sehen Sie die Prüfberichte damit durch. Wenn nichts drinsteht, hole ich es ab.` },
-          er:`Zwei Wochen.`, erRegie:`Sie greift nach dem Kalender und macht ein Kreuz.`,
-          er2:`Da kann ich nichts verlieren. Solche Angebote macht mir hier sonst keiner.`,
-          wie2:`arbeitsbereit`, stimmung:`interessiert` },
-        { id:`referenzen`, t:`Ich habe Referenzen. Drei Häuser arbeiten schon damit.`,
-          wie:`routiniert`, auto:0, aff:{GEL:0.8, FRE:-1.0},
-          er:`Welche drei?`, erRegie:`Sie fragt es sofort und meint es ernst.`,
-          er2:`Wenn Sie mir einen Namen sagen, den ich anrufen kann, ist das was wert. Sonst ist es Prospekt.`,
-          wie2:`direkt`, stimmung:`neutral` },
-        { id:`glauben`, t:`An dieser Stelle müssen Sie mir einfach glauben.`,
-          wie:`beschwörend`, auto:-1.5, aff:{},
-          er:`Müssen.`, erRegie:`Sie lacht laut und einmal.`,
-          er2:`Das sagt hier jeder, der was verkauft, und dann stehe ich nachts im Wasser.`,
-          wie2:`schneidend, gut gelaunt`, stimmung:`gereizt` }
-      ]},
-
-    { regie: `Sie sieht in den offenen Koffer, dann auf die Uhr über der Tür.`,
-      opt: [
-        { id:`neinistnein`, t:`Überlegen Sie es sich. Wenn Sie Nein sagen, ist das ein Nein und kein Zwischenstand.`,
-          wie:`ruhig, ohne Nachdruck`, auto:2, aff:{FRE:1.0, GEL:0.5},
-          an:{ selbst:`Sie machen es lieber selbst, als lange zu fragen. Also entscheiden Sie das auch selbst — und wenn es ein Nein wird, ist es ein Nein und kein Zwischenstand.`,
-               ralf:`Reden Sie mit Ralf drüber, wenn er wieder rangeht. Und wenn es ein Nein wird, ist es ein Nein.` },
-          er:`Ein Nein, das ein Nein sein darf.`, erRegie:`Sie nickt langsam.`,
-          er2:`Das habe ich in neunundzwanzig Jahren zweimal gehört.`, wie2:`leiser`, stimmung:`geruehrt` },
-        { id:`verpassen`, t:`Wenn Sie Nein sagen, verpassen Sie etwas.`,
-          wie:`drängend`, auto:-1.5, aff:{},
-          er:`Ich verpasse ständig was. Bisher steht das Haus noch.`,
-          wie2:`gleichmütig`, stimmung:`verschlossen` },
-        { id:`freitag`, t:`Der Preis gilt nur bis Freitag.`,
-          wie:`geschäftsmäßig, mit Blick auf die Uhr`, auto:-2, aff:{},
-          er:`Freitag.`, erRegie:`Sie klappt den Koffer von ihrer Seite aus zu.`,
-          er2:`Dann bis Freitag. Ohne mich. Wer mir eine Frist setzt, hat es nötig, und wer es nötig hat, verkauft mir nichts.`,
-          wie2:`laut, endgültig`, stimmung:`gereizt` }
-      ]}
-  ],
-  ausgang: [
-    { ab:72, titel:`Sie kauft.`, stimmung:`freundlich`,
-      regie:`Sie wischt sich die Hand an der Hose ab und hält sie dir hin, bevor sie etwas sagt.`,
-      er:`Ich nehme es. Zwei Wochen, dann rufe ich an — so oder so, und ehrlich.`,
-      wie:`fest, laut`,
-      nachRegie:`Sie bringt dich bis zum Ende des Gangs und erklärt dir dabei, welche Tür klemmt und warum.` },
-    { ab:48, titel:`Sie lässt es offen.`, stimmung:`nachdenklich`,
-      er:`Lassen Sie mir was da. Ich sage nichts zu, aber ich werfe es auch nicht weg.`,
-      wie:`sachlich`,
-      nachRegie:`Sie legt es auf den Ordner, nicht in die Schublade.` },
-    { ab:-999, titel:`Sie kauft nicht.`, stimmung:`verschlossen`,
-      regie:`Sie klappt den Koffer zu und schiebt ihn dir über die Werkbank zurück.`,
-      er:`Nein. Und ich sage Ihnen auch warum: Sie haben mir eine halbe Stunde lang zugehört und trotzdem nicht gemerkt, was ich brauche. Das ist kein Vorwurf, das ist ein Befund.`,
-      wie:`laut, direkt, ohne Bosheit — und genau deshalb endgültig` }
-  ]
-},
 });

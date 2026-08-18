@@ -411,6 +411,17 @@ body.imMenue .raum{display:none}
 .menue{flex:1; min-height:0; overflow-y:auto; padding:6px 2px 20px}
 .mkarte[disabled]{opacity:.5; cursor:not-allowed}
 .mkarten{display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:12px; margin-top:12px}
+/* Eine Etage: Überschrift über die ganze Breite, darunter ihre Leute. */
+.etage{grid-column:1/-1; margin-top:14px; display:flex; align-items:baseline; gap:12px; flex-wrap:wrap}
+.etage:first-child{margin-top:0}
+.etage .nr{font-family:var(--mono); font-size:9px; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--accent); border:1px solid var(--accent); border-radius:999px; padding:3px 10px}
+.etage.zu .nr{color:var(--muted); border-color:var(--line)}
+.etage b{font-size:15px; font-weight:600; color:var(--ink)}
+.etage.zu b{color:var(--muted)}
+.etage span{font-size:13px; color:var(--muted)}
+.etage .schloss{grid-column:1/-1; font-size:13px; color:var(--muted); line-height:1.5;
+  border:1px dashed var(--line); border-radius:11px; padding:12px 14px; background:var(--surface)}
 a.mkarte, button.mkarte{display:flex; gap:14px; align-items:center; text-align:left; font:inherit; color:inherit;
   background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:14px 16px;
   cursor:pointer; transition:border-color .15s, transform .15s, box-shadow .15s}
@@ -639,8 +650,6 @@ button.pick.haupt:before{content:"◆"; color:var(--accent); margin-right:9px; f
 .ratezeile button.an{background:var(--accent); border-color:var(--accent); color:var(--accent-ink); font-weight:600}
 button.act[disabled]{opacity:.4; cursor:default; box-shadow:none; transform:none}
 
-/* ── Waren: alle drei müssen auf einen Blick zu sehen sein, der
-      ausführliche Text steht im Koffer ── */
 .prod{display:grid; gap:6px}
 button.prod{display:flex; align-items:baseline; gap:12px; text-align:left; font:inherit; color:var(--ink);
   background:var(--surface); border:1px solid var(--line); border-radius:11px; padding:9px 11px 9px 13px;
@@ -651,20 +660,6 @@ button.prod em{flex:1 1 auto; font-style:normal; font-size:13.5px; color:var(--m
 button.prod .key{flex:0 0 auto; font-family:var(--mono); font-size:10px; color:var(--muted);
   border:1px solid var(--line); border-radius:6px; min-width:21px; padding:2px 0; text-align:center}
 .tool.stumm{opacity:.5}
-.tool .zahl{font-family:var(--mono); font-size:12px; color:var(--accent-ink); background:var(--accent);
-  border-radius:999px; min-width:19px; padding:1px 6px; text-align:center; font-weight:600}
-/* Der Koffer im Überblick */
-.ware{border:1px solid var(--line-soft); border-radius:11px; padding:12px 14px; margin-bottom:8px;
-  background:var(--surface)}
-.ware.weg{opacity:.45}
-.ware b{font-size:15px; font-weight:600}
-.ware .kurz{font-size:13.5px; color:var(--accent-2); margin:2px 0 6px}
-.ware .lang{font-size:13px; color:var(--muted); line-height:1.5}
-.kasse{font-family:var(--mono); font-size:12px; letter-spacing:.1em; text-transform:uppercase;
-  color:var(--muted); margin-bottom:12px}
-.kasse b{color:var(--accent); font-size:15px}
-.wmenge{display:block; font-family:var(--mono); font-size:10.5px; color:var(--accent-2); margin-top:2px}
-.ware .haken{font-size:12.5px; color:var(--STA); margin-top:6px; line-height:1.45}
 
 /* ── Auflösung ── */
 .verdict .big{font-size:25px; font-weight:600; letter-spacing:-.02em; line-height:1.15}
@@ -740,10 +735,9 @@ table.bil tr.hi td.n{color:var(--accent); font-weight:600}
     </div>
     <div class="tools">
       <button class="tool nurschmal" id="sideToggle">Dein Bild</button>
-      <button class="tool" id="kofferToggle">Koffer <b class="zahl" id="warenZahl">3</b></button>
       <button class="tool" id="musikToggle" title="Hintergrundmusik">♪ <span id="musikText">an</span></button>
       <button class="tool" id="infoToggle">Was das Modell tut</button>
-      <button class="tool warnung" id="resetToggle" title="Kasse, Bestand, alle Akten und alle Einstellungen löschen · Umschalt + R">Zurücksetzen</button>
+      <button class="tool warnung" id="resetToggle" title="Alle Akten und alle Einstellungen löschen · Umschalt + R">Zurücksetzen</button>
       <div class="themepick">
         <button class="tool" id="themeToggle" aria-haspopup="true" aria-expanded="false">
           <span class="theme-dot" id="themeDot"></span><span id="themeName">Tinte</span><span class="caret">▾</span>
@@ -760,12 +754,10 @@ table.bil tr.hi td.n{color:var(--accent); font-weight:600}
     <div class="mkarten" id="mkarten"></div>
     <div class="mkonto" id="mkonto"></div>
     <div class="mzeilen">
-      <button class="mzeile" id="mLaden"><b>Laden</b>
-        <span>Nachschub kaufen. Ein Stück kostet dort rund ein Drittel dessen, was du dafür bekommst.</span></button>
       <button class="mzeile" id="mInfo"><b>Was das Modell tut</b>
         <span>Die Rechnung dahinter, und was daran belegt ist.</span></button>
       <button class="mzeile" id="mReset"><b>Zurücksetzen</b>
-        <span>Kasse, Bestand und alle gespeicherten Einstellungen löschen.</span></button>
+        <span>Alle Akten, alle Schlüssel und alle gespeicherten Einstellungen löschen.</span></button>
     </div>
   </section>
 
@@ -801,10 +793,6 @@ table.bil tr.hi td.n{color:var(--accent); font-weight:600}
           <div class="meter bez"><i id="bezBar" style="width:35%"></i></div>
           <div class="zhinweis" id="bezText"></div>
         </div>
-        <div class="zrow" id="bereitRow" hidden>
-          <span class="zlab">Bereitschaft</span><span class="znum" id="bereitVal">30</span>
-          <div class="meter bereit"><i id="bereitBar" style="width:30%"></i></div>
-        </div>
         <div class="zrow" id="aufRow">
           <span class="zlab">Geduld heute</span><span class="znum" id="aufVal">100</span>
           <div class="meter geduld"><i id="aufBar" style="width:100%"></i></div>
@@ -835,23 +823,6 @@ table.bil tr.hi td.n{color:var(--accent); font-weight:600}
     </aside>
   </div>
 
-  <div class="modal" id="koffer" hidden role="dialog" aria-modal="true" aria-label="Dein Koffer">
-    <button class="zu" id="kofferZu" aria-label="Schließen">×</button>
-    <h3>Dein Koffer</h3>
-    <p>Drei Waren. Was du anbietest, entscheidest du danach, was du über den Menschen vor dir gelernt hast —
-    dieselben drei Dinge passen bei jedem anders.</p>
-    <div id="kofferListe"></div>
-    <div class="row" style="margin-top:16px"><button class="act" id="zumLaden">Zum Laden</button></div>
-  </div>
-
-  <div class="modal" id="laden" hidden role="dialog" aria-modal="true" aria-label="Laden">
-    <button class="zu" id="ladenZu" aria-label="Schließen">×</button>
-    <h3>Laden</h3>
-    <p>Nachschub kostet einen Bruchteil dessen, was du draußen dafür bekommst. Was du hier kaufst,
-    liegt beim nächsten Gespräch im Koffer.</p>
-    <div id="ladenListe"></div>
-  </div>
-
   <div class="scrim" id="scrim" hidden></div>
   <div class="modal" id="info" hidden role="dialog" aria-modal="true" aria-label="Was das Modell tut">
     <button class="zu" id="infoZu" aria-label="Schließen">×</button>
@@ -871,13 +842,12 @@ table.bil tr.hi td.n{color:var(--accent); font-weight:600}
     <p><b>Zwei Balken.</b> Die <i>Geduld</i> gilt für diesen Nachmittag: sie fällt bei jeder Frage, und zwar
     zunehmend, und sie steigt wieder, wenn ein Gespräch trifft. Bei null steht er auf. Die <i>Freundschaft</i>
     bleibt über die Besuche: sie wächst, wenn du ihn richtig liest, und fällt, wenn du danebengreifst.</p>
-    <p><b>Ob er kauft, ist ein Wurf.</b> Der Bedarf ist die Bedingung — was er nicht braucht, kauft er auch
-    beim besten Verhältnis nicht. Die Freundschaft ist der Zuschlag: bis zu fünfzehn Punkte auf die Aussicht,
-    genug, um aus einem Vielleicht ein Ja zu machen, nie genug für ein Nein. Die Aussicht steht vor dem Wurf
-    auf dem Schirm.</p>
-    <p><b>Der Verkauf</b> trennt zwei Dinge. <i>Was</i> du anbietest, misst sich an den zwei Waagen und an dem,
-    was gerade bei ihm los ist. <i>Wie</i> du es anbietest, misst sich an seiner Persönlichkeit. Die Wertung
-    gewichtet Autonomieunterstützung rund dreimal so stark wie Motivpassung. <span id="belegA"></span></p>
+    <p><b>Das Haus hat Etagen.</b> Unten sitzen zwei, und weiter kommst du erst, wenn du beide zu Ende gelesen
+    hast — beide Stufen, Wesen und Bedürfnisse. Dann liegt der Schlüssel für die nächste Etage da. Es gibt
+    nichts zu verkaufen und nichts zu gewinnen außer Leuten, die dich hereinlassen.</p>
+    <p><b>Wie du fragst, zählt mehr als was.</b> Jeder Zug unterstellt dem Gegenüber eine Persönlichkeit. Trifft
+    die Unterstellung, geht er darauf ein; trifft sie nicht, merkt er es sofort. Was in diesem Spiel gewichtet
+    wird, ist die Autonomieunterstützung — rund dreimal so stark wie die Motivpassung. <span id="belegA"></span></p>
     <p><span id="belegC"></span></p>
     <p><span id="belegAsym"></span></p>
     <p><b>Wo es dünn bleibt.</b> <span id="belegItems"></span></p>
@@ -928,28 +898,18 @@ document.addEventListener("click", e => { if(!themeBar.hidden && !e.target.close
 
 const scrim = document.getElementById("scrim"), info = document.getElementById("info");
 const seite = document.querySelector(".side");
-const koffer = document.getElementById("koffer");
-function zuOffen(){ return !info.hidden || !koffer.hidden || !document.getElementById("laden").hidden
-  || seite.classList.contains("auf"); }
+function zuOffen(){ return !info.hidden || seite.classList.contains("auf"); }
 function zeigeInfo(a){ setTimeout(waehleSpur, 0); info.hidden = !a; scrim.hidden = !zuOffen(); }
-function zeigeKoffer(a){ setTimeout(waehleSpur, 0); if(a) fuelleKoffer(); koffer.hidden = !a; scrim.hidden = !zuOffen(); }
-const laden = document.getElementById("laden");
-function zeigeLaden(a){ setTimeout(waehleSpur, 0); if(a){ fuelleLaden(); koffer.hidden = true; }
-  laden.hidden = !a; scrim.hidden = !zuOffen(); }
 function zeigeSeite(a){ setTimeout(waehleSpur, 0); seite.classList.toggle("auf", a); scrim.hidden = !zuOffen(); }
 document.getElementById("infoToggle").onclick = () => zeigeInfo(true);
 document.getElementById("infoZu").onclick = () => zeigeInfo(false);
-document.getElementById("kofferToggle").onclick = () => zeigeKoffer(koffer.hidden);
-document.getElementById("kofferZu").onclick = () => zeigeKoffer(false);
-document.getElementById("zumLaden").onclick = () => zeigeLaden(true);
-document.getElementById("ladenZu").onclick = () => zeigeLaden(false);
 document.getElementById("sideToggle").onclick = () => zeigeSeite(!seite.classList.contains("auf"));
 document.getElementById("musikToggle").onclick = () => musikSchalten(!musikAn);
 document.addEventListener("pointerdown", function ersteBeruehrung(){
   document.removeEventListener("pointerdown", ersteBeruehrung);
   if(musikAn){ laufend = null; waehleSpur(); }
 }, {once:false});
-scrim.onclick = () => { zeigeInfo(false); zeigeKoffer(false); zeigeLaden(false); zeigeSeite(false); };
+scrim.onclick = () => { zeigeInfo(false); zeigeSeite(false); };
 
 /* Aufklappbare Kaesten. Zu ist der Normalfall, damit die Spalte ohne
    Scrollen auskommt; wer sie einmal aufmacht, findet sie offen wieder. */
@@ -974,14 +934,13 @@ function notizenAufklappen(){
 
 /* ═══════════════ Musik ═══════════════
    Drei Spuren, je nachdem, wo du gerade bist: im Menü, im Gespräch
-   oder im Verkauf. Die Dateien liegen in musik/ neben dieser Datei;
+   und am Ende eines Besuchs. Die Dateien liegen in musik/ neben dieser Datei;
    fehlt eine, bleibt es an der Stelle still. Browser lassen Ton erst
    nach der ersten Berührung zu, deshalb startet sie beim ersten Klick. */
 const MUSIK = {
-  menue:     "musik/menu.mp3",       // Koffer und Erklärfenster
-  shop:      "musik/shop.mp3",       // der Laden
+  menue:     "musik/menu.mp3",       // Menü und Erklärfenster
   ingame:    "musik/ingame.mp3",     // das laufende Gespräch
-  gewonnen:  "musik/won.mp3",        // er hat gekauft
+  gewonnen:  "musik/won.mp3",        // der Besuch ist gut ausgegangen
   verloren:  "musik/verloren.mp3"    // kein Abschluss oder rausgeworfen
 };
 const LAUTSTAERKE = 0.35;
@@ -1027,11 +986,10 @@ function musikSchalten(an){
 /* Welche Spur passt gerade? Menü schlägt alles, sonst entscheidet die Phase. */
 function waehleSpur(){
   if(!musikAn) return;
-  if(!document.getElementById("laden").hidden) return setzeMusik("shop");
   if(document.body.classList.contains("imMenue")) return setzeMusik("menue");
   if(!S) return;
-  if(!document.getElementById("info").hidden || !document.getElementById("koffer").hidden) return setzeMusik("menue");
-  if(S.phase >= 5) return setzeMusik(S.verkauft ? "gewonnen" : "verloren");
+  if(!document.getElementById("info").hidden) return setzeMusik("menue");
+  if(S.phase >= 5) return setzeMusik(S.bez >= S.bezStart ? "gewonnen" : "verloren");
   setzeMusik("ingame");
 }
 
@@ -1064,6 +1022,10 @@ const AN = k => (((typeof DATA !== "undefined" && DATA && DATA.anrede) || WELT.a
 /* Ganze Sätze beugen: {er}, {Sein}, {ihn} und so weiter werden durch
    dieselbe Tabelle geschickt wie einzelne Wörter. */
 const anrede = s => String(s).replace(/\{(\w+)\}/g, (_, k) => AN(k));
+/* Im Menü ist keine Person geladen. Damit auf der Karte trotzdem die
+   richtige Form steht, nimmt diese Fassung die Tabelle der Person mit. */
+const anredeVon = (pp, s) => String(s).replace(/\{(\w+)\}/g,
+  (_, k) => ((pp && pp.anrede) || {})[k] || (WELT.anrede || {})[k] || k);
 /* Eins beugt sich, der Rest nicht: einen Punkt, bei einem Punkt. */
 const akk = n => n === 1 ? "Einen" : gross(wort(n));
 const dat = n => n === 1 ? "einem" : wort(n);
@@ -1117,35 +1079,16 @@ function modus(m){ let b=0; for(let i=1;i<5;i++) if(m[i]>m[b]) b=i; return STUFE
 
 
 /* ═══════════════ Spielzustand ═══════════════
-   DATA ist die Welt plus die gerade besuchte Person. Was du besitzt,
-   liegt daneben in KONTO und überlebt jedes Gespräch. */
+   DATA ist die Welt plus die gerade besuchte Person. Mehr besitzt man
+   in diesem Spiel nicht: es gibt nichts zu kaufen und nichts zu
+   verkaufen, nur Leute, die man kennt oder nicht kennt. */
 let DATA = null, T = null, M = null, HERO = null, S = null;
 let cfgBF = null, cfgMO = null, rateBF = null, rateMO = null;
-const KONTO = { kasse:0, bestand:{} };
-WELT.produkte.forEach(p => { KONTO.bestand[p.id] = p.bestand; });
-/* Was du besitzt, bleibt über Gespräche und über das Schließen des
-   Browsers hinweg erhalten. Zurücksetzen im Menü räumt es weg. */
-function kontoSichern(){
-  try{ localStorage.setItem("konto", JSON.stringify(KONTO)); }catch(e){}
-}
-(function kontoLaden(){
-  try{
-    const roh = JSON.parse(localStorage.getItem("konto") || "null");
-    if(roh && roh.bestand){
-      KONTO.kasse = roh.kasse || 0;
-      WELT.produkte.forEach(p => {
-        if(typeof roh.bestand[p.id] === "number") KONTO.bestand[p.id] = roh.bestand[p.id];
-      });
-    }
-  }catch(e){}
-})();
 const NOFF = 3;
-const stueck = () => WELT.produkte.reduce((a,p) => a + KONTO.bestand[p.id], 0);
-const geld = n => n.toLocaleString('de-DE') + ' €';
 const PHASEN = () => [
   {n:"Ankunft", t:"Wer sitzt da?"}, {n:AN("Sein")+" Wesen", t:"Wie "+AN("er")+" tickt"},
   {n:AN("Seine")+" Antriebe", t:"Worauf "+AN("er")+" anspringt"}, {n:AN("Seine")+" Lage", t:"Was gerade ist"},
-  {n:"Der Koffer", t:"Der Verkauf"}, {n:"Abschied", t:"Was bleibt"}
+  {n:"Besuch", t:"Vorbeikommen"}, {n:"Abschied", t:"Was bleibt"}
 ];
 
 /* ═══════════════ Die Akte ═══════════════
@@ -1163,7 +1106,7 @@ function frischeAkte(){
   return { besuche:0, bez:WELT.freundschaft.start, bfVerlauf:[], moVerlauf:[],
            bfGestellt:[], moGestellt:[], privGestellt:[], zGesehen:[],
            fakten:[], spuren:[], gesagt:[], gefunden:[], bedarf:[],
-           geduldWeg:0, fest:{}, verkauft:[], letzter:null,
+           geduldWeg:0, fest:{}, letzter:null,
            stufe:1, punkte:{}, sterne:null };
 }
 /* Ältere Stände bekommen fehlende Felder nachgereicht, statt dass das
@@ -1176,6 +1119,28 @@ function akteVon(id){
 }
 /* Wie viele Punkte in einer Stufe überhaupt zu holen sind. */
 function stufenMax(L){ return L.punkte ? L.punkte.genau * (L.key === "bf" ? 5 : 2) : 0; }
+
+/* ── Die Etagen ──────────────────────────────────────────────────────
+   Gelesen heißt: beide Lesestufen bestanden, also in Stufe drei
+   angekommen. Erst dann zählt eine Person für die Tür nach oben.
+
+   Eine Etage ist offen, wenn jede Person der Etage darunter gelesen
+   ist. Das Erdgeschoss steht immer offen — dort fängst du an. */
+const gelesen = a => (a.stufe || 1) >= 3;
+const etageVon = pp => pp.etage || 1;
+const leuteAuf = n => PERSONEN.filter(pp => etageVon(pp) === n);
+function etageOffen(n){
+  if(n <= 1) return true;
+  const drunter = leuteAuf(n - 1);
+  return drunter.length > 0 && drunter.every(pp => gelesen(akteVon(pp.id)))
+    && etageOffen(n - 1);
+}
+/* Die höchste Etage, die du betreten darfst — für den Schlüsseltext. */
+function hoechsteOffen(){
+  let n = 1;
+  while(etageOffen(n + 1)) n++;
+  return n;
+}
 const stufeZu = w => WELT.freundschaft.stufen.find(x => w >= x.ab);
 /* Jede Änderung an der Freundschaft geht hier durch und wird sofort
    gesichert — ein geschlossener Browser darf keinen Besuch verschlucken. */
@@ -1197,14 +1162,13 @@ function neuerZustand(){
     geduld:100 - (A.geduldWeg || 0) * (WELT.freundschaft.geduldUebertrag || 0),
     privGestellt:A.privGestellt.slice(), privLog:[],
     zustand:null, zGestellt:[], zLog:[], zAn:false, bedarf:[],
-    produkt:null, zug:0, zugLog:[], verkauft:null, rateLog:[],
-    raus:false, angeboten:false, ende:null, faktenStart:A.fakten.length, fragenHeute:0
+    rateLog:[],
+    raus:false, ende:null, faktenStart:A.fakten.length, fragenHeute:0
   };
   S.bfPrior = startPrior(T, DATA.rollenprior, DATA.zglocke);
   S.moPrior = startPrior(M, null, DATA.mglocke);
   S.bfGlaube = spieleNach(S.bfPrior, A.bfVerlauf, DATA.bigfive,    T, "l");
   S.moGlaube = spieleNach(S.moPrior, A.moVerlauf, DATA.motivfragen, M, "aff");
-  S.bereit = 0;
   S.zustand = ziehZustand();
 }
 
@@ -1492,7 +1456,7 @@ function zeichneNotizen(){
 
   const pb = document.getElementById("privatBox");
   pb.hidden = false;
-  /* Was du über ihn weißt: die vier privaten Dinge, und was er gerade
+  /* Was du über die Person weißt: die vier privaten Dinge, und was sie gerade
      braucht — letzteres nur, wenn du danach gefragt hast. */
   const bed = S.zustand && S.zustand.bedarf && S.bedarf.includes(S.zustand.bedarf.id)
     ? [S.zustand] : [];
@@ -1510,8 +1474,7 @@ function zeichneBalken(){
   const b = Math.round(S.bez), st = stufeZu(b);
   document.getElementById("bezVal").textContent = b + " · " + st.name;
   document.getElementById("bezBar").style.width = b + "%";
-  document.getElementById("bezText").textContent = st.text;
-  document.getElementById("bereitRow").hidden = S.phase !== 4;
+  document.getElementById("bezText").textContent = anrede(st.text);
 
   const gd = Math.round(S.geduld);
   document.getElementById("aufVal").textContent = gd + " / 100";
@@ -1522,18 +1485,14 @@ function zeichneBalken(){
     gd > 75 ? `${AN("Er")} hat Zeit und zeigt es.` : gd > 55 ? `${AN("Er")} ist noch dabei.` :
     gd > 35 ? `${AN("Er")} sieht öfter auf den Bildschirm.` :
     gd > 15 ? `${AN("Er")} hört zu, aber wartet auf ein Ende.` : `Gleich steht ${AN("er")} auf.`;
-
-  const v = Math.max(0, Math.min(100, Math.round(S.bereit)));
-  document.getElementById("bereitVal").textContent = v + " / 100";
-  document.getElementById("bereitBar").style.width = v + "%";
 }
 
 function zeichne(){
   /* Ein Zeitgeber aus einem abgebrochenen Gespräch darf hier nicht
      mehr durchkommen. */
-  if(!S || !A || document.body.classList.contains("imMenue")){ zeichneWaren(); waehleSpur(); return; }
+  if(!S || !A || document.body.classList.contains("imMenue")){ waehleSpur(); return; }
   zeichneAkte(); zeichneTalk(); zeichneKopf(); zeichneLeseband(); zeichneNotizen();
-  zeichneBalken(); zeichneWaren(); waehleSpur(); }
+  zeichneBalken(); waehleSpur(); }
 
 /* Wie viele Zeilen das Ratefeld hat, sagt der Achsensatz — fünf für
    die Merkmale, zwei für die Waagen. */
@@ -1675,8 +1634,8 @@ const sterneBild = n => `<span class="sterne">${"★".repeat(n)}<i>${"☆".repea
 
 /* ═══════════════ Die Drehscheibe ═══════════════
    Nach jedem Schritt landest du wieder hier. Was du tust, ist deine
-   Sache: du kannst sofort den Koffer aufmachen, und du kannst jederzeit
-   gehen. Beides hat seinen Preis, und beide Preise stehen dabei. */
+   Sache, und gehen darfst du jederzeit. Alles hat seinen Preis, und
+   jeder Preis steht dabei. */
 function drehscheibe(){
   if(S.ende) return;
   S.phase = 0;
@@ -1712,15 +1671,6 @@ function drehscheibe(){
       klasse: S.geduld <= 30 ? "riskant" : "",
       rechts:`privat · kostet am meisten Geduld`,
       go(){ S.phase = 3; zeichne(); privatRunde(); } });
-
-  if(!S.angeboten){
-    const B = WELT.freundschaft, kann = S.bez >= B.verkaufSchwelle;
-    items.push({ t:`Den Koffer aufmachen`, tag:kopf, klasse: kann ? "weiter" : "riskant",
-      rechts: kann
-        ? `kostet <i style="color:var(--STA)">${vzk(-B.verkaufKosten,0)}</i> · Bereitschaft startet bei ${Math.round(S.bez*B.uebertrag)}`
-        : `<i style="color:var(--STA)">${AN("er")} kennt dich zu wenig — ab ${B.verkaufSchwelle}</i>`,
-      go(){ verkaufStart(); } });
-  }
 
   items.push({ t:`Dich verabschieden`, tag:kopf, klasse:"weiter",
     rechts:`Besuch beenden, solange es gut ist`, go(){ abschied(); } });
@@ -1768,6 +1718,13 @@ function leseRunde(cfg){
   items.push(S.stufe <= 2
     ? { t:`Genug. Ich lege mich fest.`, klasse:"haupt", rechts:``, go(){ rateRunde(cfg.key === "bf" ? rateBF : rateMO); } }
     : { t: cfg.weiterText, klasse:"weiter", rechts:`0 bit`, go(){ cfg.fertig(); } });
+  /* Gehen darf man immer, auch mitten in einer Lesestufe. Gehört wird
+     trotzdem gezählt: die Antworten liegen in der Akte, und beim
+     nächsten Besuch stehen sie noch da. Nur gewertet wird nichts,
+     solange du dich nicht festgelegt hast. */
+  if(S.stufe <= 2) items.push({ t:`Für heute reicht es. Du verabschiedest dich.`, klasse:"weiter",
+    rechts:`ohne dich festzulegen · was du gehört hast, bleibt`,
+    go(){ abschied(); } });
   waehle(items);
 }
 
@@ -1958,7 +1915,7 @@ function werteRaten(cfg, tipps){
           : `Du hast seither genug Neues gehört, das zählt voll.`}</div>` : ``}
     <div class="fbilanz">${akk(genau)} ${genau===1?"Punkt":"Punkte"} hat er bestätigt${
       knapp?`, bei ${dat(knapp)} eingeschränkt`:``}${weit?`, bei ${dat(weit)} deutlich widersprochen`:``}.
-      Wie er wirklich ist, wirst du nie schwarz auf weiß sehen — nur, wie er darauf reagiert.</div>
+      Wie ${AN("er")} wirklich ist, wirst du nie schwarz auf weiß sehen — nur, wie ${AN("er")} darauf reagiert.</div>
     <table class="ftab">${zeilen.map(z => `
       <tr class="fzeile ${z.dist===0?"ja":(z.dist===1?"nah":"nein")}">
         <td class="fname">${z.label}</td>
@@ -2077,7 +2034,7 @@ function zustandRunde(){
     const farbe = e > 0.8 ? "var(--SIC)" : (e < -0.8 ? "var(--STA)" : "var(--EFF)");
     const urteil = e > 0.8 ? "passt zu deinem Bild" : (e < -0.8 ? "gegen dein Bild" : "unklar");
     return { t:f.t, tag:`Seine Lage · ${esc(z.titel)}`, klasse: e < -0.8 ? "riskant" : "",
-      rechts:`<i style="color:${farbe}" title="Das ist, was dein Modell von ihm erwarten lässt — nicht, was er ist. Ob es stimmt, sagt dir nur er.">${urteil} ${vzk(e)}</i>`,
+      rechts:`<i style="color:${farbe}" title="Das ist, was dein Modell erwarten lässt — nicht, wie die Person ist. Ob es stimmt, sagt dir nur sie selbst.">${urteil} ${vzk(e)}</i>`,
       go(){ zustandZug(z, f); } };
   });
   items.push({ t:`Das Thema ruhen lassen.`, klasse:"weiter", rechts:``, go(){ drehscheibe(); } });
@@ -2103,7 +2060,7 @@ function zustandZug(z, f){
   akteSichern();
   sag("meta", `${trifft ? AN("er")+" geht darauf ein" : "du greifst daneben"} · Freundschaft <b>${vzk(wirkung)}</b> auf ${Math.round(S.bez)}`,
     {warn: !trifft,
-     lang: neu ? `Du weißt jetzt, was er deswegen braucht: ${esc(z.bedarf.was)}. Das zählt gleich für das, was du ihm hinlegst.`
+     lang: neu ? `Du weißt jetzt, was ${AN("er")} deswegen braucht: ${esc(z.bedarf.was)}. Wer das kennt, redet anders mit ${AN("ihm")}.`
                 : (trifft ? `` : `Dein Zug hat eine Persönlichkeit unterstellt, die er nicht hat. Das merkt er sofort.`)});
   zeichne();
   setTimeout(() => zustandRunde(), 60);
@@ -2115,7 +2072,7 @@ function rausgeworfen(){
   const w = bezPlus(W_RAUSWURF);
   sag("meta", `Freundschaft <b>${vzk(w)}</b> auf ${Math.round(S.bez)}`, {warn:true});
   S.ende = "raus";
-  besuchEnde(null);
+  besuchEnde();
 }
 
 /* ═══════════════ Der Abschied ═══════════════
@@ -2129,96 +2086,15 @@ function abschied(){
     if(w) sag("meta", `Freundschaft <b>${vzk(w)}</b> auf ${Math.round(S.bez)}`);
   }
   S.ende = "abschied";
-  besuchEnde(null);
+  besuchEnde();
 }
 
-/* ═══════════════ Der Koffer ═══════════════
-   Aufmachen darfst du ihn jederzeit — auch in der ersten Minute des
-   ersten Besuchs. Nur sieht er dann hinein und dich an, und beides
-   dauert nicht lange. Der Versuch allein kostet: du hast dich zu
-   erkennen gegeben, und das nimmst du nicht zurück. */
-function verkaufStart(){
-  const B = WELT.freundschaft;
-  S.angeboten = true;
-  if(S.bez < B.verkaufSchwelle){
-    const ab = DATA.abfuhr;
-    sag("regie", ab.regie); erSagt(ab);
-    const w = bezPlus(-B.verkaufKosten * 2);
-    sag("meta", `${AN("Er")} macht den Koffer nicht auf · Freundschaft <b>${vzk(w)}</b> auf ${Math.round(S.bez)}`,
-      {warn:true, lang:`Ab ${B.verkaufSchwelle} sieht er hinein. Du standest bei ${Math.round(S.bez - w)}.`});
-    S.ende = "abfuhr";
-    return besuchEnde(null);
-  }
-  S.phase = 4;
-  bezPlus(-B.verkaufKosten);
-  S.bereit = Math.round(S.bez * B.uebertrag);
-  const v = DATA.verkauf;
-  sag("regie", v.aufschlag);
-  sag("regie", v.reaktionRegie);
-  sag("er", v.reaktion, {wie:v.reaktionWie});
-  setzeStimmung("neutral");
-  sag("meta", `Der Koffer kostet <b>${vzk(-B.verkaufKosten,0)}</b> Freundschaft · Bereitschaft startet bei <b>${S.bereit}</b>`,
-    {lang:`Die Bereitschaft ist keine eigene Währung, sondern das, was aus eurem Verhältnis geworden ist: ${
-      Math.round(S.bez)} mal ${nk(B.uebertrag)}.`});
-  zeichne();
-  knopf("Etwas anbieten", () => produktwahl());
-}
 
-/* Der Koffer, jederzeit über den Kopf zu öffnen. Hier steht der lange
-   Text, damit die Auswahl unten kurz bleiben kann. */
-function fuelleKoffer(){
-  document.getElementById("kofferListe").innerHTML =
-    `<div class="kasse">Kasse <b>${geld(KONTO.kasse)}</b> · ${stueck()} Stück im Koffer</div>`
-    + WELT.produkte.map(p => {
-    const n = KONTO.bestand[p.id];
-    return `<div class="ware ${n?"":"weg"}">
-      <b>${esc(p.name)}</b>
-      <span class="wmenge">${n ? n + "× vorrätig" : "ausverkauft"} · ${geld(p.preis)} das Stück</span>
-      <div class="kurz">${esc(p.kurz)}</div>
-      <div class="lang">${esc(p.text)}</div>
-      <div class="haken">Haken: ${esc(p.haken)}</div></div>`;
-  }).join("");
-}
-/* Der Laden. Kaufen senkt die Kasse und hebt den Bestand — mehr ist es
-   nicht, und mehr braucht es auch nicht. */
-function fuelleLaden(){
-  document.getElementById("ladenListe").innerHTML =
-    `<div class="kasse">Kasse <b>${geld(KONTO.kasse)}</b> · ${stueck()} Stück im Koffer</div>`
-    + WELT.produkte.map(p => `<div class="ware">
-        <b>${esc(p.name)}</b>
-        <span class="wmenge">${KONTO.bestand[p.id]}× im Koffer · Einkauf ${geld(p.ek)} · Verkauf ${geld(p.preis)}</span>
-        <div class="kurz">${esc(p.kurz)}</div>
-        <div class="row" style="margin-top:9px">
-          <button class="act ${KONTO.kasse < p.ek ? "" : ""}" data-kauf="${p.id}" ${KONTO.kasse < p.ek ? "disabled" : ""}>
-            Eines kaufen · ${geld(p.ek)}</button></div>
-      </div>`).join("");
-  document.querySelectorAll("[data-kauf]").forEach(b => b.onclick = () => {
-    const w = WELT.produkte.find(x => x.id === b.dataset.kauf);
-    if(KONTO.kasse < w.ek) return;
-    KONTO.kasse -= w.ek; KONTO.bestand[w.id]++; kontoSichern();
-    fuelleLaden(); zeichneWaren();
-  });
-}
 
-function zeichneWaren(){ document.getElementById("warenZahl").textContent = stueck(); }
 
-function produktwahl(){
-  gewaehlt = false;
-  const da = WELT.produkte.filter(p => KONTO.bestand[p.id] > 0);
-  choicesEl.innerHTML = `<div class="wahlkopf">Was legst du ihm hin? · Einzelheiten stehen oben im Koffer</div>`
-    + `<div class="prod">` + da.map((p,i) =>
-    `<button class="prod" data-id="${p.id}"><b>${esc(p.name)}</b><em>${esc(p.kurz)}</em>
-       <span class="rechts">${KONTO.bestand[p.id]}× · ${geld(p.preis)}</span>
-       <span class="key">${i+1}</span></button>`).join("") + `</div>`;
-  choicesEl.querySelectorAll("button.prod").forEach(b =>
-    b.onclick = () => { if(sperre()) return; nimmProdukt(DATA.produkte.find(p => p.id === b.dataset.id)); });
-  pinneUnten();
-}
 
 /* Durchgerechnet: blindes Raten gewinnt praktisch nie, sorgfaeltiges
    Zuhoeren in vier von fuenf Faellen. Siehe balance.py. */
-const W_AUTO = 2.8, W_TREFFER = 0.35, W_FEHLGRIFF = 0.7, W_RUECKGRIFF = 1,
-      W_PRODUKT = 3, W_PRIVAT = 2, W_BEDARF = 2.5;
 /* Was der Rauswurf kostet — er wirkt über den Besuch hinaus. */
 const W_RAUSWURF = -18;
 /* Jede Frage kostet Geduld. Ohne diesen Preis waere es immer richtig,
@@ -2243,132 +2119,9 @@ function geduldPlus(w){
 }
 
 
-function nimmProdukt(p){
-  S.produkt = p;
-  let passung = 0;
-  for(const m in p.passt) passung += p.passt[m] * HERO.m[m];
-  /* Was gerade bei ihm los ist, verschiebt das Gewicht — aber nur, wenn
-     du danach gefragt hast. Wer seine Lage nicht kennt, verkauft ihm
-     etwas an einen Menschen, den es diese Woche nicht gibt. */
-  let bedarf = 0;
-  const zb = S.zustand && S.zustand.bedarf;
-  if(zb && S.bedarf.includes(zb.id))
-    for(const m in zb.braucht) bedarf += (p.passt[m] || 0) * zb.braucht[m];
-  S.produktBedarf = bedarf;
-  const treffer = (p.spricht||[]).filter(id => S.gefunden.includes(id));
-  const wirkung = nachStimmung(W_PRODUKT*passung + W_BEDARF*bedarf + W_PRIVAT*treffer.length*2);
-  S.bereit += wirkung;
-  S.produktPassung = passung; S.produktTreffer = treffer;
 
-  sag("du", "Das hier. " + p.kurz, {wie:"ohne Anlauf, du legst es einfach hin"});
-  erSagt(p);
-  sag("meta", `Bereitschaft <b>${vzk(wirkung)}</b>`, {warn: wirkung < 0,
-    lang: `Warenpassung ${vzk(passung)} gegen seine Motive`
-      + (bedarf ? `, dazu ${vzk(bedarf)} für das, was gerade bei ihm los ist` : ``)
-      + (treffer.length
-          ? `, dazu trifft sie ${treffer.map(id => DATA.privat.felder.find(f=>f.id===id).was).join(" und ")}.`
-          : `, und sie trifft nichts von dem, was du privat weißt.`)});
-  zeichne();
-  setTimeout(() => zug(), 60);
-}
 
-function zug(){
-  const z = DATA.verkauf.zuege[S.zug];
-  if(!z) return schluss();
-  if(z.regie) sag("regie", z.regie);
-  if(z.frage){ sag("er", z.frage, {wie:z.wie}); setzeStimmung(z.stimmung); }
-  zeichne();
 
-  waehle(z.opt.map(o => {
-    let text = o.t, rueck = null;
-    if(o.an) for(const k in o.an) if(S.gesagt.includes(k) || S.gefunden.includes(k)){ text = o.an[k]; rueck = k; break; }
-    /* Der ehrliche Nachteil hängt an der Ware, nicht am Zug. */
-    text = text.replace("__HAKEN__", S.produkt ? S.produkt.haken : "");
-    return { t:text, tag:`Zug ${S.zug+1} von ${DATA.verkauf.zuege.length}`,
-      rechts: rueck ? `<i style="color:var(--accent)">greift auf</i>` : "",
-      go(){ ziehe(o, text, rueck); } };
-  }));
-}
-
-function ziehe(o, text, rueck){
-  let passung = 0;
-  for(const m in (o.aff||{})) passung += o.aff[m] * HERO.m[m];
-  const fit = passung >= 0 ? W_TREFFER*passung : W_FEHLGRIFF*passung;
-  const bonus = rueck ? W_RUECKGRIFF : 0;
-  const roh = W_AUTO*o.auto + fit + bonus;
-  const faktor = stimmungsFaktor();
-  const wirkung = nachStimmung(roh);
-  S.bereit += wirkung;
-
-  sag("du", text, {wie:o.wie});
-  /* In einer Zugoption steht wie für dich und wie2 für ihn. Deshalb wird
-     seine Rede hier ausdrücklich zusammengesetzt, sonst spräche er in
-     deinem Tonfall. */
-  erSagt({ erRegieVor:o.erRegieVor, er:o.er, erRegie:o.erRegie, er2:o.er2,
-           nachEr:o.nachEr, nachRegie:o.nachRegie,
-           wie:o.wie2, wie2:o.wie2, stimmung:o.stimmung });
-  S.zugLog.push({id:o.id, t:text, auto:o.auto, passung, wirkung, rueck, faktor, stimmung:S.stimmung});
-  S.zug++;
-  zeichne();
-  setTimeout(zug, 60);
-}
-
-function schluss(){
-  S.phase = 5;
-  /* Kein Schwellenwert mehr, sondern eine Aussicht.
-
-     Der Bedarf ist die Bedingung: was er nicht braucht, kauft er nicht,
-     und da hilft auch die beste Freundschaft nichts. Ist der Bedarf da,
-     macht die Bereitschaft den Hauptteil der Aussicht und die
-     Freundschaft legt bis zu fünfzehn Punkte drauf. Danach wird
-     gewürfelt, und zwar einmal. */
-  const AB = WELT.abschluss;
-  const braucht = Math.min(1, (S.produktPassung + (S.produktBedarf || 0)) / 4);
-  const spanne = Math.max(0, Math.min(1, (S.bereit - AB.vonBereit) / (AB.bisBereit - AB.vonBereit)));
-  const ausFreund = AB.ausFreundschaft * (S.bez / 100);
-  const chance = braucht < AB.bedarfNoetig ? 0
-    : Math.min(AB.deckel, AB.ausBereit * spanne + ausFreund);
-  const kauft = Math.random() < chance;
-  S.aussicht = {braucht, spanne, ausFreund, chance, kauft};
-
-  sag("meta", `Aussicht <b>${Math.round(chance*100)} %</b>`, {warn: chance < 0.25,
-    lang: braucht < AB.bedarfNoetig
-      ? `Er braucht das Ding nicht. Was jemand nicht braucht, kauft er auch dann nicht, wenn er dich mag —
-         die Freundschaft ist ein Zuschlag und kein Ersatz.`
-      : `Bedarf ${Math.round(braucht*100)} von hundert, daraus Bereitschaft ${Math.round(S.bereit)}
-         (macht ${Math.round(AB.ausBereit*spanne*100)} Punkte), dazu eure Freundschaft
-         ${Math.round(S.bez)} (macht ${Math.round(ausFreund*100)} Punkte).`});
-
-  const aus = kauft ? DATA.verkauf.ausgang[0]
-    : DATA.verkauf.ausgang.slice(1).find(a => braucht >= AB.bedarfNoetig && S.bereit >= a.ab)
-      || DATA.verkauf.ausgang[DATA.verkauf.ausgang.length - 1];
-  /* Beim Abschluss nimmt er ein bis drei Stück, so viele wie du dabei
-     hast. Das füllt die Kasse und leert den Koffer. */
-  if(kauft && S.produkt){
-    const menge = Math.min(1 + Math.floor(Math.random()*3), KONTO.bestand[S.produkt.id]);
-    const erloes = menge * S.produkt.preis;
-    KONTO.bestand[S.produkt.id] -= menge;
-    KONTO.kasse += erloes;
-    kontoSichern();
-    S.verkauft = {id:S.produkt.id, menge, erloes};
-  }
-  if(aus.regie) sag("regie", aus.regie);
-  erSagt(aus);
-  if(S.verkauft){
-    const v = S.verkauft;
-    sag("regie", v.menge === 1
-      ? `Er nimmt ein Stück und legt es neben den Block.`
-      : `Er nimmt ${wort(v.menge)} Stück. Eines für sich, der Rest — das sagt er nicht.`);
-    sag("meta", `Verkauft: ${v.menge}× ${esc(S.produkt.name)} · <b>${geld(v.erloes)}</b> · `
-      + `Kasse ${geld(KONTO.kasse)} · noch ${stueck()} Stück im Koffer`);
-  }
-  /* Ein Abschluss ist ein Vertrauensbeweis und wirkt nach; ein klares
-     Nein auch, nur andersherum. */
-  const dz = bezPlus(kauft ? 6 : (aus.ab >= 48 ? 0 : -8));
-  if(dz) sag("meta", `Freundschaft <b>${vzk(dz)}</b> auf ${Math.round(S.bez)}`, {warn: dz < 0});
-  S.ende = "verkauf";
-  besuchEnde(aus);
-}
 
 /* ═══════════════ Ende einer Lesestufe ═══════════════
    Zwei Zahlen, mehr nicht: was diese Stufe eingebracht hat und was
@@ -2415,7 +2168,8 @@ function stufenEnde(L, zeilen){
     <p class="small dim" style="margin-top:12px">${
       geschafft
         ? (L.nr === 1 ? `Stufe zwei ist offen: was er braucht.`
-           : `Stufe drei ist offen: der Koffer. Dort gilt alles, was du hier gelernt hast.`)
+           : `Du hast ${AN("ihn")} gelesen. Ab jetzt kannst du einfach vorbeikommen — und wenn alle auf
+             dieser Etage gelesen sind, liegt der Schlüssel für die nächste da.`)
         : `Du kannst die Stufe noch einmal spielen. Er fängt dann von vorn an, und du weißt mehr als beim ersten Mal.`}</p>
   </section>`);
   zeichne();
@@ -2426,14 +2180,14 @@ function stufenEnde(L, zeilen){
    Alles, was bleibt, steht in der Akte: die Freundschaft, was du gehört
    hast, worauf du dich festgelegt hast. Beim nächsten Mal geht es
    von hier weiter. */
-function besuchEnde(aus){
+function besuchEnde(){
   S.phase = 5;
   A.letzter = S.ende;
   A.bez = S.bez;
   A.geduldWeg = 100 - S.geduld;
   akteSichern();
   zeichne();
-  sag("verdict", bilanz(aus));
+  sag("verdict", bilanz());
   zeichne();
   knopf("Zurück ins Menü", () => zeigeMenue());
 }
@@ -2443,16 +2197,14 @@ function besuchEnde(aus){
    festgelegt hast und was es die Freundschaft gekostet oder gebracht hat.
    Seine wahren Werte stehen nicht darin und werden es nie. Wer wissen
    will, ob er richtig lag, muss wiederkommen und zuhören. */
-function bilanz(aus){
+function bilanz(){
   const B = WELT.freundschaft;
   const dz = S.bez - S.bezStart, st = stufeZu(S.bez);
   const neueFakten = S.fakten.slice(S.faktenStart);
   const fragen = S.bfLog.concat(S.moLog);
   const bit = fragen.reduce((a,f) => a + f.gewinn, 0);
 
-  const titel = S.ende === "abfuhr" ? "Er hat dich auflaufen lassen."
-    : S.ende === "raus" ? "Er hat dich hinausgeworfen."
-    : S.ende === "verkauf" ? aus.titel
+  const titel = S.ende === "raus" ? `${AN("Er")} hat dich hinausgeworfen.`
     : "Du bist gegangen, bevor es kippte.";
   const farbe = dz > 4 ? "var(--SIC)" : (dz < -4 ? "var(--STA)" : "var(--EFF)");
 
@@ -2464,16 +2216,16 @@ function bilanz(aus){
         z.dist===0?"bestätigt":(z.dist===1?"eingeschränkt":"widersprochen")}</span> ${vzk(z.p,1)}</td></tr>`).join("")}
     </table>
     <p class="small dim" style="margin-top:8px">Zusammen ${vzk(r.punkte,1)} Freundschaft. Was er bestätigt hat, heißt
-    nicht, dass du recht hattest — nur, dass er nicht widersprochen hat.</p>`).join("") : "";
+    nicht, dass du recht hattest — nur, dass ${AN("er")} nicht widersprochen hat.</p>`).join("") : "";
 
-  const lage = S.zLog.length ? `<h2>Was gerade bei ihm los ist</h2>
+  const lage = S.zLog.length ? `<h2>Was gerade bei ${AN("ihm")} los ist</h2>
     <p class="small" style="margin-bottom:8px"><b>${esc(S.zustand.titel)}</b></p>
     <table class="bil">${S.zLog.map(z => `<tr class="${z.trifft?"hi":""}">
       <td>${esc(z.t.length>78 ? z.t.slice(0,78)+"…" : z.t)}</td>
       <td class="n"><span class="treffer ${z.trifft?"ja":"nein"}">${z.trifft?"er ging darauf ein":"danebengegriffen"}</span> ${vzk(z.wirkung,1)}</td></tr>`).join("")}
     </table>
     ${S.zustand.bedarf && S.bedarf.includes(S.zustand.bedarf.id)
-      ? `<p class="small dim" style="margin-top:8px">Du weißt jetzt: ${esc(S.zustand.bedarf.was)}. Das zählt, wenn du ihm etwas hinlegst.</p>`
+      ? `<p class="small dim" style="margin-top:8px">Du weißt jetzt: ${esc(S.zustand.bedarf.was)}. Das ist mehr, als die meisten hier über ${AN("ihn")} wissen.</p>`
       : `<p class="small dim" style="margin-top:8px">Was er deswegen braucht, hast du nicht herausbekommen.</p>`}` : "";
 
   const notiert = neueFakten.length ? `<h2>Was du heute erfahren hast</h2>
@@ -2485,48 +2237,17 @@ function bilanz(aus){
       <td class="n"><span class="treffer ${da?"ja":"nein"}">${da?"weißt du":"weißt du nicht"}</span></td></tr>`;
   }).join("");
 
-  const wurf = S.aussicht ? `<h2>Der Wurf</h2>
-    <table class="bil">
-      <tr class="${S.aussicht.braucht >= WELT.abschluss.bedarfNoetig ? "hi" : ""}">
-        <td>Braucht er es?</td><td class="n">${Math.round(S.aussicht.braucht*100)} von hundert
-          <span class="treffer ${S.aussicht.braucht >= WELT.abschluss.bedarfNoetig ? "ja":"nein"}">${
-          S.aussicht.braucht >= WELT.abschluss.bedarfNoetig ? "ja" : "nein — dann kauft er nicht"}</span></td></tr>
-      <tr><td>Aus der Bereitschaft</td><td class="n">${Math.round(WELT.abschluss.ausBereit*S.aussicht.spanne*100)} Punkte</td></tr>
-      <tr><td>Aus eurer Freundschaft</td><td class="n">${Math.round(S.aussicht.ausFreund*100)} Punkte</td></tr>
-      <tr class="hi"><td><b>Aussicht</b></td><td class="n"><b>${Math.round(S.aussicht.chance*100)} %</b>
-        <span class="treffer ${S.aussicht.kauft?"ja":"nein"}">${S.aussicht.kauft?"gefallen":"nicht gefallen"}</span></td></tr>
-    </table>
-    <p class="small dim" style="margin-top:8px">Die Freundschaft macht aus einem Vielleicht ein Ja. Aus einem
-    Nein macht sie nichts: was er nicht braucht, kauft er auch dann nicht, wenn er dich mag.</p>` : "";
-
-  const produktZeile = S.produkt
-    ? `<h2>Was du ihm hingelegt hast</h2>
-       <table class="bil"><tr class="${S.produktPassung>0?"hi":""}">
-         <td><b>${esc(S.produkt.name)}</b> — ${esc(S.produkt.kurz)}</td>
-         <td class="n">Motivpassung ${vzk(S.produktPassung)}${
-           S.produktBedarf ? ` · Lage ${vzk(S.produktBedarf)}` : ``}</td></tr>
-       </table>` : "";
-
-  const zuege = S.zugLog.length ? `<h2>Wie du es angeboten hast</h2>
-    <table class="bil">${S.zugLog.map(z => `<tr class="${z.wirkung>0?"hi":""}">
-      <td>${esc(z.t.length>76 ? z.t.slice(0,76)+"…" : z.t)}
-        <span class="stufe ${z.auto>0?"pos":(z.auto<0?"neg":"")}">A ${vz(z.auto)}</span>
-        ${z.rueck ? `<span class="stufe pos">Rückgriff</span>` : ""}
-        ${z.faktor && z.faktor !== 1 ? `<span class="stufe ${z.faktor>1?"pos":"neg"}">${
-          esc((DATA.stimmungen[z.stimmung]||{}).t || z.stimmung)} ×${nk(z.faktor,2).replace(",00","").replace(/0$/,"")}</span>` : ""}</td>
-      <td class="n">${vzk(z.wirkung)}</td></tr>`).join("")}</table>` : "";
-
   return `<section class="panel verdict" style="margin-top:20px">
     <div class="eyebrow">${ord(A.besuche)} Besuch · Ende</div>
     <div class="big" style="color:${farbe}">${esc(titel)}</div>
     <p class="small dim" style="margin-top:10px">Freundschaft ${Math.round(S.bezStart)} →
-      <b>${Math.round(S.bez)}</b> (${vzk(dz,0)}), Stufe <b>${st.name}</b>. ${esc(st.text)}</p>
+      <b>${Math.round(S.bez)}</b> (${vzk(dz,0)}), Stufe <b>${st.name}</b>. ${esc(anrede(st.text))}</p>
 
     ${notiert}
     ${lage}
     ${festTab}
 
-    <h2>Was du über ihn persönlich weißt</h2>
+    <h2>Was du über ${AN("ihn")} persönlich weißt</h2>
     <table class="bil">${privZeilen}</table>
     <p class="small dim" style="margin-top:8px">Geduld am Ende des Besuchs:
       ${Math.round(S.geduld)} von hundert.${S.geduld < 40 ? " Ein Drittel davon fehlt ihm beim nächsten Mal." : ""}</p>
@@ -2537,22 +2258,18 @@ function bilanz(aus){
     <p class="small dim" style="margin-top:8px">Zusammen ${nk(bit)} bit in ${wort(fragen.length)}
     ${fragen.length===1?"Frage":"Fragen"}, und ${nk(-W_FRAGE*fragen.length)} Freundschaft dafür.</p>` : ""}
 
-    ${produktZeile}
-    ${zuege}
-    ${wurf}
-
-    <p class="small dim" style="margin-top:16px">Wie er wirklich ist, steht hier nicht und wird hier nie stehen.
-    Du hast sein Verhalten, deine Notizen und dein Modell. Mehr hat man bei einem Menschen auch sonst nicht.</p>
+    <p class="small dim" style="margin-top:16px">Wie ${AN("er")} wirklich ist, steht hier nicht und wird hier nie stehen.
+    Du hast ${AN("sein")} Verhalten, deine Notizen und dein Modell. Mehr hat man bei einem Menschen auch sonst nicht.</p>
   </section>`;
 }
 
 /* ═══ Menü ═══
    Das Menü ist kein eigenes Dokument, sondern eine andere Ansicht
-   desselben. So laufen Musik, Kasse und Bestand über die Gespräche
-   hinweg weiter. */
+   desselben. So läuft die Musik über die Gespräche hinweg weiter, und
+   das Haus bleibt dasselbe Haus. */
 function zeigeMenue(){
   document.body.classList.add("imMenue");
-  document.getElementById("mkarten").innerHTML = PERSONEN.map(pp => {
+  const karte = pp => {
     const a = akteVon(pp.id), st = stufeZu(a.bez), zu = a.bez < WELT.freundschaft.verbrannt;
     /* Beim ersten Mal steht da, wen du besuchst. Danach steht da, wie
        ihr auseinandergegangen seid. */
@@ -2564,23 +2281,42 @@ function zeigeMenue(){
       ? `<i style="color:var(--STA)">verbrannt · er lässt dich nicht mehr herein</i>`
       : (a.punkte.bf == null && a.punkte.mo == null)
         ? esc(pp.kurz || pp.hero.job)
-        : `Stufe ${a.stufe} · ${esc(anrede(L.name))}`
+        : `Stufe ${a.stufe} · ${esc(anredeVon(pp, L.name))}`
           + (a.sterne != null ? ` · ${"★".repeat(a.sterne)}${"☆".repeat(5-a.sterne)} ${beide} Punkte`
              : ` · ${beide} Punkte`);
     return `<button class="mkarte" data-person="${pp.id}"${zu?" disabled":""}>
       <span class="mbild" style="background-image:url('${pp.menubild || ""}')"></span>
       <span><b>${esc(pp.hero.name)}, ${pp.hero.age}</b>
         <span>${unten}</span></span>
-    </button>`; }).join("");
+    </button>`; };
+
+  /* Etage für Etage. Eine geschlossene zeigt, wer dort sitzt, nicht —
+     sondern nur, woran es liegt und wie viele noch fehlen. */
+  document.getElementById("mkarten").innerHTML = WELT.etagen.map(E => {
+    const leute = leuteAuf(E.nr);
+    if(!leute.length) return "";
+    const offen = etageOffen(E.nr);
+    const fehlen = offen ? 0 : leuteAuf(E.nr - 1).filter(pp => !gelesen(akteVon(pp.id))).length;
+    const kopf = `<div class="etage${offen?"":" zu"}">
+      <span class="nr">${offen ? "Etage " + E.nr : "abgeschlossen"}</span>
+      <b>${esc(E.name)}</b><span>${esc(E.was)}</span></div>`;
+    if(offen) return kopf + leute.map(karte).join("");
+    return kopf + `<div class="schloss">Hier kommst du noch nicht hin.
+      ${akk(fehlen)} ${fehlen === 1 ? "Menschen" : "Menschen"} in der Etage darunter
+      hast du noch nicht zu Ende gelesen — beide Stufen, Wesen und Bedürfnisse.
+      Danach liegt der Schlüssel da.</div>`;
+  }).join("");
   document.querySelectorAll("[data-person]").forEach(b =>
     b.onclick = () => starteGespraech(PERSONEN.find(x => x.id === b.dataset.person)));
+  const fertig = PERSONEN.filter(pp => gelesen(akteVon(pp.id))).length;
+  const hoch = hoechsteOffen(), letzte = WELT.etagen[WELT.etagen.length-1];
   document.getElementById("mkonto").innerHTML =
-    `Kasse <b>${geld(KONTO.kasse)}</b> · ${stueck()} Stück im Koffer`;
+    `<b>${wort(fertig)}</b> von ${wort(PERSONEN.length)} Menschen gelesen · `
+    + (hoch >= letzte.nr ? `das ganze Haus steht dir offen`
+       : `offen bis <b>${esc((WELT.etagen.find(e => e.nr === hoch)||{}).name || "")}</b>`);
   choicesEl.innerHTML = "";
-  document.getElementById("mLaden").onclick = () => zeigeLaden(true);
   document.getElementById("mInfo").onclick  = () => zeigeInfo(true);
   document.getElementById("mReset").onclick = () => zuruecksetzen();
-  zeichneWaren();
   waehleSpur();
 }
 
@@ -2591,22 +2327,20 @@ function zuruecksetzen(){
   const wo = document.body.classList.contains("imMenue") ? "" :
     "\n\nDas laufende Gespräch wird dabei abgebrochen.";
   if(!confirm("Wirklich alles zurücksetzen?\n\n"
-    + "· Kasse und Koffer\n· alle Akten — jede Person kennt dich danach wieder nicht\n"
+    + "· alle Schlüssel — du fängst wieder im Erdgeschoss an\n· alle Akten — jede Person kennt dich danach wieder nicht\n"
     + "· Farbschema und Musik\n· die aufgeklappten Kästen" + wo)) return;
   try{
     ["konto","akte","gespraech-theme","musik"].forEach(k => localStorage.removeItem(k));
     Object.keys(localStorage).filter(k => k.indexOf("falt-") === 0)
       .forEach(k => localStorage.removeItem(k));
   }catch(e){}
-  KONTO.kasse = 0;
-  WELT.produkte.forEach(p => { KONTO.bestand[p.id] = p.bestand; });
   Object.keys(AKTE).forEach(k => delete AKTE[k]);
   /* Ein laufender Besuch darf nicht weiterlaufen: was noch in einem
      Zeitgeber hängt, findet ein beendetes Spiel vor und tut nichts. */
   if(S) S.ende = "abgebrochen";
   setTheme(THEMES[0].id);
   musikSchalten(true);
-  zeigeInfo(false); zeigeKoffer(false); zeigeLaden(false); zeigeSeite(false); themeMenu(false);
+  zeigeInfo(false); zeigeSeite(false); themeMenu(false);
   zeigeMenue();
 }
 
@@ -2658,7 +2392,7 @@ document.addEventListener("keydown", e => {
   } else if(e.key === "ArrowUp" || e.key === "ArrowDown"){
     if(!S || document.body.classList.contains("imMenue")) return;
     e.preventDefault(); blaettere(e.key === "ArrowUp" ? +1 : -1);
-  } else if(k === "escape"){ themeMenu(false); zeigeInfo(false); zeigeKoffer(false); zeigeLaden(false); zeigeSeite(false); }
+  } else if(k === "escape"){ themeMenu(false); zeigeInfo(false); zeigeSeite(false); }
   else if(k === "enter"){ const b = choicesEl.querySelector("button.act"); if(b) b.click(); }
 });
 

@@ -20,6 +20,8 @@
 PERSONEN.push({
 
 id: `sartori`,
+/* In welcher Etage sie sitzt. Ohne den Schlüssel dafür kommst du nicht hin. */
+etage: 2,
 kurz: `Kantinenkoch, 61. Grauer Schopf und grünes Halstuch,
        ein Wachstuchheft unter der Kasse, das seit vierunddreißig Jahren mitgeht.`,
 theme: `dschungel`,
@@ -27,7 +29,7 @@ menubild: `personen/sartori/bilder/freundlich.webp`,
 
 hero: {
   name: `Luigi Sartori`, age: 61, job: `Kantinenkoch`,
-  ort: `Erdgeschoss, hinter der Ausgabe, Tür ohne Schild`,
+  ort: `Erdgeschoss, Mensa, hinter der Ausgabe, Tür ohne Schild`,
   /* Eher still, ordentlich, wenig neugierig, sehr zugewandt, ruhig. Er
      will dazugehören, mehr als alles andere, und Sicherheit nur so
      weit, wie sie ihm die Leute erhält.
@@ -105,7 +107,7 @@ kennenfrage: [
 ],
 
 uebergang1: {
-  duFest: `Du erzählst in zwei Sätzen, was du machst. Ein Projekt, das dir über den Kopf wächst. Davon später, sagst du.`,
+  duFest: `Du sagst, dass du neu bist und dich im Haus umsehen sollst: wer hier arbeitet, was hier läuft. Warum ausgerechnet du, sagst du nicht. Davon später.`,
   er: `Später ist gut. Essen Sie erst mal.`,
   erRegie: `Er schiebt den Teller einen Zentimeter näher.`,
   wie: `warm, unaufdringlich`, stimmung: `freundlich`
@@ -878,116 +880,5 @@ abschied: [
     er:`Wiedersehen.`, wie:`höflich und ohne jeden Inhalt`, stimmung:`verschlossen`, bez:0 }
 ],
 
-abfuhr: {
-  regie:`Du stellst den Koffer auf den Tisch. Er sieht ihn an und schiebt langsam den Kuchenteller zur Seite, damit Platz ist.`,
-  er:`Ach so.`,
-  erRegie:`Er macht Platz, und das ist schlimmer, als wenn er den Koffer wegschieben würde.`,
-  er2:`Ich kaufe nichts, aber machen Sie ruhig auf, wenn Sie schon hier sind. Und essen Sie den Kuchen, sonst wird er weggeworfen.`,
-  wie:`ohne Vorwurf`, wie2:`freundlich, und genau deshalb schwer auszuhalten`, stimmung:`abweisend` },
 
-/* --- Der Verkauf. Bei ihm trägt der Stift: er will nichts vergessen,
-       und er hat vierunddreißig Jahre in einem Wachstuchheft. -------- */
-
-verkauf: {
-  aufschlag: `Achtundzwanzig Minuten sind um. Du hebst den Koffer auf den Tisch, drehst ihn zu ihm und klappst ihn auf. Drei Dinge liegen darin, jedes in seiner Mulde.`,
-  reaktionRegie: `Er sieht in den Koffer, dann dich an, und wischt sich die Hände an der Schürze ab, obwohl sie trocken sind.`,
-  reaktion: `Sie verkaufen etwas. Das hätten Sie gleich sagen können, ich hätte trotzdem Kaffee gemacht.`,
-  reaktionWie: `ruhig, ohne Vorwurf, und ein wenig enttäuscht`,
-  start: 30,
-  zuege: [
-    { frage: `Warum zeigen Sie mir ausgerechnet das?`, wie:`sachlich, abwartend`, stimmung:`neutral`,
-      opt: [
-        { id:`alle`, t:`Weil das jeder brauchen kann.`,
-          wie:`allgemein, ein wenig auswendig`, auto:0, aff:{},
-          er:`Jeder.`, erRegie:`Er lehnt sich zurück.`,
-          er2:`Dann haben Sie mir vierzig Minuten zugehört, um mir etwas für jeden zu verkaufen. Das ist schade.`,
-          wie2:`freundlich, enttäuscht`, stimmung:`skeptisch` },
-        { id:`zugehoert`, t:`Weil Sie mir eine Stunde lang erzählt haben, was Sie nicht verlieren wollen. Wenn ich falsch liege, sagen Sie es, und ich packe wieder ein.`,
-          wie:`ruhig, ohne Druck`, auto:2, aff:{FRE:-1.2, GEL:-0.8},
-          an:{ werkstatt:`Sie haben vierunddreißig Jahre in einem Heft, das dreimal neu eingebunden wurde. Deshalb dieses und nichts anderes. Wenn ich falsch liege, packe ich ein.`,
-               plan60:`Sie hören im Oktober auf, und was Sie im Kopf haben, geht dann mit. Deshalb dieses hier. Wenn ich falsch liege, sagen Sie es.`,
-               musik:`Sie stehen zweimal die Woche mit acht alten Herren auf einem Platz. Dafür braucht man Abende. Deshalb dieses. Wenn ich falsch liege, packe ich ein.` },
-          erRegieVor:`Er sagt eine Sekunde lang nichts.`,
-          er:`Das ist ehrlich. Weiter.`, wie2:`langsamer`, stimmung:`interessiert` },
-        { id:`beste`, t:`Weil es das Beste ist, was ich dabei habe.`,
-          wie:`bestimmt, ein wenig zu glatt`, auto:0, aff:{GEL:1.2},
-          er:`Das Beste, was Sie dabei haben, sagt etwas über Ihren Koffer und nichts über mich.`,
-          wie2:`freundlich, aber unnachgiebig`, stimmung:`skeptisch` }
-      ]},
-
-    { frage: `Wo ist der Haken?`, wie:`ruhig, ohne Misstrauen im Ton`, stimmung:`neutral`,
-      opt: [
-        { id:`keiner`, t:`Es gibt keinen.`,
-          wie:`glatt`, auto:-1, aff:{},
-          er:`Es gibt immer einen.`, erRegie:`Er sagt es freundlich.`,
-          er2:`Bei jedem Gericht gibt es einen. Wenn Sie ihn nicht sagen, finde ich ihn selbst, und dann ärgere ich mich über Sie und nicht über die Sache.`,
-          wie2:`ruhig`, stimmung:`skeptisch` },
-        { id:`nennen`, t:`__HAKEN__`,
-          wie:`ruhig, ohne Beschönigung`, auto:2, aff:{FRE:-1.0},
-          erRegieVor:`Er sieht dich zum ersten Mal länger an.`,
-          er:`Das hätten Sie nicht sagen müssen.`, erRegie:`Er nickt einmal.`,
-          er2:`Genau deshalb glaube ich Ihnen den Rest.`, wie2:`langsam, ernst`, stimmung:`interessiert` },
-        { id:`spaeter`, t:`Darüber reden wir, wenn Sie sich entschieden haben.`,
-          wie:`ausweichend`, auto:-2, aff:{},
-          er:`Dann reden wir lieber jetzt nicht weiter.`,
-          erRegie:`Er steht auf und stellt Wasser auf, das niemand bestellt hat.`,
-          wie2:`sehr freundlich`, stimmung:`gereizt` }
-      ]},
-
-    { frage: `Und woher weiß ich, dass das stimmt?`, wie:`prüfend, ohne Härte`, stimmung:`skeptisch`,
-      opt: [
-        { id:`probieren`, t:`Sie behalten es zwei Wochen. Wenn es nicht tut, was ich gesagt habe, hole ich es ab, und Sie sagen kein Wort dazu.`,
-          wie:`konkret, ohne Bedingung`, auto:2, aff:{FRE:-1.4},
-          an:{ heftinhalt:`Schreiben Sie zwei Wochen lang damit in Ihr Heft. Wenn es nichts taugt, hole ich es ab, und Sie sagen kein Wort dazu.`,
-               nuss:`Schreiben Sie zwei Wochen lang die Lieferungen damit auf. Wenn es nichts taugt, hole ich es ab.` },
-          er:`Zwei Wochen.`, erRegie:`Er zieht das Heft heran und sieht es an.`,
-          er2:`Da kann ich nichts verlieren. Das ist selten.`,
-          wie2:`ruhig, aufmerksam`, stimmung:`interessiert` },
-        { id:`referenzen`, t:`Ich habe Referenzen. Drei Häuser arbeiten schon damit.`,
-          wie:`routiniert`, auto:0, aff:{FRE:-1.0, GEL:0.8},
-          er:`Drei Häuser.`, erRegie:`Er zuckt kaum merklich mit einer Schulter.`,
-          er2:`In drei Häusern kocht auch jemand anders als ich. Das sagt mir nichts über meine Küche.`,
-          wie2:`sachlich`, stimmung:`skeptisch` },
-        { id:`glauben`, t:`An dieser Stelle müssen Sie mir einfach glauben.`,
-          wie:`beschwörend`, auto:-1.5, aff:{},
-          er:`Müssen.`, erRegie:`Er lächelt und schüttelt langsam den Kopf.`,
-          er2:`Wissen Sie, ich glaube fast jedem. Deshalb bin ich vorsichtig geworden, wenn jemand es von mir verlangt.`,
-          wie2:`freundlich, sehr bestimmt`, stimmung:`skeptisch` }
-      ]},
-
-    { regie: `Er sieht in den offenen Koffer und dann auf die Uhr über der Tür.`,
-      opt: [
-        { id:`neinistnein`, t:`Überlegen Sie es sich. Wenn Sie Nein sagen, ist das ein Nein und kein Zwischenstand.`,
-          wie:`ruhig, ohne Nachdruck`, auto:2, aff:{FRE:-0.8, GEL:-0.8},
-          an:{ 'aerger:schlucken':`Sie sagen im Moment lieber nichts, das habe ich gemerkt. Dann sagen Sie mir jetzt auch nichts. Und wenn es später ein Nein wird, ist es ein Nein und kein Zwischenstand.`,
-               marek:`Reden Sie mit Marek darüber, der sagt nie etwas Dummes. Und wenn es ein Nein wird, ist es ein Nein und kein Zwischenstand.` },
-          er:`Ein Nein, das ein Nein sein darf.`, erRegie:`Er nickt.`,
-          er2:`Das ist mir noch nicht oft angeboten worden.`, wie2:`leiser`, stimmung:`geruehrt` },
-        { id:`verpassen`, t:`Wenn Sie Nein sagen, verpassen Sie etwas.`,
-          wie:`drängend`, auto:-1.5, aff:{},
-          er:`Ich verpasse einiges. Bisher ist es immer weitergegangen.`,
-          wie2:`gleichmütig`, stimmung:`verschlossen` },
-        { id:`freitag`, t:`Der Preis gilt nur bis Freitag.`,
-          wie:`geschäftsmäßig, mit Blick auf die Uhr`, auto:-2, aff:{},
-          er:`Freitag.`, erRegie:`Er klappt den Koffer von seiner Seite aus zu, sehr behutsam.`,
-          er2:`Dann wird es nichts. Ich entscheide nichts unter Zeitdruck, das habe ich mir abgewöhnt, als ich einmal zweihundert Portionen wegwerfen musste.`,
-          wie2:`freundlich, endgültig`, stimmung:`gereizt` }
-      ]}
-  ],
-  ausgang: [
-    { ab:72, titel:`Er kauft.`, stimmung:`freundlich`,
-      regie:`Er wischt sich die Hände an der Schürze ab und gibt dir die Hand, bevor er etwas sagt.`,
-      er:`Ich nehme es. Zwei Wochen, dann sage ich Ihnen, was daraus geworden ist — so oder so.`,
-      wie:`fest, warm`,
-      nachRegie:`Er packt dir zwei Stück Kuchen ein, die du nicht bestellt hast, und bringt dich bis zur Tür.` },
-    { ab:48, titel:`Er lässt es offen.`, stimmung:`nachdenklich`,
-      er:`Lassen Sie mir etwas da, ich sehe es mir an. Versprechen tue ich nichts.`,
-      wie:`freundlich, unentschieden`,
-      nachRegie:`Er legt es neben das Heft, nicht darauf.` },
-    { ab:-999, titel:`Er kauft nicht.`, stimmung:`verschlossen`,
-      regie:`Er klappt den Koffer zu und schiebt ihn dir behutsam über den Tisch zurück.`,
-      er:`Nein. Und es liegt nicht an Ihnen, Sie waren nett. Es ist nur nichts für mich dabei gewesen, und das haben Sie vorher schon gewusst.`,
-      wie:`freundlich, ohne jeden Vorwurf, und genau deshalb endgültig` }
-  ]
-},
 });

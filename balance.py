@@ -7,9 +7,9 @@
    Mal im Browser zu klicken. Weil alles aus dem Spiel selbst gelesen
    wird, koennen Messung und Wirklichkeit nicht auseinanderlaufen.
 
-   Ziel: wer blind draufloslaeuft, kommt nie zum Abschluss; wer zuhoert,
-   braucht zwei bis drei Besuche; und wer die falsche Ware hinlegt,
-   verkauft sie auch dem besten Freund nicht."""
+   Ziel: wer blind draufloslaeuft, kommt nie durch die erste Tuer; wer
+   zuhoert, hat eine Person in zwei bis drei Besuchen gelesen und
+   bekommt den Schluessel fuer die naechste Etage."""
 import io, os, re, math, random, sys
 import numpy as np
 from itertools import product as kartesisch
@@ -51,23 +51,6 @@ HZ = gewichte(re.search(r"z:\s*\{([^}]*)\}", QUELLE).group(1))
 HM = gewichte(re.search(r"m:\s*\{\s*(FRE[^}]*)\}", QUELLE).group(1))
 ROLLE = gewichte(re.search(r"rollenprior:\s*\{([^}]*)\}", QUELLE).group(1))
 
-PROD = []
-for roh in re.split(r"\n  \{ id:`", block("produkte"))[1:]:
-    PROD.append({"id": roh.split("`")[0],
-                 "passt": gewichte(re.search(r"passt:\s*\{([^}]*)\}", roh).group(1)),
-                 "spricht": re.findall(r"`(\w+)`", re.search(r"spricht:\[([^\]]*)\]", roh).group(1))})
-
-ZUEGE = []
-for zug in re.split(r"\n    \{ (?:frage|regie):", block("verkauf"))[1:]:
-    opts = []
-    for o in re.split(r"\n        \{ id:`", zug)[1:]:
-        st = re.search(r"stimmung:`(\w+)`", o)
-        opts.append({"auto": float(re.search(r"auto:(-?\d+(?:\.\d+)?)", o).group(1)),
-                     "aff": gewichte(re.search(r"aff:\s*\{([^}]*)\}", o).group(1)),
-                     "an": "an:{" in o,
-                     "stimmung": st.group(1) if st else "neutral"})
-    if opts: ZUEGE.append(opts)
-
 # ---------- Was gerade bei ihm los ist ----------
 ZUST = []
 for roh in re.split(r"\n\{ id:`", block("zustaende"))[1:]:
@@ -94,11 +77,20 @@ def nach_laune(w, st):
     return w * f if w >= 0 else w / f
 
 FR = {k: float(v) for k, v in
-      re.findall(r"(start|verkaufSchwelle|verbrannt|verkaufKosten|uebertrag|geduldUebertrag):\s*(-?[\d.]+)",
+      re.findall(r"(start|verbrannt|geduldUebertrag):\s*(-?[\d.]+)",
                  block("freundschaft"))}
-AB = {k: float(v) for k, v in
-      re.findall(r"(bedarfNoetig|vonBereit|bisBereit|ausBereit|ausFreundschaft|deckel):\s*(-?[\d.]+)",
-                 block("abschluss"))}
+
+# ---------- Die zwei Lesestufen: was sie einbringen, was zum Bestehen reicht ----------
+LEVEL = {}
+for roh in re.split(r"\n  \{ nr:", block("level"))[1:]:
+    key = re.search(r"key:`(\w+)`", roh).group(1)
+    pk = re.search(r"punkte:\{ genau:(\d+), knapp:(\d+), daneben:(\d+) \}", roh)
+    bs = re.search(r"bestehen:(\d+)", roh)
+    if pk and bs:
+        LEVEL[key] = {"genau": int(pk.group(1)), "knapp": int(pk.group(2)),
+                      "daneben": int(pk.group(3)), "bestehen": int(bs.group(1))}
+assert set(LEVEL) == {"bf", "mo"}, "Lesestufen nicht gefunden: %s" % sorted(LEVEL)
+STERNE = [(int(a), int(n)) for a, n in re.findall(r"\{ ab:(-?\d+), n:(\d)", block("sterne"))]
 
 # ---------- Gewichte: direkt aus dem Spiel gelesen ----------
 SPIEL = io.open("quelle/spiel.html", encoding="utf-8").read()
@@ -108,9 +100,7 @@ def konst(name):
     assert name in GEFUNDEN, "Konstante fehlt: " + name
     return GEFUNDEN[name]
 
-G = dict(auto=konst("W_AUTO"), treffer=konst("W_TREFFER"), fehlgriff=konst("W_FEHLGRIFF"),
-         rueckgriff=konst("W_RUECKGRIFF"), produkt=konst("W_PRODUKT"), privat=konst("W_PRIVAT"),
-         bedarf=konst("W_BEDARF"), rauswurf=konst("W_RAUSWURF"),
+G = dict(rauswurf=konst("W_RAUSWURF"),
          rtreffer=konst("W_RATE_TREFFER"), rnah=konst("W_RATE_NAH"), rdaneben=konst("W_RATE_DANEBEN"),
          frage=konst("W_FRAGE"), fragesteig=konst("W_FRAGE_STEIG"),
          gfrage=konst("W_GEDULD_FRAGE"), gprivat=konst("W_GEDULD_PRIVAT"),
@@ -182,8 +172,9 @@ def fragenplan(art, besuch, nbf, nmo):
     return random.randint(0, 3), random.randint(0, 3)
 
 def besuche(art, max_besuche=6):
-    """Spielt eine Person ueber mehrere Besuche. Gibt zurueck, ob und im
-       wievielten Besuch er kauft, und wie ihr am Ende steht."""
+    """Spielt eine Person ueber mehrere Besuche. Gibt zurueck, in
+       welchem Besuch beide Lesestufen bestanden waren, wie ihr am Ende
+       steht, und wie viele Sterne dabei herauskommen."""
     frd = FR["start"]
     pr = {"bf": prior(T, ROLLE), "mo": prior(M, {}, MGLOCKE)}
     offen = {"bf": list(range(len(BF))), "mo": list(range(len(MO)))}
@@ -191,9 +182,13 @@ def besuche(art, max_besuche=6):
     fakten = 0; geduld_weg = 0.0
     gesehen = []
     g = GUETE[art]
+    # Was die zwei Lesestufen eingebracht haben. None heisst: noch nicht abgegeben.
+    stufenpunkte = {"bf": None, "mo": None}
+    fertig_in = None
 
     for besuch in range(1, max_besuche+1):
-        if frd < FR["verbrannt"]: return (False, besuch-1, frd, "verbrannt")
+        if frd < FR["verbrannt"]:
+            return (fertig_in, frd, "verbrannt", sum(v or 0 for v in stufenpunkte.values()))
         geduld = 100.0 - geduld_weg * FR["geduldUebertrag"]
         heute = 0
         nbf, nmo = fragenplan(art, besuch, len(offen["bf"]), len(offen["mo"]))
@@ -224,6 +219,21 @@ def besuche(art, max_besuche=6):
                 punkte *= anteil
                 frd = min(100.0, max(0.0, frd + punkte))
                 geduld = min(100.0, max(0.0, geduld + punkte*G["gfest"]))
+                # Dieselbe Festlegung wird in der Lesestufe getrennt gewertet:
+                # nicht in Freundschaft, sondern in Punkten.
+                L = LEVEL[key]
+                sp = 0
+                for d in range(len(dims)):
+                    tipp = (modus(pr[key], d, len(dims)) if random.random() < g
+                            else int(random.choice(STUFEN)))
+                    dist = abs(tipp - int(wahr[dims[d]]))
+                    sp += L["genau"] if dist == 0 else (L["knapp"] if dist == 1 else L["daneben"])
+                if stufenpunkte[key] is None or sp > stufenpunkte[key]:
+                    stufenpunkte[key] = sp
+                if (fertig_in is None
+                        and all(stufenpunkte[k] is not None and stufenpunkte[k] >= LEVEL[k]["bestehen"]
+                                for k in ("bf", "mo"))):
+                    fertig_in = besuch
 
         # Was gerade bei ihm los ist
         braucht = {}
@@ -259,57 +269,23 @@ def besuche(art, max_besuche=6):
         geduld_weg = max(0.0, 100.0 - geduld)
         if geduld <= 0: continue          # rausgeworfen, der Besuch ist vorbei
 
-        # Der Koffer
-        will = (besuch == 1) if art == "zufall" else (frd >= FR["verkaufSchwelle"])
-        if not will:
-            frd = min(100.0, frd + 1)
-            continue
-        if frd < FR["verkaufSchwelle"]:
-            frd = max(0.0, frd - 2*FR["verkaufKosten"])
-            continue
-        frd -= FR["verkaufKosten"]
-        bereit = round(frd * FR["uebertrag"])
+    return (fertig_in, frd, "offen", sum(v or 0 for v in stufenpunkte.values()))
 
-        def wert(q):
-            return (sum(q["passt"].get(m,0)*HM[m] for m in HM)
-                    + G["bedarf"]/G["produkt"]*sum(q["passt"].get(m,0)*braucht.get(m,0) for m in braucht))
-        best = max(PROD, key=wert)
-        p = best if random.random() < g else random.choice(PROD)
-        passung = sum(p["passt"].get(m,0)*HM[m] for m in HM)
-        bedarf  = sum(p["passt"].get(m,0)*braucht.get(m,0) for m in braucht)
-        treffer = min(len(p["spricht"]), fakten)
-        bereit += G["produkt"]*passung + G["bedarf"]*bedarf + G["privat"]*treffer*2
-
-        laune = "neutral"
-        for opts in ZUEGE:
-            o = max(opts, key=lambda x: x["auto"]) if random.random() < g else random.choice(opts)
-            sm = sum(o["aff"].get(m,0)*HM[m] for m in HM)
-            roh = G["auto"]*o["auto"] + (G["treffer"]*sm if sm >= 0 else G["fehlgriff"]*sm)
-            if o["an"] and fakten >= 2 and random.random() < g: roh += G["rueckgriff"]
-            bereit += nach_laune(roh, laune)
-            laune = o["stimmung"]
-
-        # Kein Schwellenwert, sondern ein Wurf. Ohne Bedarf kein Kauf.
-        braucht_wert = min(1.0, (G["produkt"]*passung + G["bedarf"]*bedarf) / (4*G["produkt"]))
-        spanne = max(0.0, min(1.0, (bereit - AB["vonBereit"]) / (AB["bisBereit"] - AB["vonBereit"])))
-        chance = 0.0 if braucht_wert < AB["bedarfNoetig"] else min(
-            AB["deckel"], AB["ausBereit"]*spanne + AB["ausFreundschaft"]*(frd/100))
-        if random.random() < chance:
-            return (True, besuch, min(100.0, frd+6), "kauft")
-        # Ein Nein beendet den Besuch, nicht die Bekanntschaft: man kommt
-        # wieder. Nur kostet jeder Versuch, und das summiert sich.
-        if not (bereit >= 48 and braucht_wert >= AB["bedarfNoetig"]):
-            frd = max(0.0, frd - 8)
-
-    return (False, max_besuche, frd, "kein Versuch")
+def sterne(p):
+    for ab, n in STERNE:
+        if p >= ab: return n
+    return 0
 
 def lauf(art, n):
     r = [besuche(art) for _ in range(n)]
-    kauft = np.array([x[0] for x in r])
-    wann  = np.array([x[1] for x in r if x[0]])
-    frd   = np.array([x[2] for x in r])
-    tot   = np.array([x[3] == "verbrannt" or x[2] < FR["verbrannt"] for x in r])
-    return kauft.mean(), (wann.mean() if len(wann) else float("nan")), frd.mean(), tot.mean()
+    fertig = np.array([x[0] is not None for x in r])
+    wann   = np.array([x[0] for x in r if x[0] is not None], dtype=float)
+    frd    = np.array([x[1] for x in r])
+    tot    = np.array([x[2] == "verbrannt" or x[1] < FR["verbrannt"] for x in r])
+    pkt    = np.array([x[3] for x in r], dtype=float)
+    st     = np.array([sterne(x[3]) for x in r], dtype=float)
+    return (fertig.mean(), (wann.mean() if len(wann) else float("nan")),
+            frd.mean(), tot.mean(), pkt.mean(), st.mean())
 
 if __name__ == "__main__":
     N = 400
@@ -320,11 +296,12 @@ if __name__ == "__main__":
         else: G[k] = float(v)
     random.seed(7); np.random.seed(7)
     print("Person: %s" % WER)
-    print("geparst: %d BF, %d Waagenfragen, %d Waren, %d Zuege, %d Zustaende"
-          % (len(BF), len(MO), len(PROD), len(ZUEGE), len(ZUST)))
-    print("Freundschaft:", FR, "\nAbschluss:", AB)
-    print("Waren gegen ihn:", {q["id"]: round(sum(q["passt"].get(m,0)*HM[m] for m in HM), 2) for q in PROD})
-    print("%-8s %8s %9s %12s %10s" % ("", "kauft", "im Besuch", "Freundschaft", "verbrannt"))
+    print("geparst: %d BF, %d Waagenfragen, %d Zustaende" % (len(BF), len(MO), len(ZUST)))
+    print("Freundschaft:", FR)
+    print("Lesestufen:", LEVEL)
+    print("%-8s %9s %9s %8s %7s %12s %10s"
+          % ("", "gelesen", "im Besuch", "Punkte", "Sterne", "Freundschaft", "verbrannt"))
     for art in ("zufall", "mittel", "gut", "perfekt"):
-        ja, wann, bz, tot = lauf(art, N)
-        print("%-8s %7.1f%% %9.1f %12.1f %9.1f%%" % (art, 100*ja, wann, bz, 100*tot))
+        ja, wann, bz, tot, pkt, st = lauf(art, N)
+        print("%-8s %8.1f%% %9.1f %8.0f %7.1f %12.1f %9.1f%%"
+              % (art, 100*ja, wann, pkt, st, bz, 100*tot))

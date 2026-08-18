@@ -2,8 +2,8 @@
    Die Welt: was für jede Person gleich ist.
 
    Die fünf Achsen der Persönlichkeit und der Motive, was eine
-   Ausprägung für dich bedeutet, dein Koffer und die Belege. Wer eine
-   Person ergänzt, fasst diese Datei nicht an.
+   Ausprägung für dich bedeutet, die Etagen des Hauses und die Belege.
+   Wer eine Person ergänzt, fasst diese Datei nicht an.
    ═══════════════════════════════════════════════════════════════════ */
 const WELT = {
 
@@ -71,39 +71,32 @@ stimmungswirkung: {
 
 /* --- Die Beziehung. Sie ist das einzige, was zwischen zwei Besuchen
        bleibt, und sie entscheidet alles: ob er dich hereinlässt, ob er
-       den Koffer überhaupt ansieht, wie er dich begrüßt.
+       wie viel er dir erzählt, wie er dich begrüßt.
 
        Fragen kosten Geduld. Was ihr aufbaut, kommt daher, dass du ihn
        richtig liest — beim Festlegen und in dem, was gerade bei ihm
-       los ist. Wer sofort verkaufen will, zahlt dafür. --------------- */
+       los ist. ------------------------------------------------------ */
 freundschaft: {
   start: 35,
-  /* Darunter macht er den Koffer nicht mehr auf. */
-  verkaufSchwelle: 55,
   /* Darunter lässt er dich gar nicht mehr herein. */
   verbrannt: 8,
-  /* Was der Verkaufsversuch an sich kostet: du hast dich zu erkennen
-     gegeben, und das lässt sich nicht zurücknehmen. */
-  verkaufKosten: 6,
-  /* Woraus die Bereitschaft im Verkauf startet. */
-  uebertrag: 0.85,
   /* Wie viel von der verbrauchten Geduld er ins nächste Mal mitnimmt.
      Wer ihn an einem Nachmittag ausquetscht, sitzt beim nächsten
      Besuch einem Mann gegenüber, der schon weiß, wie das läuft. */
   geduldUebertrag: 0.35,
   stufen: [
     { ab:80, name:`verbündet`,
-      text:`Er hält dir den Rücken frei. Was du sagst, gilt bei ihm, bis das Gegenteil bewiesen ist.` },
+      text:`{Er} hält dir den Rücken frei. Was du sagst, gilt bei {ihm}, bis das Gegenteil bewiesen ist.` },
     { ab:60, name:`vertraut`,
-      text:`Er redet mit dir über Dinge, die er anderen im Haus nicht erzählt.` },
+      text:`{Er} redet mit dir über Dinge, die {er} anderen im Haus nicht erzählt.` },
     { ab:40, name:`bekannt`,
-      text:`Er weiß, wer du bist, und nimmt sich Zeit. Mehr aber auch nicht.` },
+      text:`{Er} weiß, wer du bist, und nimmt sich Zeit. Mehr aber auch nicht.` },
     { ab:20, name:`fremd`,
-      text:`Ein Termin unter anderen. Er ist höflich, und Höflichkeit ist hier kein gutes Zeichen.` },
+      text:`Ein Termin unter anderen. {Er} ist höflich, und Höflichkeit ist hier kein gutes Zeichen.` },
     { ab:8, name:`abgekühlt`,
-      text:`Er lässt dich noch herein. Viel fehlt nicht mehr, und das tut er nicht mehr.` },
+      text:`{Er} lässt dich noch herein. Viel fehlt nicht mehr, und das tut {er} nicht mehr.` },
     { ab:-999, name:`verbrannt`,
-      text:`Er hat dich abgeschrieben. Ein Besuch mehr ändert daran nichts.` }
+      text:`{Er} hat dich abgeschrieben. Ein Besuch mehr ändert daran nichts.` }
   ]
 },
 
@@ -131,8 +124,8 @@ level: [
   { nr:2, key:`mo`, name:`Was {er} braucht`,
     was:`Zwei Waagen, jede mit zwei Seiten. Sicherheit oder Freiheit, Nähe oder Geltung.`,
     punkte:{ genau:50, knapp:20, daneben:0 }, bestehen:50 },
-  { nr:3, key:`koffer`, name:`Der Koffer`,
-    was:`Jetzt erst geht es ums Verkaufen — mit allem, was du über {ihn} weißt.`,
+  { nr:3, key:`besuch`, name:`{Ihn} kennenlernen`,
+    was:`Kein Punktestand mehr. Du kommst vorbei, fragst, was gerade los ist, und siehst, wie weit {er} dich hereinlässt.`,
     punkte:null, bestehen:null }
 ],
 
@@ -157,7 +150,7 @@ deutung: {
        mitte:`Neues zieht ihn weder an noch ab. Argumentiere über die Sache, nicht über die Neuheit.`,
        tief: `Er will Bewährtes. Neuheit ist für ihn ein Risiko und kein Reiz.` },
   C: { hoch: `Er plant. Ein klarer Ablauf mit Terminen beruhigt ihn mehr als jedes Versprechen.`,
-       mitte:`Struktur hilft, ist aber kein Verkaufsargument.`,
+       mitte:`Struktur hilft, ist aber kein Hebel bei ihm.`,
        tief: `Pläne langweilen ihn. Er entscheidet früh und korrigiert unterwegs — gib ihm etwas zum Anfangen, keinen Fahrplan.` },
   E: { hoch: `Er denkt im Reden. Lass ihn ausreden, widersprich ruhig; Stille und Monologe verlieren ihn.`,
        mitte:`Er redet, wenn es etwas zu sagen gibt. Weder Schweigen noch Lautstärke bringen dich weiter.`,
@@ -179,60 +172,23 @@ mdeutung: {
          tief: `Er will dazugehören. Wer sonst mitmacht, ist ein Argument; Schmeichelei ist keins und kostet dich sofort.` }
 },
 
-/* --- Wann er kauft. Keine Schwelle mehr, sondern eine Wahrscheinlich-
-       keit — und zwei Dinge, die sie machen:
+/* --- Die Etagen. Das Haus gibt sich nicht auf einmal her: unten
+       sitzen zwei, und erst wer die beiden gelesen hat — beide
+       Lesestufen bestanden —, bekommt den Schlüssel für die nächste.
 
-       Der Bedarf ist die Bedingung. Was er nicht braucht, kauft er
-       nicht, und zwar bei keiner Freundschaft der Welt.
+       Die Nummer steht bei jeder Person unter etage. Wer eine Etage
+       ergänzt, schreibt hier eine Zeile dazu. --------------------- */
 
-       Die Freundschaft ist der Zuschlag. Wer ihm nahesteht, bekommt
-       ein Ja auch dann, wenn die Sache nur halb passt — bis zu
-       fuenfzehn Punkte, nie mehr. Freundschaft macht aus einem
-       Vielleicht ein Ja und aus einem Nein nichts. ------------------ */
-
-abschluss: {
-  /* Darunter braucht er die Ware schlicht nicht. */
-  bedarfNoetig: 0.2,
-  /* Zwischen diesen Ständen steigt die Aussicht von null auf achtzig
-     Prozent. */
-  vonBereit: 35, bisBereit: 88, ausBereit: 0.80,
-  ausFreundschaft: 0.15,
-  deckel: 0.93
-},
-
-
-/* --- Akt 1: Ankunft. Fest geschrieben, trägt null bit. ------------- */
-
-/* --- Stimmungen. Jede zeigt ein anderes Bild aus bilder/. Fehlt eine
-       Datei, bleibt das Grundporträt stehen und nur der Text wechselt.
-       Neue Stimmung: hier eine Zeile, Bild danebenlegen, fertig. ------ */
-
-produkte: [
-  { id:`uhr`, ek:340, preis:900, bestand:3, name:`Die Uhr`,
-    kurz:`Eine Stunde daran gedreht, und du hast einen Tag mehr, den nur du erlebst.`,
-    text:`Eine Taschenuhr, Messing, abgegriffen. Wer die Krone einmal ganz herumdreht, bekommt vierundzwanzig Stunden, in denen die Welt stillsteht und er allein weiterarbeitet. Danach geht es weiter, als wäre nichts gewesen. Niemand außer ihm merkt etwas.`,
-    haken:`Die Stunden, die Sie gewinnen, altern Sie mit. Ein Tag ist ein Tag, auch wenn ihn keiner sieht.`,
-    passt:{ FRE:1.6 }, spricht:[`plan60`,`musik`],
-    erRegieVor:`Er nimmt sie aus der Mulde und wiegt sie in der Hand, ohne zu fragen, ob er darf.`,
-    er:`Zeit.`, erRegie:`Er dreht die Krone eine halbe Umdrehung und hält an.`,
-    er2:`Zeigen Sie mir, wie sie geht.`, wie:`leise, sehr aufmerksam`, wie2:`fordernd`, stimmung:`interessiert` },
-
-  { id:`stift`, ek:150, preis:400, bestand:3, name:`Der Stift`,
-    kurz:`Was du damit schreibst, vergisst du nie wieder.`,
-    text:`Ein Füllhalter, schwarz, ohne Aufschrift. Jeder Satz, den man damit auf Papier bringt, bleibt vollständig im Gedächtnis — Wortlaut, Seite, Tag. Kein Nachschlagen mehr, kein Suchen, kein zweites Mal lesen.`,
-    haken:`Sie vergessen auch das nie wieder, was Sie lieber vergessen würden. Schreiben Sie nichts damit auf, was Sie loswerden wollen.`,
-    passt:{ FRE:-1.0, GEL:-0.3 }, spricht:[`werkstatt`],
-    er:`Ein Stift.`, erRegie:`Er nimmt ihn, dreht ihn einmal und legt ihn zurück in die Mulde.`,
-    er2:`Ich schreibe wenig. Ich rechne.`, wie:`trocken`, wie2:`abschließend`, stimmung:`skeptisch` },
-
-  { id:`brille`, ek:250, preis:650, bestand:3, name:`Die Brille`,
-    kurz:`Wer sie aufsetzt, sieht jedem Text an, wo er nicht stimmt.`,
-    text:`Ein schmales Gestell mit klaren Gläsern. Wer sie trägt, sieht in jedem geschriebenen Text die Stellen aufleuchten, an denen etwas falsch ist — der Rechenfehler, die geschönte Zahl, der Satz, den jemand gegen besseres Wissen geschrieben hat.`,
-    haken:`Sie sehen die Fehler auch in dem, was Sie selbst geschrieben haben. Alle davon.`,
-    passt:{ FRE:-0.6, GEL:1.4 }, spricht:[],
-    er:`Eine Brille, die Fehler zeigt.`,
-    erRegie:`Er setzt sie auf, sieht auf den obersten Ausdruck seines Stapels und nimmt sie wieder ab.`,
-    er2:`Meine Fehler finde ich selbst. Das ist der Job.`, wie:`gedehnt`, wie2:`kühl`, stimmung:`skeptisch` }
+etagen: [
+  { nr:1, name:`Erdgeschoss`,
+    was:`Die Tür und der Gang dahinter. An den beiden kommt niemand vorbei.`,
+    schluessel:`Der Schlüssel für den ersten Stock liegt auf dem Tresen, als du wiederkommst. Niemand sagt, wer ihn hingelegt hat.` },
+  { nr:2, name:`Erster Stock und Mensa`,
+    was:`Die Büros oben und die Tür hinter der Ausgabe. Beides steht Fremden nicht offen.`,
+    schluessel:`Am Schlüsselbrett hängt jetzt einer mehr, mit einem Anhänger aus Pappe: UG.` },
+  { nr:3, name:`Keller`,
+    was:`Wo die Technik steht und wo hier unten niemand vorbeikommt.`,
+    schluessel:`` }
 ],
 
 belege: {

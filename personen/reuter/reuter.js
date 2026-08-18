@@ -17,6 +17,8 @@
 PERSONEN.push({
 
 id: `reuter`,
+/* In welcher Etage sie sitzt. Ohne den Schlüssel dafür kommst du nicht hin. */
+etage: 2,
 kurz: `Papierrestauratorin, 38. Dunkler Bob und Kittel über dem Pullover,
        ein Tisch, auf dem jedes Werkzeug parallel liegt.`,
 theme: `blaupause`,
@@ -24,7 +26,7 @@ menubild: `personen/reuter/bilder/freundlich.webp`,
 
 hero: {
   name: `Annika Reuter`, age: 38, job: `Papierrestauratorin`,
-  ort: `Untergeschoss, Werkstatt drei, kein Fenster`,
+  ort: `Erster Stock, Zimmer sieben, Werkstatt ohne Fenster`,
   /* Eher still, sehr gewissenhaft, sehr verträglich, robust, mäßig
      neugierig. Sie will Verlässlichkeit und Nähe, nicht Freiheit und
      nicht Geltung.
@@ -72,7 +74,7 @@ raumbild: ``,
 
 baum: {
   start: {
-    regie: `Untergeschoss, Gang ohne Fenster, dritte Tür. Du klopfst. Es dauert, dann geht sie auf, einen Spalt weit, und sie steht im Rahmen und sieht dich an.`,
+    regie: `Erster Stock, Gang ohne Fenster, dritte Tür. Du klopfst. Es dauert, dann geht sie auf, einen Spalt weit, und sie steht im Rahmen und sieht dich an.`,
     er: `Entschuldigung. Ich hatte den Termin im Kopf und trotzdem vergessen.`,
     wie: `leise, sofort entschuldigend`, stimmung: `neutral`,
     erRegie: `Sie tritt zur Seite, nimmt einen Stapel Kartons vom Besucherstuhl und stellt ihn ordentlich neben die Tür.`,
@@ -110,7 +112,7 @@ kennenfrage: [
 ],
 
 uebergang1: {
-  duFest: `Du erzählst in zwei Sätzen, was du machst. Ein Projekt, das dir über den Kopf wächst. Davon später, sagst du.`,
+  duFest: `Du sagst, dass du neu bist und dich im Haus umsehen sollst: wer hier arbeitet, was hier läuft. Warum ausgerechnet du, sagst du nicht. Davon später.`,
   er: `Später ist in Ordnung. Ich bin sowieso schlecht darin, gleich zur Sache zu kommen.`,
   erRegie: `Sie setzt sich auf die Kante ihres Arbeitshockers, nicht ganz darauf.`,
   wie: `entschuldigend, aber wärmer als vorher`, stimmung: `freundlich`
@@ -788,7 +790,7 @@ reaktion: {
          zuHoch:{ er:`So genau nun auch wieder nicht. Zu Hause sieht es anders aus als hier.`, wie:`einschränkend, verlegen` },
          zuTief:{ er:`Nachlässig.`, erRegie:`Sie sieht zum Werkzeugbrett mit den Umrissen.`, er2:`Ich merke, wenn ein Falzbein fehlt, seit Montag. Sagen Sie das noch mal.`, wie:`gedehnt`, wie2:`trocken` } },
     E: { genau:{ er:`Ungefähr. Ich kann Menschen gut, ich brauche danach nur länger als andere, bis ich wieder ich bin.`, wie:`ruhig, ohne Entschuldigung` },
-         zuHoch:{ er:`Gesellig.`, erRegie:`Sie lacht einmal kurz in die Hand.`, er2:`Ich sitze im Untergeschoss mit dem Rücken zur Tür. Das ist keine Übergangslösung.`, wie:`ungläubig`, wie2:`vergnügt` },
+         zuHoch:{ er:`Gesellig.`, erRegie:`Sie lacht einmal kurz in die Hand.`, er2:`Ich sitze am Ende des Gangs mit dem Rücken zur Tür. Das ist keine Übergangslösung.`, wie:`ungläubig`, wie2:`vergnügt` },
          zuTief:{ er:`Ganz so schlimm ist es nicht. Ich singe mittwochs mit vierzig Leuten in einem Raum.`, wie:`richtigstellend` } },
     A: { genau:{ er:`Das stimmt, und es ist nicht nur eine gute Eigenschaft. Ich gebe auch nach, wenn ich recht habe.`, wie:`selbstkritisch` },
          zuHoch:{ er:`Nachgiebig bin ich nicht überall. Beim Objekt bin ich unangenehm, fragen Sie oben nach.`, wie:`fester als erwartet` },
@@ -834,120 +836,6 @@ abschied: [
     er:`Machen Sie es gut.`, wie:`höflich und ohne jeden Inhalt`, stimmung:`verschlossen`, bez:0 }
 ],
 
-abfuhr: {
-  regie:`Du stellst den Koffer auf den Tisch. Sie sieht ihn an und legt sofort beide Hände auf das Blatt darunter, als müsste sie es schützen.`,
-  er:`Oh.`, erRegie:`Sie schiebt den Koffer nicht weg. Sie rückt ihren Hocker zurück, was schlimmer ist.`,
-  er2:`Entschuldigen Sie, ich hatte gedacht, wir reden. Machen Sie ihn bitte wieder zu, ich kaufe hier unten nichts. Und beim nächsten Mal sagen Sie es einfach am Anfang, das ist für uns beide leichter.`,
-  wie:`überrascht, sehr leise`, wie2:`freundlich, entschuldigend, und vollkommen endgültig`, stimmung:`abweisend` },
 
-/* --- Der Verkauf. Autonomieunterstützung wiegt auch bei ihr am
-       schwersten — wer ihr die Wahl lässt, kommt weiter als der, der
-       ihr etwas abnimmt. Nur schlägt Druck bei ihr nicht in Wut um,
-       sondern in Höflichkeit, und die ist endgültig. ---------------- */
-
-verkauf: {
-  aufschlag: `Achtundzwanzig Minuten sind um. Du hebst den Koffer auf den Tisch, an die Kante, weg von dem Blatt unter den Gewichten, und klappst ihn auf. Drei Dinge liegen darin, jedes in seiner Mulde.`,
-  reaktionRegie: `Sie sieht in den Koffer, dann dich an, und ihre Hände bleiben auf dem Tisch liegen.`,
-  reaktion: `Sie verkaufen etwas. Die ganze Zeit über.`,
-  reaktionWie: `leise, ohne Vorwurf, nur festgestellt`,
-  start: 30,
-  zuege: [
-    { frage: `Warum zeigen Sie mir ausgerechnet das?`, wie:`sachlich, abwartend`, stimmung:`neutral`,
-      opt: [
-        { id:`alle`, t:`Weil das jeder brauchen kann.`,
-          wie:`allgemein, ein wenig auswendig`, auto:0, aff:{},
-          er:`Jeder.`, erRegie:`Sie faltet die Hände.`,
-          er2:`Dann haben Sie sich die vierzig Minuten sparen können, und ich mich auch. Das sage ich ungern, aber es stimmt.`,
-          wie2:`freundlich und sehr enttäuscht`, stimmung:`skeptisch` },
-        { id:`zugehoert`, t:`Weil Sie mir vierzig Minuten lang gesagt haben, was Ihnen fehlt. Wenn ich falsch liege, sagen Sie es, und ich packe wieder ein.`,
-          wie:`ruhig, ohne Druck`, auto:2, aff:{FRE:-1.4, GEL:-0.6},
-          an:{ plan60:`Neun Verträge, und der zehnte steht im Umschlag. Das hier ist das Einzige in dem Koffer, das noch da ist, wenn der Vertrag es nicht mehr ist. Wenn ich falsch liege, sagen Sie es, und ich packe ein.`,
-               unklar:`Sie sagten, Sie füllen Ungewissheit zu Ihren eigenen Ungunsten aus. Deshalb dieses und nichts anderes. Wenn ich falsch liege, sagen Sie es.`,
-               werkstatt:`Wer ein Puppenhaus von 1910 repariert, das niemand bestellt hat, verliert ungern eine Notiz. Deshalb dieses hier.`,
-               musik:`Sie singen seit zwölf Jahren mittwochs. Dafür braucht man Abende, die einem gehören. Deshalb dieses.` },
-          erRegieVor:`Sie sagt eine Sekunde lang nichts.`,
-          er:`Das ist der erste ehrliche Satz, seit der Koffer offen ist. Reden Sie weiter.`, wie2:`langsamer, wärmer`, stimmung:`interessiert` },
-        { id:`beste`, t:`Weil es das Beste ist, was ich dabei habe.`,
-          wie:`bestimmt, ein wenig zu glatt`, auto:0, aff:{GEL:1.2},
-          er:`Das Beste, was Sie dabei haben, sagt etwas über Ihren Koffer und nichts über mich.`,
-          wie2:`freundlich, aber unnachgiebig`, stimmung:`skeptisch` }
-      ]},
-
-    { frage: `Wo ist der Haken?`, wie:`direkt, für ihre Verhältnisse sehr direkt`, stimmung:`skeptisch`,
-      opt: [
-        { id:`keiner`, t:`Es gibt keinen.`,
-          wie:`glatt`, auto:-1, aff:{},
-          er:`Es gibt immer einen.`, erRegie:`Sie zieht den Bleistift hinter dem Ohr hervor und legt ihn hin.`,
-          er2:`Dass Sie ihn nicht nennen, heißt nur, dass ich ihn nachts allein suchen muss. Das mache ich sowieso schon genug.`,
-          wie2:`kühl`, stimmung:`gereizt` },
-        { id:`nennen`, t:`__HAKEN__`,
-          wie:`ruhig, ohne Beschönigung`, auto:2, aff:{FRE:-1.2},
-          erRegieVor:`Sie sieht dich zum ersten Mal länger an, ohne auszuweichen.`,
-          er:`Das hätten Sie mir nicht sagen müssen.`, erRegie:`Sie nickt einmal.`,
-          er2:`Genau deshalb glaube ich Ihnen den Rest. Das ist bei mir selten und Sie sollten es nicht überschätzen — aber es ist so.`,
-          wie2:`langsam, ernst`, stimmung:`interessiert` },
-        { id:`spaeter`, t:`Darüber reden wir, wenn Sie sich entschieden haben.`,
-          wie:`ausweichend`, auto:-2, aff:{FRE:-0.6},
-          er:`Nein.`, erRegie:`Sie sagt es sofort, was bei ihr fast nie vorkommt.`,
-          er2:`Entschuldigung. Aber nein. Jetzt, oder wir lassen es.`, wie2:`hart, und sofort wieder entschuldigend`, stimmung:`gereizt` }
-      ]},
-
-    { frage: `Und woher weiß ich, dass das stimmt?`, wie:`prüfend`, stimmung:`skeptisch`,
-      opt: [
-        { id:`probieren`, t:`Sie behalten es zwei Wochen. Wenn es nicht tut, was ich gesagt habe, hole ich es ab, und Sie sagen kein Wort dazu.`,
-          wie:`konkret, ohne Bedingung`, auto:2, aff:{FRE:-1.4, GEL:-0.4},
-          an:{ regelwerk:`Sie schlagen lieber nach, als dem Bauchgefühl um halb sechs zu trauen. Dann prüfen Sie es selbst: zwei Wochen, und wenn es nicht tut, was ich gesagt habe, hole ich es ab.`,
-               heft:`Sie führen seit elf Jahren ein Heft über Ihre Fehler. Dann führen Sie zwei Wochen lang eines über mich, und wenn ich darin stehe, hole ich es ab.` },
-          er:`Zwei Wochen.`, erRegie:`Sie zieht einen Zettel heran und schreibt ein Datum an den Rand.`,
-          er2:`Das ist ein Angebot, bei dem ich nichts falsch machen kann. So etwas bekomme ich selten.`,
-          wie2:`arbeitsbereit`, stimmung:`interessiert` },
-        { id:`referenzen`, t:`Ich habe Referenzen. Drei Häuser arbeiten schon damit.`,
-          wie:`routiniert`, auto:0, aff:{FRE:-0.8, GEL:0.8},
-          er:`Drei Häuser.`, erRegie:`Sie zieht die Schultern einen Millimeter hoch.`,
-          er2:`Ich kenne die Häuser nicht und weiß nicht, wie sorgfältig dort geprüft wird. Das beruhigt mich leider gar nicht.`,
-          wie2:`sachlich`, stimmung:`skeptisch` },
-        { id:`glauben`, t:`An dieser Stelle müssen Sie mir einfach glauben.`,
-          wie:`beschwörend`, auto:-1.5, aff:{},
-          er:`Müssen.`, erRegie:`Sie lächelt, und es erreicht die Augen nicht.`,
-          er2:`Ich arbeite an Dingen, bei denen man nichts rückgängig machen kann. Glauben ist das Einzige, was ich mir nicht leisten kann.`,
-          wie2:`sehr freundlich, sehr endgültig`, stimmung:`gereizt` }
-      ]},
-
-    { regie: `Sie sieht in den offenen Koffer, dann auf das Blatt unter den Gewichten, dann auf die Uhr über der Tür.`,
-      opt: [
-        { id:`neinistnein`, t:`Überlegen Sie es sich. Wenn Sie Nein sagen, ist das ein Nein und kein Zwischenstand.`,
-          wie:`ruhig, ohne Nachdruck`, auto:2, aff:{FRE:-1.2, GEL:-0.5},
-          an:{ nachgeben:`Sie haben gesagt, dass Sie nachgeben, wenn jemand böse ist. Ich bin nicht böse, egal was Sie sagen. Und wenn es ein Nein wird, ist es ein Nein und kein Zwischenstand.`,
-               zusammen:`Schlafen Sie eine Nacht drüber, und rufen Sie ruhig jemanden an. Und wenn es ein Nein wird, ist es ein Nein und kein Zwischenstand.` },
-          er:`Ein Nein, das ein Nein sein darf.`, erRegie:`Sie atmet einmal hörbar aus.`,
-          er2:`Sie ahnen nicht, wie selten das ist.`, wie2:`leiser`, stimmung:`geruehrt` },
-        { id:`verpassen`, t:`Wenn Sie Nein sagen, verpassen Sie etwas.`,
-          wie:`drängend`, auto:-1.5, aff:{},
-          er:`Das kann sein.`, erRegie:`Sie zieht den Hocker ein Stück zurück.`,
-          er2:`Ich verpasse einiges. Damit komme ich besser zurecht als mit einer Entscheidung, zu der man mich gedrängt hat.`,
-          wie2:`gleichmütig`, stimmung:`verschlossen` },
-        { id:`freitag`, t:`Der Preis gilt nur bis Freitag.`,
-          wie:`geschäftsmäßig, mit Blick auf die Uhr`, auto:-2, aff:{},
-          er:`Freitag.`, erRegie:`Sie klappt den Koffer von ihrer Seite aus zu, sehr behutsam, damit nichts verrutscht.`,
-          er2:`Ich habe seit neun Jahren keinen Vertrag, der länger als ein Jahr gilt. Fristen sind das Letzte, womit man mich überzeugt.`,
-          wie2:`ruhig und vollkommen zu`, stimmung:`gereizt` }
-      ]}
-  ],
-  ausgang: [
-    { ab:72, titel:`Sie kauft.`, stimmung:`freundlich`,
-      regie:`Sie schiebt den Zettel mit dem Datum unter das Messinggewicht, wo er nicht wegfliegen kann.`,
-      er:`Ich nehme es. Zwei Wochen, dann melde ich mich — so oder so, das verspreche ich Ihnen.`,
-      wie:`fest, und sie meint jedes Wort`,
-      nachRegie:`Sie gibt dir die Hand und hält sie eine Sekunde länger, als man muss. Der Koffer ist leichter geworden.` },
-    { ab:48, titel:`Sie lässt es offen.`, stimmung:`nachdenklich`,
-      er:`Lassen Sie mir eine Karte da. Ich sage jetzt nichts zu, weil ich sonst Ja sage und es hinterher bereue.`,
-      wie:`ehrlich, ein wenig entschuldigend`,
-      nachRegie:`Sie legt die Karte in die oberste Schublade, nicht auf den Stapel daneben.` },
-    { ab:-999, titel:`Sie kauft nicht.`, stimmung:`verschlossen`,
-      regie:`Sie klappt den Koffer zu und schiebt ihn dir über den Tisch zurück, mit beiden Händen.`,
-      er:`Nein. Und ich glaube, Sie haben mir zugehört, um verkaufen zu können, und nicht, weil es Sie interessiert hat. Das merkt man leider auch dann, wenn die Ware gut ist.`,
-      wie:`leise, freundlich, und genau deshalb endgültig` }
-  ]
-},
 
 });

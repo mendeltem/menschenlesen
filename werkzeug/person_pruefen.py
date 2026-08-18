@@ -16,10 +16,10 @@
       eine Mine und einer ein Muenzwurf?"""
 import io, os, re, subprocess, sys
 
-PFLICHT = ["id", "kurz", "theme", "hero", "rollenprior", "stimmungen", "raumbild",
+PFLICHT = ["id", "etage", "kurz", "theme", "hero", "rollenprior", "stimmungen", "raumbild",
            "baum", "kennenfrage", "uebergang1", "bigfive", "motivfragen", "privat",
            "privatfragen", "hinausgeworfen", "zustaende", "reaktion",
-           "wiedersehen", "abschied", "abfuhr", "verkauf"]
+           "wiedersehen", "abschied"]
 STIMMUNGEN = ["neutral", "freundlich", "amuesiert", "interessiert", "nachdenklich",
               "skeptisch", "gereizt", "verschlossen", "geruehrt", "abweisend"]
 
@@ -95,9 +95,6 @@ def main():
         "if schwach: print('  schwer lesbar: ' + ', '.join(schwach) + '  — dort trifft man fast nie')\n"
         "r = q(B.M, B.LIK_MO, B.MO, B.HM, B.MGLOCKE, 5, 2)\n"
         "print('Waagen nach fünf Fragen     ' + '  '.join('%s(%+d) %3.0f%%' % (nm, B.HM[nm], 100*r[nm]) for nm in B.M))\n"
-        "print('\\nWaren gegen diese Person    ' + '  '.join('%s %+.1f' % (p['id'], sum(p['passt'].get(m,0)*B.HM[m] for m in B.HM)) for p in B.PROD))\n"
-        "if not any(sum(p['passt'].get(m,0)*B.HM[m] for m in B.HM) > 0.8 for p in B.PROD):\n"
-        "    print('  ACHTUNG: keine Ware passt — diese Person kann nichts kaufen')\n"
         "blok = B.QUELLE[B.QUELLE.index('zustaende: ['):B.QUELLE.index('reaktion: {')]\n"
         "zids = [(m.start(), m.group(1)) for m in re.finditer(r'\\{ id:`(\\w+)`, titel:', blok)]\n"
         "print('\\nLage: Wert je Weg (ein Treffer, eine Mine, ein Münzwurf wären ideal)')\n"

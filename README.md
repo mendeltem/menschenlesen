@@ -8,27 +8,30 @@
 dort steht, welche Datei man anfasst, wie gebaut wird, was entschieden
 ist und was noch offen.*
 
-Du besuchst einen Mann, den du nicht kennst, und willst ihm irgendwann
-etwas verkaufen. Nur klappt das nicht am ersten Tag. Beim ersten Besuch
-lernst du ihn kennen; was danach zwischen euch steht, entscheidet, ob er
-den Koffer überhaupt ansieht.
+Du bist neu in einem Haus und sollst dich umsehen: wer hier arbeitet,
+was hier läuft. Unten sitzen zwei, an denen niemand vorbeikommt — der
+Empfang und die Hausmeisterin. Weiter kommst du erst, wenn du die beiden
+gelesen hast. Dann liegt der Schlüssel für die nächste Etage da.
+
+Es gibt nichts zu kaufen und nichts zu verkaufen. Was du gewinnen kannst,
+sind Menschen, die dich hereinlassen.
 
 Es läuft vollständig im Browser: kein Server, kein Konto, nichts wird
 gesendet. Der Knopf oben startet die gespielte Fassung; wer das Zeug
 lieber lokal hat, lädt das Verzeichnis herunter und öffnet `index.html`
 per Doppelklick. Beides ist dieselbe Datei.
 
-## Drei Stufen
+## Zwei Stufen und ein Besuch
 
 Das Spiel hatte alles auf einmal: lesen, ausfragen, Freundschaft, Geduld,
-Lagen, Verkauf. Jetzt kommt es in drei Stufen, und die ersten zwei sind
-nichts als zuhören.
+Lagen, Verkauf. Das Verkaufen ist weg. Übrig bleiben zwei Stufen, die
+nichts als zuhören sind, und danach darfst du einfach vorbeikommen.
 
 | | | |
 |---|---|---|
-| **1** | Sein Wesen | fünf Merkmale, jedes von −2 bis +2 |
-| **2** | Was er braucht | zwei Waagen, jede mit zwei Seiten |
-| **3** | Der Koffer | alles Übrige, und erst jetzt geht es ums Verkaufen |
+| **1** | Ihr Wesen | fünf Merkmale, jedes von −2 bis +2 |
+| **2** | Was sie braucht | zwei Waagen, jede mit zwei Seiten |
+| **3** | Sie kennenlernen | kein Punktestand mehr: was gerade los ist, und was privat |
 
 **In Stufe eins und zwei gibt es keine Balken und kein Modell.** Keine
 Freundschaft, keine Geduld, keine bit-Zahlen, keine
@@ -55,6 +58,23 @@ gestellt, und die Freundschaft startet danach, wie gut du gelesen hast:
 zweihundert Punkte bringen dich auf 75 statt auf 35. Wer schlecht liest,
 sitzt einem Fremden gegenüber; wer gut liest, jemandem, der ihn für einen
 hält, der zuhört.
+
+**Gehen darfst du immer.** Auch mitten in einer Lesestufe, ohne dich
+festzulegen. Was du gehört hast, bleibt in der Akte und steht beim
+nächsten Besuch noch da — nur gewertet wird es erst, wenn du dich
+festlegst.
+
+## Das Haus hat Etagen
+
+| | | |
+|---|---|---|
+| **Erdgeschoss** | Petra Kettner, Angela Vogt | die Tür und der Gang dahinter |
+| **Erster Stock und Mensa** | Tobias Baumgartner, Annika Reuter, Luigi Sartori | die Büros und die Tür hinter der Ausgabe |
+| **Keller** | Kai Dombrowski | wo die Technik steht |
+
+Eine Etage geht auf, wenn **jede** Person der Etage darunter beide
+Lesestufen bestanden hat. Vorher steht dort nur, wie viele noch fehlen —
+nicht, wer dort sitzt. Das Erdgeschoss steht immer offen.
 
 ## Was drin steckt
 
@@ -93,8 +113,8 @@ daneben steht ausgeschrieben, wie weit man zurück ist.
 
 **Eine Drehscheibe statt einer Reihenfolge.** Nach jedem Schritt
 entscheidest du neu: ihn über sich reden lassen, herausfinden, worauf er
-anspringt, dich festlegen, fragen was gerade los ist, den Koffer
-aufmachen, gehen. Alles ist immer erlaubt. Nur kostet alles etwas.
+anspringt, dich festlegen, fragen was gerade los ist, nach dem Privaten
+fragen, gehen. Alles ist immer erlaubt. Nur kostet alles etwas.
 
 **Das Festlegen ist der Kern.** Aus dem Gespräch schließt du, wer er
 ist — und irgendwann sagst du es ihm ins Gesicht: für jedes Merkmal eine
@@ -112,10 +132,10 @@ antwortet: bei einem Treffer bestätigt er, bei einem Fehlgriff
 widerspricht er. Aus der Richtung seines Widerspruchs kannst du
 schließen, wohin du danebenlagst. Mehr Hilfe gibt es nicht.
 
-## Zwei Balken — nur in Stufe drei
+## Zwei Balken — erst wenn du gelesen hast
 
-In den Lesestufen gibt es sie nicht. Erst wenn es ums Verkaufen geht,
-kommen sie dazu.
+In den Lesestufen gibt es sie nicht. Erst wenn beide bestanden sind und
+du einfach vorbeikommst, kommen sie dazu.
 
 **Geduld** gilt für diesen Nachmittag und beginnt bei hundert. Jede Frage
 kostet, und zwar zunehmend: die erste sechs, die siebte gut zehn — er
@@ -135,29 +155,8 @@ Ein Drittel des Verbrauchs nimmt er mit ins nächste Mal.
 
 Sie wächst, wenn du ihn richtig liest: ein Festlegen ohne Widerspruch ist
 bis zu 25 wert, ein Gespräch über seine Lage bis zu 8. Sie fällt bei
-jeder Frage und bei jedem Fehlgriff.
-
-**Der Koffer** geht erst ab 55 auf. Darunter sieht er hinein, sieht dich
-an und schiebt ihn zurück — das kostet 12. Auch ein geglückter Versuch
-kostet 6: du hast dich zu erkennen gegeben.
-
-## Ob er kauft, ist ein Wurf
-
-Keine Schwelle mehr, sondern eine Aussicht — und sie steht vor dem Wurf
-auf dem Schirm.
-
-**Der Bedarf ist die Bedingung.** Was er nicht braucht, kauft er nicht.
-Bei ihm gilt das hart:
-
-| | Passung | beste Aussicht |
-|---|---|---|
-| Die Uhr | +3,2 | 93 % |
-| Der Stift | −1,4 | **0 %** |
-| Die Brille | −4,0 | **0 %** |
-
-**Die Freundschaft ist der Zuschlag,** nicht der Ersatz: bis zu fünfzehn
-Punkte auf die Aussicht. Genug, um aus einem Vielleicht ein Ja zu machen.
-Nie genug, um aus einem Nein etwas zu machen.
+jeder Frage und bei jedem Fehlgriff. Unter 8 lässt er dich nicht mehr
+herein, und dann ist diese Person für dieses Spiel verloren.
 
 ## Sechs Menschen, die sich widersprechen
 
@@ -171,7 +170,6 @@ Das ist kein Beiwerk, sondern der Prüfstein. Wer aus dem ersten Gespräch
 Gewohnheiten mitbringt, tritt beim zweiten in Minen: bei ihm trägt der
 trockene, direkte Weg, bei ihr der behutsame — und wer ihr fröhlich
 widerspricht, bekommt keinen Streit, sondern ein sehr höfliches Ende.
-Und die richtige Ware dreht sich mit:
 
 Der dritte ist Luigi Sartori, Kantinenkoch, einundsechzig, seit
 vierunddreißig Jahren dasselbe Haus. Er ist zugewandt wie sonst niemand
@@ -180,14 +178,7 @@ in den Speisesaal. Wer ihn für den lauten, herzlichen Koch hält, den das
 Klischee verspricht, redet an ihm vorbei — und merkt es nicht, weil er
 freundlich bleibt. Sein Ärger sieht aus wie Zustimmung.
 
-| | Baumgartner | Reuter | Sartori | Vogt | Dombrowski | Kettner |
-|---|---|---|---|---|---|---|
-| Die Uhr | **+3,2** | −3,2 | −1,6 | +1,6 | 0,0 | −3,2 |
-| Der Stift | −1,4 | **+2,6** | **+1,6** | −1,6 | −0,3 | **+2,3** |
-| Die Brille | −4,0 | −1,6 | −2,2 | **+2,2** | **+1,4** | −0,2 |
-
-Mit Angela Vogt hat jede der drei Waren ihren Menschen. Sie ist auch die
-Erste auf der anderen Seite der zweiten Waage: die drei anderen wollen
+Angela Vogt ist die Erste auf der anderen Seite der zweiten Waage: die drei anderen wollen
 alle dazugehören und keiner gesehen werden, sie will beides umgekehrt.
 Damit ist *Nähe oder Geltung* zum ersten Mal eine Frage mit zwei
 möglichen Antworten und nicht eine mit einer.
@@ -235,11 +226,9 @@ beim anderen anwendet, verliert. Und bei ihr sieht Ärger nicht nach Ärger
 aus — sie wird höflicher. Die Anzeige nennt diese Stimmung deshalb *sehr
 höflich*, und was der Name bedeutet, muss man erst lernen.
 
-Bei Reuter und Sartori trägt dieselbe Ware aus verschiedenen Gründen:
-sie will nichts verlieren, er will nichts vergessen. Wer die Ware nach
-dem Menschen wählt, merkt den Unterschied nicht einmal. Wer sie nach dem
-letzten Gespräch wählt, hat zufällig recht — und beim nächsten zufällig
-unrecht.
+Wer aus dem einen Gespräch Gewohnheiten mitbringt, tritt im nächsten in
+Minen. Es gibt kein Verfahren, das bei allen sechs trägt — das ist der
+ganze Inhalt des Spiels.
 
 Auch die Anzeige redet über jede Person in ihrer Form — *Sein Wesen*
 gegen *Ihr Wesen*, *er antwortet dir darauf* gegen *sie antwortet dir
@@ -263,8 +252,9 @@ führt dich genau diese Zahl in die Mine:
 Ohne eine einzige Frage sieht das harmlos aus. Nach neun Fragen steht da
 *gegen dein Bild −0,8*, und das stimmt: er lacht kurz und ohne Freude.
 
-Wer trifft, erfährt außerdem, was er deswegen gerade braucht — und das
-verschiebt, welche Ware diese Woche die richtige ist.
+Wer trifft, erfährt außerdem, was er deswegen gerade braucht. Gewertet
+wird das nicht mehr — es ist das, was man über einen Menschen weiß und
+die meisten anderen im Haus nicht.
 
 ## Wie es gebaut ist
 
@@ -274,7 +264,7 @@ die alles mitbringen: Texte, Fragen, Zustände, Bilder, Farbschema.
 | | |
 |---|---|
 | `index.html` | Menü und Mechanik. Weiß nichts über eine bestimmte Person. |
-| `welt.js` | was für jede Person gilt: die Achsen, die Freundschaftsstufen, die Abschlussrechnung, dein Koffer, die Belege |
+| `welt.js` | was für jede Person gilt: die Achsen, die Freundschaftsstufen, die Etagen, die Belege |
 | `personen/baumgartner/` | Tobias Baumgartner, Statistiker: seine Datei und seine Bilder |
 | `personen/reuter/` | Annika Reuter, Papierrestauratorin — dasselbe noch einmal, und in fast allem seine Gegenprobe |
 | `personen/sartori/` | Luigi Sartori, Kantinenkoch |
@@ -284,8 +274,8 @@ die alles mitbringen: Texte, Fragen, Zustände, Bilder, Farbschema.
 | `PROMPTS_ANNIKA.md`, `PROMPTS_LUIGI.md`, `PROMPTS_ANGELA.md`, `PROMPTS_KAI.md`, `PROMPTS_PETRA.md` | der Personengenerator an einer Person durchgespielt, fertig zum Kopieren |
 | `PROMPTS.md` | ein Prompt, aus dem jede weitere Person entsteht |
 | `werkzeug/` | zerlegt einen Kontaktbogen in die zehn Stimmungsbilder |
-| `musik/` | fünf Spuren: Menü, Laden, Gespräch, gewonnen, verloren |
-| `balance.py` | spielt sechshundert Besuchsreihen je Spielweise und misst, wann er kauft |
+| `musik/` | vier Spuren: Menü, Gespräch, gut ausgegangen, schlecht ausgegangen |
+| `balance.py` | spielt vierhundert Besuchsreihen je Spielweise und misst, wann eine Person gelesen ist |
 | `quelle/spiel.html` | **die Vorlage, an der man arbeitet** — Menü, Mechanik, Anzeige |
 | `quelle/themes.css` | die dreizehn Farbschemata, alle dunkel |
 | `quelle/bauen.py` | setzt beides zu `index.html` zusammen |
@@ -295,7 +285,7 @@ gehört:
 
 ```
 personen/reuter/
-  reuter.js            Wahrheit, Fragen, Zustände, Widerworte, Verkaufszüge
+  reuter.js            Etage, Wahrheit, Fragen, Zustände, Widerworte
   kontaktbogen.jpg     der erzeugte Bogen, aus dem die Bilder kommen
   bilder/              neutral.webp, freundlich.webp … abweisend.webp
 ```
@@ -317,13 +307,13 @@ Verpackung — mit Absicht: Browser verbieten `fetch()` auf `file://`, per
 `<script src>` geladene Dateien nicht. So läuft das Spiel per Doppelklick
 genauso wie auf einem Server.
 
-**Was bleibt** — Kasse, Bestand und die Akte jeder Person — liegt im
+**Was bleibt** — die Akte jeder Person, und damit auch die Schlüssel — liegt im
 Speicher des Browsers. **Zurücksetzen** steht oben in der Leiste, liegt
 auf <kbd>Umschalt</kbd>+<kbd>R</kbd> und ist aus dem Menü wie aus jedem
 laufenden Gespräch erreichbar; es fragt einmal nach und räumt dann alles
-weg: Kasse, Koffer, alle Akten, Farbschema,
-Musik und die aufgeklappten Kästen. Danach kennt dich jede Person wieder
-nicht.
+weg: alle Akten, alle Schlüssel, Farbschema, Musik und die aufgeklappten
+Kästen. Danach kennt dich jede Person wieder nicht, und du stehst wieder
+im Erdgeschoss.
 
 ## Die Stimmung
 
@@ -334,25 +324,31 @@ in schlechter Laune tun sie mehr weh, nicht weniger.
 
 ## Die Balance
 
-`python balance.py` liest die Gewichte aus `spiel.html`, die Fragen und
-Zustände aus `welt.js` und `personen/`, und spielt sechshundert
-Besuchsreihen je Spielweise über bis zu sechs Besuche. Weil die Zahlen
-aus dem Spiel selbst kommen, können Messung und Wirklichkeit nicht
-auseinanderlaufen. In welchem Besuch er kauft:
+`python balance.py <person>` liest die Gewichte aus `spiel.html`, die
+Fragen und Zustände aus `welt.js` und `personen/`, und spielt
+vierhundert Besuchsreihen je Spielweise über bis zu sechs Besuche. Weil
+die Zahlen aus dem Spiel selbst kommen, können Messung und Wirklichkeit
+nicht auseinanderlaufen.
 
-| | 1. | 2. | 3. | 4. | 5. | 6. | kauft | verbrannt |
-|---|---|---|---|---|---|---|---|---|
-| Zufall | 0 % | 0 % | 0 % | 0 % | 0 % | 0 % | **0 %** | 76 % |
-| Mittelmaß | 1 % | 7 % | 12 % | 13 % | 15 % | 13 % | **61 %** | 0 % |
-| gutes Zuhören | 1 % | 28 % | 36 % | 22 % | 9 % | 2 % | **98 %** | 0 % |
-| alles ausfragen | 0 % | 1 % | 34 % | 43 % | 19 % | 3 % | **100 %** | 0 % |
+Gemessen wird jetzt, was zählt: kommt man durch die Tür? Für Petra
+Kettner, die erste Person des Spiels:
 
-Blind raten gewinnt nie und verbrennt in drei von vier Fällen die
-Freundschaft so weit, dass er nicht mehr aufmacht. Am ersten Tag zu
-verkaufen ist möglich, aber selten. Wer alles ausfragt, kommt auch hin —
-braucht dafür aber einen Besuch länger als der, der gezielt fragt, weil
-die Geduld schneller aufgebraucht ist und ein Drittel davon mit ins
-nächste Mal geht.
+| | gelesen | im Besuch | Punkte | Sterne | Freundschaft | verbrannt |
+|---|---|---|---|---|---|---|
+| Zufall | 25 % | 3,4 | 98 | 1,4 | 21 | **43 %** |
+| Mittelmaß | 58 % | 1,6 | 124 | 2,7 | 89 | 0 % |
+| gutes Zuhören | 72 % | 2,0 | 126 | 2,8 | 100 | 0 % |
+| alles ausfragen | 98 % | 1,0 | 151 | 3,8 | 100 | 0 % |
+
+Blind raten kommt in einem von vier Fällen durch und verbrennt in vier
+von zehn die Freundschaft so weit, dass sie nicht mehr aufmacht. Über
+zwei Personen im Erdgeschoss hinweg heißt das: wer rät, steht mit
+sechsprozentiger Wahrscheinlichkeit vor der Treppe.
+
+Das Gefälle ist über alle sechs dasselbe, die Höhe nicht. Annika Reuter
+ist die schwerste — bei ihr kommt selbst *alles ausfragen* nur in der
+Hälfte der Läufe durch, weil ihre zwei Waagen beide auf −2 stehen und
+die Waagen-Fragen dort am wenigsten trennen.
 
 ## Ehrlichkeit
 
@@ -360,8 +356,8 @@ Die Person steht fest, sie wird nicht aus dem Prior gezogen. Das
 Rollenklischee am Anfang ist genau das: ein Klischee. Das Gesicht trägt
 null bit — es wird unabhängig vom wahren Profil gezeigt.
 
-Die Wertung im Verkauf gewichtet Autonomieunterstützung rund dreimal so
-stark wie Motivpassung. Das ist keine Designlaune, sondern der Stand der
+Die Wertung gewichtet Autonomieunterstützung rund dreimal so stark wie
+Motivpassung. Das ist keine Designlaune, sondern der Stand der
 Belege: g = 0,84 über 74 Interventionsstudien gegen r = 0,11 über 41
 Studien, in kontrollierten Designs meist nicht signifikant. Die Items
 selbst sind erfunden — Näheres in `wissenschaftliche_pruefung.md`.

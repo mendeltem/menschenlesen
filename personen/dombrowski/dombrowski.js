@@ -31,6 +31,8 @@
 PERSONEN.push({
 
 id: `dombrowski`,
+/* In welcher Etage sie sitzt. Ohne den Schlüssel dafür kommst du nicht hin. */
+etage: 3,
 kurz: `Systemadministrator, 43. Kapuzenpulli unter dem Hemd, ein Becher
        kalter Kaffee, und ein Blick, der alle zwei Minuten zum Monitor geht.`,
 theme: `kosmos`,
@@ -116,7 +118,7 @@ kennenfrage: [
 ],
 
 uebergang1: {
-  duFest: `Du erzählst in zwei Sätzen, was du machst. Ein Projekt, das dir über den Kopf wächst. Davon später, sagst du.`,
+  duFest: `Du sagst, dass du neu bist und dich im Haus umsehen sollst: wer hier arbeitet, was hier läuft. Warum ausgerechnet du, sagst du nicht. Davon später.`,
   er: `Über den Kopf. Ja. Kenne ich. Erzählen Sie später, ich höre erst mal zu.`,
   erRegie: `Er stellt den Laptop auf den Boden, überlegt es sich anders und legt ihn auf die Knie zurück, zugeklappt.`,
   wie: `zu schnell zugestimmt, als hätte er das Wort erkannt`, stimmung: `freundlich`
@@ -876,121 +878,5 @@ abschied: [
     er:`Wiedersehen.`, wie:`höflich und leer`, stimmung:`verschlossen`, bez:0 }
 ],
 
-abfuhr: {
-  regie:`Du stellst den Koffer auf den zweiten Schreibtisch, den leeren. Er sieht ihn an und rührt sich eine Weile nicht.`,
-  er:`Ach so.`,
-  erRegie:`Er schiebt den Koffer nicht weg. Er sieht ihn nur an und dreht dabei den kalten Kaffeebecher in der Hand.`,
-  er2:`Ich habe Ihnen von einer Nacht erzählt, in der ich eine Steckdosenleiste aus der Wand gerissen habe. Das habe ich noch keinem erzählt, der hier arbeitet. Und Sie haben zugehört, weil Sie wissen wollten, was ich kaufe. Ich bin nicht mal böse. Ich hätte es besser wissen müssen.`,
-  wie:`leise`, wie2:`sehr ruhig, und das ist schlimmer als laut`, stimmung:`abweisend` },
 
-/* --- Der Verkauf. Bei ihm ist der Bedarf fast alles: über seine
-       Motive kommst du kaum an ihn heran, weil er auf der ersten Waage
-       in der Mitte steht. Was er braucht, hängt daran, was diese Woche
-       bei ihm los ist — und ob du danach gefragt hast. ------------- */
-
-verkauf: {
-  aufschlag: `Achtundzwanzig Minuten sind um. Du hebst den Koffer auf den leeren zweiten Schreibtisch, drehst ihn zu ihm und klappst ihn auf. Drei Dinge liegen darin, jedes in seiner Mulde.`,
-  reaktionRegie: `Er steht vom Rollwagen auf, kommt zwei Schritte näher und bleibt dann stehen, statt sich zu setzen.`,
-  reaktion: `Sie verkaufen was. Gut. Dann hatte das hier einen Grund, das ist mir fast lieber.`,
-  reaktionWie: `nüchtern, mit einem Rest von Erleichterung, den er selbst nicht bemerkt`,
-  start: 30,
-  zuege: [
-    { frage: `Warum zeigen Sie mir ausgerechnet das?`, wie:`sachlich, ohne Schärfe`, stimmung:`neutral`,
-      opt: [
-        { id:`alle`, t:`Weil das jeder brauchen kann.`,
-          wie:`allgemein, ein wenig auswendig`, auto:0, aff:{},
-          er:`Jeder.`, erRegie:`Er tritt einen halben Schritt zurück.`,
-          er2:`Dann hätten Sie sich die halbe Stunde sparen können. Ich hätte Ihnen am Telefon gesagt, dass ich nichts brauche, was jeder braucht.`,
-          wie2:`trocken`, stimmung:`skeptisch` },
-        { id:`zugehoert`, t:`Weil Sie mir eine halbe Stunde lang erzählt haben, was hier schiefgeht und wie oft Sie es gesagt haben. Wenn ich falsch liege, sagen Sie es, und ich packe ein.`,
-          wie:`ruhig, ohne Druck`, auto:2, aff:{GEL:1.3, FRE:0.4},
-          an:{ plan60:`Sie haben eine Kündigung geschrieben und schicken sie seit sieben Monaten nicht ab. Ich glaube, das hier gehört in dieselbe Richtung. Wenn nicht, packe ich ein.`,
-               musik:`Sie sitzen elf Jahre mit fünf Leuten zusammen, die Sie nie getroffen haben. Sie halten Sachen lange durch. Dafür ist das hier.`,
-               werkstatt:`Auf Ihrem Küchentisch steht seit zwei Jahren ein offener Rechner. Ich glaube, ich weiß, warum das hier passen könnte.` },
-          erRegieVor:`Er sieht auf den offenen Koffer und dann auf dich, und diesmal sieht er nicht gleich wieder weg.`,
-          er:`Weiter.`, wie2:`langsamer, aufmerksam`, stimmung:`interessiert` },
-        { id:`beste`, t:`Weil es das Beste ist, was ich dabei habe.`,
-          wie:`bestimmt`, auto:0, aff:{GEL:1.0},
-          er:`Das Beste wofür?`, erRegie:`Er nimmt es nicht in die Hand.`,
-          er2:`Ich habe seit elf Jahren die beste Lösung für Probleme, die keiner hat. Sagen Sie mir das Problem, dann reden wir über das Beste.`,
-          wie2:`trocken, nicht unfreundlich`, stimmung:`neutral` }
-      ]},
-
-    { frage: `Wo ist der Haken?`, wie:`sofort, ohne Umweg`, stimmung:`skeptisch`,
-      opt: [
-        { id:`keiner`, t:`Es gibt keinen.`,
-          wie:`glatt`, auto:-1, aff:{},
-          er:`Es gibt immer einen.`, erRegie:`Er legt es zurück in die Mulde, ohne es angesehen zu haben.`,
-          er2:`Ich betreibe seit elf Jahren Sachen, bei denen im Prospekt kein Haken stand. Ich weiß inzwischen, wo er dann stattdessen sitzt: bei mir, nachts.`,
-          wie2:`bestimmt`, stimmung:`gereizt` },
-        { id:`nennen`, t:`__HAKEN__`,
-          wie:`ruhig, ohne Beschönigung`, auto:2, aff:{FRE:0.5, GEL:0.7},
-          erRegieVor:`Er hört auf, in den Koffer zu sehen.`,
-          er:`Sie haben es mir gesagt, bevor ich es gemerkt habe.`, erRegie:`Er nickt einmal, sehr knapp.`,
-          er2:`Das ist mir in diesem Haus zuletzt vor vier Jahren passiert. Erzählen Sie weiter, ich höre jetzt richtig zu.`,
-          wie2:`ernst, ein wenig überrascht`, stimmung:`interessiert` },
-        { id:`spaeter`, t:`Darüber reden wir, wenn Sie sich entschieden haben.`,
-          wie:`ausweichend`, auto:-2, aff:{},
-          er:`Nein.`, erRegie:`Er klappt seinen Laptop auf.`,
-          er2:`Genau so ist die Sache von 2016 hier reingekommen. Über den Haken reden wir jetzt, oder wir reden über etwas anderes.`,
-          wie2:`hart`, stimmung:`gereizt` }
-      ]},
-
-    { frage: `Und woher weiß ich, dass das stimmt?`, wie:`prüfend`, stimmung:`skeptisch`,
-      opt: [
-        { id:`probieren`, t:`Sie behalten es zwei Wochen. Wenn es nicht tut, was ich gesagt habe, hole ich es ab, und Sie müssen kein Wort dazu sagen.`,
-          wie:`konkret, ohne Bedingung`, auto:2, aff:{FRE:1.0, GEL:0.5},
-          an:{ werkstatt:`Zwei Wochen. Wenn es bei Ihnen zu Hause neben dem offenen Rechner liegen bleibt, hole ich es ab und Sie müssen sich nicht erklären.` },
-          er:`Zwei Wochen.`, erRegie:`Er sieht auf einen der Haftzettel und wieder auf dich.`,
-          er2:`Ohne dass ich etwas unterschreibe und ohne dass mich in zwei Wochen jemand anruft und fragt, wie ich mich entschieden habe.`,
-          wie2:`prüfend, dann zustimmend`, stimmung:`interessiert` },
-        { id:`referenzen`, t:`Ich habe Referenzen. Drei Häuser arbeiten schon damit.`,
-          wie:`routiniert`, auto:0, aff:{GEL:0.7, FRE:-0.7},
-          er:`Welche drei?`, erRegie:`Er fragt es sofort.`,
-          er2:`Wenn Sie mir einen Namen und eine Nummer geben, rufe ich morgen an. Sonst ist es eine Zahl, und Zahlen habe ich selbst genug.`,
-          wie2:`direkt`, stimmung:`neutral` },
-        { id:`glauben`, t:`An dieser Stelle müssen Sie mir einfach glauben.`,
-          wie:`beschwörend`, auto:-1.5, aff:{},
-          er:`Müssen.`, erRegie:`Er lacht kurz und ohne jedes Vergnügen.`,
-          er2:`Das stand auch in der Mappe von 2011. Danach habe ich vier Jahre lang jeden zweiten Monat einen Abend damit verbracht.`,
-          wie2:`schneidend`, stimmung:`gereizt` }
-      ]},
-
-    { regie: `Er sieht in den offenen Koffer und dann auf den Bildschirm, auf dem seit einer Weile nichts passiert.`,
-      opt: [
-        { id:`neinistnein`, t:`Lassen Sie sich Zeit. Wenn Sie Nein sagen, ist das ein Nein und kein Zwischenstand.`,
-          wie:`ruhig, ohne Nachdruck`, auto:2, aff:{FRE:0.9, GEL:0.5},
-          an:{ plan60:`Sie haben eine Kündigung, die seit sieben Monaten liegt. Ich weiß, wie das ist mit Entscheidungen. Wenn es ein Nein wird, ist es ein Nein und kein Zwischenstand.`,
-               tochter:`Entscheiden Sie das am Wochenende, wenn Ihr Sohn da ist, oder gar nicht. Und wenn es ein Nein wird, ist es ein Nein.` },
-          er:`Ein Nein, das ein Nein sein darf.`, erRegie:`Er sieht dich lange genug an, dass es unangenehm wird.`,
-          er2:`Ich habe hier unten elf Jahre lang keine Entscheidung getroffen, bei der mir das jemand zugestanden hätte. Das ist der erste Satz heute, bei dem ich Ihnen glaube.`,
-          wie2:`leise`, stimmung:`geruehrt` },
-        { id:`verpassen`, t:`Wenn Sie jetzt Nein sagen, verpassen Sie etwas.`,
-          wie:`drängend`, auto:-1.5, aff:{},
-          er:`Ich verpasse dauernd was.`, erRegie:`Er zeigt auf die vierundvierzig Zettel.`,
-          er2:`Sehen Sie sich das an. Ich lebe davon, Sachen zu verpassen. Damit kriegen Sie mich nicht.`,
-          wie2:`gleichmütig`, stimmung:`verschlossen` },
-        { id:`freitag`, t:`Der Preis gilt nur bis Freitag.`,
-          wie:`geschäftsmäßig, mit einem Blick auf die Uhr`, auto:-2, aff:{},
-          er:`Freitag.`, erRegie:`Er klappt den Koffer von seiner Seite aus zu.`,
-          er2:`Ich habe drei Wochen, um für eine Prüfung zu belegen, was ich in elf Jahren nicht aufgeschrieben habe. Und Sie kommen mir mit Freitag. Nein.`,
-          wie2:`sehr ruhig, endgültig`, stimmung:`gereizt` }
-      ]}
-  ],
-  ausgang: [
-    { ab:72, titel:`Er kauft.`, stimmung:`freundlich`,
-      regie:`Er steht eine Weile davor, dann greift er zu und hält es fest, als könnte es ihm jemand wieder abnehmen.`,
-      er:`Gut. Ich nehme es. Und ich rufe in zwei Wochen an — auch wenn es nichts geworden ist, gerade dann.`,
-      wie:`fest, für seine Verhältnisse laut`,
-      nachRegie:`Er bringt dich bis zum Treppenabsatz und erklärt dir dabei, welcher Stock welchen Aufzug hat und warum der linke schneller ist.` },
-    { ab:48, titel:`Er lässt es offen.`, stimmung:`nachdenklich`,
-      er:`Lassen Sie mir was da. Ich sage nichts zu. Aber ich werfe es nicht weg, das mache ich nie.`,
-      wie:`vorsichtig`,
-      nachRegie:`Er legt es auf den leeren zweiten Schreibtisch, nicht in die Schublade.` },
-    { ab:-999, titel:`Er kauft nicht.`, stimmung:`verschlossen`,
-      regie:`Er klappt den Koffer zu und schiebt ihn über den leeren Tisch zurück.`,
-      er:`Nein. Und damit Sie nicht raten müssen, woran es lag: Sie haben mir eine halbe Stunde zugehört und dann etwas hingelegt, das zu jemandem gehört, der weniger Angst hat als ich. Ich hätte gern gesagt, dass Sie danebenlagen. Sie lagen daneben.`,
-      wie:`leise, sehr genau, ohne Bosheit` }
-  ]
-},
 });
