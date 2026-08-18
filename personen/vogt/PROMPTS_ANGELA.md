@@ -157,8 +157,8 @@ Seitenkopf. Jeder Gegenstand kommt im Gespräch vor.
 > portraits: clean black line art, soft cel shading, muted natural palette,
 > no people, no text, 16:9.
 >
-> A caretaker's workshop in the basement of an institutional building, door
-> standing open to a corridor. A pegboard with tools hung on painted
+> A caretaker's workshop on the ground floor of an institutional building,
+> behind the stairwell, door standing open to a corridor. A pegboard with tools hung on painted
 > outlines, two outlines empty and the two tools lying on the bench instead.
 > A cut-open section of pipe on the bench, the inside almost closed up with
 > scale, a handwritten note beside it with two dates. A key board with a

@@ -14,9 +14,9 @@ genau diesen Namen.
 
 ## Wer er ist, in einem Absatz
 
-Dreiundvierzig, seit elf Jahren im selben fensterlosen Raum im dritten
-Stock. Schmal, leicht vornübergebeugt, blasse Haut ohne Sonne, dünnes
-Haar, das er alle drei Monate selbst schneidet. Zwei Tage Bart, nie mehr
+Dreiundvierzig, seit elf Jahren im selben fensterlosen Raum im Keller.
+Schmal, leicht vornübergebeugt, blasse Haut ohne Sonne, dünnes Haar,
+das er alle drei Monate selbst schneidet. Zwei Tage Bart, nie mehr
 und nie weniger. Er friert bei achtzehn Grad und sagt das nicht. **Sein
 warmer Akzent ist Ockergelb**, ein ausgewaschener Kapuzenpulli unter
 einem offenen Hemd — das einzig Warme in einem Raum aus schwarzem Blech.
@@ -189,8 +189,8 @@ dem Seitenkopf. Jeder Gegenstand kommt im Gespräch vor.
 > portraits: clean black line art, soft cel shading, muted cool palette,
 > no people, no text, 16:9.
 >
-> A small windowless server room in an institutional building, converted
-> from an old map archive. Two rows of black 19-inch racks facing each
+> A small windowless server room in the basement of an institutional
+> building, converted from an old map archive. Two rows of black 19-inch racks facing each
 > other with a narrow aisle between them, about eighty centimetres wide.
 > Bundles of patch cables, a few status lights. On one rack a yellowed
 > handwritten label. A low rolling cart with a closed laptop on it. A

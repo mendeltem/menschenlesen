@@ -26,7 +26,7 @@ menubild: `personen/vogt/bilder/freundlich.webp`,
 
 hero: {
   name: `Angela Vogt`, age: 47, job: `Hausmeisterin und Betriebselektrikerin`,
-  ort: `Untergeschoss, Werkstatt am Ende des Ganges, Tür immer offen`,
+  ort: `Erdgeschoss, Werkstatt hinter dem Treppenhaus, Tür immer offen`,
   /* Bodenständig, laut, direkt, unerschütterlich, wenig neugierig auf
      Neues und ordentlich in dem, was zählt.
 
@@ -70,7 +70,7 @@ raumbild: ``,
 
 baum: {
   start: {
-    regie: `Untergeschoss, letzte Tür, und die steht offen. Sie liegt halb unter einem Waschbecken, nur die Beine schauen heraus. Orangefarbene Jacke, Schlüsselbund am Gürtel.`,
+    regie: `Erdgeschoss, hinter dem Treppenhaus, letzte Tür, und die steht offen. Sie liegt halb unter einem Waschbecken, nur die Beine schauen heraus. Orangefarbene Jacke, Schlüsselbund am Gürtel.`,
     er: `Moment. Wenn ich jetzt loslasse, haben wir hier gleich ein Schwimmbad.`,
     wie: `laut, aus dem Schrank heraus`, stimmung: `neutral`,
     erRegie: `Es klackt zweimal, dann kommt sie heraus, steht auf und wischt sich die Hände an der Hose ab.`,
@@ -97,7 +97,7 @@ baum: {
   radio: {
     er: `Das läuft seit halb sechs und bleibt an.`,
     erRegie: `Sie sagt es, ohne sich zu entschuldigen, und dreht es keinen Millimeter leiser.`,
-    er2: `Wenn hier oben keiner mehr ist, ist es sonst so still, dass man das Haus arbeiten hört. Und dann sucht man Geräusche. Das mache ich nicht mehr, ich bin siebenundvierzig.`,
+    er2: `Wenn im Haus keiner mehr ist, ist es sonst so still, dass man das Haus arbeiten hört. Und dann sucht man Geräusche. Das mache ich nicht mehr, ich bin siebenundvierzig.`,
     wie: `laut`, wie2: `trocken, fast heiter`, stimmung: `amuesiert`,
     fakt: `lässt das Radio laufen, um das Haus nicht arbeiten zu hören`, ende: true
   }
@@ -359,7 +359,7 @@ motivfragen: [
   { id:`zustimmung`, q:`Wer redet Ihnen rein, wenn Sie etwas anders machen wollen?`,
     a:[
       {id:`keiner`, wie:`bestimmt`, stimmung:`neutral`,
-       t:`Hier unten keiner. Was zwischen Kellerdecke und Fußboden passiert, ist meins.`,
+       t:`In der Werkstatt keiner. Was zwischen Dach und Fundament passiert, ist meins.`,
        aff:{FRE:2.0}},
       {id:`vorschrift`, wie:`sachlich, ohne Groll`, stimmung:`neutral`,
        t:`Die Vorschrift, und das ist auch gut so. Bei Strom hört der Spaß auf, da halte ich mich an jeden Buchstaben.`,

@@ -38,7 +38,7 @@ menubild: `personen/dombrowski/bilder/freundlich.webp`,
 
 hero: {
   name: `Kai Dombrowski`, age: 43, job: `Systemadministrator`,
-  ort: `Dritter Stock, Raum 3.14, früher Kartenarchiv, kein Fenster`,
+  ort: `Untergeschoss, Raum U 14, früher Kartenarchiv, kein Fenster`,
   /* Neugierig auf Werkzeug, ohne jede Ordnung, weder laut noch still,
      schnell schroff, und ständig einen Schritt weiter im Schlimmsten.
 
@@ -76,7 +76,7 @@ raumbild: ``,
 
 baum: {
   start: {
-    regie: `Dritter Stock, letzte Tür, kein Schild. Dahinter ist es kalt und laut: zwei Reihen schwarze Schränke, dazwischen ein Gang von achtzig Zentimetern. Er sitzt am Ende auf einem Rollwagen, den Laptop auf den Knien.`,
+    regie: `Die Treppe in den Keller, letzte Tür, kein Schild. Dahinter ist es kalt und laut: zwei Reihen schwarze Schränke, dazwischen ein Gang von achtzig Zentimetern. Er sitzt am Ende auf einem Rollwagen, den Laptop auf den Knien.`,
     er: `Zwei Minuten. Wenn ich jetzt aufstehe, fängt der wieder von vorn an.`,
     wie: `laut, gegen das Rauschen, ohne aufzusehen`, stimmung: `neutral`,
     erRegie: `Irgendwo hört ein Ton auf. Er atmet aus, klappt den Laptop zu und dreht sich auf dem Wagen zu dir herum.`,
@@ -326,7 +326,7 @@ motivfragen: [
        t:`Dass man mich nur kennt, wenn was kaputt ist. Elf Jahre lang läuft alles, und im Jahresbericht steht die Kantine.`,
        aff:{GEL:2.2}},
       {id:`dritter`, wie:`leiser`, stimmung:`nachdenklich`,
-       t:`Dass hier oben niemand vorbeikommt. Der dritte Stock ist eine Sackgasse, das ist auch baulich so.`,
+       t:`Dass hier unten niemand vorbeikommt. Der Keller ist eine Sackgasse, das ist auch baulich so.`,
        aff:{GEL:-2.0}}
     ]},
 
@@ -340,10 +340,10 @@ motivfragen: [
        t:`Eine zweite Stelle. Eine halbe würde reichen. Sie ist seit 2019 im Plan und seit 2019 nicht besetzt.`,
        aff:{FRE:-2.1}, fakt:`die zweite Stelle steht seit 2019 im Plan und ist nie besetzt worden`},
       {id:`bericht`, wie:`fast verlegen und trotzdem deutlich`, stimmung:`nachdenklich`,
-       t:`Ein Absatz im Jahresbericht über das, was hier oben läuft. Vier Sätze. Ich würde sie sogar selbst schreiben.`,
+       t:`Ein Absatz im Jahresbericht über das, was hier unten läuft. Vier Sätze. Ich würde sie sogar selbst schreiben.`,
        aff:{GEL:2.0}},
       {id:`tuer`, wie:`beiläufig`, stimmung:`freundlich`,
-       t:`Ich würde runterziehen. Zweiter Stock, egal welcher Raum, Hauptsache, es geht jemand vorbei.`,
+       t:`Ich würde hochziehen. Egal welcher Stock, Hauptsache, es geht jemand vorbei.`,
        aff:{GEL:-2.1}}
     ]},
 
@@ -366,8 +366,8 @@ motivfragen: [
   { id:`reinreden`, q:`Wer redet Ihnen rein, wenn Sie etwas anders machen wollen?`,
     a:[
       {id:`keiner`, wie:`erst zufrieden, dann eine Spur langsamer`, stimmung:`neutral`,
-       t:`Niemand. Was hier oben passiert, ist meins. Ich kann heute Nachmittag das halbe Netz umbauen und keiner merkt es.`,
-       aff:{FRE:1.9}, fakt:`kann hier oben alles allein entscheiden, und niemand merkt es`},
+       t:`Niemand. Was hier unten passiert, ist meins. Ich kann heute Nachmittag das halbe Netz umbauen und keiner merkt es.`,
+       aff:{FRE:1.9}, fakt:`kann hier unten alles allein entscheiden, und niemand merkt es`},
       {id:`vorschrift`, wie:`sachlich`, stimmung:`neutral`,
        t:`Bei allem, was Personaldaten anfasst, die Vorschrift. Und das ist gut so, da will ich gar nicht entscheiden dürfen.`,
        aff:{FRE:-2.0}},
@@ -843,7 +843,7 @@ reaktion: {
   },
   m: {
     FRE: { genau:{ er:`Das ist die ehrlichste Antwort, die ich dazu gehört habe.`, erRegie:`Er lehnt sich zurück.`, er2:`Ich habe hier alle Freiheit der Welt, und die halbe Zeit wünsche ich mir, es sagt mir einer, wie es gemacht wird. Beides gleichzeitig. Das kann ich niemandem erklären, und Sie haben nicht mal gefragt.`, wie:`überrascht`, wie2:`sehr direkt` },
-           zuHoch:{ er:`Ich will nicht frei sein.`, erRegie:`Er sagt es schnell und dann langsamer.`, er2:`Ich bin frei. Es redet mir hier oben kein Mensch rein, ich könnte heute Nachmittag das halbe Netz umbauen. Genau davon wache ich nachts auf. Wer frei sein will, hat noch keine gehabt.`, wie:`richtigstellend`, wie2:`ernst` },
+           zuHoch:{ er:`Ich will nicht frei sein.`, erRegie:`Er sagt es schnell und dann langsamer.`, er2:`Ich bin frei. Es redet mir hier unten kein Mensch rein, ich könnte heute Nachmittag das halbe Netz umbauen. Genau davon wache ich nachts auf. Wer frei sein will, hat noch keine gehabt.`, wie:`richtigstellend`, wie2:`ernst` },
            zuTief:{ er:`Sicherheit ist nicht alles. Wenn mir hier einer vorschreiben würde, wie ich diese Schränke zu betreiben habe, wäre ich in einem halben Jahr weg. Ich weiß, dass das nicht zusammenpasst. Es ist trotzdem so.`, wie:`abwägend` } },
     GEL: { genau:{ er:`Ein bisschen, ja.`, erRegie:`Er zeigt mit dem Daumen zur Tür, an der die ausgedruckte Mail hängt.`, er2:`Nicht auf eine Bühne. Es würde reichen, wenn irgendwo steht, dass es einer gesagt hat. Ein Wort. Deshalb hängt das Blatt da.`, wie:`ohne Ausflucht`, wie2:`ruhig` },
            zuHoch:{ er:`So wichtig ist mir das nicht. Ich will nicht vorne stehen, mir ist es sogar unangenehm. Mir wäre nur lieb, dass es mich in einem Papier überhaupt gibt.`, wie:`einschränkend` },
@@ -963,7 +963,7 @@ verkauf: {
           an:{ plan60:`Sie haben eine Kündigung, die seit sieben Monaten liegt. Ich weiß, wie das ist mit Entscheidungen. Wenn es ein Nein wird, ist es ein Nein und kein Zwischenstand.`,
                tochter:`Entscheiden Sie das am Wochenende, wenn Ihr Sohn da ist, oder gar nicht. Und wenn es ein Nein wird, ist es ein Nein.` },
           er:`Ein Nein, das ein Nein sein darf.`, erRegie:`Er sieht dich lange genug an, dass es unangenehm wird.`,
-          er2:`Ich habe hier oben elf Jahre lang keine Entscheidung getroffen, bei der mir das jemand zugestanden hätte. Das ist der erste Satz heute, bei dem ich Ihnen glaube.`,
+          er2:`Ich habe hier unten elf Jahre lang keine Entscheidung getroffen, bei der mir das jemand zugestanden hätte. Das ist der erste Satz heute, bei dem ich Ihnen glaube.`,
           wie2:`leise`, stimmung:`geruehrt` },
         { id:`verpassen`, t:`Wenn Sie jetzt Nein sagen, verpassen Sie etwas.`,
           wie:`drängend`, auto:-1.5, aff:{},

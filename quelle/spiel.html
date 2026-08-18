@@ -1342,7 +1342,7 @@ function ankunft(){
   S.phase = 0;
   if(A.besuche === 1) return phase1("start");
   const w = (DATA.wiedersehen || []).find(x => S.bez >= x.ab);
-  sag("regie", `Dein ${ord(A.besuche)} Besuch. Vierter Stock, letzte Tür.`);
+  sag("regie", `Dein ${ord(A.besuche)} Besuch. ${DATA.hero.ort}.`);
   if(w){ sag("regie", w.regie); erSagt(w); }
   if(S.geduld < 92) sag("meta", `${AN("Er")} hat noch im Kopf, wie viel du letztes Mal gefragt hast · Geduld <b>${
     Math.round(S.geduld)}</b> statt hundert`, {warn:true});

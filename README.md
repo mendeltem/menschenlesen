@@ -159,7 +159,7 @@ Bei ihm gilt das hart:
 Punkte auf die Aussicht. Genug, um aus einem Vielleicht ein Ja zu machen.
 Nie genug, um aus einem Nein etwas zu machen.
 
-## Fünf Menschen, die sich widersprechen
+## Sechs Menschen, die sich widersprechen
 
 Baumgartner ist laut, offen, unordentlich und nicht umzuwerfen; er will
 selbst bestimmen und auf keine Bühne. Annika Reuter ist eher still, sehr
@@ -180,11 +180,11 @@ in den Speisesaal. Wer ihn für den lauten, herzlichen Koch hält, den das
 Klischee verspricht, redet an ihm vorbei — und merkt es nicht, weil er
 freundlich bleibt. Sein Ärger sieht aus wie Zustimmung.
 
-| | Baumgartner | Reuter | Sartori | Vogt | Dombrowski |
-|---|---|---|---|---|---|
-| Die Uhr | **+3,2** | −3,2 | −1,6 | +1,6 | 0,0 |
-| Der Stift | −1,4 | **+2,6** | **+1,6** | −1,6 | −0,3 |
-| Die Brille | −4,0 | −1,6 | −2,2 | **+2,2** | **+1,4** |
+| | Baumgartner | Reuter | Sartori | Vogt | Dombrowski | Kettner |
+|---|---|---|---|---|---|---|
+| Die Uhr | **+3,2** | −3,2 | −1,6 | +1,6 | 0,0 | −3,2 |
+| Der Stift | −1,4 | **+2,6** | **+1,6** | −1,6 | −0,3 | **+2,3** |
+| Die Brille | −4,0 | −1,6 | −2,2 | **+2,2** | **+1,4** | −0,2 |
 
 Mit Angela Vogt hat jede der drei Waren ihren Menschen. Sie ist auch die
 Erste auf der anderen Seite der zweiten Waage: die drei anderen wollen
@@ -214,6 +214,26 @@ albern ist; wer ihn genau fragt, beruhigt ihn. In jeder seiner zehn
 Lagen liegt genau eine gut gemeinte Frage, und sie ist der teuerste
 Fehlgriff im Spiel. Bei Vogt scheitert das Mitgefühl, weil sie es nicht
 braucht. Bei ihm scheitert es, weil es zu billig ist.
+
+Die Sechste steht ganz vorn: Petra Kettner, Empfang, sechsundfünfzig, seit
+zweiundzwanzig Jahren an demselben Tresen. Sie füllt das größte Loch, das
+der Besetzung geblieben war — von den fünf anderen ist keiner wirklich
+hart. Angela und Kai stehen bei minus eins und sind im Kern beide
+zugewandt, die anderen drei liegen im Plus. Jeder von ihnen lässt sich
+über Wärme ein Stück weit gewinnen. Sie nicht.
+
+Das ist keine Bosheit, und sie ist nie unhöflich. Sie war acht Jahre
+freundlich, und dann hat die Freundlichkeit sie einmal sehr viel gekostet;
+seitdem tut sie genau ihre Aufgabe und keinen Handschlag mehr. Wer sie mag,
+bekommt davon nichts zurück. Wer sie nach der Sache fragt — nach dem
+Ablauf, der Vorschrift, dem Formular —, sitzt plötzlich einer Fachfrau
+gegenüber, die zwanzig Minuten am Stück reden kann.
+
+**Damit steht die Lektion des Erdgeschosses ganz vorn: Angela erreicht man
+über den Menschen, Petra nur über die Arbeit.** Wer das eine Verfahren
+beim anderen anwendet, verliert. Und bei ihr sieht Ärger nicht nach Ärger
+aus — sie wird höflicher. Die Anzeige nennt diese Stimmung deshalb *sehr
+höflich*, und was der Name bedeutet, muss man erst lernen.
 
 Bei Reuter und Sartori trägt dieselbe Ware aus verschiedenen Gründen:
 sie will nichts verlieren, er will nichts vergessen. Wer die Ware nach
@@ -260,7 +280,8 @@ die alles mitbringen: Texte, Fragen, Zustände, Bilder, Farbschema.
 | `personen/sartori/` | Luigi Sartori, Kantinenkoch |
 | `personen/vogt/` | Angela Vogt, Hausmeisterin |
 | `personen/dombrowski/` | Kai Dombrowski, Systemadministrator: der Erste, der sich sorgt |
-| `PROMPTS_ANNIKA.md`, `PROMPTS_LUIGI.md`, `PROMPTS_ANGELA.md`, `PROMPTS_KAI.md` | der Personengenerator an einer Person durchgespielt, fertig zum Kopieren |
+| `personen/kettner/` | Petra Kettner, Empfang: die Erste, bei der Wärme nichts nützt |
+| `PROMPTS_ANNIKA.md`, `PROMPTS_LUIGI.md`, `PROMPTS_ANGELA.md`, `PROMPTS_KAI.md`, `PROMPTS_PETRA.md` | der Personengenerator an einer Person durchgespielt, fertig zum Kopieren |
 | `PROMPTS.md` | ein Prompt, aus dem jede weitere Person entsteht |
 | `werkzeug/` | zerlegt einen Kontaktbogen in die zehn Stimmungsbilder |
 | `musik/` | fünf Spuren: Menü, Laden, Gespräch, gewonnen, verloren |
