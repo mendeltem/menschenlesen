@@ -159,7 +159,7 @@ Bei ihm gilt das hart:
 Punkte auf die Aussicht. Genug, um aus einem Vielleicht ein Ja zu machen.
 Nie genug, um aus einem Nein etwas zu machen.
 
-## Drei Menschen, die sich widersprechen
+## Fünf Menschen, die sich widersprechen
 
 Baumgartner ist laut, offen, unordentlich und nicht umzuwerfen; er will
 selbst bestimmen und auf keine Bühne. Annika Reuter ist eher still, sehr
@@ -180,17 +180,40 @@ in den Speisesaal. Wer ihn für den lauten, herzlichen Koch hält, den das
 Klischee verspricht, redet an ihm vorbei — und merkt es nicht, weil er
 freundlich bleibt. Sein Ärger sieht aus wie Zustimmung.
 
-| | Baumgartner | Reuter | Sartori | Vogt |
-|---|---|---|---|---|
-| Die Uhr | **+3,2** | −3,2 | −1,6 | +1,6 |
-| Der Stift | −1,4 | **+2,6** | **+1,6** | −1,6 |
-| Die Brille | −4,0 | −1,6 | −2,2 | **+2,2** |
+| | Baumgartner | Reuter | Sartori | Vogt | Dombrowski |
+|---|---|---|---|---|---|
+| Die Uhr | **+3,2** | −3,2 | −1,6 | +1,6 | 0,0 |
+| Der Stift | −1,4 | **+2,6** | **+1,6** | −1,6 | −0,3 |
+| Die Brille | −4,0 | −1,6 | −2,2 | **+2,2** | **+1,4** |
 
 Mit Angela Vogt hat jede der drei Waren ihren Menschen. Sie ist auch die
 Erste auf der anderen Seite der zweiten Waage: die drei anderen wollen
 alle dazugehören und keiner gesehen werden, sie will beides umgekehrt.
 Damit ist *Nähe oder Geltung* zum ersten Mal eine Frage mit zwei
 möglichen Antworten und nicht eine mit einer.
+
+Der Fünfte ist Kai Dombrowski, Systemadministrator, dreiundvierzig, seit
+elf Jahren in einem Raum ohne Fenster. Er ist der Erste in diesem Haus,
+der sich sorgt: die vier anderen stehen alle bei minus eins oder minus
+zwei im Neurotizismus, keiner von ihnen liegt nachts wach. Damit war die
+Deutung für ein hohes N bloß Zierde und ist nie ausgespielt worden.
+
+Er bringt auch die erste Null mit, und zwar zweimal. Er redet zwanzig
+Minuten über einen Netzwerkschalter und schweigt danach fünf — das ist
+keine Extraversion, das ist Angst mit Auslauf, und wer das eine für das
+andere hält, rät zu hoch. Und auf *Sicherheit oder Freiheit* hat er
+keine Antwort: er hat alle Freiheit der Welt und wünscht sich die halbe
+Zeit, es sagt ihm einer, wie es gemacht wird. Über diese Waage kommt man
+nicht an ihn heran, nur über seine Lage. Wer viermal gespielt hat, hat
+bis dahin gelernt, dass die Mitte nie die Antwort ist — das war ein
+Fehler im Spiel und kein Schwierigkeitsgrad.
+
+Die Gesprächsregel bei ihm ist neu und die eigentliche Lektion: **Trost
+ist eine Beleidigung.** Wer ihn beruhigt, sagt ihm, dass seine Sorge
+albern ist; wer ihn genau fragt, beruhigt ihn. In jeder seiner zehn
+Lagen liegt genau eine gut gemeinte Frage, und sie ist der teuerste
+Fehlgriff im Spiel. Bei Vogt scheitert das Mitgefühl, weil sie es nicht
+braucht. Bei ihm scheitert es, weil es zu billig ist.
 
 Bei Reuter und Sartori trägt dieselbe Ware aus verschiedenen Gründen:
 sie will nichts verlieren, er will nichts vergessen. Wer die Ware nach
@@ -236,7 +259,8 @@ die alles mitbringen: Texte, Fragen, Zustände, Bilder, Farbschema.
 | `personen/reuter/` | Annika Reuter, Papierrestauratorin — dasselbe noch einmal, und in fast allem seine Gegenprobe |
 | `personen/sartori/` | Luigi Sartori, Kantinenkoch |
 | `personen/vogt/` | Angela Vogt, Hausmeisterin |
-| `PROMPTS_ANNIKA.md`, `PROMPTS_LUIGI.md` | der Personengenerator an einer Person durchgespielt, fertig zum Kopieren |
+| `personen/dombrowski/` | Kai Dombrowski, Systemadministrator: der Erste, der sich sorgt |
+| `PROMPTS_ANNIKA.md`, `PROMPTS_LUIGI.md`, `PROMPTS_ANGELA.md`, `PROMPTS_KAI.md` | der Personengenerator an einer Person durchgespielt, fertig zum Kopieren |
 | `PROMPTS.md` | ein Prompt, aus dem jede weitere Person entsteht |
 | `werkzeug/` | zerlegt einen Kontaktbogen in die zehn Stimmungsbilder |
 | `musik/` | fünf Spuren: Menü, Laden, Gespräch, gewonnen, verloren |

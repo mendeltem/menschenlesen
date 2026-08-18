@@ -28,9 +28,14 @@ def main():
     if len(sys.argv) < 2:
         sys.exit("Aufruf: python werkzeug/person_pruefen.py <kennung>")
     wer = sys.argv[1]
-    datei = "personen/%s.js" % wer
-    if not os.path.exists(datei):
-        sys.exit("Nicht gefunden: " + datei)
+    # Jede Person hat einen Ordner; wie die Datei darin heisst, ist egal.
+    ordner = os.path.join("personen", wer)
+    if not os.path.isdir(ordner):
+        sys.exit("Kein Ordner personen/%s" % wer)
+    dateien = sorted(f for f in os.listdir(ordner) if f.endswith(".js"))
+    if not dateien:
+        sys.exit("Keine Personendatei in " + ordner)
+    datei = os.path.join(ordner, dateien[0])
     s = io.open(datei, encoding="utf-8").read()
     fehler = []
 
