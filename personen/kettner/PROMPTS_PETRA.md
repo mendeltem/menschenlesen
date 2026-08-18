@@ -128,18 +128,44 @@ Von Hand muss das niemand:
 python werkzeug/kontaktbogen_schneiden.py personen/kettner/kontaktbogen.jpg kettner
 ```
 
-**Wenn das nicht sauber trennt:** die Stegsuche braucht dunkle Stege
-zwischen den Feldern. Kommt der Bogen mit gezeichneten Rahmen (wie Kais)
-oder mit Beschriftung zwischen den Reihen (wie Angelas), liest man die
-Kanten einmal ab und gibt sie mit:
+**Ihr Bogen hatte helle Stege statt dunkler.** Kein gezeichneter Rahmen,
+sondern schmale weiße Bänder zwischen den Feldern — heller als der graue
+Feldhintergrund. Die Stegsuche sucht dunkle Streifen und fand nur ihren
+Strickmantel. Die Kanten einmal abgelesen und mitgegeben:
 
 ```bash
-python werkzeug/kontaktbogen_schneiden.py personen/kettner/kontaktbogen.jpg kettner --rand 5 --senkrecht L1,R1,L2,R2,L3,R3,L4,R4,L5,R5 --waagerecht O1,U1,O2,U2
+python werkzeug/kontaktbogen_schneiden.py personen/kettner/kontaktbogen.jpg kettner --rand 4 --senkrecht 0,650,658,1305,1311,1953,1958,2606,2613,3264 --waagerecht 0,650,661,1312
 ```
 
 Je Feld zwei Zahlen, linke und rechte Kante; bei `--waagerecht` je Reihe
-Ober- und Unterkante. Gesucht sind die Spalten und Zeilen, in denen über
-dreißig Prozent der Pixel dunkler als 120 sind.
+Ober- und Unterkante. Bei hellen Stegen sucht man die Spalten, in denen
+auch der dunkelste Pixel noch über 235 liegt; bei dunklen Rahmen die,
+in denen über dreißig Prozent der Pixel unter 120 liegen.
+
+### Was beim ersten Durchgang schiefging
+
+Feld 7 kam gut: ein breites Lächeln, und darüber Brauen, die dazu nicht
+passen — die obere Gesichtshälfte macht nicht mit. Genau das war gemeint.
+
+**Feld 6 kam falsch.** Statt *prüfend* hat der Generator ein
+klassisches Wutgesicht gezeichnet: Brauen fest zusammen, Mundwinkel
+herunter. Bei jeder anderen Person wäre das brauchbar, bei ihr nicht —
+sie ist die Figur, deren Unmut nie nach Unmut aussieht. Ein Bild, auf
+dem sie offen böse guckt, nimmt Feld 7 die Wirkung.
+
+Zum Nachziehen, mit dem Referenzporträt und nur für dieses eine Feld:
+
+> Use the attached portrait as the exact reference. Keep everything
+> identical: face, hair, make-up, glasses on their chain, the wine-red
+> cardigan, the counter, the pen, the plain light grey background.
+>
+> Expression: assessing, not hostile. She is checking whether what you
+> just said is true. **Her brows stay level — they must not draw
+> together, and the corners of the mouth must not turn down.** The chin
+> is drawn back a little, the head very slightly tilted, one eyebrow a
+> fraction lower than the other, the eyes narrowed by a millimetre. The
+> mouth is closed and neutral. A receptionist deciding whether to
+> believe you, not a woman who is angry. Square 1:1, no text, no frame.
 
 ---
 
