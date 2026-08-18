@@ -111,6 +111,46 @@ uebergang1: {
   wie: `amüsiert, ein wenig lauernd`, stimmung: `interessiert`
 },
 
+/* --- Fuenf Einstiege. Beim Wiederkommen faengt es hier an. Bei ihm
+       muss man nichts tun: er redet los. ------------------------- */
+
+einstieg: [
+  { id:`geklopft`, t:`Ich habe geklopft.`, wie:`halb entschuldigend`,
+    er:`Habe ich gehört. Ich habe nur gerade eine Zahl im Kopf gehabt, die ich nicht verlieren wollte.`,
+    erRegie:`Er zeigt auf einen Zettel, auf dem eine einzelne Zahl steht, sonst nichts.`,
+    er2:`Da ist sie. Jetzt kann sie weg. Setzen Sie sich irgendwo hin, wo nichts liegt — viel Auswahl haben Sie nicht.`,
+    wie:`schnell`, wie2:`vergnügt`, stimmung:`freundlich`,
+    fakt:`schreibt Zahlen auf Zettel, um sie aus dem Kopf zu bekommen` },
+
+  { id:`kopfhoerer`, t:`Was hören Sie da?`, wie:`neugierig`,
+    er:`Nichts. Die sind aus.`,
+    erRegie:`Er nimmt sie vom Hals und legt sie auf den Tisch.`,
+    er2:`Sie sind seit halb neun aus. Ich habe sie um, damit die Leute auf dem Gang mich nicht ansprechen. Das funktioniert seit vier Jahren.`,
+    wie:`trocken`, wie2:`ohne jede Reue`, stimmung:`amuesiert`,
+    fakt:`trägt ausgeschaltete Kopfhörer, damit ihn auf dem Gang niemand anspricht` },
+
+  { id:`stapel`, t:`Der Stapel ist gewachsen.`, wie:`mit einem Blick auf den Schreibtisch`,
+    er:`Der wächst und schrumpft, das ist ein Prozess.`,
+    erRegie:`Er legt eine Hand darauf, ohne hinzusehen.`,
+    er2:`Und ich finde alles darin in unter zehn Sekunden. Wenn jemand aufräumt, finde ich zwei Wochen lang nichts. Das ist einmal passiert.`,
+    wie:`gut gelaunt`, wie2:`bestimmt`, stimmung:`amuesiert`,
+    fakt:`hat nach einem fremden Aufräumen zwei Wochen lang nichts gefunden` },
+
+  { id:`fenster`, t:`Draußen wird gebaut.`, wie:`mit einem Blick in den Innenhof`,
+    er:`Seit März. Presslufthammer immer um Viertel nach zehn, als hätten sie einen Plan.`,
+    erRegie:`Er sieht auf die Uhr, dann aus dem Fenster.`,
+    er2:`Ich habe angefangen, meine schwierigen Sachen auf halb acht zu legen. Das war die beste Änderung dieses Jahres, und ich verdanke sie einem Bagger.`,
+    wie:`lebhaft`, wie2:`sehr vergnügt`, stimmung:`amuesiert`,
+    fakt:`arbeitet seit dem Baulärm ab halb acht und hält das für eine Verbesserung` },
+
+  { id:`kaffee`, t:`Sie haben zwei Tassen hier stehen.`, wie:`beiläufig`,
+    er:`Drei. Die dritte steht hinter dem Monitor.`,
+    erRegie:`Er stellt sie dazu, ohne Verlegenheit.`,
+    er2:`Ich mache eine, vergesse sie, mache eine neue. Am Nachmittag räume ich alle drei zusammen weg und finde das jedes Mal komisch.`,
+    wie:`sachlich`, wie2:`vergnügt`, stimmung:`amuesiert`,
+    fakt:`vergisst angefangene Tassen und räumt nachmittags drei auf einmal weg` }
+],
+
 zwischen: {
   bf: {
     3: { regie: `Er dreht den Stuhl eine Vierteldrehung, sodass er dich direkt ansieht.`,

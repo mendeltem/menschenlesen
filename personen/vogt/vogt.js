@@ -118,6 +118,47 @@ uebergang1: {
   wie: `aufgeräumt, sehr direkt`, stimmung: `freundlich`
 },
 
+/* --- Fuenf Einstiege. Beim Wiederkommen faengt es hier an. Bei ihr
+       reicht ein Blick in den Raum: es liegt immer etwas herum, das
+       gerade kaputt war. ------------------------------------------ */
+
+einstieg: [
+  { id:`kaputt`, t:`Was ist heute kaputt?`, wie:`geradeheraus, schon in der Tür`,
+    er:`Heizung im zweiten, Türschließer im Treppenhaus, und einer hat den Schlüssel im Schloss abgebrochen.`,
+    erRegie:`Sie zählt es an drei Fingern ab, ohne aufzusehen.`,
+    er2:`Halb elf. Das ist ein normaler Vormittag.`,
+    wie:`schnell, ohne Klage`, wie2:`trocken, fast vergnügt`, stimmung:`amuesiert`,
+    fakt:`drei Störungen bis halb elf sind für sie ein normaler Vormittag` },
+
+  { id:`farbe`, t:`Es riecht nach frischer Farbe.`, wie:`schnuppernd`,
+    er:`Der Stuhl. Sagte ich beim letzten Mal.`,
+    erRegie:`Sie zeigt mit dem Kinn auf einen Hocker in der Ecke, an dem ein Zettel hängt.`,
+    er2:`Ich streiche ihn zum vierten Mal. Nicht weil er es braucht — weil ich dann zwanzig Minuten nichts anderes machen muss.`,
+    wie:`beiläufig`, wie2:`unerwartet offen`, stimmung:`freundlich`,
+    fakt:`streicht denselben Hocker zum vierten Mal, um zwanzig Minuten Ruhe zu haben` },
+
+  { id:`hand`, t:`Sie haben sich die Hand aufgerissen.`, wie:`sachlich, ohne Aufregung`,
+    er:`Kantenschutz vom Aufzug. Scharf wie ein Messer.`,
+    erRegie:`Sie sieht auf ihren Handrücken, als hätte sie es noch nicht bemerkt, und wischt einmal darüber.`,
+    er2:`Ist nichts. Wenn ich für so was aufhören würde, hätte ich nie angefangen.`,
+    wie:`knapp`, wie2:`achselzuckend`, stimmung:`neutral`,
+    fakt:`hat sich am Kantenschutz des Aufzugs die Hand aufgerissen und es nicht bemerkt` },
+
+  { id:`radio`, t:`Was läuft da gerade?`, wie:`mit einem Nicken zum Radio`,
+    er:`Weiß ich nicht. Nachrichten waren es vorhin.`,
+    erRegie:`Sie dreht es nicht lauter und nicht leiser.`,
+    er2:`Ich höre gar nicht hin. Ich höre nur, wenn es aufhört.`,
+    wie:`beiläufig`, wie2:`sachlich`, stimmung:`neutral`,
+    fakt:`hört das Radio nicht, merkt aber sofort, wenn es aufhört` },
+
+  { id:`schluessel`, t:`Sie sind schon unterwegs gewesen.`, wie:`mit einem Blick auf den Schlüsselbund`,
+    er:`Seit halb sechs.`,
+    erRegie:`Sie hebt den Bund an und lässt ihn fallen.`,
+    er2:`Vier Stockwerke, alle Fenster im Treppenhaus, und den Müllraum. Danach weiß ich, was für ein Tag wird.`,
+    wie:`sachlich`, wie2:`bestimmt`, stimmung:`neutral`,
+    fakt:`geht jeden Morgen ab halb sechs das ganze Haus ab` }
+],
+
 /* --- Neun Fragen zur Person. l = wie stark eine Antwort für welches
        Merkmal spricht. ---------------------------------------------- */
 

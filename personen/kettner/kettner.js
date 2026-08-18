@@ -134,6 +134,47 @@ uebergang1: {
   wie: `verbindlich, ohne jede Neugier`, stimmung: `neutral`
 },
 
+/* --- Fuenf Einstiege. Beim Wiederkommen faengt es hier an, nicht bei
+       den Merkmalen. Bei ihr sind es lauter Dienstsachen, und genau das
+       ist der Punkt: ueber die Arbeit kommt man an sie heran. ------ */
+
+einstieg: [
+  { id:`eintragen`, t:`Muss ich mich wieder eintragen?`, wie:`schon nach dem Stift greifend`,
+    er:`Jedes Mal.`,
+    erRegie:`Sie dreht das Buch um, ohne aufzusehen, und schiebt den Stift durch den Schlitz.`,
+    er2:`Auch die Frau, die hier seit achtzehn Jahren putzt. Die findet das albern und trägt sich trotzdem ein.`,
+    wie:`freundlich, ohne Verhandlungsspielraum`, wie2:`trocken`, stimmung:`neutral`,
+    fakt:`lässt jeden eintragen, auch die Reinigungskraft von achtzehn Jahren` },
+
+  { id:`stapel`, t:`Der Paketstapel ist gewachsen.`, wie:`beiläufig, mit einem Blick nach rechts`,
+    er:`Zwei mehr als gestern.`,
+    erRegie:`Sie sieht nicht hin. Sie weiß es.`,
+    er2:`Ich zähle sie morgens. Nicht weil es jemand verlangt, sondern damit ich sagen kann, wie viele es waren, wenn eines fehlt.`,
+    wie:`sachlich`, wie2:`nüchtern`, stimmung:`neutral`,
+    fakt:`zählt die Pakete jeden Morgen, für den Fall, dass eines fehlt` },
+
+  { id:`telefon`, t:`Klingelt das den ganzen Tag so?`, wie:`nach dem zweiten Klingeln`,
+    er:`Vierzig- bis sechzigmal.`,
+    erRegie:`Es klingelt wieder. Sie lässt es zweimal klingeln und geht dann ran, sagt zwei Sätze, legt auf.`,
+    er2:`So. Die Hälfte davon will die Nummer von jemandem, die im Telefonbuch steht.`,
+    wie:`ohne Klage`, wie2:`trocken`, stimmung:`neutral`,
+    fakt:`bekommt vierzig bis sechzig Anrufe am Tag, die Hälfte davon überflüssig` },
+
+  { id:`wetter`, t:`Draußen ist es ekelhaft.`, wie:`während du dir den Mantel abklopfst`,
+    er:`Sehe ich am Boden.`,
+    erRegie:`Sie zeigt mit dem Stift auf den Steinboden vor dem Tresen, auf dem zwei nasse Streifen liegen.`,
+    er2:`Bis mittags ist das eine Rutschbahn, und wer hinfällt, fällt hier vorn hin. Ich habe dreimal um eine Matte gebeten.`,
+    wie:`sachlich`, wie2:`gleichmäßig`, stimmung:`neutral`,
+    fakt:`hat dreimal um eine Fußmatte gebeten, weil der Boden vorn rutschig wird` },
+
+  { id:`ruhe`, t:`Es ist heute erstaunlich ruhig hier.`, wie:`ehrlich`,
+    er:`Ferien.`,
+    erRegie:`Sie legt den Stift genau parallel zur Kante, was er schon war.`,
+    er2:`Zwei Wochen. In der ersten ist es angenehm, in der zweiten sitze ich hier und höre die Uhr.`,
+    wie:`knapp`, wie2:`sachlich, und einen Ton zu ehrlich`, stimmung:`nachdenklich`,
+    fakt:`hört in der zweiten Ferienwoche die Uhr` }
+],
+
 /* --- Neun Fragen zur Person. l = wie stark eine Antwort für welches
        Merkmal spricht. Ihr Neurotizismus liegt genau in der Mitte: sie
        ist nicht robust wie Angela, sie ist nur nicht weit genug

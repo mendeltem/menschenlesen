@@ -118,6 +118,47 @@ uebergang1: {
   wie: `entschuldigend, aber wärmer als vorher`, stimmung: `freundlich`
 },
 
+/* --- Fuenf Einstiege. Beim Wiederkommen faengt es hier an. Bei ihr
+       liegt immer etwas auf dem Tisch, und man darf es ansehen, aber
+       nicht anfassen. ---------------------------------------------- */
+
+einstieg: [
+  { id:`stoere`, t:`Störe ich mitten in etwas?`, wie:`leise, in der Tür`,
+    er:`Ich bin in einer Pause zwischen zwei Schichten Leim.`,
+    erRegie:`Sie legt den Pinsel quer über das Glas, nicht hinein.`,
+    er2:`Zwanzig Minuten. Danach muss ich weiter, sonst zieht es sich krumm. Bis dahin gehöre ich Ihnen.`,
+    wie:`ruhig`, wie2:`freundlich, sehr genau`, stimmung:`freundlich`,
+    fakt:`arbeitet in Fenstern von zwanzig Minuten, zwischen zwei Schichten Leim` },
+
+  { id:`tisch`, t:`Was liegt da?`, wie:`mit einem Blick auf den Tisch, ohne hinzugreifen`,
+    er:`Ein Gemeinderatsprotokoll von 1911. Wasserschaden von 1994.`,
+    erRegie:`Sie dreht das Blatt einen Zentimeter, damit du es besser siehst, und behält die Hand darauf.`,
+    er2:`Dreiundachtzig Jahre lag es trocken und heil, und dann ist ein Rohr geplatzt. Das ist meistens die Geschichte.`,
+    wie:`sachlich`, wie2:`ruhig`, stimmung:`interessiert`,
+    fakt:`arbeitet an einem Protokoll von 1911 mit einem Wasserschaden von 1994` },
+
+  { id:`licht`, t:`Sie haben die Lampe umgestellt.`, wie:`beiläufig`,
+    er:`Sie ist zwei Zentimeter weiter links.`,
+    erRegie:`Sie sieht dich an, kurz und aufmerksam, so als hätte sie etwas nachgeprüft.`,
+    er2:`Das ist noch niemandem aufgefallen, der hier hereinkommt. Meiner Kollegin auch nicht, und die kommt jeden Tag.`,
+    wie:`überrascht`, wie2:`fast erfreut`, stimmung:`interessiert`,
+    fakt:`hat gemerkt, dass dir die verschobene Lampe aufgefallen ist` },
+
+  { id:`kalt`, t:`Es ist kühl hier.`, wie:`die Hände in den Taschen`,
+    er:`Achtzehn Grad und fünfzig Prozent. Das ist keine Sparsamkeit, das ist die Vorgabe.`,
+    erRegie:`Sie zeigt auf ein kleines Gerät am Regal, das zwei Zahlen anzeigt.`,
+    er2:`Papier hat es lieber kühl als ich. Ich habe drei Pullover hier hängen.`,
+    wie:`sachlich`, wie2:`mit einem kleinen Lächeln`, stimmung:`freundlich`,
+    fakt:`hält achtzehn Grad und fünfzig Prozent, mit drei Pullovern zum Ausgleich` },
+
+  { id:`leise`, t:`Man hört hier gar nichts.`, wie:`nach einer Pause`,
+    er:`Doch. Die Lüftung, und alle vier Minuten den Aufzug.`,
+    erRegie:`Sie hebt einen Finger und wartet. Nach ein paar Sekunden fährt der Aufzug an.`,
+    er2:`Wenn er zwei Wochen stillsteht, arbeite ich schlechter. Das ist mir selbst unangenehm.`,
+    wie:`ruhig`, wie2:`leiser`, stimmung:`nachdenklich`,
+    fakt:`arbeitet schlechter, wenn der Aufzug stillsteht` }
+],
+
 /* --- Akt 2: neun Fragen zu ihr. Jede bietet eine starke und eine
        gemäßigte Antwort auf demselben Merkmal — nur so lässt sich eine
        Zwei von einer Eins unterscheiden. ---------------------------- */

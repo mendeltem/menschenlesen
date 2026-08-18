@@ -124,6 +124,46 @@ uebergang1: {
   wie: `zu schnell zugestimmt, als hätte er das Wort erkannt`, stimmung: `freundlich`
 },
 
+/* --- Fuenf Einstiege. Beim Wiederkommen faengt es hier an. Bei ihm
+       ist es kalt und laut, und beides erwaehnt er nie von selbst. -- */
+
+einstieg: [
+  { id:`kalt`, t:`Immer noch achtzehn Grad?`, wie:`beiläufig, die Hände in den Taschen`,
+    er:`Siebzehn acht.`,
+    erRegie:`Er sagt die Zahl, ohne nachzusehen, und zieht dann doch den Ärmel über die Hand.`,
+    er2:`Ich habe eine Jacke hier hängen, die ich nie anziehe. Wenn ich sie anziehe, ist etwas kaputt, dann stehe ich länger.`,
+    wie:`sachlich`, wie2:`trocken`, stimmung:`neutral`,
+    fakt:`zieht die Jacke im Serverraum nur an, wenn etwas kaputt ist` },
+
+  { id:`piept`, t:`Piept da was?`, wie:`nach ein paar Sekunden`,
+    er:`Sie hören das?`,
+    erRegie:`Er hebt den Kopf, das erste Mal ganz.`,
+    er2:`Das ist eine Platte im dritten Schrank, die seit Dienstag anders klingt. Hier unten hört das sonst niemand, weil sonst niemand hier unten ist.`,
+    wie:`überrascht`, wie2:`schneller`, stimmung:`interessiert`,
+    fakt:`eine Platte im dritten Schrank klingt seit Dienstag anders` },
+
+  { id:`geklingelt`, t:`Ich habe oben geklingelt, es ging niemand ran.`, wie:`ohne Vorwurf`,
+    er:`Die Klingel geht auf ein Telefon, das seit 2021 nicht mehr existiert.`,
+    erRegie:`Er sagt es, als wäre es eine Wetterlage.`,
+    er2:`Ich habe es dreimal gemeldet. Inzwischen finde ich es praktisch, und das ist kein guter Zustand.`,
+    wie:`nüchtern`, wie2:`trocken, ohne Vergnügen`, stimmung:`amuesiert`,
+    fakt:`die Kellerklingel läuft seit 2021 auf ein Telefon, das es nicht mehr gibt` },
+
+  { id:`zettel`, t:`Da sind neue Zettel dazugekommen.`, wie:`mit einem Blick auf den Monitor`,
+    er:`Zwei.`,
+    erRegie:`Er sieht hin und wieder weg.`,
+    er2:`Ich habe heute Morgen zwei geschrieben und einen abgemacht. Das ist die Bilanz eines guten Tages.`,
+    wie:`knapp`, wie2:`ohne Selbstmitleid`, stimmung:`nachdenklich`,
+    fakt:`schreibt an guten Tagen zwei Zettel und macht einen ab` },
+
+  { id:`ruhe`, t:`Wie hält man das mit dem Rauschen aus?`, wie:`ehrlich neugierig`,
+    er:`Man hört es nach zwei Minuten nicht mehr.`,
+    erRegie:`Er wartet einen Moment, als hörte er selbst hin.`,
+    er2:`Das Schlimme ist der Feierabend. Ich sitze zu Hause in der Küche, und da ist es so still, dass ich das Radio anmache. Elf Jahre, und ich habe mich daran gewöhnt.`,
+    wie:`sachlich`, wie2:`langsamer`, stimmung:`nachdenklich`,
+    fakt:`braucht zu Hause das Radio, weil es ohne das Rauschen zu still ist` }
+],
+
 /* --- Neun Fragen zur Person. l = wie stark eine Antwort für welches
        Merkmal spricht. Sein N liegt bei plus zwei und sein C bei minus
        zwei; auf beides führen mehrere Wege. Die Extraversion bleibt mit

@@ -1106,7 +1106,7 @@ function frischeAkte(){
   return { besuche:0, bez:WELT.freundschaft.start, bfVerlauf:[], moVerlauf:[],
            bfGestellt:[], moGestellt:[], privGestellt:[], zGesehen:[],
            fakten:[], spuren:[], gesagt:[], gefunden:[], bedarf:[],
-           geduldWeg:0, fest:{}, letzter:null,
+           geduldWeg:0, fest:{}, letzter:null, einstiegGesehen:[],
            stufe:1, punkte:{}, sterne:null };
 }
 /* Ältere Stände bekommen fehlende Felder nachgereicht, statt dass das
@@ -1557,7 +1557,38 @@ function ankunft(){
   if(S.geduld < 92) sag("meta", `${AN("Er")} hat noch im Kopf, wie viel du letztes Mal gefragt hast · Geduld <b>${
     Math.round(S.geduld)}</b> statt hundert`, {warn:true});
   zeichne();
-  knopf("Hereinkommen", () => weiterNachAnkunft());
+  knopf("Hereinkommen", () => einstiegRunde());
+}
+
+/* Beim Wiederkommen faengt man nicht mit der Persoenlichkeit an.
+
+   Wer zur Tuer hereinkommt und als Erstes fragt, was passiert, wenn man
+   einen Fehler macht, ist kein Besucher, sondern eine Befragung. Also
+   erst ein kurzer Wortwechsel ueber nichts Besonderes — das Wetter, ein
+   Stapel, ein Geraeusch. Er kostet nichts, er zaehlt nichts, und er
+   traegt trotzdem eine Notiz ein.
+
+   Beim ersten Besuch gibt es das schon: der Empfang mit seiner einen
+   Frage. Deshalb greift das hier erst ab dem zweiten Mal. */
+function einstiegRunde(){
+  const alle = DATA.einstieg || [];
+  if(!alle.length) return weiterNachAnkunft();
+  let rest = alle.filter(e => !A.einstiegGesehen.includes(e.id));
+  /* Sind alle durch, faengt der Kreis von vorn an — besser eine
+     Wiederholung als gar kein Anfang. */
+  if(!rest.length){ A.einstiegGesehen = []; rest = alle.slice(); }
+  const misch = rest.slice().sort(() => Math.random()-0.5).slice(0, 3);
+  zeichne();
+  waehle(misch.map(e => ({
+    t:e.t, tag:`Bevor es losgeht`, rechts:`kostet nichts`,
+    go(){
+      A.einstiegGesehen.push(e.id); akteSichern();
+      sag("du", e.t, {wie:e.wie});
+      erSagt(e); merke(e);
+      zeichne();
+      setTimeout(() => weiterNachAnkunft(), 60);
+    }
+  })));
 }
 
 function phase1(id){

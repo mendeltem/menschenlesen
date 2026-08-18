@@ -113,6 +113,46 @@ uebergang1: {
   wie: `warm, unaufdringlich`, stimmung: `freundlich`
 },
 
+/* --- Fuenf Einstiege. Beim Wiederkommen faengt es hier an. Bei ihm
+       riecht der Raum, und darueber kommt man ins Gespraech. ------- */
+
+einstieg: [
+  { id:`heute`, t:`Was gibt es heute?`, wie:`freundlich, schon in der Tür`,
+    er:`Linsen. Und Milchreis, weil Freitag ist.`,
+    erRegie:`Er wischt sich die Hände ab und nickt zum Topf.`,
+    er2:`Der Milchreis geht immer. Bei den Linsen bleiben achtzig Portionen stehen, das weiß ich vorher, und ich koche sie trotzdem.`,
+    wie:`warm`, wie2:`ohne Bitterkeit`, stimmung:`freundlich`,
+    fakt:`kocht Linsen, obwohl er weiß, dass achtzig Portionen stehen bleiben` },
+
+  { id:`riecht`, t:`Es riecht gut hier.`, wie:`ehrlich`,
+    er:`Zwiebeln. Das riecht immer gut, das ist ein Trick.`,
+    erRegie:`Er lacht kurz und leise.`,
+    er2:`Wenn um elf jemand vorbeigeht und Zwiebeln riecht, kommt er um zwölf. Wenn es nach nichts riecht, geht er zum Bäcker.`,
+    wie:`warm`, wie2:`vergnügt, mit einem Zeigefinger`, stimmung:`amuesiert`,
+    fakt:`brät morgens Zwiebeln an, damit der Geruch die Leute mittags herbringt` },
+
+  { id:`stoere`, t:`Störe ich gerade?`, wie:`in der Tür stehend`,
+    er:`Ich habe zwanzig Minuten, bis der Ofen etwas von mir will.`,
+    erRegie:`Er sieht auf eine alte Eieruhr, die auf der Ablage steht, und stellt sie um.`,
+    er2:`Setzen Sie sich. Und nehmen Sie ein Stück, sonst muss ich es wegwerfen.`,
+    wie:`ruhig`, wie2:`freundlich, ohne Widerspruch zuzulassen`, stimmung:`freundlich`,
+    fakt:`misst seine Pausen mit einer alten Eieruhr` },
+
+  { id:`hand`, t:`Sie haben Mehl am Ärmel.`, wie:`beiläufig`,
+    er:`Immer.`,
+    erRegie:`Er sieht hin und macht keine Anstalten, es abzuklopfen.`,
+    er2:`Meine Frau hat vierunddreißig Jahre lang gesagt, ich soll die Schürze zu Hause ausziehen. Ich habe es vierunddreißig Jahre lang vergessen.`,
+    wie:`gleichmütig`, wie2:`leiser, mit einem kleinen Lächeln`, stimmung:`nachdenklich`,
+    fakt:`hat vierunddreißig Jahre lang vergessen, die Schürze zu Hause auszuziehen` },
+
+  { id:`still`, t:`Hier hinten ist es sehr still.`, wie:`mit einem Blick zur Klappe`,
+    er:`Bis halb zwölf. Dann ist es eine Stunde lang laut, und dann wieder still.`,
+    erRegie:`Er sieht zur geschlossenen Ausgabeklappe.`,
+    er2:`Die Stunde ist der Grund, warum ich das mache. Die restlichen sieben sind der Preis dafür.`,
+    wie:`ruhig`, wie2:`sachlich, und es klingt nicht wie eine Klage`, stimmung:`nachdenklich`,
+    fakt:`arbeitet sieben Stunden für die eine, in der die Ausgabe offen ist` }
+],
+
 /* --- Akt 2: neun Fragen zur Person, du stellst so viele du willst. --
    l = wie stark eine Antwort für welches Merkmal spricht.
        O Offenheit, C Gewissenhaftigkeit, E Extraversion,
