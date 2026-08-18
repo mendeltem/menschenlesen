@@ -118,20 +118,30 @@ Von Hand muss das niemand:
 python werkzeug/kontaktbogen_schneiden.py personen/dombrowski/kontaktbogen.jpg dombrowski
 ```
 
-**Wenn der Bogen beschriftet ist:** bei Angela hat Gemini die Dateinamen
-über und unter die Felder geschrieben, obwohl im Prompt *no text, no
-labels, no numbers* steht — und die mittlere Zeile war noch dazu falsch.
-Zwischen den Reihen liegt dann kein Steg, sondern Text, und die
-Stegsuche schneidet mitten hinein. Dann liest man die Feldkanten einmal
-ab und gibt sie mit:
+**Bei seinem Bogen ging das nicht.** Er kam unbeschriftet und in der
+richtigen Reihenfolge — aber mit einem gezeichneten Rahmen um jedes
+Feld und ohne dunklen Steg dazwischen. Die Stegsuche findet dann nichts,
+teilt gleichmäßig, und der schwarze Strich bleibt in jedem Bild stehen.
+Also einmal die Rahmenlinien abgelesen und knapp innerhalb geschnitten:
 
 ```bash
-python werkzeug/kontaktbogen_schneiden.py personen/dombrowski/kontaktbogen.jpg dombrowski --rand 4 --senkrecht L1,R1,L2,R2,L3,R3,L4,R4,L5,R5 --waagerecht O1,U1,O2,U2
+python werkzeug/kontaktbogen_schneiden.py personen/dombrowski/kontaktbogen.jpg dombrowski --rand 5 --senkrecht 24,633,670,1285,1322,1941,1978,2593,2630,3239 --waagerecht 26,636,675,1285
 ```
 
 Je Feld zwei Zahlen, linke und rechte Kante; bei `--waagerecht` je Reihe
-Ober- und Unterkante. Die Bilder selbst stehen meist in der richtigen
-Reihenfolge, nur die Beschriftung ist Unsinn.
+Ober- und Unterkante. `--rand 5` frisst den Rahmenstrich weg. Heraus
+kommen zehn Bilder um 600 × 600.
+
+Die Zahlen gelten für diesen Bogen (3264 × 1312). Bei einem neuen liest
+man sie neu ab: gesucht sind die Spalten und Zeilen, in denen über
+dreißig Prozent der Pixel dunkler als 120 sind — das sind genau die
+Rahmen.
+
+**Wenn ein Bogen beschriftet ist:** bei Angela hat Gemini die
+Dateinamen über und unter die Felder geschrieben, obwohl im Prompt *no
+text, no labels, no numbers* steht. Zwischen den Reihen liegt dann kein
+Steg, sondern Text. Derselbe Weg hilft, nur liest man die Kanten dann an
+den Feldern statt an den Rahmen ab.
 
 ---
 

@@ -63,7 +63,10 @@ def main():
         print("Stimmungen  alle zehn belegt")
 
     # 2 · Bilder
-    wege = sorted(set(re.findall(r"`(bilder/[^`]+)`", s)))
+    # Seit dem Umzug in Ordner stehen die Wege als personen/<kennung>/bilder/...
+    # Die alte Form ohne Vorsatz bleibt gueltig, dann liegt sie im Personenordner.
+    wege = sorted(set(re.findall(r"`((?:personen/[^`/]+/)?bilder/[^`]+)`", s)))
+    wege = [w if w.startswith("personen/") else os.path.join(ordner, w) for w in wege]
     fehlt_b = [w for w in wege if not os.path.exists(w)]
     print("Bilder      %d genannt, %d vorhanden%s"
           % (len(wege), len(wege) - len(fehlt_b),
