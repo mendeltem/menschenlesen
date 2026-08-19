@@ -94,7 +94,7 @@ noch da; gewertet wird es erst, wenn du dich festlegst.
 legt sich um ein Stück der Anzeige und sagt in zwei Sätzen, was es tut:
 das Gespräch und seine drei Stimmen, die Zugliste, das Gesicht und was
 es nicht verrät, die zwei Knöpfe, der Stufenkopf, die Notizen.
-Überspringen geht in jedem Schritt, und es läuft genau einmal.
+Überspringen geht in jedem Schritt, und es läuft genau einmal — bei wem, entscheidet sich daran, wen du zuerst besuchst. *Zurücksetzen* holt es zurück.
 
 ## Das Haus hat Etagen
 

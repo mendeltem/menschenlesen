@@ -1488,37 +1488,37 @@ const sterneBild = n => `<span class="sterne">${"★".repeat(n)}<i>${"☆".repea
    Läuft einmal, beim ersten Menschen, sobald zum ersten Mal Züge
    dastehen. Jeder Schritt zeigt auf ein Stück der Anzeige und sagt in
    zwei Sätzen, wozu es da ist. Überspringen geht überall. */
-const TUTOR = [
+const TUTOR = () => [
   { ziel:"#talk", titel:"Das Gespräch",
-    text:"Hier steht, was gesagt wird. <b>Ihre Sätze stehen in Anführungszeichen</b>, deine darüber, "
-       + "und was kursiv dasteht, tut sie, während sie redet — eine Hand, ein Blick, eine Pause. "
-       + "Der neueste Wortwechsel steht groß, alles davor klein." },
+    text:`Hier steht, was gesagt wird. <b>${AN("Seine")} Sätze stehen in Anführungszeichen</b>, deine darüber,
+      und was kursiv dasteht, tut ${AN("er")}, während ${AN("er")} redet — eine Hand, ein Blick, eine Pause.
+      Der neueste Wortwechsel steht groß, alles davor klein.` },
   { ziel:"#choices", titel:"Deine Züge",
     text:"Unten stehen deine Möglichkeiten, und die Zifferntasten wählen sie auch. "
        + "Es gibt keine falsche Wahl — nur Folgen. Rechts steht jeweils, was ein Zug bringt oder kostet." },
-  { ziel:".panel.person", titel:"Ihr Gesicht",
-    text:"Ihre Stimmung, und nur das. Sie sagt dir, <b>wie sie gerade reagiert</b> — nicht, wie sie ist. "
-       + "Das Bild trägt keine Information über ihren Charakter, mit Absicht." },
+  { ziel:".panel.person", titel:"Das Gesicht",
+    text:`${AN("Seine")} Stimmung, und nur das. Sie sagt dir, <b>wie ${AN("er")} gerade reagiert</b> — nicht,
+      wie ${AN("er")} ist. Das Bild trägt keine Information über den Charakter, mit Absicht.` },
   { ziel:"#jederzeit", titel:"Immer erreichbar",
-    text:"<b>Abschätzen</b> heißt: du sagst ihr ins Gesicht, für wen du sie hältst. Das ist der Kern des Spiels "
-       + "und beendet die Stufe. <b>Zurück zur Übersicht</b> geht jederzeit — was du gehört hast, bleibt." },
+    text:`<b>Abschätzen</b> heißt: du sagst ${AN("ihm")} ins Gesicht, für wen du ${AN("ihn")} hältst. Das ist der
+      Kern des Spiels und beendet die Stufe. <b>Zurück zur Übersicht</b> geht jederzeit — was du gehört hast, bleibt.` },
   { ziel:"#akte", titel:"Wo du bist",
-    text:"Stufe eins von drei: ihr Wesen, fünf Merkmale von minus zwei bis plus zwei. "
-       + "Danach kommt, was sie braucht, und danach darfst du einfach vorbeikommen." },
+    text:`Stufe eins von drei: ${AN("sein")} Wesen, fünf Merkmale von minus zwei bis plus zwei.
+      Danach kommt, was ${AN("er")} braucht, und danach darfst du einfach vorbeikommen.` },
   { ziel:"#notizBox", titel:"Was du behältst",
-    text:"Jede Antwort, die etwas verrät, landet hier als Notiz. "
-       + "<b>Die Wahrheit über sie steht nirgends</b> — es gibt keine Auflösung. Du hast ihr Verhalten, "
-       + "deine Notizen und dein eigenes Urteil. Mehr hat man bei einem Menschen auch sonst nicht." }
+    text:`Jede Antwort, die etwas verrät, landet hier als Notiz.
+      <b>Die Wahrheit steht nirgends</b> — es gibt keine Auflösung. Du hast ${AN("sein")} Verhalten,
+      deine Notizen und dein eigenes Urteil. Mehr hat man bei einem Menschen auch sonst nicht.` }
 ];
 
-let tutSchritt = -1, tutEl = null;
+let tutSchritt = -1, tutEl = null, TUT = [];
 function tutorialFertig(){
   try{ localStorage.setItem("tutorial", "1"); }catch(e){}
   if(tutEl){ tutEl.remove(); tutEl = null; }
   tutSchritt = -1;
 }
 function tutorialZeige(i){
-  const sch = TUTOR[i];
+  const sch = TUT[i];
   if(!sch) return tutorialFertig();
   const ziel = document.querySelector(sch.ziel);
   if(!ziel || ziel.hidden || !ziel.offsetHeight) return tutorialZeige(i + 1);
@@ -1530,9 +1530,9 @@ function tutorialZeige(i){
   loch.style.width = (r.width + 2*luft) + "px";
   loch.style.height = (r.height + 2*luft) + "px";
   blase.innerHTML = `<div class="eyebrow">${esc(sch.titel)}</div><p>${sch.text}</p>
-    <div class="zeile"><span class="schritt">${i+1} von ${TUTOR.length}</span>
+    <div class="zeile"><span class="schritt">${i+1} von ${TUT.length}</span>
       <button class="ueber">Überspringen</button>
-      <button class="weiter">${i === TUTOR.length-1 ? "Los geht's" : "Weiter"}</button></div>`;
+      <button class="weiter">${i === TUT.length-1 ? "Los geht's" : "Weiter"}</button></div>`;
   blase.querySelector(".weiter").onclick = () => tutorialZeige(i + 1);
   blase.querySelector(".ueber").onclick = () => tutorialFertig();
   /* Unter das Loch, wenn darunter Platz ist, sonst darüber. Und nie
@@ -1549,6 +1549,7 @@ function vielleichtTutorial(){
   if(tutEl) return;
   try{ if(localStorage.getItem("tutorial")) return; }catch(e){ return; }
   if(!S || S.stufe > 2 || A.besuche !== 1) return;
+  TUT = TUTOR();
   tutEl = document.createElement("div");
   tutEl.className = "coach";
   tutEl.innerHTML = `<div class="loch"></div><div class="blase"></div>`;
@@ -2308,9 +2309,9 @@ function zuruecksetzen(){
     "\n\nDas laufende Gespräch wird dabei abgebrochen.";
   if(!confirm("Wirklich alles zurücksetzen?\n\n"
     + "· alle Schlüssel — du fängst wieder im Erdgeschoss an\n· alle Akten — jede Person kennt dich danach wieder nicht\n"
-    + "· Farbschema und Musik\n· die aufgeklappten Kästen" + wo)) return;
+    + "· Farbschema, Musik und das Tutorial\n· die aufgeklappten Kästen" + wo)) return;
   try{
-    ["konto","akte","gespraech-theme","musik"].forEach(k => localStorage.removeItem(k));
+    ["akte","tutorial","gespraech-theme","musik"].forEach(k => localStorage.removeItem(k));
     Object.keys(localStorage).filter(k => k.indexOf("falt-") === 0)
       .forEach(k => localStorage.removeItem(k));
   }catch(e){}
