@@ -84,7 +84,7 @@ baum: {
     erRegie: `Irgendwo hört ein Ton auf. Er atmet aus, klappt den Laptop zu und dreht sich auf dem Wagen zu dir herum.`,
     er2: `So. Sie sind der Termin. Setzen Sie sich — nicht auf den Karton, da ist was drin.`,
     wie2: `schneller, als er selbst erwartet hat`,
-    nachRegie: `Er schiebt dir einen Bürostuhl ohne Lehne zu und bleibt selbst auf dem Rollwagen sitzen. Die Lüfter rauschen so gleichmäßig, dass man es nach zwei Minuten nicht mehr hört. Ihr habt vierzig Minuten, und du hast dir vorgenommen, dein Anliegen bis zum Schluss zurückzuhalten.`,
+    nachRegie: `Er schiebt dir einen Bürostuhl ohne Lehne zu und bleibt selbst auf dem Rollwagen sitzen. Die Lüfter rauschen so gleichmäßig, dass man es nach zwei Minuten nicht mehr hört. Ihr habt vierzig Minuten, und du hast dir vorgenommen, nicht sofort nach der Stelle zu fragen.`,
     frage: true
   },
 
@@ -118,10 +118,11 @@ kennenfrage: [
 ],
 
 uebergang1: {
-  duFest: `Du sagst, dass du neu bist und dich im Haus umsehen sollst: wer hier arbeitet, was hier läuft. Warum ausgerechnet du, sagst du nicht. Davon später.`,
-  er: `Über den Kopf. Ja. Kenne ich. Erzählen Sie später, ich höre erst mal zu.`,
+  duFest: `Du sagst, warum du da bist: eine Anzeige, drei Zeilen, jemand in diesem Haus sucht Hilfe. Unterschrieben mit R. Melzer, Zimmer 2.14. Wie dringend du sie brauchst, sagst du nicht.`,
+  er: `2.14.`,
   erRegie: `Er stellt den Laptop auf den Boden, überlegt es sich anders und legt ihn auf die Knie zurück, zugeklappt.`,
-  wie: `zu schnell zugestimmt, als hätte er das Wort erkannt`, stimmung: `freundlich`
+  er2: `Sein Konto läuft noch. Es gibt keinen Vorgang dafür, wenn jemand einfach nicht mehr kommt — also läuft es weiter, seit fünf Monaten, und ich sehe jedes Mal seinen Namen. Erzählen Sie später davon. Ich höre erst mal zu.`,
+  wie: `sofort, ohne nachzudenken`, wie2: `zu schnell, als wäre er froh, dass ihn jemand fragt`, stimmung: `freundlich`
 },
 
 /* --- Fuenf Einstiege. Beim Wiederkommen faengt es hier an. Bei ihm

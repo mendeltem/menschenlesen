@@ -70,7 +70,7 @@ baum: {
     wie: `schnell, im Gehen gesprochen`, stimmung: `neutral`,
     erRegie: `Er schiebt einen Stapel Ausdrucke vom Besucherstuhl auf den Boden.`,
     er2: `So. Setzen.`, wie2: `kurz, endgültig`,
-    nachRegie: `Er stellt zwei Tassen hin, ohne zu fragen, und schiebt dir eine zu. Die Maschine dahinter ist von 2009 und klingt danach. Ihr habt vierzig Minuten, und du hast dir vorgenommen, dein Anliegen bis zum Schluss zurückzuhalten.`,
+    nachRegie: `Er stellt zwei Tassen hin, ohne zu fragen, und schiebt dir eine zu. Die Maschine dahinter ist von 2009 und klingt danach. Ihr habt vierzig Minuten, und du hast dir vorgenommen, nicht sofort nach der Stelle zu fragen.`,
     frage: true
   },
 
@@ -105,10 +105,11 @@ kennenfrage: [
    letzten Akt aus. */
 
 uebergang1: {
-  duFest: `Du sagst, dass du neu bist und dich im Haus umsehen sollst: wer hier arbeitet, was hier läuft. Warum ausgerechnet du, sagst du nicht. Davon später.`,
-  er: `Aha, davon später. Gut, ich merke es mir — dann reden wir solange über etwas anderes.`,
+  duFest: `Du sagst, warum du da bist: eine Anzeige, drei Zeilen, jemand in diesem Haus sucht Hilfe. Unterschrieben mit R. Melzer, Zimmer 2.14. Wie dringend du sie brauchst, sagst du nicht.`,
+  er: `Melzer. Ja. Die Anzeige war eigentlich meine Idee.`,
   erRegie: `Er lehnt sich zurück und legt die Kopfhörer auf den Tisch.`,
-  wie: `amüsiert, ein wenig lauernd`, stimmung: `interessiert`
+  er2: `Wir wollten die Stelle teilen — er die eine Hälfte, ich die andere. Dann war er weg, und mit ihm die Hälfte, die er bezahlt hätte. Davon später. Erst reden wir über etwas anderes, sonst wird das hier ein Bewerbungsgespräch, und darin bin ich furchtbar.`,
+  wie: `amüsiert, ein wenig lauernd`, wie2: `schneller, offener`, stimmung: `interessiert`
 },
 
 /* --- Fuenf Einstiege. Beim Wiederkommen faengt es hier an. Bei ihm

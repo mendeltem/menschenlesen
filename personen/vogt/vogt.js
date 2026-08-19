@@ -78,7 +78,7 @@ baum: {
     erRegie: `Es klackt zweimal, dann kommt sie heraus, steht auf und wischt sich die Hände an der Hose ab.`,
     er2: `So. Sie sind der Termin. Setzen Sie sich, aber nicht auf den Stuhl da, der ist gestrichen.`,
     wie2: `schnell, freundlich, ohne Punkt und Komma`,
-    nachRegie: `Sie schiebt einen Hocker mit dem Fuß herüber und setzt sich auf die Werkbank. Irgendwo im Raum läuft ein Radio, sehr leise. Ihr habt vierzig Minuten, und du hast dir vorgenommen, dein Anliegen bis zum Schluss zurückzuhalten.`,
+    nachRegie: `Sie schiebt einen Hocker mit dem Fuß herüber und setzt sich auf die Werkbank. Irgendwo im Raum läuft ein Radio, sehr leise. Ihr habt vierzig Minuten, und du hast dir vorgenommen, nicht sofort nach der Stelle zu fragen.`,
     frage: true
   },
 
@@ -112,10 +112,11 @@ kennenfrage: [
 ],
 
 uebergang1: {
-  duFest: `Du sagst, dass du neu bist und dich im Haus umsehen sollst: wer hier arbeitet, was hier läuft. Warum ausgerechnet du, sagst du nicht. Davon später.`,
-  er: `Später. Gut. Dann erzählen Sie mir bis dahin was Vernünftiges, ich habe die Hände frei.`,
+  duFest: `Du sagst, warum du da bist: eine Anzeige, drei Zeilen, jemand in diesem Haus sucht Hilfe. Unterschrieben mit R. Melzer, Zimmer 2.14. Wie dringend du sie brauchst, sagst du nicht.`,
+  er: `Melzer.`,
   erRegie: `Sie greift hinter sich, nimmt einen Schraubenzieher und fängt an, ihn zu putzen, ohne hinzusehen.`,
-  wie: `aufgeräumt, sehr direkt`, stimmung: `freundlich`
+  er2: `Dessen Zimmer habe ich im April ausgeräumt. Zwei Kisten, die stehen immer noch bei mir, weil sie keiner abholt. Setzen Sie sich und erzählen Sie mir bis dahin was Vernünftiges, ich habe die Hände frei.`,
+  wie: `sofort, ohne nachzudenken`, wie2: `aufgeräumt, sehr direkt`, stimmung: `freundlich`
 },
 
 /* --- Fuenf Einstiege. Beim Wiederkommen faengt es hier an. Bei ihr

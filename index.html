@@ -842,9 +842,11 @@ table.bil tr.hi td.n{color:var(--accent); font-weight:600}
     <p><b>Zwei Balken.</b> Die <i>Geduld</i> gilt für diesen Nachmittag: sie fällt bei jeder Frage, und zwar
     zunehmend, und sie steigt wieder, wenn ein Gespräch trifft. Bei null steht er auf. Die <i>Freundschaft</i>
     bleibt über die Besuche: sie wächst, wenn du ihn richtig liest, und fällt, wenn du danebengreifst.</p>
-    <p><b>Das Haus hat Etagen.</b> Unten sitzen zwei, und weiter kommst du erst, wenn du beide zu Ende gelesen
-    hast — beide Stufen, Wesen und Bedürfnisse. Dann liegt der Schlüssel für die nächste Etage da. Es gibt
-    nichts zu verkaufen und nichts zu gewinnen außer Leuten, die dich hereinlassen.</p>
+    <p><b>Du suchst Arbeit.</b> Eine Anzeige hat dich hergebracht, unterschrieben mit R. Melzer, Zimmer 2.14 —
+    und Melzer ist seit dem Frühjahr weg. Fragen darfst du jeden sofort, ob hier jemand jemanden sucht. Nur
+    bekommst du von einem Fremden eine Antwort, die höflich ist und nichts enthält. Wer dich kennt, sagt
+    dieselbe Sache noch einmal, und dann stimmt sie. Wer eine Etage durch hat, wird eine Etage weiter
+    geschickt.</p>
     <p><b>Wie du fragst, zählt mehr als was.</b> Jeder Zug unterstellt dem Gegenüber eine Persönlichkeit. Trifft
     die Unterstellung, geht er darauf ein; trifft sie nicht, merkt er es sofort. Was in diesem Spiel gewichtet
     wird, ist die Autonomieunterstützung — rund dreimal so stark wie die Motivpassung. <span id="belegA"></span></p>
@@ -1081,7 +1083,8 @@ function modus(m){ let b=0; for(let i=1;i<5;i++) if(m[i]>m[b]) b=i; return STUFE
 /* ═══════════════ Spielzustand ═══════════════
    DATA ist die Welt plus die gerade besuchte Person. Mehr besitzt man
    in diesem Spiel nicht: es gibt nichts zu kaufen und nichts zu
-   verkaufen, nur Leute, die man kennt oder nicht kennt. */
+   verkaufen; es gibt Leute, die einen kennen, und Leute, die einen
+   nicht kennen. */
 let DATA = null, T = null, M = null, HERO = null, S = null;
 let cfgBF = null, cfgMO = null, rateBF = null, rateMO = null;
 const NOFF = 3;

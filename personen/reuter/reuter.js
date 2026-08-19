@@ -79,7 +79,7 @@ baum: {
     wie: `leise, sofort entschuldigend`, stimmung: `neutral`,
     erRegie: `Sie tritt zur Seite, nimmt einen Stapel Kartons vom Besucherstuhl und stellt ihn ordentlich neben die Tür.`,
     er2: `Setzen Sie sich. Möchten Sie Tee? Ich habe nur Tee.`, wie2: `freundlich, ein wenig zu schnell`,
-    nachRegie: `Der Raum ist kühl und sehr aufgeräumt. Auf dem Tisch liegt ein einzelnes stockfleckiges Blatt unter sechs Messinggewichten. Ihr habt vierzig Minuten, und du hast dir vorgenommen, dein Anliegen bis zum Schluss zurückzuhalten.`,
+    nachRegie: `Der Raum ist kühl und sehr aufgeräumt. Auf dem Tisch liegt ein einzelnes stockfleckiges Blatt unter sechs Messinggewichten. Ihr habt vierzig Minuten, und du hast dir vorgenommen, nicht sofort nach der Stelle zu fragen.`,
     frage: true
   },
 
@@ -112,10 +112,11 @@ kennenfrage: [
 ],
 
 uebergang1: {
-  duFest: `Du sagst, dass du neu bist und dich im Haus umsehen sollst: wer hier arbeitet, was hier läuft. Warum ausgerechnet du, sagst du nicht. Davon später.`,
-  er: `Später ist in Ordnung. Ich bin sowieso schlecht darin, gleich zur Sache zu kommen.`,
+  duFest: `Du sagst, warum du da bist: eine Anzeige, drei Zeilen, jemand in diesem Haus sucht Hilfe. Unterschrieben mit R. Melzer, Zimmer 2.14. Wie dringend du sie brauchst, sagst du nicht.`,
+  er: `Die Anzeige hing bei uns am Brett. Ich habe sie zweimal gelesen.`,
   erRegie: `Sie setzt sich auf die Kante ihres Arbeitshockers, nicht ganz darauf.`,
-  wie: `entschuldigend, aber wärmer als vorher`, stimmung: `freundlich`
+  er2: `Ich habe ihm auch geschrieben, zweimal, und nie eine Antwort bekommen. Dann war das Zimmer leer. Aber Sie sind ja jetzt hier — reden wir erst über etwas anderes, ich bin sowieso schlecht darin, gleich zur Sache zu kommen.`,
+  wie: `vorsichtig`, wie2: `entschuldigend, aber wärmer als vorher`, stimmung: `freundlich`
 },
 
 /* --- Fuenf Einstiege. Beim Wiederkommen faengt es hier an. Bei ihr

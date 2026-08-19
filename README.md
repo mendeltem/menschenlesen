@@ -8,11 +8,19 @@
 dort steht, welche Datei man anfasst, wie gebaut wird, was entschieden
 ist und was noch offen.*
 
-Du suchst Arbeit in einem Haus, in dem du niemanden kennst. Unten sitzen
-zwei, an denen niemand vorbeikommt — der Empfang und die Hausmeisterin.
-Fragen darfst du sie sofort, ob hier jemand jemanden sucht. Du bekommst
-dann eine Antwort, die höflich ist, vollständig, und ohne einen Krümel
-Inhalt: die Ausschreibungen hängen am Brett neben dem Aufzug.
+Eine Anzeige hat dich hergebracht: drei Zeilen, jemand in diesem Haus
+sucht Hilfe, unterschrieben mit **R. Melzer, Zimmer 2.14**. In 2.14 sitzt
+seit dem Frühjahr niemand mehr, und jeder im Haus weiß ein anderes
+Bruchstück darüber — die Empfangsdame hat seinen Ausweis noch als offen
+stehen, die Hausmeisterin hat sein Zimmer ausgeräumt, im Keller läuft
+sein Konto weiter, weil es keinen Vorgang dafür gibt, wenn jemand
+einfach nicht mehr kommt.
+
+Du brauchst die Arbeit trotzdem. Unten sitzen zwei, an denen niemand
+vorbeikommt — der Empfang und die Hausmeisterin. Fragen darfst du sie
+sofort, ob hier jemand jemanden sucht. Du bekommst dann eine Antwort, die
+höflich ist, vollständig, und ohne einen Krümel Inhalt: die
+Ausschreibungen hängen am Brett neben dem Aufzug.
 
 Am Brett hängt nie etwas. Was hier gesucht wird, wird weitergesagt — und
 weitergesagt wird es an Leute, die man kennt. Also musst du die zwei
@@ -20,8 +28,11 @@ zuerst lesen. Erst dann erzählt dir dieselbe Person dasselbe noch einmal,
 und diesmal stimmt es. Wer eine Etage durch hat, wird eine Etage weiter
 geschickt, bis unten im Keller herauskommt, was hier wirklich fehlt.
 
-Es gibt nichts zu kaufen und nichts zu verkaufen. Was du gewinnen kannst,
-ist eine halbe Stelle, die in keiner Ausschreibung steht.
+Am Ende wirst du eingestellt, aber nicht auf Melzers Stelle und nicht,
+weil du die Richtige gefragt hättest. Sondern weil du zu diesem Zeitpunkt
+jeden in diesem Haus kennst und sonst niemand das tut. Die Arbeit ist:
+dich in der Gegend umsehen und die Leute kennenlernen. Dieselbe Arbeit
+wie bisher, nur bezahlt.
 
 Es läuft vollständig im Browser: kein Server, kein Konto, nichts wird
 gesendet. Der Knopf oben startet die gespielte Fassung; wer das Zeug

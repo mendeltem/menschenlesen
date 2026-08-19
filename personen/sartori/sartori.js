@@ -73,7 +73,7 @@ baum: {
     wie: `warm, ohne aufzusehen`, stimmung: `freundlich`,
     erRegie: `Er trocknet sich die Hände, stellt einen Teller mit zwei Stück Kuchen zwischen euch und schiebt ihn dir zu, ohne zu fragen.`,
     er2: `Vom Mittag übrig. Sonst wirft man ihn weg, und das mache ich nicht.`, wie2: `beiläufig, endgültig`,
-    nachRegie: `Er setzt sich, die Hände auf den Knien. Draußen läuft die Spülmaschine. Ihr habt vierzig Minuten, und du hast dir vorgenommen, dein Anliegen bis zum Schluss zurückzuhalten.`,
+    nachRegie: `Er setzt sich, die Hände auf den Knien. Draußen läuft die Spülmaschine. Ihr habt vierzig Minuten, und du hast dir vorgenommen, nicht sofort nach der Stelle zu fragen.`,
     frage: true
   },
 
@@ -107,10 +107,11 @@ kennenfrage: [
 ],
 
 uebergang1: {
-  duFest: `Du sagst, dass du neu bist und dich im Haus umsehen sollst: wer hier arbeitet, was hier läuft. Warum ausgerechnet du, sagst du nicht. Davon später.`,
-  er: `Später ist gut. Essen Sie erst mal.`,
+  duFest: `Du sagst, warum du da bist: eine Anzeige, drei Zeilen, jemand in diesem Haus sucht Hilfe. Unterschrieben mit R. Melzer, Zimmer 2.14. Wie dringend du sie brauchst, sagst du nicht.`,
+  er: `Ach, der Melzer.`,
   erRegie: `Er schiebt den Teller einen Zentimeter näher.`,
-  wie: `warm, unaufdringlich`, stimmung: `freundlich`
+  er2: `Vierzehn Jahre lang dienstags Fisch, und kein einziges Mal etwas dazu gesagt. Weder gut noch schlecht. Essen Sie erst mal, das andere läuft nicht weg.`,
+  wie: `warm, mit einem kleinen Nicken`, wie2: `unaufdringlich`, stimmung: `freundlich`
 },
 
 /* --- Fuenf Einstiege. Beim Wiederkommen faengt es hier an. Bei ihm

@@ -92,9 +92,9 @@ baum: {
     er: `Einen Moment. — So. Ihr Name?`,
     wie: `freundlich, ohne dass darin Wärme wäre`, stimmung: `neutral`,
     erRegie: `Du sagst ihn. Sie trägt ihn ein, dreht das Buch um und schiebt dir einen Stift durch den Schlitz, ohne den Kopf zu heben.`,
-    er2: `Unterschrift hier. Der Ausweis kommt zurück, wenn Sie gehen. Die Kollegin, zu der Sie wollen, ist seit halb elf nicht am Platz — das wissen Sie vermutlich nicht.`,
+    er2: `Unterschrift hier. Der Ausweis kommt zurück, wenn Sie gehen. Und Sie sind heute der Erste, der sich erst mal umsieht — die anderen wissen alle, wo sie hinwollen.`,
     wie2: `zügig, sehr geübt, eine Spur zu schnell für ein Gespräch`,
-    nachRegie: `Sie schiebt dir einen Besucherausweis zu, Nummer 14, und sieht dich zum ersten Mal an. Hinter ihr klingelt ein Telefon zweimal und hört wieder auf. Ihr habt vierzig Minuten, und du hast dir vorgenommen, dein Anliegen bis zum Schluss zurückzuhalten.`,
+    nachRegie: `Sie schiebt dir einen Besucherausweis zu, Nummer 14, und sieht dich zum ersten Mal an. Hinter ihr klingelt ein Telefon zweimal und hört wieder auf. Ihr habt vierzig Minuten, und du hast dir vorgenommen, nicht sofort nach der Stelle zu fragen.`,
     frage: true
   },
 
@@ -128,10 +128,11 @@ kennenfrage: [
 ],
 
 uebergang1: {
-  duFest: `Du sagst, dass du neu bist und dich im Haus umsehen sollst: wer hier arbeitet, was hier läuft. Warum ausgerechnet du, sagst du nicht. Davon später.`,
-  er: `Gut. Dann später. Ich habe bis halb zwölf niemanden angemeldet.`,
-  erRegie: `Sie legt den Stift genau parallel zur Kante des Buches und faltet die Hände darüber.`,
-  wie: `verbindlich, ohne jede Neugier`, stimmung: `neutral`
+  duFest: `Du sagst, warum du da bist: eine Anzeige, drei Zeilen, jemand in diesem Haus sucht Hilfe. Unterschrieben mit R. Melzer, Zimmer 2.14. Wie dringend du sie brauchst, sagst du nicht.`,
+  er: `Melzer. Zimmer 2.14.`,
+  erRegie: `Sie sagt es, ohne nachzusehen, und legt den Stift genau parallel zur Kante des Buches.`,
+  er2: `Der hat das Haus im März verlassen. Den Ausweis hat er nicht abgegeben, das steht bei mir bis heute als offen. Sie können trotzdem sitzen bleiben — angemeldet ist bis halb zwölf ohnehin niemand.`,
+  wie: `verbindlich, ohne jede Überraschung`, wie2: `sachlich`, stimmung: `neutral`
 },
 
 /* --- Fuenf Einstiege. Beim Wiederkommen faengt es hier an, nicht bei

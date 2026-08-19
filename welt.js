@@ -194,7 +194,7 @@ etagen: [
     weiterWie:`sachlich` },
   { nr:3, name:`Keller`,
     was:`Wo die Technik steht und wo hier unten niemand vorbeikommt.`,
-    weiter:`Wir suchen jemanden für die Lieferungen. Das steht nirgends ausgeschrieben, weil es keine Stelle ist — es ist eine halbe, und die zahlt drei Abteilungen zusammen. Wenn Sie das machen wollen, sage ich oben Bescheid.`,
+    weiter:`Melzers Anzeige war für etwas anderes, und Melzer ist weg. Aber Sie laufen jetzt seit Wochen hier herum und kennen inzwischen jeden in diesem Haus — das kann von uns keiner von sich behaupten, ich am allerwenigsten. Wir brauchen jemanden für die Lieferungen. Das steht nirgends ausgeschrieben, weil es keine Stelle ist, sondern eine halbe, die drei Abteilungen zusammen bezahlen. Wenn Sie wollen, sage ich oben Bescheid.`,
     weiterRegie:`Er klappt den Laptop zu, was er sonst nicht tut, wenn jemand da ist.`,
     weiterWie:`langsam, als hätte er es vorher überlegt`,
     ende:true }
@@ -203,7 +203,7 @@ etagen: [
 /* Was am Ende steht, wenn alle sechs gelesen und gefragt sind. */
 angeheuert: {
   titel:`Du bist angeheuert.`,
-  text:`Eine halbe Stelle, die drei Abteilungen zusammen bezahlen, für die Lieferungen. Sie steht in keiner Ausschreibung, und du hast sie bekommen, weil du sechs Menschen zugehört hast, bis sie dir von selbst erzählt haben, was hier fehlt.`
+  text:`Melzer ist nie wiedergekommen, und seine Anzeige hat außer dir niemand beantwortet. Was daraus geworden ist, steht in keiner Ausschreibung: eine halbe Stelle für die Lieferungen, bezahlt von drei Abteilungen zusammen. Du hast sie nicht bekommen, weil du die Richtige gefragt hast, sondern weil du am Ende jeden in diesem Haus kanntest und sonst niemand das tut. Dazu gehört die Gegend — die Apotheke, der Imbiss, die Werkstatt an der Ecke. Dich umsehen und die Leute kennenlernen: dieselbe Arbeit wie bisher, nur bezahlt.`
 },
 
 belege: {
