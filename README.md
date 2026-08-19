@@ -83,10 +83,18 @@ ein Stapel, ein Geräusch. Fünf je Person, drei zur Wahl. Er kostet
 nichts und wird nicht gewertet, trägt aber jedes Mal eine Notiz ein, die
 man sonst nicht bekommt.
 
-**Gehen darfst du immer.** Auch mitten in einer Lesestufe, ohne dich
-festzulegen. Was du gehört hast, bleibt in der Akte und steht beim
-nächsten Besuch noch da — nur gewertet wird es erst, wenn du dich
-festlegst.
+**Zwei Knöpfe stehen immer da**, sobald man sich begrüßt hat: unter dem
+Bild und über den Notizen liegen *Abschätzen* und *Zurück zur
+Übersicht*. Beides geht auch mitten in einer Lesestufe — wer mitten im
+Festlegen abbricht, verwirft die Einschätzung, statt sie zu kassieren.
+Was du gehört hast, bleibt in der Akte und steht beim nächsten Besuch
+noch da; gewertet wird es erst, wenn du dich festlegst.
+
+**Beim allerersten Menschen läuft ein Tutorial.** Sechs Schritte, jeder
+legt sich um ein Stück der Anzeige und sagt in zwei Sätzen, was es tut:
+das Gespräch und seine drei Stimmen, die Zugliste, das Gesicht und was
+es nicht verrät, die zwei Knöpfe, der Stufenkopf, die Notizen.
+Überspringen geht in jedem Schritt, und es läuft genau einmal.
 
 ## Das Haus hat Etagen
 

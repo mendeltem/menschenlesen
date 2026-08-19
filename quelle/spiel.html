@@ -301,6 +301,36 @@ body[data-stufe="lesen"] button.pick .rechts{display:none}
 .punktzeile b{display:block; font-family:var(--sans); font-size:22px; font-weight:600;
   letter-spacing:0; text-transform:none; color:var(--ink); margin-top:3px}
 
+/* ── Das Tutorial ──────────────────────────────────────────────────
+   Ein Loch im Dunkel und eine Sprechblase daneben. Das Loch ist kein
+   echtes Loch, sondern ein Kasten mit einem sehr grossen Schatten nach
+   aussen — so bleibt das Element darunter sichtbar und alles andere
+   liegt im Halbdunkel. */
+.coach{position:fixed; inset:0; z-index:70}
+.coach .loch{position:absolute; border-radius:14px; pointer-events:none;
+  box-shadow:0 0 0 9999px rgba(0,0,0,.74), 0 0 0 2px var(--accent), var(--glow);
+  transition:top .28s ease, left .28s ease, width .28s ease, height .28s ease}
+.coach .blase{position:absolute; width:min(340px, calc(100vw - 32px)); background:var(--surface);
+  border:1px solid var(--accent); border-radius:14px; padding:15px 17px 13px;
+  box-shadow:var(--glow); transition:top .28s ease, left .28s ease}
+.coach .blase .eyebrow{margin-bottom:6px}
+.coach .blase p{font-size:13.5px; line-height:1.55; color:var(--ink); margin:0 0 12px}
+.coach .blase p b{color:var(--accent-2)}
+.coach .zeile{display:flex; align-items:center; gap:10px}
+.coach .zeile .schritt{font-family:var(--mono); font-size:10px; letter-spacing:.14em;
+  color:var(--muted); margin-right:auto}
+.coach .zeile button{font:inherit; cursor:pointer; border-radius:9px; padding:7px 13px; font-size:13px}
+.coach .weiter{background:var(--accent); color:var(--accent-ink); border:1px solid var(--accent); font-weight:600}
+.coach .ueber{background:transparent; color:var(--muted); border:1px solid var(--line)}
+.coach .ueber:hover{color:var(--ink)}
+
+/* Die zwei Knöpfe, die nach dem Hallo immer dastehen. */
+.jederzeit{display:flex; flex-direction:column; gap:8px}
+.jederzeit .act{width:100%; justify-content:center}
+.act.still{background:transparent; color:var(--muted); border-color:var(--line)}
+.act.still:hover{color:var(--ink); border-color:var(--accent)}
+.jhinweis{font-size:12px; line-height:1.45; color:var(--muted); margin:2px 0 0}
+
 .stimmung.gut{color:var(--SIC); border-color:var(--SIC)}
 .stimmung.schlecht{color:var(--STA); border-color:var(--STA)}
 .stimmung b{font-weight:600}
@@ -541,6 +571,12 @@ table.bil tr.hi td.n{color:var(--accent); font-weight:600}
         </div>
       </section>
 
+      <section class="panel jederzeit" id="jederzeit" hidden>
+        <button class="act" id="jetztFest">Abschätzen</button>
+        <button class="act still" id="jetztRaus">Zurück zur Übersicht</button>
+        <p class="jhinweis" id="jhinweis"></p>
+      </section>
+
       <section class="panel zahlen">
         <div class="zrow" id="bezRow">
           <span class="zlab">Freundschaft</span><span class="znum" id="bezVal">35</span>
@@ -568,7 +604,7 @@ table.bil tr.hi td.n{color:var(--accent); font-weight:600}
             <span class="eyebrow">Was du privat weißt</span><b id="privatZahl">0/4</b><span class="pfeil">▾</span></button>
           <ul class="notes falt-koerper" id="privatListe" hidden></ul>
         </div>
-        <div class="falt">
+        <div class="falt" id="notizBox">
           <button class="falt-kopf" data-ziel="notes">
             <span class="eyebrow">Notizen</span><b id="notizZahl">0</b><span class="pfeil">▾</span></button>
           <ul class="notes falt-koerper" id="notes" hidden></ul>
@@ -1247,7 +1283,7 @@ function zeichne(){
      mehr durchkommen. */
   if(!S || !A || document.body.classList.contains("imMenue")){ waehleSpur(); return; }
   zeichneAkte(); zeichneTalk(); zeichneKopf(); zeichneLeseband(); zeichneNotizen();
-  zeichneBalken(); waehleSpur(); }
+  zeichneBalken(); drehscheibe0(); waehleSpur(); }
 
 /* Wie viele Zeilen das Ratefeld hat, sagt der Achsensatz — fünf für
    die Merkmale, zwei für die Waagen. */
@@ -1371,8 +1407,38 @@ function uebergang1(){
 
 /* Wohin es nach dem Empfang geht, entscheidet die Stufe. */
 function weiterNachAnkunft(){
+  S.begonnen = true;
+  drehscheibe0();
   if(S.stufe <= 2) return leseStufe();
   drehscheibe();
+}
+
+/* Was in der Spalte immer erreichbar ist, sobald man sich begrüßt hat:
+   sich festlegen und gehen. Beides steht auch in der Zugliste — nur
+   sucht man es dort, und hier steht es. */
+function drehscheibe0(){
+  const kasten = document.getElementById("jederzeit");
+  if(!kasten) return;
+  kasten.hidden = !S || !S.begonnen || S.ende;
+  if(kasten.hidden) return;
+  const fest = document.getElementById("jetztFest");
+  /* Abgeschätzt wird in den zwei Lesestufen; in Stufe drei steht die
+     Einschätzung längst und wird nicht noch einmal gewertet. */
+  const kann = S.stufe <= 2 && !R.aktiv;
+  fest.hidden = !kann;
+  if(kann) fest.onclick = () => { if(S.ende || R.aktiv) return;
+    rateRunde(S.band === "mo" ? rateMO : rateBF); };
+  /* Gehen geht auch mitten im Festlegen — dann wird die Einschätzung
+     verworfen, nicht gewertet. */
+  document.getElementById("jetztRaus").onclick = () => {
+    if(S.ende) return;
+    if(R.aktiv){ R.aktiv = null; talkEl.hidden = false;
+      document.getElementById("ratefeld").hidden = true; }
+    abschied();
+  };
+  document.getElementById("jhinweis").textContent = kann
+    ? `Sag ${AN("ihr")} ins Gesicht, für wen du ${AN("sie")} hältst. Das beendet die Stufe.`
+    : `Gehen darfst du immer. Was du gehört hast, bleibt.`;
 }
 
 /* Wer eine Leserunde beendet, wird gefragt, ob er sich jetzt festlegt.
@@ -1417,6 +1483,80 @@ function stufenPunkte(zeilen, L){
 }
 const sterneZu = p => WELT.sterne.find(x => p >= x.ab);
 const sterneBild = n => `<span class="sterne">${"★".repeat(n)}<i>${"☆".repeat(5-n)}</i></span>`;
+
+/* ═══════════════ Das Tutorial ═══════════════
+   Läuft einmal, beim ersten Menschen, sobald zum ersten Mal Züge
+   dastehen. Jeder Schritt zeigt auf ein Stück der Anzeige und sagt in
+   zwei Sätzen, wozu es da ist. Überspringen geht überall. */
+const TUTOR = [
+  { ziel:"#talk", titel:"Das Gespräch",
+    text:"Hier steht, was gesagt wird. <b>Ihre Sätze stehen in Anführungszeichen</b>, deine darüber, "
+       + "und was kursiv dasteht, tut sie, während sie redet — eine Hand, ein Blick, eine Pause. "
+       + "Der neueste Wortwechsel steht groß, alles davor klein." },
+  { ziel:"#choices", titel:"Deine Züge",
+    text:"Unten stehen deine Möglichkeiten, und die Zifferntasten wählen sie auch. "
+       + "Es gibt keine falsche Wahl — nur Folgen. Rechts steht jeweils, was ein Zug bringt oder kostet." },
+  { ziel:".panel.person", titel:"Ihr Gesicht",
+    text:"Ihre Stimmung, und nur das. Sie sagt dir, <b>wie sie gerade reagiert</b> — nicht, wie sie ist. "
+       + "Das Bild trägt keine Information über ihren Charakter, mit Absicht." },
+  { ziel:"#jederzeit", titel:"Immer erreichbar",
+    text:"<b>Abschätzen</b> heißt: du sagst ihr ins Gesicht, für wen du sie hältst. Das ist der Kern des Spiels "
+       + "und beendet die Stufe. <b>Zurück zur Übersicht</b> geht jederzeit — was du gehört hast, bleibt." },
+  { ziel:"#akte", titel:"Wo du bist",
+    text:"Stufe eins von drei: ihr Wesen, fünf Merkmale von minus zwei bis plus zwei. "
+       + "Danach kommt, was sie braucht, und danach darfst du einfach vorbeikommen." },
+  { ziel:"#notizBox", titel:"Was du behältst",
+    text:"Jede Antwort, die etwas verrät, landet hier als Notiz. "
+       + "<b>Die Wahrheit über sie steht nirgends</b> — es gibt keine Auflösung. Du hast ihr Verhalten, "
+       + "deine Notizen und dein eigenes Urteil. Mehr hat man bei einem Menschen auch sonst nicht." }
+];
+
+let tutSchritt = -1, tutEl = null;
+function tutorialFertig(){
+  try{ localStorage.setItem("tutorial", "1"); }catch(e){}
+  if(tutEl){ tutEl.remove(); tutEl = null; }
+  tutSchritt = -1;
+}
+function tutorialZeige(i){
+  const sch = TUTOR[i];
+  if(!sch) return tutorialFertig();
+  const ziel = document.querySelector(sch.ziel);
+  if(!ziel || ziel.hidden || !ziel.offsetHeight) return tutorialZeige(i + 1);
+  tutSchritt = i;
+  const r = ziel.getBoundingClientRect(), luft = 8;
+  const loch = tutEl.querySelector(".loch"), blase = tutEl.querySelector(".blase");
+  loch.style.top = (r.top - luft) + "px";
+  loch.style.left = (r.left - luft) + "px";
+  loch.style.width = (r.width + 2*luft) + "px";
+  loch.style.height = (r.height + 2*luft) + "px";
+  blase.innerHTML = `<div class="eyebrow">${esc(sch.titel)}</div><p>${sch.text}</p>
+    <div class="zeile"><span class="schritt">${i+1} von ${TUTOR.length}</span>
+      <button class="ueber">Überspringen</button>
+      <button class="weiter">${i === TUTOR.length-1 ? "Los geht's" : "Weiter"}</button></div>`;
+  blase.querySelector(".weiter").onclick = () => tutorialZeige(i + 1);
+  blase.querySelector(".ueber").onclick = () => tutorialFertig();
+  /* Unter das Loch, wenn darunter Platz ist, sonst darüber. Und nie
+     über den Rand hinaus. */
+  const bh = blase.offsetHeight || 190, bw = blase.offsetWidth || 340;
+  let top = r.bottom + 14;
+  if(top + bh > innerHeight - 12) top = Math.max(12, r.top - bh - 14);
+  let left = r.left + r.width/2 - bw/2;
+  left = Math.max(12, Math.min(innerWidth - bw - 12, left));
+  blase.style.top = top + "px";
+  blase.style.left = left + "px";
+}
+function vielleichtTutorial(){
+  if(tutEl) return;
+  try{ if(localStorage.getItem("tutorial")) return; }catch(e){ return; }
+  if(!S || S.stufe > 2 || A.besuche !== 1) return;
+  tutEl = document.createElement("div");
+  tutEl.className = "coach";
+  tutEl.innerHTML = `<div class="loch"></div><div class="blase"></div>`;
+  document.body.appendChild(tutEl);
+  /* Erst zeichnen lassen, dann messen. */
+  setTimeout(() => tutorialZeige(0), 30);
+  addEventListener("resize", () => { if(tutEl && tutSchritt >= 0) tutorialZeige(tutSchritt); });
+}
 
 /* ═══════════════ Nach Arbeit fragen ═══════════════
    Der Zug, der das Haus aufmacht. Fragen darf man immer; eine ehrliche
@@ -1560,6 +1700,7 @@ function leseRunde(cfg){
     rechts:`ohne dich festzulegen · was du gehört hast, bleibt`,
     go(){ abschied(); } });
   waehle(items);
+  vielleichtTutorial();
 }
 
 function stelle(frage, an, cfg){
@@ -2103,6 +2244,7 @@ function bilanz(){
    das Haus bleibt dasselbe Haus. */
 function zeigeMenue(){
   document.body.classList.add("imMenue");
+  const jk = document.getElementById("jederzeit"); if(jk) jk.hidden = true;
   const karte = pp => {
     const a = akteVon(pp.id), st = stufeZu(a.bez), zu = a.bez < WELT.freundschaft.verbrannt;
     /* Beim ersten Mal steht da, wen du besuchst. Danach steht da, wie
