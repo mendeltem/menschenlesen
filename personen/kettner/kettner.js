@@ -175,6 +175,25 @@ einstieg: [
     fakt:`hört in der zweiten Ferienwoche die Uhr` }
 ],
 
+/* --- Die Frage nach Arbeit. Sie ist die Erste, die man fragt, und die
+       Letzte, die etwas verraet, solange man ihr fremd ist: Auskunft
+       gibt sie ueber das Haus, nicht ueber Menschen. ------------- */
+
+arbeit: {
+  frage: `Sucht hier eigentlich jemand jemanden?`,
+  wie: `beiläufig, als wäre es dir gerade eingefallen`,
+  zu: { er:`Stellenausschreibungen hängen am Brett neben dem Aufzug.`,
+        erRegie:`Sie zeigt mit dem Stift in die Richtung, ohne hinzusehen.`,
+        er2:`Was nicht dort hängt, gibt es nicht. Jedenfalls nicht offiziell.`,
+        wie:`freundlich, vollständig, und ohne einen Krümel Inhalt`,
+        wie2:`sachlich`, stimmung:`neutral` },
+  offen: { er:`Am Brett hängt nichts. Am Brett hängt fast nie etwas.`,
+           erRegie:`Sie legt den Stift hin und sieht dich zum ersten Mal an, ohne dabei etwas einzutragen.`,
+           er2:`Was hier gesucht wird, wird nicht ausgeschrieben. Es wird jemandem gesagt, der zufällig danebensteht. Ich stehe seit zweiundzwanzig Jahren daneben.`,
+           wie:`trocken`, wie2:`nüchtern, und darin liegt ein Angebot`, stimmung:`interessiert`,
+           fakt:`sagt, dass hier nichts ausgeschrieben, sondern weitergesagt wird` }
+},
+
 /* --- Neun Fragen zur Person. l = wie stark eine Antwort für welches
        Merkmal spricht. Ihr Neurotizismus liegt genau in der Mitte: sie
        ist nicht robust wie Angela, sie ist nur nicht weit genug

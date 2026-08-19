@@ -153,6 +153,23 @@ einstieg: [
     fakt:`arbeitet sieben Stunden für die eine, in der die Ausgabe offen ist` }
 ],
 
+/* --- Die Frage nach Arbeit. Er hoert sie anders als die anderen: fuer
+       ihn ist sie keine Auskunft, sondern etwas ueber dich. -------- */
+
+arbeit: {
+  frage: `Sucht hier eigentlich jemand jemanden?`,
+  wie: `beiläufig, mit dem Teller in der Hand`,
+  zu: { er:`In der Küche nicht.`,
+        erRegie:`Er wischt die Anrichte ab, die schon sauber ist.`,
+        er2:`Wir sind zu zweit, und zu zweit bleibt es, solange die Ausschreibung läuft.`,
+        wie:`freundlich`, wie2:`ausweichend, ohne dass es unhöflich klingt`, stimmung:`neutral` },
+  offen: { er:`Sie fragen das seit einer Weile, und Sie fragen es beiläufig.`,
+           erRegie:`Er setzt sich hin, was er sonst nicht tut.`,
+           er2:`Man fragt so, wenn man es nötig hat und nicht möchte, dass es jemand merkt. Ich weiß nichts von einer Stelle. Aber ich weiß, wer in diesem Haus wen anruft, und ich habe hier vierunddreißig Jahre lang gekocht. Sagen Sie mir Bescheid, wenn es so weit ist.`,
+           wie:`ruhig, ohne Vorwurf`, wie2:`warm, sehr genau`, stimmung:`geruehrt`,
+           fakt:`hat gemerkt, warum du beiläufig fragst, und bietet an, seine Kontakte zu nutzen` }
+},
+
 /* --- Akt 2: neun Fragen zur Person, du stellst so viele du willst. --
    l = wie stark eine Antwort für welches Merkmal spricht.
        O Offenheit, C Gewissenhaftigkeit, E Extraversion,

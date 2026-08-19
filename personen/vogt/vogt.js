@@ -159,6 +159,24 @@ einstieg: [
     fakt:`geht jeden Morgen ab halb sechs das ganze Haus ab` }
 ],
 
+/* --- Die Frage nach Arbeit. Bei ihr ist sie keine heikle Frage,
+       sondern eine praktische — sie beantwortet sie wie eine
+       Stoerungsmeldung. ------------------------------------------ */
+
+arbeit: {
+  frage: `Sucht hier eigentlich jemand jemanden?`,
+  wie: `geradeheraus`,
+  zu: { er:`Weiß ich nicht.`,
+        erRegie:`Sie sagt es, ohne von der Schraube aufzusehen.`,
+        er2:`Fragen Sie in der Verwaltung, zweiter Stock. Die wissen sowas.`,
+        wie:`knapp`, wie2:`freundlich und vollkommen nutzlos`, stimmung:`neutral` },
+  offen: { er:`Die Verwaltung weiß gar nichts, das habe ich Ihnen letztes Mal noch anders gesagt.`,
+           erRegie:`Sie legt den Schraubenzieher hin.`,
+           er2:`Gesucht wird hier immer jemand, nur steht das nirgends. Was Sie brauchen, ist einer, der Ihren Namen sagt, wenn er gefragt wird. Ich sage ihn.`,
+           wie:`direkt`, wie2:`laut, ohne Umschweife`, stimmung:`freundlich`,
+           fakt:`will deinen Namen sagen, wenn jemand nach jemandem fragt` }
+},
+
 /* --- Neun Fragen zur Person. l = wie stark eine Antwort für welches
        Merkmal spricht. ---------------------------------------------- */
 

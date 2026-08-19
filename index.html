@@ -1106,7 +1106,7 @@ function frischeAkte(){
   return { besuche:0, bez:WELT.freundschaft.start, bfVerlauf:[], moVerlauf:[],
            bfGestellt:[], moGestellt:[], privGestellt:[], zGesehen:[],
            fakten:[], spuren:[], gesagt:[], gefunden:[], bedarf:[],
-           geduldWeg:0, fest:{}, letzter:null, einstiegGesehen:[],
+           geduldWeg:0, fest:{}, letzter:null, einstiegGesehen:[], arbeitGefragt:false,
            stufe:1, punkte:{}, sterne:null };
 }
 /* Ältere Stände bekommen fehlende Felder nachgereicht, statt dass das
@@ -1127,12 +1127,15 @@ function stufenMax(L){ return L.punkte ? L.punkte.genau * (L.key === "bf" ? 5 : 
    Eine Etage ist offen, wenn jede Person der Etage darunter gelesen
    ist. Das Erdgeschoss steht immer offen — dort fängst du an. */
 const gelesen = a => (a.stufe || 1) >= 3;
+/* Gelesen reicht nicht. Weiter kommt nur, wem jemand etwas gesagt hat —
+   und dafür muss man gefragt haben. */
+const durch = a => gelesen(a) && !!a.arbeitGefragt;
 const etageVon = pp => pp.etage || 1;
 const leuteAuf = n => PERSONEN.filter(pp => etageVon(pp) === n);
 function etageOffen(n){
   if(n <= 1) return true;
   const drunter = leuteAuf(n - 1);
-  return drunter.length > 0 && drunter.every(pp => gelesen(akteVon(pp.id)))
+  return drunter.length > 0 && drunter.every(pp => durch(akteVon(pp.id)))
     && etageOffen(n - 1);
 }
 /* Die höchste Etage, die du betreten darfst — für den Schlüsseltext. */
@@ -1663,6 +1666,48 @@ function stufenPunkte(zeilen, L){
 const sterneZu = p => WELT.sterne.find(x => p >= x.ab);
 const sterneBild = n => `<span class="sterne">${"★".repeat(n)}<i>${"☆".repeat(5-n)}</i></span>`;
 
+/* ═══════════════ Nach Arbeit fragen ═══════════════
+   Der Zug, der das Haus aufmacht. Fragen darf man immer; eine ehrliche
+   Antwort bekommt man nur von jemandem, der einen kennt. Deshalb sagt
+   in den Lesestufen jeder dasselbe höfliche Nichts, und erst danach
+   erzählt er, was er weiß.
+
+   Sind alle einer Etage gelesen und gefragt, hängt die Person noch
+   einen Satz an: wo man als Nächstes hinsoll. */
+function arbeitFragen(){
+  const A2 = DATA.arbeit;
+  if(!A2) return drehscheibe();
+  const offen = gelesen(A) && S.stufe > 2;
+  sag("du", A2.frage, {wie:A2.wie});
+  if(!offen){
+    erSagt(A2.zu);
+    sag("meta", `${AN("Er")} kennt dich zu wenig`,
+      {warn:true, lang:`Auf diese Frage antwortet niemand ehrlich, der einen nicht kennt. Lies ${AN("ihn")} erst zu Ende — beide Stufen.`});
+    zeichne();
+    return setTimeout(() => weiterNachArbeit(), 60);
+  }
+  erSagt(A2.offen); merke(A2.offen);
+  const vorher = A.arbeitGefragt;
+  A.arbeitGefragt = true; akteSichern();
+  /* Macht diese Frage die Etage voll? Dann sagt sie noch etwas dazu. */
+  const E = WELT.etagen.find(e => e.nr === (DATA.etage || 1));
+  const fertig = leuteAuf(DATA.etage || 1).every(pp => durch(akteVon(pp.id)));
+  if(!vorher && fertig && E && E.weiter){
+    if(E.weiterRegie) sag("regie", E.weiterRegie);
+    sag("er", E.weiter, {wie:E.weiterWie});
+    sag("meta", E.ende ? `<b>${esc(WELT.angeheuert.titel)}</b>` : `Die nächste Etage steht dir offen`,
+      {lang: E.ende ? esc(WELT.angeheuert.text)
+                    : `Alle auf dieser Etage sind gelesen und gefragt. Im Menü ist die nächste jetzt offen.`});
+  }
+  zeichne();
+  setTimeout(() => weiterNachArbeit(), 60);
+}
+/* Nach der Frage geht es dorthin zurück, wo man hergekommen ist. */
+function weiterNachArbeit(){
+  if(S.stufe <= 2) return leseRunde(S.band === "mo" ? cfgMO : cfgBF);
+  drehscheibe();
+}
+
 /* ═══════════════ Die Drehscheibe ═══════════════
    Nach jedem Schritt landest du wieder hier. Was du tust, ist deine
    Sache, und gehen darfst du jederzeit. Alles hat seinen Preis, und
@@ -1702,6 +1747,10 @@ function drehscheibe(){
       klasse: S.geduld <= 30 ? "riskant" : "",
       rechts:`privat · kostet am meisten Geduld`,
       go(){ S.phase = 3; zeichne(); privatRunde(); } });
+
+  if(DATA.arbeit && !A.arbeitGefragt)
+    items.push({ t:DATA.arbeit.frage, tag:kopf, klasse:"haupt",
+      rechts:`ob hier jemand jemanden braucht`, go(){ arbeitFragen(); } });
 
   items.push({ t:`Dich verabschieden`, tag:kopf, klasse:"weiter",
     rechts:`Besuch beenden, solange es gut ist`, go(){ abschied(); } });
@@ -1753,6 +1802,8 @@ function leseRunde(cfg){
      trotzdem gezählt: die Antworten liegen in der Akte, und beim
      nächsten Besuch stehen sie noch da. Nur gewertet wird nichts,
      solange du dich nicht festgelegt hast. */
+  if(S.stufe <= 2 && DATA.arbeit) items.push({ t:DATA.arbeit.frage, rechts:`ob hier jemand jemanden braucht`,
+    go(){ arbeitFragen(); } });
   if(S.stufe <= 2) items.push({ t:`Für heute reicht es. Du verabschiedest dich.`, klasse:"weiter",
     rechts:`ohne dich festzulegen · was du gehört hast, bleibt`,
     go(){ abschied(); } });
@@ -2314,7 +2365,9 @@ function zeigeMenue(){
         ? esc(pp.kurz || pp.hero.job)
         : `Stufe ${a.stufe} · ${esc(anredeVon(pp, L.name))}`
           + (a.sterne != null ? ` · ${"★".repeat(a.sterne)}${"☆".repeat(5-a.sterne)} ${beide} Punkte`
-             : ` · ${beide} Punkte`);
+             : ` · ${beide} Punkte`)
+          + (gelesen(a) && !a.arbeitGefragt
+             ? ` · <i style="color:var(--accent)">noch nicht nach Arbeit gefragt</i>` : ``);
     return `<button class="mkarte" data-person="${pp.id}"${zu?" disabled":""}>
       <span class="mbild" style="background-image:url('${pp.menubild || ""}')"></span>
       <span><b>${esc(pp.hero.name)}, ${pp.hero.age}</b>
@@ -2327,24 +2380,26 @@ function zeigeMenue(){
     const leute = leuteAuf(E.nr);
     if(!leute.length) return "";
     const offen = etageOffen(E.nr);
-    const fehlen = offen ? 0 : leuteAuf(E.nr - 1).filter(pp => !gelesen(akteVon(pp.id))).length;
+    const fehlen = offen ? 0 : leuteAuf(E.nr - 1).filter(pp => !durch(akteVon(pp.id))).length;
     const kopf = `<div class="etage${offen?"":" zu"}">
       <span class="nr">${offen ? "Etage " + E.nr : "abgeschlossen"}</span>
       <b>${esc(E.name)}</b><span>${esc(E.was)}</span></div>`;
     if(offen) return kopf + leute.map(karte).join("");
     return kopf + `<div class="schloss">Hier kommst du noch nicht hin.
       ${akk(fehlen)} ${fehlen === 1 ? "Menschen" : "Menschen"} in der Etage darunter
-      hast du noch nicht zu Ende gelesen — beide Stufen, Wesen und Bedürfnisse.
-      Danach liegt der Schlüssel da.</div>`;
+      hast du noch nicht zu Ende: beide Lesestufen, und dann die Frage, ob hier jemand
+      jemanden braucht. Wer dich kennt, schickt dich weiter.</div>`;
   }).join("");
   document.querySelectorAll("[data-person]").forEach(b =>
     b.onclick = () => starteGespraech(PERSONEN.find(x => x.id === b.dataset.person)));
-  const fertig = PERSONEN.filter(pp => gelesen(akteVon(pp.id))).length;
+  const fertig = PERSONEN.filter(pp => durch(akteVon(pp.id))).length;
   const hoch = hoechsteOffen(), letzte = WELT.etagen[WELT.etagen.length-1];
-  document.getElementById("mkonto").innerHTML =
-    `<b>${wort(fertig)}</b> von ${wort(PERSONEN.length)} Menschen gelesen · `
-    + (hoch >= letzte.nr ? `das ganze Haus steht dir offen`
-       : `offen bis <b>${esc((WELT.etagen.find(e => e.nr === hoch)||{}).name || "")}</b>`);
+  const alle = fertig === PERSONEN.length;
+  document.getElementById("mkonto").innerHTML = alle
+    ? `<b>${esc(WELT.angeheuert.titel)}</b> ${esc(WELT.angeheuert.text)}`
+    : `<b>${wort(fertig)}</b> von ${wort(PERSONEN.length)} Menschen gelesen und gefragt · `
+      + (hoch >= letzte.nr ? `das ganze Haus steht dir offen`
+         : `offen bis <b>${esc((WELT.etagen.find(e => e.nr === hoch)||{}).name || "")}</b>`);
   choicesEl.innerHTML = "";
   document.getElementById("mInfo").onclick  = () => zeigeInfo(true);
   document.getElementById("mReset").onclick = () => zuruecksetzen();

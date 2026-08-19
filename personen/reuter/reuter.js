@@ -159,6 +159,23 @@ einstieg: [
     fakt:`arbeitet schlechter, wenn der Aufzug stillsteht` }
 ],
 
+/* --- Die Frage nach Arbeit. Sie ist selbst befristet, und deshalb ist
+       das die einzige Frage, bei der sie zuerst an sich denkt. ----- */
+
+arbeit: {
+  frage: `Sucht hier eigentlich jemand jemanden?`,
+  wie: `vorsichtig`,
+  zu: { er:`Das müsste im Intranet stehen.`,
+        erRegie:`Sie sieht kurz auf und dann wieder auf das Blatt vor sich.`,
+        er2:`Ich habe da lange nicht nachgesehen.`,
+        wie:`leise`, wie2:`abschließend`, stimmung:`verschlossen` },
+  offen: { er:`Ich habe da sehr oft nachgesehen.`,
+           erRegie:`Sie legt den Pinsel quer über das Glas und lässt die Hände liegen.`,
+           er2:`Ich bin seit neun Jahren befristet, ich sehe jeden Montag nach. Deshalb weiß ich auch, was nicht drinsteht: die halben Stellen. Die werden zusammengelegt und weitergesagt, und wer davon erfährt, hat mit den richtigen Leuten geredet.`,
+           wie:`ruhig`, wie2:`sehr genau, und zum ersten Mal über sich`, stimmung:`nachdenklich`,
+           fakt:`sieht seit neun Jahren jeden Montag nach offenen Stellen` }
+},
+
 /* --- Akt 2: neun Fragen zu ihr. Jede bietet eine starke und eine
        gemäßigte Antwort auf demselben Merkmal — nur so lässt sich eine
        Zwei von einer Eins unterscheiden. ---------------------------- */

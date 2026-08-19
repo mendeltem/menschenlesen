@@ -182,14 +182,29 @@ mdeutung: {
 etagen: [
   { nr:1, name:`Erdgeschoss`,
     was:`Die Tür und der Gang dahinter. An den beiden kommt niemand vorbei.`,
-    schluessel:`Der Schlüssel für den ersten Stock liegt auf dem Tresen, als du wiederkommst. Niemand sagt, wer ihn hingelegt hat.` },
+    /* Was gesagt wird, wenn hier alle gelesen und gefragt sind. Erst
+       das schickt dich eine Etage weiter — kein Schlüssel, ein Mensch. */
+    weiter:`Gehen Sie oben mal vorbei. Erster Stock, die drei Zimmer am Ende. Einer davon hat im Frühjahr zweimal gefragt, ob ich jemanden weiß, und ich wusste niemanden.`,
+    weiterRegie:`Und dann, ohne dass du danach gefragt hättest:`,
+    weiterWie:`beiläufig, als fiele es gerade erst ein` },
   { nr:2, name:`Erster Stock und Mensa`,
     was:`Die Büros oben und die Tür hinter der Ausgabe. Beides steht Fremden nicht offen.`,
-    schluessel:`Am Schlüsselbrett hängt jetzt einer mehr, mit einem Anhänger aus Pappe: UG.` },
+    weiter:`Und im Keller sitzen auch welche. Das vergisst hier jeder, weil da keiner vorbeikommt. Fragen Sie da unten, die sind mehr als sie aussehen.`,
+    weiterRegie:`Dann, mit einem Nicken Richtung Treppenhaus:`,
+    weiterWie:`sachlich` },
   { nr:3, name:`Keller`,
     was:`Wo die Technik steht und wo hier unten niemand vorbeikommt.`,
-    schluessel:`` }
+    weiter:`Wir suchen jemanden für die Lieferungen. Das steht nirgends ausgeschrieben, weil es keine Stelle ist — es ist eine halbe, und die zahlt drei Abteilungen zusammen. Wenn Sie das machen wollen, sage ich oben Bescheid.`,
+    weiterRegie:`Er klappt den Laptop zu, was er sonst nicht tut, wenn jemand da ist.`,
+    weiterWie:`langsam, als hätte er es vorher überlegt`,
+    ende:true }
 ],
+
+/* Was am Ende steht, wenn alle sechs gelesen und gefragt sind. */
+angeheuert: {
+  titel:`Du bist angeheuert.`,
+  text:`Eine halbe Stelle, die drei Abteilungen zusammen bezahlen, für die Lieferungen. Sie steht in keiner Ausschreibung, und du hast sie bekommen, weil du sechs Menschen zugehört hast, bis sie dir von selbst erzählt haben, was hier fehlt.`
+},
 
 belege: {
   A: `Autonomieunterstützung: Meta-Analyse über 74 Interventionsstudien, 80 Prozent randomisiert. Wahrgenommene Autonomieunterstützung g = 0,84, autonome Motivation g = 0,41 (Gillison, Rouse, Standage, Sebire & Ryan, Health Psychology Review 13, 2019). Die Studien stammen aus dem Gesundheitsbereich, die Übertragung auf Verhandlungen ist Extrapolation.`,

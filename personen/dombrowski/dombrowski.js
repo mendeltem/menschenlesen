@@ -164,6 +164,24 @@ einstieg: [
     fakt:`braucht zu Hause das Radio, weil es ohne das Rauschen zu still ist` }
 ],
 
+/* --- Die Frage nach Arbeit. Hier endet die Kette: er ist der Einzige,
+       der genau weiss, was fehlt, weil es seit Jahren an ihm
+       haengenbleibt. --------------------------------------------- */
+
+arbeit: {
+  frage: `Sucht hier eigentlich jemand jemanden?`,
+  wie: `sachlich`,
+  zu: { er:`Für hier unten? Nein.`,
+        erRegie:`Er sieht am Bildschirm vorbei und dann wieder hin.`,
+        er2:`Die halbe Stelle ist seit 2019 im Plan und wird seit 2019 nicht besetzt. Das ist alles, was ich dazu sagen kann.`,
+        wie:`knapp`, wie2:`nüchtern`, stimmung:`neutral` },
+  offen: { er:`Die halbe Stelle wird nie besetzt, das habe ich aufgegeben.`,
+           erRegie:`Er stellt den Laptop neben sich auf den Rollwagen.`,
+           er2:`Aber es gibt etwas anderes, und daran hängt seit vier Jahren keiner. Die Lieferungen. Die kommen unten an, und dann liegen sie da, und irgendwann trage ich sie hoch, weil sonst niemand kommt. Ich habe das dreimal gemeldet und einmal ausgerechnet: sechs Stunden im Monat, die ich nicht habe.`,
+           wie:`sachlich`, wie2:`genau, und schneller werdend`, stimmung:`interessiert`,
+           fakt:`trägt seit vier Jahren die Lieferungen selbst hoch, sechs Stunden im Monat` }
+},
+
 /* --- Neun Fragen zur Person. l = wie stark eine Antwort für welches
        Merkmal spricht. Sein N liegt bei plus zwei und sein C bei minus
        zwei; auf beides führen mehrere Wege. Die Extraversion bleibt mit

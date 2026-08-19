@@ -151,6 +151,23 @@ einstieg: [
     fakt:`vergisst angefangene Tassen und räumt nachmittags drei auf einmal weg` }
 ],
 
+/* --- Die Frage nach Arbeit. Er ist der, der sucht — nur weiss er das
+       selbst nicht so genau, bevor ihn jemand danach fragt. ------- */
+
+arbeit: {
+  frage: `Sucht hier eigentlich jemand jemanden?`,
+  wie: `beiläufig`,
+  zu: { er:`Puh. Bei uns läuft gerade eine Ausschreibung, glaube ich.`,
+        erRegie:`Er sieht auf den Stapel, als könnte die Antwort darin liegen, und sucht nicht.`,
+        er2:`Oder sie ist durch. Ich müsste nachsehen, und ich sehe garantiert nicht nach.`,
+        wie:`gut gelaunt`, wie2:`entwaffnend ehrlich und völlig unbrauchbar`, stimmung:`amuesiert` },
+  offen: { er:`Ich habe im Frühjahr zweimal unten gefragt, ob jemand jemanden weiß.`,
+           erRegie:`Er schiebt den Stapel zur Seite, was du ihn noch nie hast tun sehen.`,
+           er2:`Nicht für eine Stelle — dafür reicht das Geld nicht. Für die Sachen, die niemand macht, weil sie zwischen drei Abteilungen liegen. Genau die Art Arbeit, für die man niemanden findet, weil sie in keiner Ausschreibung steht.`,
+           wie:`schneller`, wie2:`sehr direkt`, stimmung:`interessiert`,
+           fakt:`hat im Frühjahr zweimal gefragt, ob jemand jemanden für die Arbeit zwischen den Abteilungen weiß` }
+},
+
 zwischen: {
   bf: {
     3: { regie: `Er dreht den Stuhl eine Vierteldrehung, sodass er dich direkt ansieht.`,

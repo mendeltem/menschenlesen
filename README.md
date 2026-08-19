@@ -8,13 +8,20 @@
 dort steht, welche Datei man anfasst, wie gebaut wird, was entschieden
 ist und was noch offen.*
 
-Du bist neu in einem Haus und sollst dich umsehen: wer hier arbeitet,
-was hier läuft. Unten sitzen zwei, an denen niemand vorbeikommt — der
-Empfang und die Hausmeisterin. Weiter kommst du erst, wenn du die beiden
-gelesen hast. Dann liegt der Schlüssel für die nächste Etage da.
+Du suchst Arbeit in einem Haus, in dem du niemanden kennst. Unten sitzen
+zwei, an denen niemand vorbeikommt — der Empfang und die Hausmeisterin.
+Fragen darfst du sie sofort, ob hier jemand jemanden sucht. Du bekommst
+dann eine Antwort, die höflich ist, vollständig, und ohne einen Krümel
+Inhalt: die Ausschreibungen hängen am Brett neben dem Aufzug.
+
+Am Brett hängt nie etwas. Was hier gesucht wird, wird weitergesagt — und
+weitergesagt wird es an Leute, die man kennt. Also musst du die zwei
+zuerst lesen. Erst dann erzählt dir dieselbe Person dasselbe noch einmal,
+und diesmal stimmt es. Wer eine Etage durch hat, wird eine Etage weiter
+geschickt, bis unten im Keller herauskommt, was hier wirklich fehlt.
 
 Es gibt nichts zu kaufen und nichts zu verkaufen. Was du gewinnen kannst,
-sind Menschen, die dich hereinlassen.
+ist eine halbe Stelle, die in keiner Ausschreibung steht.
 
 Es läuft vollständig im Browser: kein Server, kein Konto, nichts wird
 gesendet. Der Knopf oben startet die gespielte Fassung; wer das Zeug
@@ -59,6 +66,12 @@ zweihundert Punkte bringen dich auf 75 statt auf 35. Wer schlecht liest,
 sitzt einem Fremden gegenüber; wer gut liest, jemandem, der ihn für einen
 hält, der zuhört.
 
+**Ein Besuch fängt nicht mit der Persönlichkeit an.** Beim Wiederkommen
+steht davor ein kurzer Wortwechsel über nichts Besonderes — das Wetter,
+ein Stapel, ein Geräusch. Fünf je Person, drei zur Wahl. Er kostet
+nichts und wird nicht gewertet, trägt aber jedes Mal eine Notiz ein, die
+man sonst nicht bekommt.
+
 **Gehen darfst du immer.** Auch mitten in einer Lesestufe, ohne dich
 festzulegen. Was du gehört hast, bleibt in der Akte und steht beim
 nächsten Besuch noch da — nur gewertet wird es erst, wenn du dich
@@ -72,9 +85,30 @@ festlegst.
 | **Erster Stock und Mensa** | Tobias Baumgartner, Annika Reuter, Luigi Sartori | die Büros und die Tür hinter der Ausgabe |
 | **Keller** | Kai Dombrowski | wo die Technik steht |
 
-Eine Etage geht auf, wenn **jede** Person der Etage darunter beide
-Lesestufen bestanden hat. Vorher steht dort nur, wie viele noch fehlen —
-nicht, wer dort sitzt. Das Erdgeschoss steht immer offen.
+Eine Etage geht auf, wenn **jede** Person darunter beide Lesestufen
+bestanden hat **und** danach nach Arbeit gefragt wurde. Vorher steht dort
+nur, wie viele noch fehlen — nicht, wer dort sitzt. Das Erdgeschoss steht
+immer offen.
+
+Kein Schlüssel macht das auf, sondern ein Mensch. Wer das Erdgeschoss
+durch hat, hört von Angela: *„Gehen Sie oben mal vorbei. Erster Stock,
+die drei Zimmer am Ende. Einer davon hat im Frühjahr zweimal gefragt, ob
+ich jemanden weiß, und ich wusste niemanden."* Oben kommt der Hinweis auf
+den Keller, und unten stellt sich heraus, dass die Lieferungen seit vier
+Jahren an einem hängenbleiben, der sie nicht schafft.
+
+## Dieselbe Frage, zwei Antworten
+
+*Sucht hier eigentlich jemand jemanden?* — die Frage steht immer zur
+Wahl, vom ersten Satz an. Was sich ändert, ist die Antwort.
+
+| | |
+|---|---|
+| **fremd** | „Stellenausschreibungen hängen am Brett neben dem Aufzug. Was nicht dort hängt, gibt es nicht. Jedenfalls nicht offiziell." |
+| **gelesen** | „Am Brett hängt nichts. Am Brett hängt fast nie etwas. Was hier gesucht wird, wird jemandem gesagt, der zufällig danebensteht. Ich stehe seit zweiundzwanzig Jahren daneben." |
+
+Beides ist Petra Kettner, beides ist wahr, und der Unterschied zwischen
+beidem ist das ganze Spiel.
 
 ## Was drin steckt
 
@@ -264,7 +298,7 @@ die alles mitbringen: Texte, Fragen, Zustände, Bilder, Farbschema.
 | | |
 |---|---|
 | `index.html` | Menü und Mechanik. Weiß nichts über eine bestimmte Person. |
-| `welt.js` | was für jede Person gilt: die Achsen, die Freundschaftsstufen, die Etagen, die Belege |
+| `welt.js` | was für jede Person gilt: die Achsen, die Freundschaftsstufen, die Etagen und wohin sie weiterschicken, die Belege |
 | `personen/baumgartner/` | Tobias Baumgartner, Statistiker: seine Datei und seine Bilder |
 | `personen/reuter/` | Annika Reuter, Papierrestauratorin — dasselbe noch einmal, und in fast allem seine Gegenprobe |
 | `personen/sartori/` | Luigi Sartori, Kantinenkoch |
@@ -285,7 +319,7 @@ gehört:
 
 ```
 personen/reuter/
-  reuter.js            Etage, Wahrheit, Fragen, Zustände, Widerworte
+  reuter.js            Etage, Wahrheit, Fragen, Einstiege, Zustände, Widerworte
   kontaktbogen.jpg     der erzeugte Bogen, aus dem die Bilder kommen
   bilder/              neutral.webp, freundlich.webp … abweisend.webp
 ```
