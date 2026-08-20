@@ -113,10 +113,10 @@ kennenfrage: [
 ],
 
 uebergang1: {
-  duFest: `Du sagst, warum du da bist: eine Anzeige, drei Zeilen, jemand in diesem Haus sucht Hilfe. Unterschrieben mit R. Melzer, Zimmer 1.14. Wie dringend du sie brauchst, sagst du nicht.`,
-  er: `Die Anzeige hing bei uns am Brett. Ich habe sie zweimal gelesen.`,
+  duFest: `Du sagst, warum du da bist: du brauchst den Antrag A38. Drei Wochen läuft das jetzt, vier Stellen haben dich weitergeschickt, und die letzte hat gesagt, in diesem Haus sitze jemand, der ihn ausstellen darf — R. Melzer, Zimmer 1.14. Wie oft du das inzwischen gehört hast, sagst du nicht.`,
+  er: `Den A38 habe ich auch einmal gebraucht.`,
   erRegie: `Sie setzt sich auf die Kante ihres Arbeitshockers, nicht ganz darauf.`,
-  er2: `Ich habe ihm auch geschrieben, zweimal, und nie eine Antwort bekommen. Sein Zimmer ist das vierte auf diesem Gang, ich gehe jeden Morgen daran vorbei. Aber Sie sind ja jetzt hier — reden wir erst über etwas anderes, ich bin sowieso schlecht darin, gleich zur Sache zu kommen.`,
+  er2: `Für die Ausstellung, letztes Jahr. Elf Wochen, und am Ende hat Melzer ihn unterschrieben, ohne hinzusehen. Sein Zimmer ist das vierte auf diesem Gang, ich gehe jeden Morgen daran vorbei. Aber Sie sind ja jetzt hier — reden wir erst über etwas anderes, ich bin sowieso schlecht darin, gleich zur Sache zu kommen.`,
   wie: `vorsichtig`, wie2: `entschuldigend, aber wärmer als vorher`, stimmung: `freundlich`
 },
 
@@ -172,18 +172,18 @@ einstieg: [
 /* --- Die Frage nach Arbeit. Sie ist selbst befristet, und deshalb ist
        das die einzige Frage, bei der sie zuerst an sich denkt. ----- */
 
-arbeit: {
-  frage: `Sucht hier eigentlich jemand jemanden?`,
+antrag: {
+  frage: `Wo bekomme ich den A38?`,
   wie: `vorsichtig`,
   zu: { er:`Das müsste im Intranet stehen.`,
         erRegie:`Sie sieht kurz auf und dann wieder auf das Blatt vor sich.`,
-        er2:`Ich habe da lange nicht nachgesehen.`,
+        er2:`Unter Formulare, glaube ich. Ich habe da lange nicht nachgesehen.`,
         wie:`leise`, wie2:`abschließend`, stimmung:`verschlossen` },
-  offen: { er:`Ich habe da sehr oft nachgesehen.`,
+  offen: { er:`Im Intranet steht er, und der Link geht ins Leere. Seit dem Frühjahr.`,
            erRegie:`Sie legt den Pinsel quer über das Glas und lässt die Hände liegen.`,
-           er2:`Ich bin seit neun Jahren befristet, ich sehe jeden Montag nach. Deshalb weiß ich auch, was nicht drinsteht: die halben Stellen. Die werden zusammengelegt und weitergesagt, und wer davon erfährt, hat mit den richtigen Leuten geredet.`,
-           wie:`ruhig`, wie2:`sehr genau, und zum ersten Mal über sich`, stimmung:`nachdenklich`,
-           fakt:`sieht seit neun Jahren jeden Montag nach offenen Stellen` }
+           er2:`Ich habe das gemeldet. Man hat mir geantwortet, das Formular sei nicht abgeschafft, nur die Zuständigkeit sei offen. Das ist der genaueste Satz, den ich je aus diesem Haus bekommen habe, und er hilft niemandem.`,
+           wie:`ruhig`, wie2:`sehr genau, ohne Bitterkeit`, stimmung:`nachdenklich`,
+           fakt:`der Link zum A38 geht seit dem Frühjahr ins Leere; die Zuständigkeit ist offen` }
 },
 
 /* --- Akt 2: neun Fragen zu ihr. Jede bietet eine starke und eine

@@ -113,10 +113,10 @@ kennenfrage: [
 ],
 
 uebergang1: {
-  duFest: `Du sagst, warum du da bist: eine Anzeige, drei Zeilen, jemand in diesem Haus sucht Hilfe. Unterschrieben mit R. Melzer, Zimmer 1.14. Wie dringend du sie brauchst, sagst du nicht.`,
-  er: `Melzer.`,
+  duFest: `Du sagst, warum du da bist: du brauchst den Antrag A38. Drei Wochen läuft das jetzt, vier Stellen haben dich weitergeschickt, und die letzte hat gesagt, in diesem Haus sitze jemand, der ihn ausstellen darf — R. Melzer, Zimmer 1.14. Wie oft du das inzwischen gehört hast, sagst du nicht.`,
+  er: `A38. Melzer.`,
   erRegie: `Sie greift hinter sich, nimmt einen Schraubenzieher und fängt an, ihn zu putzen, ohne hinzusehen.`,
-  er2: `Dessen Zimmer habe ich im April ausgeräumt. Zwei Kisten, die stehen immer noch bei mir, weil sie keiner abholt. Setzen Sie sich und erzählen Sie mir bis dahin was Vernünftiges, ich habe die Hände frei.`,
+  er2: `Dessen Zimmer habe ich im April ausgeräumt. Zwei Kisten, die stehen immer noch bei mir, weil sie keiner abholt. Ob da Ihr Formular drin ist, weiß ich nicht — nachgesehen habe ich nicht, das steht mir nicht zu. Setzen Sie sich und erzählen Sie mir bis dahin was Vernünftiges, ich habe die Hände frei.`,
   wie: `sofort, ohne nachzudenken`, wie2: `aufgeräumt, sehr direkt`, stimmung: `freundlich`
 },
 
@@ -173,8 +173,8 @@ einstieg: [
        sondern eine praktische — sie beantwortet sie wie eine
        Stoerungsmeldung. ------------------------------------------ */
 
-arbeit: {
-  frage: `Sucht hier eigentlich jemand jemanden?`,
+antrag: {
+  frage: `Wo bekomme ich den A38?`,
   wie: `geradeheraus`,
   zu: { er:`Weiß ich nicht.`,
         erRegie:`Sie sagt es, ohne von der Schraube aufzusehen.`,
@@ -182,9 +182,9 @@ arbeit: {
         wie:`knapp`, wie2:`freundlich und vollkommen nutzlos`, stimmung:`neutral` },
   offen: { er:`Die Verwaltung weiß gar nichts, das habe ich Ihnen letztes Mal noch anders gesagt.`,
            erRegie:`Sie legt den Schraubenzieher hin.`,
-           er2:`Gesucht wird hier immer jemand, nur steht das nirgends. Was Sie brauchen, ist einer, der Ihren Namen sagt, wenn er gefragt wird. Ich sage ihn.`,
+           er2:`In diesem Haus bekommt man kein Papier, indem man es beantragt. Man bekommt es, weil einer, der einen kennt, im richtigen Moment den Namen sagt. Ich sage ihn.`,
            wie:`direkt`, wie2:`laut, ohne Umschweife`, stimmung:`freundlich`,
-           fakt:`will deinen Namen sagen, wenn jemand nach jemandem fragt` }
+           fakt:`will deinen Namen sagen, wenn jemand fragt` }
 },
 
 /* --- Neun Fragen zur Person. l = wie stark eine Antwort für welches

@@ -175,26 +175,38 @@ mdeutung: {
 /* --- Die Etagen. Das Haus gibt sich nicht auf einmal her: unten
        sitzen zwei, und erst wer die beiden gelesen hat — beide
        Lesestufen bestanden und danach gefragt —, wird weitergeschickt.
+       Verschlossen ist keine Etage: hinaufgehen darf man jederzeit, nur
+       schickt einen weg, wer einen nicht kennt.
+
+       bild   liegt in bilder/ und ist Querformat; fehlt es, bleibt der
+              Verlauf aus farbe stehen.
+       farbe  die Farbe dieses Stockwerks im Treppenhaus.
+       hoehe  wo es im Haus liegt: 0 ist das Erdgeschoss, minus eins der
+              Keller. nr ist der Schritt auf der Route, hoehe der Stock —
+              die zwei sind nicht dasselbe.
 
        Die Nummer steht bei jeder Person unter etage. Wer eine Etage
        ergänzt, schreibt hier eine Zeile dazu. --------------------- */
 
 etagen: [
   { nr:1, name:`Erdgeschoss`,
-    was:`Die Tür und der Gang dahinter. An den beiden kommt niemand vorbei.`,
+    was:`Drehtür, Empfang, und der Gang dahinter. An den beiden kommt niemand vorbei.`,
+    hoehe:0, bild:`bilder/etageE.webp`, farbe:`#8c5a44`,
     /* Was gesagt wird, wenn hier alle gelesen und gefragt sind. Erst
        das schickt dich eine Etage weiter — kein Schlüssel, ein Mensch. */
-    weiter:`Gehen Sie oben mal vorbei. Erster Stock, die drei Zimmer am Ende — das vierte ist Melzers, da schließt seit dem Frühjahr niemand mehr auf. Von den dreien hat einer mich im Frühjahr zweimal gefragt, ob ich jemanden weiß, und ich wusste niemanden.`,
+    weiter:`Gehen Sie in den ersten Stock. Melzers Zimmer ist das vierte am Gang, da schließt seit dem Frühjahr niemand mehr auf — aber die beiden nebenan haben mit ihm gearbeitet. Einer von denen weiß, woran Ihr Papier hängt. Fragen Sie nicht die Verwaltung, fragen Sie die zwei.`,
     weiterRegie:`Und dann, ohne dass du danach gefragt hättest:`,
     weiterWie:`beiläufig, als fiele es gerade erst ein` },
-  { nr:2, name:`Erster Stock und Mensa`,
-    was:`Die Büros oben und die Tür hinter der Ausgabe. Beides steht Fremden nicht offen.`,
-    weiter:`Und im Keller sitzen auch welche. Das vergisst hier jeder, weil da keiner vorbeikommt. Fragen Sie da unten, die sind mehr als sie aussehen.`,
+  { nr:2, name:`Erster Stock`,
+    was:`Der Gang mit den Büros. Die vierte Tür ist Melzers und steht seit dem Frühjahr zu.`,
+    hoehe:1, bild:`bilder/etage1.webp`, farbe:`#8a6f4a`,
+    weiter:`Und dann müssen Sie ins Untergeschoss. Was Melzer unterschrieben hat, hängt an einem Rechner, und der Rechner steht unten. Ohne die Freigabe von dort ist Ihr Antrag ein Blatt Papier. Die zwei da unten vergisst hier jeder, weil niemand vorbeikommt — die sind mehr, als sie aussehen.`,
     weiterRegie:`Dann, mit einem Nicken Richtung Treppenhaus:`,
     weiterWie:`sachlich` },
-  { nr:3, name:`Keller`,
-    was:`Wo die Technik steht und wo hier unten niemand vorbeikommt.`,
-    weiter:`Melzers Anzeige war für etwas anderes, und Melzer ist weg. Aber Sie laufen jetzt seit Wochen hier herum und kennen inzwischen jeden in diesem Haus — das kann von uns keiner von sich behaupten, ich am allerwenigsten. Wir brauchen jemanden für die Lieferungen. Das steht nirgends ausgeschrieben, weil es keine Stelle ist, sondern eine halbe, die drei Abteilungen zusammen bezahlen. Wenn Sie wollen, sage ich oben Bescheid.`,
+  { nr:3, name:`Untergeschoss`,
+    was:`Kantine und Serverraum. Hier unten kommt sonst niemand vorbei.`,
+    hoehe:-1, bild:`bilder/etageU.webp`, farbe:`#4a6a72`,
+    weiter:`Damit sind Sie durch, und das Ergebnis ist: es geht nicht. Nicht bei mir, nicht bei den anderen, bei niemandem in diesem Haus. Ich sage das ungern, weil ich weiß, wie lange Sie unterwegs sind. Aber Sie laufen jetzt seit Wochen hier herum und kennen inzwischen jeden — das kann von uns keiner von sich behaupten, ich am allerwenigsten. Ich rufe oben an.`,
     weiterRegie:`Er klappt den Laptop zu, was er sonst nicht tut, wenn jemand da ist.`,
     weiterWie:`langsam, als hätte er es vorher überlegt`,
     ende:true }
@@ -202,8 +214,8 @@ etagen: [
 
 /* Was am Ende steht, wenn alle sechs gelesen und gefragt sind. */
 angeheuert: {
-  titel:`Du bist angeheuert.`,
-  text:`Melzer ist nie wiedergekommen, und seine Anzeige hat außer dir niemand beantwortet. Was daraus geworden ist, steht in keiner Ausschreibung: eine halbe Stelle für die Lieferungen, bezahlt von drei Abteilungen zusammen. Du hast sie nicht bekommen, weil du die Richtige gefragt hast, sondern weil du am Ende jeden in diesem Haus kanntest und sonst niemand das tut. Dazu gehört die Gegend — die Apotheke, der Imbiss, die Werkstatt an der Ecke. Dich umsehen und die Leute kennenlernen: dieselbe Arbeit wie bisher, nur bezahlt.`
+  titel:`Du hast den A38.`,
+  text:`Nicht, weil du ihn beantragt hättest. Melzer ist nie wiedergekommen, seine Unterschrift fehlt, seine Freigabe ist gültig und tot, und keiner der sechs konnte dir helfen — jeder Einzelne hat es versucht und ist an derselben Stelle stehengeblieben. Ausgestellt hat ihn jemand, den du nie gesprochen hast: dritter Stock, zwei Minuten, kein Formular. Er hat gesagt, in derselben Woche hätten sechs Leute aus diesem Haus wegen derselben Person bei ihm angerufen, und das habe es in elf Jahren nicht gegeben. Wofür du den A38 brauchst, hat er nicht gefragt.`
 },
 
 belege: {

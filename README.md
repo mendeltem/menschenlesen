@@ -8,31 +8,28 @@
 dort steht, welche Datei man anfasst, wie gebaut wird, was entschieden
 ist und was noch offen.*
 
-Eine Anzeige hat dich hergebracht: drei Zeilen, jemand in diesem Haus
-sucht Hilfe, unterschrieben mit **R. Melzer, Zimmer 1.14**. In 1.14 sitzt
-seit dem Frühjahr niemand mehr, und jeder im Haus weiß ein anderes
-Bruchstück darüber — die Empfangsdame hat seinen Ausweis noch als offen
-stehen, die Hausmeisterin hat sein Zimmer ausgeräumt, im Keller läuft
-sein Konto weiter, weil es keinen Vorgang dafür gibt, wenn jemand
-einfach nicht mehr kommt.
+Du brauchst den **Antrag A38**. Drei Wochen läuft das jetzt, vier Stellen
+haben dich weitergeschickt, und die letzte hat gesagt, in diesem Haus
+sitze jemand, der ihn ausstellen darf: **R. Melzer, Zimmer 1.14**.
 
-Du brauchst die Arbeit trotzdem. Unten sitzen zwei, an denen niemand
-vorbeikommt — der Empfang und die Hausmeisterin. Fragen darfst du sie
-sofort, ob hier jemand jemanden sucht. Du bekommst dann eine Antwort, die
-höflich ist, vollständig, und ohne einen Krümel Inhalt: die
-Ausschreibungen hängen am Brett neben dem Aufzug.
+In 1.14 sitzt seit dem Frühjahr niemand mehr, und jeder im Haus weiß ein
+anderes Bruchstück darüber — die Empfangsdame hat seinen Ausweis noch als
+offen stehen und schickt trotzdem weiter Leute zu seiner Tür, die
+Hausmeisterin hat sein Zimmer ausgeräumt, im Keller läuft sein Konto
+weiter, weil es keinen Vorgang dafür gibt, wenn jemand einfach nicht mehr
+kommt. Die Freigabe für den A38 hängt an diesem Konto und ist gültig.
 
-Am Brett hängt nie etwas. Was hier gesucht wird, wird weitergesagt — und
-weitergesagt wird es an Leute, die man kennt. Also musst du die zwei
-zuerst lesen. Erst dann erzählt dir dieselbe Person dasselbe noch einmal,
-und diesmal stimmt es. Wer eine Etage durch hat, wird eine Etage weiter
-geschickt, bis unten im Keller herauskommt, was hier wirklich fehlt.
+**Verschlossen ist nichts.** Du darfst in jede Etage, und jede Tür geht
+auf. Nur schickt dich weg, wer dich nicht kennt — höflich, vollständig,
+und im Kreis. Erst wer beide Lesestufen hinter sich hat, hört von
+derselben Person dieselbe Sache noch einmal, und dann stimmt sie. Wer
+eine Etage durch hat, wird eine Etage weitergeschickt.
 
-Am Ende wirst du eingestellt, aber nicht auf Melzers Stelle und nicht,
-weil du die Richtige gefragt hättest. Sondern weil du zu diesem Zeitpunkt
-jeden in diesem Haus kennst und sonst niemand das tut. Die Arbeit ist:
-dich in der Gegend umsehen und die Leute kennenlernen. Dieselbe Arbeit
-wie bisher, nur bezahlt.
+Am Ende kann dir niemand helfen. Jeder der sechs versucht es und bleibt
+an derselben Stelle stehen. Den A38 stellt dir jemand aus, den du nie
+gesprochen hast — weil in derselben Woche sechs Leute aus diesem Haus
+wegen derselben Person bei ihm angerufen haben, und das habe es in elf
+Jahren nicht gegeben.
 
 Es läuft vollständig im Browser: kein Server, kein Konto, nichts wird
 gesendet. Der Knopf oben startet die gespielte Fassung; wer das Zeug
@@ -96,35 +93,40 @@ das Gespräch und seine drei Stimmen, die Zugliste, das Gesicht und was
 es nicht verrät, die zwei Knöpfe, der Stufenkopf, die Notizen.
 Überspringen geht in jedem Schritt, und es läuft genau einmal — bei wem, entscheidet sich daran, wen du zuerst besuchst. *Zurücksetzen* holt es zurück.
 
-## Das Haus hat Etagen
+## Ein Haus, drei Stockwerke, zwei Knöpfe
+
+Das Menü ist kein Menü, sondern ein Treppenhaus. Du siehst ein Stockwerk
+auf einmal, mit seinem eigenen Bild und seiner eigenen Farbe, und
+wechselst mit **▲** und **▼**. Die Zimmer dahinter behalten ihr eigenes
+Farbschema — man tritt aus dem Amt in ein Leben und wieder zurück.
 
 | | | |
 |---|---|---|
-| **Erdgeschoss** | Petra Kettner, Angela Vogt | die Tür und der Gang dahinter |
-| **Erster Stock und Mensa** | Tobias Baumgartner, Annika Reuter, Luigi Sartori | die Büros und die Tür hinter der Ausgabe |
-| **Keller** | Kai Dombrowski | wo die Technik steht |
+| **Erster Stock** | Tobias Baumgartner, Annika Reuter | der Gang mit den Büros; die vierte Tür ist Melzers |
+| **Erdgeschoss** | Petra Kettner, Angela Vogt | Drehtür, Empfang, der Gang dahinter |
+| **Untergeschoss** | Luigi Sartori, Kai Dombrowski | Kantine und Serverraum |
 
-Eine Etage geht auf, wenn **jede** Person darunter beide Lesestufen
-bestanden hat **und** danach nach Arbeit gefragt wurde. Vorher steht dort
-nur, wie viele noch fehlen — nicht, wer dort sitzt. Das Erdgeschoss steht
-immer offen.
+**Hingehen darfst du überall, von der ersten Minute an.** Was sich
+sperrt, ist nicht das Haus, sondern die Route: den nächsten Hinweis
+bekommt nur, wer die Leute davor gelesen hat. Steht die Route noch
+weiter unten, sagt es das Stockwerk gleich dazu — *man wird dich
+weiterschicken, freundlich und im Kreis.*
 
-Kein Schlüssel macht das auf, sondern ein Mensch. Wer das Erdgeschoss
-durch hat, hört von Angela: *„Gehen Sie oben mal vorbei. Erster Stock,
-die drei Zimmer am Ende. Einer davon hat im Frühjahr zweimal gefragt, ob
-ich jemanden weiß, und ich wusste niemanden."* Oben kommt der Hinweis auf
-den Keller, und unten stellt sich heraus, dass die Lieferungen seit vier
-Jahren an einem hängenbleiben, der sie nicht schafft.
+Eine Etage rückt weiter, wenn **jede** Person darunter beide Lesestufen
+bestanden hat **und** danach nach dem Antrag gefragt wurde. Wer das
+Erdgeschoss durch hat, hört von Petra: *„Gehen Sie in den ersten Stock.
+Melzers Zimmer ist das vierte am Gang, da schließt seit dem Frühjahr
+niemand mehr auf — aber die beiden nebenan haben mit ihm gearbeitet."*
 
 ## Dieselbe Frage, zwei Antworten
 
-*Sucht hier eigentlich jemand jemanden?* — die Frage steht immer zur
-Wahl, vom ersten Satz an. Was sich ändert, ist die Antwort.
+*Wo bekomme ich den A38?* — die Frage steht immer zur Wahl, vom ersten
+Satz an. Was sich ändert, ist die Antwort.
 
 | | |
 |---|---|
-| **fremd** | „Stellenausschreibungen hängen am Brett neben dem Aufzug. Was nicht dort hängt, gibt es nicht. Jedenfalls nicht offiziell." |
-| **gelesen** | „Am Brett hängt nichts. Am Brett hängt fast nie etwas. Was hier gesucht wird, wird jemandem gesagt, der zufällig danebensteht. Ich stehe seit zweiundzwanzig Jahren daneben." |
+| **fremd** | „Formulare liegen im Regal rechts neben dem Aufzug. Alphabetisch, A bis C im obersten Fach. Was nicht dort liegt, gibt es nicht. Jedenfalls nicht für Besucher." |
+| **gelesen** | „Im Regal liegt A36 und A39. Dazwischen ist eine Lücke, und die ist kein Versehen. Den A38 stellt in diesem Haus eine einzige Person aus. Ich schicke seit dem Frühjahr Leute zu einem Zimmer, in dem niemand sitzt, und niemand hat mir gesagt, dass ich damit aufhören soll. Also mache ich es weiter." |
 
 Beides ist Petra Kettner, beides ist wahr, und der Unterschied zwischen
 beidem ist das ganze Spiel.
@@ -323,6 +325,7 @@ die alles mitbringen: Texte, Fragen, Zustände, Bilder, Farbschema.
 | `personen/sartori/` | Luigi Sartori, Kantinenkoch |
 | `personen/vogt/` | Angela Vogt, Hausmeisterin |
 | `personen/dombrowski/` | Kai Dombrowski, Systemadministrator: der Erste, der sich sorgt |
+| `bilder/` | drei Stockwerksbilder fürs Treppenhaus, dazu PROMPTS_ETAGEN.md |
 | `personen/kettner/` | Petra Kettner, Empfang: die Erste, bei der Wärme nichts nützt |
 | `PROMPTS_ANNIKA.md`, `PROMPTS_LUIGI.md`, `PROMPTS_ANGELA.md`, `PROMPTS_KAI.md`, `PROMPTS_PETRA.md` | der Personengenerator an einer Person durchgespielt, fertig zum Kopieren |
 | `PROMPTS.md` | ein Prompt, aus dem jede weitere Person entsteht |

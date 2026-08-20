@@ -106,10 +106,10 @@ kennenfrage: [
    letzten Akt aus. */
 
 uebergang1: {
-  duFest: `Du sagst, warum du da bist: eine Anzeige, drei Zeilen, jemand in diesem Haus sucht Hilfe. Unterschrieben mit R. Melzer, Zimmer 1.14. Wie dringend du sie brauchst, sagst du nicht.`,
-  er: `Melzer. Ja. Nebenan, die Tür, an der Sie eben vorbeigekommen sind.`,
+  duFest: `Du sagst, warum du da bist: du brauchst den Antrag A38. Drei Wochen läuft das jetzt, vier Stellen haben dich weitergeschickt, und die letzte hat gesagt, in diesem Haus sitze jemand, der ihn ausstellen darf — R. Melzer, Zimmer 1.14. Wie oft du das inzwischen gehört hast, sagst du nicht.`,
+  er: `A38. Nebenan, die Tür, an der Sie eben vorbeigekommen sind.`,
   erRegie: `Er lehnt sich zurück und legt die Kopfhörer auf den Tisch.`,
-  er2: `Die Anzeige war eigentlich meine Idee. Wir wollten die Stelle teilen — er die eine Hälfte, ich die andere. Dann war er weg, und mit ihm die Hälfte, die er bezahlt hätte. Davon später. Erst reden wir über etwas anderes, sonst wird das hier ein Bewerbungsgespräch, und darin bin ich furchtbar.`,
+  er2: `Melzer hat den ausgestellt, und Melzer ist weg. Wir haben uns die Sache geteilt — er das Papier, ich die Zahlen. Dann war er weg, und das Papier auch. Davon später. Erst reden wir über etwas anderes, sonst wird das hier ein Antragsgespräch, und darin bin ich furchtbar.`,
   wie: `amüsiert, ein wenig lauernd`, wie2: `schneller, offener`, stimmung: `interessiert`
 },
 
@@ -164,18 +164,18 @@ einstieg: [
 /* --- Die Frage nach Arbeit. Er ist der, der sucht — nur weiss er das
        selbst nicht so genau, bevor ihn jemand danach fragt. ------- */
 
-arbeit: {
-  frage: `Sucht hier eigentlich jemand jemanden?`,
+antrag: {
+  frage: `Wo bekomme ich den A38?`,
   wie: `beiläufig`,
-  zu: { er:`Puh. Bei uns läuft gerade eine Ausschreibung, glaube ich.`,
+  zu: { er:`Puh. Nebenan, glaube ich. Oder das war früher so.`,
         erRegie:`Er sieht auf den Stapel, als könnte die Antwort darin liegen, und sucht nicht.`,
-        er2:`Oder sie ist durch. Ich müsste nachsehen, und ich sehe garantiert nicht nach.`,
+        er2:`Ich müsste nachsehen, und ich sehe garantiert nicht nach. Nehmen Sie es mir nicht übel, ich bin nicht die Auskunft.`,
         wie:`gut gelaunt`, wie2:`entwaffnend ehrlich und völlig unbrauchbar`, stimmung:`amuesiert` },
-  offen: { er:`Ich habe im Frühjahr zweimal unten gefragt, ob jemand jemanden weiß.`,
+  offen: { er:`Sie bekommen ihn nicht. Ich sage Ihnen auch, warum, und das sagt Ihnen sonst keiner.`,
            erRegie:`Er schiebt den Stapel zur Seite, was du ihn noch nie hast tun sehen.`,
-           er2:`Nicht für eine Stelle — dafür reicht das Geld nicht. Für die Sachen, die niemand macht, weil sie zwischen drei Abteilungen liegen. Genau die Art Arbeit, für die man niemanden findet, weil sie in keiner Ausschreibung steht.`,
-           wie:`schneller`, wie2:`sehr direkt`, stimmung:`interessiert`,
-           fakt:`hat im Frühjahr zweimal gefragt, ob jemand jemanden für die Arbeit zwischen den Abteilungen weiß` }
+           er2:`Der A38 hängt an einer Unterschrift und an einer Freigabe. Die Unterschrift ist Melzer, die Freigabe hängt an seinem Konto im Keller. Beides existiert noch, und beides gehört einem Menschen, der nicht mehr kommt. Das ist kein Verwaltungsproblem mehr. Das ist Statistik: die Wahrscheinlichkeit, dass sich das von selbst löst, ist null.`,
+           wie:`schneller`, wie2:`sehr direkt, fast fröhlich vor Präzision`, stimmung:`interessiert`,
+           fakt:`der A38 hängt an Melzers Unterschrift und an der Freigabe auf seinem Konto im Keller` }
 },
 
 zwischen: {

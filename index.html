@@ -410,6 +410,46 @@ body.imMenue .raum{display:none}
    eine Fussnote — entsprechend gross. */
 .menue{flex:1; min-height:0; overflow-y:auto; padding:6px 2px 20px}
 .mkarte[disabled]{opacity:.5; cursor:not-allowed}
+/* ── Das Treppenhaus ─────────────────────────────────────────────────
+   Das Haus, das Verrückte macht: Marmor, Terrakotta, Lorbeer und
+   Versalien. Die Zimmer dahinter behalten ihr eigenes Farbschema — man
+   tritt aus dem Amt in ein Leben und wieder zurück. */
+body.imMenue .menue{
+  --stock: #8c5a44;
+  padding:22px 24px 26px; border-radius:18px;
+  background:
+    linear-gradient(180deg, rgba(244,238,226,.06), rgba(244,238,226,0) 40%),
+    var(--stockbild, none),
+    linear-gradient(160deg, color-mix(in srgb, var(--stock) 34%, #17110c), #17110c 72%);
+  background-size:auto, cover, auto; background-position:center;
+  border:1px solid color-mix(in srgb, var(--stock) 45%, var(--line));
+  box-shadow:inset 0 1px 0 rgba(244,238,226,.10), 0 18px 44px rgba(0,0,0,.45);
+}
+.haus{display:flex; align-items:center; gap:18px; margin-bottom:6px}
+.haus .stockmitte{flex:1; min-width:0}
+.stocknr{font-family:var(--mono); font-size:10px; letter-spacing:.34em; text-transform:uppercase;
+  color:color-mix(in srgb, var(--stock) 55%, #e8dcc6)}
+.stockname{font-family:var(--serif, Georgia, serif); font-size:30px; font-weight:600;
+  letter-spacing:.10em; text-transform:uppercase; color:#f2e7d2; line-height:1.1; margin:2px 0 4px;
+  text-shadow:0 2px 14px rgba(0,0,0,.55)}
+.stockwas{font-size:13.5px; color:#cdbfa6; line-height:1.5; max-width:60ch}
+button.stock{width:52px; height:52px; flex:0 0 auto; border-radius:50%; cursor:pointer;
+  font-size:17px; line-height:1; color:#f2e7d2; background:rgba(23,17,12,.55);
+  border:1px solid color-mix(in srgb, var(--stock) 55%, var(--line));
+  transition:transform .12s ease, background .15s ease, border-color .15s ease}
+button.stock:hover:not(:disabled){transform:scale(1.08);
+  background:color-mix(in srgb, var(--stock) 40%, rgba(23,17,12,.55)); border-color:#e8dcc6}
+button.stock:disabled{opacity:.22; cursor:default}
+.stockhinweis{font-size:13px; line-height:1.55; color:#cdbfa6; margin:10px 0 0;
+  border-left:2px solid color-mix(in srgb, var(--stock) 60%, var(--line)); padding:8px 0 8px 13px}
+body.imMenue .mkarte{background:rgba(23,17,12,.52);
+  border-color:color-mix(in srgb, var(--stock) 34%, var(--line))}
+body.imMenue .mkarte:hover{border-color:#e8dcc6}
+body.imMenue .mkarte b{color:#f2e7d2}
+body.imMenue .mkonto{color:#cdbfa6}
+body.imMenue .mkonto b{color:#f0d9a8}
+body.imMenue .eyebrow{color:color-mix(in srgb, var(--stock) 50%, #e8dcc6)}
+
 .mkarten{display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:12px; margin-top:12px}
 /* Eine Etage: Überschrift über die ganze Breite, darunter ihre Leute. */
 .etage{grid-column:1/-1; margin-top:14px; display:flex; align-items:baseline; gap:12px; flex-wrap:wrap}
@@ -780,7 +820,16 @@ table.bil tr.hi td.n{color:var(--accent); font-weight:600}
   <div class="akte" id="akte"></div>
 
   <section class="menue" id="menue">
-    <div class="eyebrow">Wen besuchst du?</div>
+    <div class="haus" id="haus">
+      <button class="stock" id="etageHoch" title="Ein Stockwerk höher">▲</button>
+      <div class="stockmitte">
+        <div class="stocknr" id="stockNr"></div>
+        <div class="stockname" id="stockName"></div>
+        <div class="stockwas" id="stockWas"></div>
+      </div>
+      <button class="stock" id="etageRunter" title="Ein Stockwerk tiefer">▼</button>
+    </div>
+    <div class="stockhinweis" id="stockHinweis" hidden></div>
     <div class="mkarten" id="mkarten"></div>
     <div class="mkonto" id="mkonto"></div>
     <div class="mzeilen">
@@ -878,11 +927,12 @@ table.bil tr.hi td.n{color:var(--accent); font-weight:600}
     <p><b>Zwei Balken.</b> Die <i>Geduld</i> gilt für diesen Nachmittag: sie fällt bei jeder Frage, und zwar
     zunehmend, und sie steigt wieder, wenn ein Gespräch trifft. Bei null steht er auf. Die <i>Freundschaft</i>
     bleibt über die Besuche: sie wächst, wenn du ihn richtig liest, und fällt, wenn du danebengreifst.</p>
-    <p><b>Du suchst Arbeit.</b> Eine Anzeige hat dich hergebracht, unterschrieben mit R. Melzer, Zimmer 1.14 —
-    und Melzer ist seit dem Frühjahr weg. Fragen darfst du jeden sofort, ob hier jemand jemanden sucht. Nur
-    bekommst du von einem Fremden eine Antwort, die höflich ist und nichts enthält. Wer dich kennt, sagt
-    dieselbe Sache noch einmal, und dann stimmt sie. Wer eine Etage durch hat, wird eine Etage weiter
-    geschickt.</p>
+    <p><b>Du brauchst den Antrag A38.</b> Ausstellen darf ihn in diesem Haus genau eine Person: R. Melzer,
+    Zimmer 1.14 — und Melzer ist seit dem Frühjahr weg. Fragen darfst du jeden sofort, und hingehen darfst du
+    überall; verschlossen ist keine Etage. Nur bekommst du von einem Fremden eine Antwort, die höflich ist,
+    vollständig und leer. Wer dich kennt, sagt dieselbe Sache noch einmal, und dann stimmt sie. Wer eine
+    Etage durch hat, wird eine Etage weitergeschickt. Am Ende kann dir niemand helfen — und du bekommst den
+    A38 trotzdem, weil sechs Leute deinen Namen gesagt haben.</p>
     <p><b>Wie du fragst, zählt mehr als was.</b> Jeder Zug unterstellt dem Gegenüber eine Persönlichkeit. Trifft
     die Unterstellung, geht er darauf ein; trifft sie nicht, merkt er es sofort. Was in diesem Spiel gewichtet
     wird, ist die Autonomieunterstützung — rund dreimal so stark wie die Motivpassung. <span id="belegA"></span></p>
@@ -1160,29 +1210,31 @@ function akteVon(id){
 function stufenMax(L){ return L.punkte ? L.punkte.genau * (L.key === "bf" ? 5 : 2) : 0; }
 
 /* ── Die Etagen ──────────────────────────────────────────────────────
-   Gelesen heißt: beide Lesestufen bestanden, also in Stufe drei
-   angekommen. Erst dann zählt eine Person für die Tür nach oben.
+   Gelesen heißt: beide Lesestufen bestanden. Durch heißt: gelesen und
+   danach nach dem Antrag gefragt.
 
-   Eine Etage ist offen, wenn jede Person der Etage darunter gelesen
-   ist. Das Erdgeschoss steht immer offen — dort fängst du an. */
+   Verschlossen ist hier nichts. Das Treppenhaus steht offen, du darfst
+   in jede Etage, und jede Tür geht auf — nur schickt dich weg, wer dich
+   nicht kennt. Was sich sperrt, ist nicht das Haus, sondern die Route:
+   den nächsten Hinweis bekommt nur, wer die Leute davor gelesen hat. */
 const gelesen = a => (a.stufe || 1) >= 3;
 /* Gelesen reicht nicht. Weiter kommt nur, wem jemand etwas gesagt hat —
    und dafür muss man gefragt haben. */
 const durch = a => gelesen(a) && !!a.arbeitGefragt;
 const etageVon = pp => pp.etage || 1;
 const leuteAuf = n => PERSONEN.filter(pp => etageVon(pp) === n);
-function etageOffen(n){
-  if(n <= 1) return true;
-  const drunter = leuteAuf(n - 1);
-  return drunter.length > 0 && drunter.every(pp => durch(akteVon(pp.id)))
-    && etageOffen(n - 1);
+/* Wie weit dich die Route gebracht hat: die erste Etage, auf der noch
+   jemand nicht durch ist. Betreten darfst du auch die darüber — nur
+   weiß dort niemand, wer du bist. */
+function routeBis(){
+  for(const E of WELT.etagen){
+    const hier = leuteAuf(E.nr);
+    if(hier.length && !hier.every(pp => durch(akteVon(pp.id)))) return E.nr;
+  }
+  return WELT.etagen[WELT.etagen.length-1].nr;
 }
-/* Die höchste Etage, die du betreten darfst — für den Schlüsseltext. */
-function hoechsteOffen(){
-  let n = 1;
-  while(etageOffen(n + 1)) n++;
-  return n;
-}
+/* Welches Stockwerk gerade zu sehen ist. */
+let etageJetzt = null;
 const stufeZu = w => WELT.freundschaft.stufen.find(x => w >= x.ab);
 /* Jede Änderung an der Freundschaft geht hier durch und wird sofort
    gesichert — ein geschlossener Browser darf keinen Besuch verschlucken. */
@@ -1819,7 +1871,7 @@ function vielleichtTutorial(){
    Sind alle einer Etage gelesen und gefragt, hängt die Person noch
    einen Satz an: wo man als Nächstes hinsoll. */
 function arbeitFragen(){
-  const A2 = DATA.arbeit;
+  const A2 = DATA.antrag;
   if(!A2) return drehscheibe();
   const offen = gelesen(A) && S.stufe > 2;
   sag("du", A2.frage, {wie:A2.wie});
@@ -1839,9 +1891,9 @@ function arbeitFragen(){
   if(!vorher && fertig && E && E.weiter){
     if(E.weiterRegie) sag("regie", E.weiterRegie);
     sag("er", E.weiter, {wie:E.weiterWie});
-    sag("meta", E.ende ? `<b>${esc(WELT.angeheuert.titel)}</b>` : `Die nächste Etage steht dir offen`,
+    sag("meta", E.ende ? `<b>${esc(WELT.angeheuert.titel)}</b>` : `Die Route geht weiter`,
       {lang: E.ende ? esc(WELT.angeheuert.text)
-                    : `Alle auf dieser Etage sind gelesen und gefragt. Im Menü ist die nächste jetzt offen.`});
+                    : `Alle auf dieser Etage sind gelesen und gefragt. Hingehen durftest du überall — jetzt weiß man dort auch, wer du bist.`});
   }
   zeichne();
   setTimeout(() => weiterNachArbeit(), 60);
@@ -1892,9 +1944,9 @@ function drehscheibe(){
       rechts:`privat · kostet am meisten Geduld`,
       go(){ S.phase = 3; zeichne(); privatRunde(); } });
 
-  if(DATA.arbeit && !A.arbeitGefragt)
-    items.push({ t:DATA.arbeit.frage, tag:kopf, klasse:"haupt",
-      rechts:`ob hier jemand jemanden braucht`, go(){ arbeitFragen(); } });
+  if(DATA.antrag && !A.arbeitGefragt)
+    items.push({ t:DATA.antrag.frage, tag:kopf, klasse:"haupt",
+      rechts:`der Antrag, wegen dem du hier bist`, go(){ arbeitFragen(); } });
 
   items.push({ t:`Dich verabschieden`, tag:kopf, klasse:"weiter",
     rechts:`Besuch beenden, solange es gut ist`, go(){ abschied(); } });
@@ -1946,7 +1998,7 @@ function leseRunde(cfg){
      trotzdem gezählt: die Antworten liegen in der Akte, und beim
      nächsten Besuch stehen sie noch da. Nur gewertet wird nichts,
      solange du dich nicht festgelegt hast. */
-  if(S.stufe <= 2 && DATA.arbeit) items.push({ t:DATA.arbeit.frage, rechts:`ob hier jemand jemanden braucht`,
+  if(S.stufe <= 2 && DATA.antrag) items.push({ t:DATA.antrag.frage, rechts:`der Antrag, wegen dem du hier bist`,
     go(){ arbeitFragen(); } });
   if(S.stufe <= 2) items.push({ t:`Für heute reicht es. Du verabschiedest dich.`, klasse:"weiter",
     rechts:`ohne dich festzulegen · was du gehört hast, bleibt`,
@@ -2497,59 +2549,86 @@ function bilanz(){
 function zeigeMenue(){
   document.body.classList.add("imMenue");
   const jk = document.getElementById("jederzeit"); if(jk) jk.hidden = true;
-  const karte = pp => {
-    const a = akteVon(pp.id), st = stufeZu(a.bez), zu = a.bez < WELT.freundschaft.verbrannt;
-    /* Beim ersten Mal steht da, wen du besuchst. Danach steht da, wie
-       ihr auseinandergegangen seid. */
+  /* Beim ersten Aufschlagen steht man da, wo die Route steht. Danach
+     bleibt man, wo man war — man verliert sonst dauernd den Faden. */
+  if(etageJetzt == null) etageJetzt = routeBis();
+  zeichneEtage();
+  choicesEl.innerHTML = "";
+  document.getElementById("mInfo").onclick  = () => zeigeInfo(true);
+  document.getElementById("mReset").onclick = () => zuruecksetzen();
+  waehleSpur();
+}
+
+/* Ein Stockwerk, seine Farbe, sein Bild und seine Leute. */
+function zeichneEtage(){
+  /* Von oben nach unten, wie im Treppenhaus. Die Reihenfolge in welt.js
+     ist die der Route, nicht die der Stockwerke. */
+  const alle = WELT.etagen.filter(E => leuteAuf(E.nr).length)
+    .slice().sort((a,b) => (b.hoehe||0) - (a.hoehe||0));
+  const i = Math.max(0, alle.findIndex(E => E.nr === etageJetzt));
+  const E = alle[i] || alle[0];
+  etageJetzt = E.nr;
+
+  const menue = document.getElementById("menue");
+  menue.style.setProperty("--stock", E.farbe || "#8c5a44");
+  menue.style.setProperty("--stockbild", E.bild ? `url('${E.bild}')` : "none");
+
+  document.getElementById("stockNr").textContent =
+    `Stockwerk ${i+1} von ${wort(alle.length)} · Route Schritt ${E.nr}`;
+  document.getElementById("stockName").textContent = E.name;
+  document.getElementById("stockWas").textContent = E.was;
+
+  /* Hoch geht immer, solange es ein Stockwerk gibt. Tiefer auch. */
+  const hoch = document.getElementById("etageHoch");
+  const runter = document.getElementById("etageRunter");
+  hoch.disabled = i === 0;
+  runter.disabled = i === alle.length - 1;
+  hoch.onclick = () => { if(i > 0){ etageJetzt = alle[i-1].nr; zeichneEtage(); } };
+  runter.onclick = () => { if(i < alle.length-1){ etageJetzt = alle[i+1].nr; zeichneEtage(); } };
+
+  /* Wer hier oben noch nichts von dir weiß, schickt dich weiter. Das
+     steht dabei, statt dass die Tür zu wäre. */
+  const dran = E.nr <= routeBis();
+  const hinw = document.getElementById("stockHinweis");
+  hinw.hidden = dran;
+  if(!dran){
+    const fehlen = WELT.etagen.filter(x => x.nr < E.nr)
+      .flatMap(x => leuteAuf(x.nr)).filter(pp => !durch(akteVon(pp.id))).length;
+    hinw.innerHTML = `Hingehen darfst du. Nur weiß hier oben noch niemand, wer du bist —
+      man wird dich weiterschicken, freundlich und im Kreis.
+      ${akk(fehlen)} ${fehlen === 1 ? "Menschen" : "Menschen"} weiter unten
+      ${fehlen === 1 ? "hast du" : "hast du"} noch nicht zu Ende gelesen.`;
+  }
+
+  document.getElementById("mkarten").innerHTML = leuteAuf(E.nr).map(pp => {
+    const a = akteVon(pp.id), zu = a.bez < WELT.freundschaft.verbrannt;
     /* Was auf der Karte steht: beim ersten Mal, wer da sitzt; danach,
        wie weit du bist und was du dort erreicht hast. */
     const L = WELT.level[Math.min(2, (a.stufe || 1) - 1)];
     const beide = (a.punkte.bf || 0) + (a.punkte.mo || 0);
     const unten = zu
-      ? `<i style="color:var(--STA)">verbrannt · er lässt dich nicht mehr herein</i>`
+      ? `<i style="color:var(--STA)">verbrannt · ${esc(anredeVon(pp,"{er}"))} lässt dich nicht mehr herein</i>`
       : (a.punkte.bf == null && a.punkte.mo == null)
         ? esc(pp.kurz || pp.hero.job)
         : `Stufe ${a.stufe} · ${esc(anredeVon(pp, L.name))}`
           + (a.sterne != null ? ` · ${"★".repeat(a.sterne)}${"☆".repeat(5-a.sterne)} ${beide} Punkte`
              : ` · ${beide} Punkte`)
           + (gelesen(a) && !a.arbeitGefragt
-             ? ` · <i style="color:var(--accent)">noch nicht nach Arbeit gefragt</i>` : ``);
+             ? ` · <i style="color:var(--accent)">noch nicht nach dem Antrag gefragt</i>` : ``);
     return `<button class="mkarte" data-person="${pp.id}"${zu?" disabled":""}>
       <span class="mbild" style="background-image:url('${pp.menubild || ""}')"></span>
       <span><b>${esc(pp.hero.name)}, ${pp.hero.age}</b>
         <span>${unten}</span></span>
-    </button>`; };
-
-  /* Etage für Etage. Eine geschlossene zeigt, wer dort sitzt, nicht —
-     sondern nur, woran es liegt und wie viele noch fehlen. */
-  document.getElementById("mkarten").innerHTML = WELT.etagen.map(E => {
-    const leute = leuteAuf(E.nr);
-    if(!leute.length) return "";
-    const offen = etageOffen(E.nr);
-    const fehlen = offen ? 0 : leuteAuf(E.nr - 1).filter(pp => !durch(akteVon(pp.id))).length;
-    const kopf = `<div class="etage${offen?"":" zu"}">
-      <span class="nr">${offen ? "Etage " + E.nr : "abgeschlossen"}</span>
-      <b>${esc(E.name)}</b><span>${esc(E.was)}</span></div>`;
-    if(offen) return kopf + leute.map(karte).join("");
-    return kopf + `<div class="schloss">Hier kommst du noch nicht hin.
-      ${akk(fehlen)} ${fehlen === 1 ? "Menschen" : "Menschen"} in der Etage darunter
-      hast du noch nicht zu Ende: beide Lesestufen, und dann die Frage, ob hier jemand
-      jemanden braucht. Wer dich kennt, schickt dich weiter.</div>`;
-  }).join("");
+    </button>`; }).join("");
   document.querySelectorAll("[data-person]").forEach(b =>
     b.onclick = () => starteGespraech(PERSONEN.find(x => x.id === b.dataset.person)));
+
   const fertig = PERSONEN.filter(pp => durch(akteVon(pp.id))).length;
-  const hoch = hoechsteOffen(), letzte = WELT.etagen[WELT.etagen.length-1];
-  const alle = fertig === PERSONEN.length;
-  document.getElementById("mkonto").innerHTML = alle
+  const wo = WELT.etagen.find(x => x.nr === routeBis()) || {};
+  document.getElementById("mkonto").innerHTML = fertig === PERSONEN.length
     ? `<b>${esc(WELT.angeheuert.titel)}</b> ${esc(WELT.angeheuert.text)}`
     : `<b>${wort(fertig)}</b> von ${wort(PERSONEN.length)} Menschen gelesen und gefragt · `
-      + (hoch >= letzte.nr ? `das ganze Haus steht dir offen`
-         : `offen bis <b>${esc((WELT.etagen.find(e => e.nr === hoch)||{}).name || "")}</b>`);
-  choicesEl.innerHTML = "";
-  document.getElementById("mInfo").onclick  = () => zeigeInfo(true);
-  document.getElementById("mReset").onclick = () => zuruecksetzen();
-  waehleSpur();
+      + `die Route steht im <b>${esc(wo.name || "")}</b>`;
 }
 
 /* Alles zurück auf Anfang. Erreichbar aus dem Menü und aus jedem
@@ -2567,6 +2646,7 @@ function zuruecksetzen(){
       .forEach(k => localStorage.removeItem(k));
   }catch(e){}
   Object.keys(AKTE).forEach(k => delete AKTE[k]);
+  etageJetzt = null;
   /* Ein laufender Besuch darf nicht weiterlaufen: was noch in einem
      Zeitgeber hängt, findet ein beendetes Spiel vor und tut nichts. */
   if(S) S.ende = "abgebrochen";

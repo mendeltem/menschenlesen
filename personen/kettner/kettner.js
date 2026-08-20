@@ -129,10 +129,10 @@ kennenfrage: [
 ],
 
 uebergang1: {
-  duFest: `Du sagst, warum du da bist: eine Anzeige, drei Zeilen, jemand in diesem Haus sucht Hilfe. Unterschrieben mit R. Melzer, Zimmer 1.14. Wie dringend du sie brauchst, sagst du nicht.`,
-  er: `Melzer. Zimmer 1.14.`,
-  erRegie: `Sie sagt es, ohne nachzusehen, und legt den Stift genau parallel zur Kante des Buches.`,
-  er2: `Der hat das Haus im März verlassen. Den Ausweis hat er nicht abgegeben, das steht bei mir bis heute als offen. Sie können trotzdem sitzen bleiben — angemeldet ist bis halb zwölf ohnehin niemand.`,
+  duFest: `Du sagst, warum du da bist: du brauchst den Antrag A38. Drei Wochen läuft das jetzt, vier Stellen haben dich weitergeschickt, und die letzte hat gesagt, in diesem Haus sitze jemand, der ihn ausstellen darf — R. Melzer, Zimmer 1.14. Wie oft du das inzwischen gehört hast, sagst du nicht.`,
+  er: `A38. Melzer, Zimmer 1.14.`,
+  erRegie: `Sie sagt beides, ohne nachzusehen, und legt den Stift genau parallel zur Kante des Buches.`,
+  er2: `Der hat das Haus im März verlassen. Den Ausweis hat er nicht abgegeben, das steht bei mir bis heute als offen. Sie sind der Vierte, der deswegen kommt. Sie können trotzdem sitzen bleiben — angemeldet ist bis halb zwölf ohnehin niemand.`,
   wie: `verbindlich, ohne jede Überraschung`, wie2: `sachlich`, stimmung: `neutral`
 },
 
@@ -189,19 +189,19 @@ einstieg: [
        Letzte, die etwas verraet, solange man ihr fremd ist: Auskunft
        gibt sie ueber das Haus, nicht ueber Menschen. ------------- */
 
-arbeit: {
-  frage: `Sucht hier eigentlich jemand jemanden?`,
+antrag: {
+  frage: `Wo bekomme ich den A38?`,
   wie: `beiläufig, als wäre es dir gerade eingefallen`,
-  zu: { er:`Stellenausschreibungen hängen am Brett neben dem Aufzug.`,
+  zu: { er:`Formulare liegen im Regal rechts neben dem Aufzug. Alphabetisch, A bis C im obersten Fach.`,
         erRegie:`Sie zeigt mit dem Stift in die Richtung, ohne hinzusehen.`,
-        er2:`Was nicht dort hängt, gibt es nicht. Jedenfalls nicht offiziell.`,
+        er2:`Was nicht dort liegt, gibt es nicht. Jedenfalls nicht für Besucher.`,
         wie:`freundlich, vollständig, und ohne einen Krümel Inhalt`,
         wie2:`sachlich`, stimmung:`neutral` },
-  offen: { er:`Am Brett hängt nichts. Am Brett hängt fast nie etwas.`,
+  offen: { er:`Im Regal liegt A36 und A39. Dazwischen ist eine Lücke, und die ist kein Versehen.`,
            erRegie:`Sie legt den Stift hin und sieht dich zum ersten Mal an, ohne dabei etwas einzutragen.`,
-           er2:`Was hier gesucht wird, wird nicht ausgeschrieben. Es wird jemandem gesagt, der zufällig danebensteht. Ich stehe seit zweiundzwanzig Jahren daneben.`,
-           wie:`trocken`, wie2:`nüchtern, und darin liegt ein Angebot`, stimmung:`interessiert`,
-           fakt:`sagt, dass hier nichts ausgeschrieben, sondern weitergesagt wird` }
+           er2:`Den A38 stellt in diesem Haus eine einzige Person aus. Ich schicke seit dem Frühjahr Leute zu einem Zimmer, in dem niemand sitzt, und niemand hat mir gesagt, dass ich damit aufhören soll. Also mache ich es weiter.`,
+           wie:`trocken`, wie2:`nüchtern, und darin liegt zum ersten Mal etwas`, stimmung:`interessiert`,
+           fakt:`schickt seit dem Frühjahr Leute zu einem Zimmer, in dem niemand sitzt` }
 },
 
 /* --- Neun Fragen zur Person. l = wie stark eine Antwort für welches

@@ -22,7 +22,7 @@ PERSONEN.push({
 id: `sartori`,
 /* In welcher Etage diese Person sitzt. Dorthin kommst du erst, wenn dich
    jemand aus der Etage darunter weiterschickt. */
-etage: 2,
+etage: 3,
 kurz: `Kantinenkoch, 61. Grauer Schopf und grünes Halstuch,
        ein Wachstuchheft unter der Kasse, das seit vierunddreißig Jahren mitgeht.`,
 theme: `dschungel`,
@@ -30,7 +30,7 @@ menubild: `personen/sartori/bilder/freundlich.webp`,
 
 hero: {
   name: `Luigi Sartori`, age: 61, job: `Kantinenkoch`,
-  ort: `Erdgeschoss, Mensa, hinter der Ausgabe, Tür ohne Schild`,
+  ort: `Untergeschoss, Kantine, hinter der Ausgabe, Tür ohne Schild`,
   /* Eher still, ordentlich, wenig neugierig, sehr zugewandt, ruhig. Er
      will dazugehören, mehr als alles andere, und Sicherheit nur so
      weit, wie sie ihm die Leute erhält.
@@ -108,10 +108,10 @@ kennenfrage: [
 ],
 
 uebergang1: {
-  duFest: `Du sagst, warum du da bist: eine Anzeige, drei Zeilen, jemand in diesem Haus sucht Hilfe. Unterschrieben mit R. Melzer, Zimmer 1.14. Wie dringend du sie brauchst, sagst du nicht.`,
+  duFest: `Du sagst, warum du da bist: du brauchst den Antrag A38. Drei Wochen läuft das jetzt, vier Stellen haben dich weitergeschickt, und die letzte hat gesagt, in diesem Haus sitze jemand, der ihn ausstellen darf — R. Melzer, Zimmer 1.14. Wie oft du das inzwischen gehört hast, sagst du nicht.`,
   er: `Ach, der Melzer.`,
   erRegie: `Er schiebt den Teller einen Zentimeter näher.`,
-  er2: `Vierzehn Jahre lang dienstags Fisch, und kein einziges Mal etwas dazu gesagt. Weder gut noch schlecht. Essen Sie erst mal, das andere läuft nicht weg.`,
+  er2: `Vierzehn Jahre lang dienstags Fisch, und kein einziges Mal etwas dazu gesagt. Weder gut noch schlecht. Wenn Sie bis hier unten gekommen sind, waren Sie schon überall. Essen Sie erst mal, das andere läuft nicht weg — das läuft seit dem Frühjahr nicht weg.`,
   wie: `warm, mit einem kleinen Nicken`, wie2: `unaufdringlich`, stimmung: `freundlich`
 },
 
@@ -166,18 +166,18 @@ einstieg: [
 /* --- Die Frage nach Arbeit. Er hoert sie anders als die anderen: fuer
        ihn ist sie keine Auskunft, sondern etwas ueber dich. -------- */
 
-arbeit: {
-  frage: `Sucht hier eigentlich jemand jemanden?`,
+antrag: {
+  frage: `Wo bekomme ich den A38?`,
   wie: `beiläufig, mit dem Teller in der Hand`,
-  zu: { er:`In der Küche nicht.`,
+  zu: { er:`In der Küche bestimmt nicht.`,
         erRegie:`Er wischt die Anrichte ab, die schon sauber ist.`,
-        er2:`Wir sind zu zweit, und zu zweit bleibt es, solange die Ausschreibung läuft.`,
+        er2:`Da müssen Sie nach oben. Hier unten gibt es Essen und Kabel, sonst nichts.`,
         wie:`freundlich`, wie2:`ausweichend, ohne dass es unhöflich klingt`, stimmung:`neutral` },
-  offen: { er:`Sie fragen das seit einer Weile, und Sie fragen es beiläufig.`,
+  offen: { er:`Sie fragen das seit Wochen, und Sie fragen es jedes Mal beiläufig.`,
            erRegie:`Er setzt sich hin, was er sonst nicht tut.`,
-           er2:`Man fragt so, wenn man es nötig hat und nicht möchte, dass es jemand merkt. Ich weiß nichts von einer Stelle. Aber ich weiß, wer in diesem Haus wen anruft, und ich habe hier vierunddreißig Jahre lang gekocht. Sagen Sie mir Bescheid, wenn es so weit ist.`,
+           er2:`Man fragt so, wenn man es nötig hat und nicht möchte, dass es jemand merkt. Ich kann Ihnen das Papier nicht geben. Aber ich weiß, wer in diesem Haus wen anruft, und ich koche hier seit vierunddreißig Jahren für alle. Sagen Sie mir Bescheid, wenn es so weit ist.`,
            wie:`ruhig, ohne Vorwurf`, wie2:`warm, sehr genau`, stimmung:`geruehrt`,
-           fakt:`hat gemerkt, warum du beiläufig fragst, und bietet an, seine Kontakte zu nutzen` }
+           fakt:`weiß, wer in diesem Haus wen anruft, und bietet es an` }
 },
 
 /* --- Akt 2: neun Fragen zur Person, du stellst so viele du willst. --

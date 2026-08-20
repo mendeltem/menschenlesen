@@ -18,7 +18,7 @@ import io, os, re, subprocess, sys
 
 PFLICHT = ["id", "etage", "kurz", "theme", "hero", "rollenprior", "stimmungen", "raumbild",
            "baum", "kennenfrage", "uebergang1", "bigfive", "motivfragen", "privat",
-           "privatfragen", "hinausgeworfen", "zustaende", "reaktion",
+           "privatfragen", "hinausgeworfen", "zustaende", "reaktion", "einstieg", "antrag",
            "wiedersehen", "abschied"]
 STIMMUNGEN = ["neutral", "freundlich", "amuesiert", "interessiert", "nachdenklich",
               "skeptisch", "gereizt", "verschlossen", "geruehrt", "abweisend"]

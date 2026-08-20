@@ -119,10 +119,10 @@ kennenfrage: [
 ],
 
 uebergang1: {
-  duFest: `Du sagst, warum du da bist: eine Anzeige, drei Zeilen, jemand in diesem Haus sucht Hilfe. Unterschrieben mit R. Melzer, Zimmer 1.14. Wie dringend du sie brauchst, sagst du nicht.`,
-  er: `1.14.`,
+  duFest: `Du sagst, warum du da bist: du brauchst den Antrag A38. Drei Wochen läuft das jetzt, vier Stellen haben dich weitergeschickt, und die letzte hat gesagt, in diesem Haus sitze jemand, der ihn ausstellen darf — R. Melzer, Zimmer 1.14. Wie oft du das inzwischen gehört hast, sagst du nicht.`,
+  er: `1.14. Sein Konto läuft noch.`,
   erRegie: `Er stellt den Laptop auf den Boden, überlegt es sich anders und legt ihn auf die Knie zurück, zugeklappt.`,
-  er2: `Sein Konto läuft noch. Es gibt keinen Vorgang dafür, wenn jemand einfach nicht mehr kommt — also läuft es weiter, seit fünf Monaten, und ich sehe jedes Mal seinen Namen. Erzählen Sie später davon. Ich höre erst mal zu.`,
+  er2: `Die Freigabe für den A38 hängt daran, und es gibt keinen Vorgang dafür, wenn jemand einfach nicht mehr kommt. Also läuft es weiter, seit fünf Monaten, und ich sehe jedes Mal seinen Namen. Erzählen Sie später davon. Ich höre erst mal zu.`,
   wie: `sofort, ohne nachzudenken`, wie2: `zu schnell, als wäre er froh, dass ihn jemand fragt`, stimmung: `freundlich`
 },
 
@@ -178,18 +178,18 @@ einstieg: [
        der genau weiss, was fehlt, weil es seit Jahren an ihm
        haengenbleibt. --------------------------------------------- */
 
-arbeit: {
-  frage: `Sucht hier eigentlich jemand jemanden?`,
+antrag: {
+  frage: `Wo bekomme ich den A38?`,
   wie: `sachlich`,
-  zu: { er:`Für hier unten? Nein.`,
+  zu: { er:`Hier unten gar nicht.`,
         erRegie:`Er sieht am Bildschirm vorbei und dann wieder hin.`,
-        er2:`Die halbe Stelle ist seit 2019 im Plan und wird seit 2019 nicht besetzt. Das ist alles, was ich dazu sagen kann.`,
+        er2:`Ich betreibe die Geräte. Was auf den Geräten passiert, ist nicht meine Zuständigkeit. Das ist der Satz, den ich hier am häufigsten sage.`,
         wie:`knapp`, wie2:`nüchtern`, stimmung:`neutral` },
-  offen: { er:`Die halbe Stelle wird nie besetzt, das habe ich aufgegeben.`,
-           erRegie:`Er stellt den Laptop neben sich auf den Rollwagen.`,
-           er2:`Aber es gibt etwas anderes, und daran hängt seit vier Jahren keiner. Die Lieferungen. Die kommen unten an, und dann liegen sie da, und irgendwann trage ich sie hoch, weil sonst niemand kommt. Ich habe das dreimal gemeldet und einmal ausgerechnet: sechs Stunden im Monat, die ich nicht habe.`,
-           wie:`sachlich`, wie2:`genau, und schneller werdend`, stimmung:`interessiert`,
-           fakt:`trägt seit vier Jahren die Lieferungen selbst hoch, sechs Stunden im Monat` }
+  offen: { er:`Ich kann Ihnen die Freigabe anzeigen. Geben kann ich sie Ihnen nicht.`,
+           erRegie:`Er stellt den Laptop neben sich auf den Rollwagen und dreht ihn nicht zu dir.`,
+           er2:`Sie steht auf Melzers Konto und ist gültig — das System weiß nicht, dass er weg ist. Ich könnte sie mit drei Handgriffen auf Ihren Namen umschreiben, und niemand würde es je merken. Ich mache es nicht. Nicht weil ich Angst habe, erwischt zu werden, sondern weil dann alles, was Sie hier in Wochen erarbeitet haben, auf einer Lüge steht.`,
+           wie:`sachlich`, wie2:`langsam, sehr genau`, stimmung:`interessiert`,
+           fakt:`könnte Melzers Freigabe umschreiben und tut es nicht` }
 },
 
 /* --- Neun Fragen zur Person. l = wie stark eine Antwort für welches
