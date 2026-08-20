@@ -158,7 +158,15 @@ einstieg: [
     erRegie:`Sie hebt einen Finger und wartet. Nach ein paar Sekunden fährt der Aufzug an.`,
     er2:`Wenn er zwei Wochen stillsteht, arbeite ich schlechter. Das ist mir selbst unangenehm.`,
     wie:`ruhig`, wie2:`leiser`, stimmung:`nachdenklich`,
-    fakt:`arbeitet schlechter, wenn der Aufzug stillsteht` }
+    fakt:`arbeitet schlechter, wenn der Aufzug stillsteht` },
+
+
+  { id:`keller`, t:`Ich war vorhin im Keller. Da ist es kalt.`, wie:`beiläufig`,
+    er:`Beim Herrn Dombrowski.`,
+    erRegie:`Sie legt den Pinsel quer über das Glas.`,
+    er2:`Wir haben eine Zeit lang zusammen an der Digitalisierung gesessen. Er hat mir erklärt, warum meine Scans nichts taugen, und er hat recht gehabt. Danach hat er sich dreimal entschuldigt, obwohl es nichts zu entschuldigen gab.`,
+    wie:`sofort`, wie2:`mit einem kleinen Lächeln`, stimmung:`freundlich`,
+    fakt:`hat mit Kai Dombrowski an der Digitalisierung gesessen; er hat sich dreimal für etwas entschuldigt, das keiner Entschuldigung bedurfte` }
 ],
 
 /* --- Die Frage nach Arbeit. Sie ist selbst befristet, und deshalb ist

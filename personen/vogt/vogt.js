@@ -158,7 +158,15 @@ einstieg: [
     erRegie:`Sie hebt den Bund an und lässt ihn fallen.`,
     er2:`Vier Stockwerke, alle Fenster im Treppenhaus, und den Müllraum. Danach weiß ich, was für ein Tag wird.`,
     wie:`sachlich`, wie2:`bestimmt`, stimmung:`neutral`,
-    fakt:`geht jeden Morgen ab halb sechs das ganze Haus ab` }
+    fakt:`geht jeden Morgen ab halb sechs das ganze Haus ab` },
+
+
+  { id:`empfang`, t:`Ich musste mich vorne wieder eintragen.`, wie:`beiläufig`,
+    er:`Natürlich mussten Sie.`,
+    erRegie:`Sie lacht einmal, kurz und laut.`,
+    er2:`Die Kettner trägt ihre eigene Mutter ein, wenn die vorbeikommt. Wissen Sie was: das ist mir lieber als die Hälfte hier oben. Bei ihr weiß ich, woran ich bin, und das kann ich von wenigen sagen.`,
+    wie:`sofort`, wie2:`laut, anerkennend`, stimmung:`amuesiert`,
+    fakt:`hält Petra Kettner für berechenbar, und das ist bei ihr ein Lob` }
 ],
 
 /* --- Die Frage nach Arbeit. Bei ihr ist sie keine heikle Frage,
@@ -647,7 +655,7 @@ zustaende: [
       liest:{C:0.9, E:0.6, N:-0.4},
       gut:{ er:`Genau das ist die Frage, und niemand konnte sie mir beantworten.`,
             erRegie:`Sie hebt den Schlüsselbund an.`,
-            er2:`Wenn der Strom weg ist, geht die Karte nicht. Und wenn der Strom weg ist, bin ich der Mensch, der reinmuss.`,
+            er2:`Wenn der Strom weg ist, geht die Karte nicht. Und wenn der Strom weg ist, bin ich der Mensch, der reinmuss. Vorne am Empfang nehmen sie der Kettner im selben Aufwasch das Buch weg. Dasselbe Papier, dieselbe Unterschrift.`,
             wie:`sofort`, wie2:`sehr klar`, stimmung:`interessiert`,
             fakt:`bei Stromausfall funktioniert das Kartensystem nicht, ausgerechnet dann muss sie rein`, bez:8 },
       zu:{ er:`Wird man sehen.`, wie:`abwiegelnd`, stimmung:`neutral`, bez:-1 } },
@@ -777,7 +785,7 @@ zustaende: [
       liest:{E:0.9, C:0.7},
       gut:{ er:`Vier Sachen.`,
             erRegie:`Sie faltet den Plan auf und zeigt der Reihe nach auf die Kreuze.`,
-            er2:`Steigleitung, Brandschutztür, ein Fenster, das nicht aufgeht, und eine Steckdose, wo die Tür hinkommt. Habe ich alles angezeichnet und hingeschickt. Antwort steht aus.`,
+            er2:`Steigleitung, Brandschutztür, ein Fenster, das nicht aufgeht, und eine Steckdose, wo die Tür hinkommt. Habe ich alles angezeichnet und hingeschickt. Antwort steht aus. Da oben sitzen zwei Leute, die davon noch gar nichts wissen, und einer von beiden verliert sein Fenster.`,
             wie:`sofort`, wie2:`rasch, sehr sicher`, stimmung:`interessiert`,
             fakt:`hat vier Fehler im Bauplan angezeichnet und keine Antwort bekommen`, bez:8 },
       zu:{ er:`Es ist nicht mein Plan.`, wie:`abweisend`, stimmung:`verschlossen`, bez:-2 } },

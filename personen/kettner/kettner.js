@@ -174,7 +174,15 @@ einstieg: [
     erRegie:`Sie legt den Stift genau parallel zur Kante, was er schon war.`,
     er2:`Zwei Wochen. In der ersten ist es angenehm, in der zweiten sitze ich hier und höre die Uhr.`,
     wie:`knapp`, wie2:`sachlich, und einen Ton zu ehrlich`, stimmung:`nachdenklich`,
-    fakt:`hört in der zweiten Ferienwoche die Uhr` }
+    fakt:`hört in der zweiten Ferienwoche die Uhr` },
+
+
+  { id:`hausmeisterin`, t:`Unten hat mir jemand die Tür aufgehalten, mit einem Schlüsselbund wie ein Gefängniswärter.`, wie:`erheitert`,
+    er:`Frau Vogt.`,
+    erRegie:`Sie sagt den Namen, ohne zu lächeln, und trägt etwas ein.`,
+    er2:`Die Einzige in diesem Haus, die mir etwas bringt, ohne dass ich darum bitte. Im Winter Streusalz, und einmal eine Fußmatte, die sie irgendwo aufgetrieben hat. Die durfte nicht liegen bleiben, Brandschutz. Sie hat sie trotzdem gebracht.`,
+    wie:`sachlich`, wie2:`gleichmäßig, und irgendwo darin steckt etwas`, stimmung:`neutral`,
+    fakt:`Angela Vogt hat ihr einmal eine Fußmatte gebracht, die nicht liegen bleiben durfte` }
 ],
 
 /* --- Die Frage nach Arbeit. Sie ist die Erste, die man fragt, und die
@@ -577,7 +585,7 @@ zustaende: [
       liest:{C:1.2, E:0.4},
       gut:{ er:`Die Uhrzeit, zu der jemand wieder gegangen ist.`,
             erRegie:`Sie schlägt das Buch eine Seite zurück und dreht es zu dir.`,
-            er2:`Und der Grund, warum ich jemanden nicht hereingelassen habe. Das System kennt nur, wer drin war. Es kennt nicht, wen ich abgewiesen habe und weshalb. Genau danach hat mich 2011 jemand gefragt.`,
+            er2:`Und der Grund, warum ich jemanden nicht hereingelassen habe. Das System kennt nur, wer drin war. Es kennt nicht, wen ich abgewiesen habe und weshalb. Genau danach hat mich 2011 jemand gefragt. Frau Vogt unten hat denselben Prospekt bekommen — ihr nehmen sie die Schlüssel weg. Wir sind offenbar dasselbe Vorhaben.`,
             wie:`sofort`, wie2:`sehr genau`, stimmung:`interessiert`,
             fakt:`nur das Buch verzeichnet, wen sie abgewiesen hat und warum`, bez:8 },
       zu:{ er:`Papier eben.`, wie:`knapp`, stimmung:`verschlossen`, bez:-2 } },

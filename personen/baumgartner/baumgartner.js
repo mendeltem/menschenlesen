@@ -150,7 +150,15 @@ einstieg: [
     erRegie:`Er stellt sie dazu, ohne Verlegenheit.`,
     er2:`Ich mache eine, vergesse sie, mache eine neue. Am Nachmittag räume ich alle drei zusammen weg und finde das jedes Mal komisch.`,
     wie:`sachlich`, wie2:`vergnügt`, stimmung:`amuesiert`,
-    fakt:`vergisst angefangene Tassen und räumt nachmittags drei auf einmal weg` }
+    fakt:`vergisst angefangene Tassen und räumt nachmittags drei auf einmal weg` },
+
+
+  { id:`nachbarin`, t:`Auf dem Gang riecht es nach Leim.`, wie:`schnuppernd`,
+    er:`Das ist Frau Reuter, dritte Tür.`,
+    erRegie:`Er zeigt mit dem Daumen über die Schulter, ohne hinzusehen.`,
+    er2:`Wir sitzen seit sechs Jahren an demselben Gang, und ich weiß bis heute nicht, ob sie mich mag. Sie klopft immer an, bevor sie hereinkommt. Ich klopfe nie. Das sagt vermutlich mehr über mich als über sie.`,
+    wie:`sofort`, wie2:`gut gelaunt, und dann eine Spur nachdenklich`, stimmung:`amuesiert`,
+    fakt:`sitzt seit sechs Jahren am selben Gang wie Annika Reuter und weiß nicht, ob sie ihn mag` }
 ],
 
 /* --- Die Frage nach Arbeit. Er ist der, der sucht — nur weiss er das

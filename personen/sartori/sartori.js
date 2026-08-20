@@ -152,7 +152,15 @@ einstieg: [
     erRegie:`Er sieht zur geschlossenen Ausgabeklappe.`,
     er2:`Die Stunde ist der Grund, warum ich das mache. Die restlichen sieben sind der Preis dafür.`,
     wie:`ruhig`, wie2:`sachlich, und es klingt nicht wie eine Klage`, stimmung:`nachdenklich`,
-    fakt:`arbeitet sieben Stunden für die eine, in der die Ausgabe offen ist` }
+    fakt:`arbeitet sieben Stunden für die eine, in der die Ausgabe offen ist` },
+
+
+  { id:`vorne`, t:`Vorne am Empfang sitzt jemand, der nie hier unten isst.`, wie:`beiläufig, mit einem Blick zur Klappe`,
+    er:`Frau Kettner. Zweiundzwanzig Jahre, und einmal war sie hier.`,
+    erRegie:`Er sagt es, während er den Teller abwischt.`,
+    er2:`Der Tresen darf nicht leer sein, sagt sie. Ich packe ihr manchmal etwas ein und stelle es hin, wenn sie telefoniert. Sie sagt nichts dazu. Aber die Schüssel steht am nächsten Tag gespült auf der Ablage.`,
+    wie:`ruhig`, wie2:`warm, ohne Aufhebens`, stimmung:`freundlich`,
+    fakt:`stellt Petra Kettner Essen hin, und sie stellt die Schüssel gespült zurück` }
 ],
 
 /* --- Die Frage nach Arbeit. Er hoert sie anders als die anderen: fuer

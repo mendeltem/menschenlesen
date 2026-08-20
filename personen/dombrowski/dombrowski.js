@@ -163,7 +163,15 @@ einstieg: [
     erRegie:`Er wartet einen Moment, als hörte er selbst hin.`,
     er2:`Das Schlimme ist der Feierabend. Ich sitze zu Hause in der Küche, und da ist es so still, dass ich das Radio anmache. Elf Jahre, und ich habe mich daran gewöhnt.`,
     wie:`sachlich`, wie2:`langsamer`, stimmung:`nachdenklich`,
-    fakt:`braucht zu Hause das Radio, weil es ohne das Rauschen zu still ist` }
+    fakt:`braucht zu Hause das Radio, weil es ohne das Rauschen zu still ist` },
+
+
+  { id:`besuch`, t:`Kommt hier unten je jemand vorbei?`, wie:`ehrlich neugierig`,
+    er:`Die Hausmeisterin. Sonst niemand.`,
+    erRegie:`Er sagt es ohne Selbstmitleid, wie eine Zählung.`,
+    er2:`Frau Vogt kommt zweimal im Monat wegen der Zähler und bleibt jedes Mal fünf Minuten länger, als sie müsste. Sie hat mir mal gesagt, sie mag es hier unten, weil es so klingt wie in einem Schiff. Das war der beste Satz, den in diesem Raum je jemand gesagt hat.`,
+    wie:`sofort`, wie2:`sachlich, und darunter etwas anderes`, stimmung:`geruehrt`,
+    fakt:`Angela Vogt bleibt bei den Zählern länger als nötig und sagt, hier unten klinge es wie in einem Schiff` }
 ],
 
 /* --- Die Frage nach Arbeit. Hier endet die Kette: er ist der Einzige,
@@ -629,7 +637,7 @@ zustaende: [
       liest:{N:1.3, A:-0.4},
       gut:{ er:`Steht da nicht.`,
             erRegie:`Er blättert eine Seite zurück und wieder vor, als könnte da doch etwas stehen.`,
-            er2:`Ich habe die Mappe dreimal gelesen. In keinem Satz kommt vor, was mit dem passiert, der es bisher gemacht hat. Nicht mal negativ. Gar nicht.`,
+            er2:`Ich habe die Mappe dreimal gelesen. In keinem Satz kommt vor, was mit dem passiert, der es bisher gemacht hat. Nicht mal negativ. Gar nicht. Die Haustechnik geht im selben Januar raus, und die Küche steht auch in einer Ausschreibung. Das ist keine Entscheidung über mich, das ist eine über das ganze Haus, und das macht es nicht besser.`,
             wie:`trocken`, wie2:`sehr genau`, stimmung:`interessiert`,
             fakt:`in der Angebotsmappe kommt er selbst in keinem Satz vor`, bez:8 },
       zu:{ er:`Das entscheiden andere.`, wie:`verschlossen`, stimmung:`verschlossen`, bez:-2 } },
@@ -705,7 +713,7 @@ zustaende: [
       gut:{ er:`Ich habe einmal reingesehen, ja. Mehr nicht.`, wie:`vorsichtig`, stimmung:`neutral`, bez:2 },
       zu:{ er:`Nein.`,
            erRegie:`Er zeigt auf einen Aufkleber am Lüftungskasten.`,
-           er2:`Das ist Kälteanlage, das darf ich nicht, und das ist auch richtig so. Was ich darf, ist alle zwanzig Minuten draufsehen und hoffen. Danke, dass Sie fragen, aber genau das ist es ja.`,
+           er2:`Das ist Kälteanlage, das darf ich nicht, und das ist auch richtig so. Frau Vogt darf es übrigens auch nicht, und die ist Elektrikerin. Was ich darf, ist alle zwanzig Minuten draufsehen und hoffen. Danke, dass Sie fragen, aber genau das ist es ja.`,
            wie:`sofort`, wie2:`gereizt und müde zugleich`, stimmung:`gereizt`, bez:-6 } },
 
     { id:`gemeldet`, t:`Wie oft haben Sie das gemeldet?`, wie:`geradeheraus`,
@@ -745,7 +753,7 @@ zustaende: [
       liest:{C:-0.5, N:1.0, O:0.4},
       gut:{ er:`Dass die Kühlung nicht reicht, und was passiert, wenn sie ausfällt.`,
             erRegie:`Er zieht das Blatt gerade, obwohl es gerade hängt.`,
-            er2:`Vier Absätze. Ich habe eine Stunde daran geschrieben und jeden Satz zweimal umgestellt, damit er nicht klingt, als hätte ich Angst.`,
+            er2:`Vier Absätze. Ich habe eine Stunde daran geschrieben und jeden Satz zweimal umgestellt, damit er nicht klingt, als hätte ich Angst. Die Frau am Empfang schreibt solche Mails auch, ich habe eine davon zufällig gesehen. Wir haben beide nie eine Antwort bekommen und nie darüber geredet.`,
             wie:`sachlich`, wie2:`langsamer`, stimmung:`nachdenklich`,
             fakt:`hat an der Warnmail eine Stunde geschrieben, damit sie nicht ängstlich klingt`, bez:7 },
       zu:{ er:`Das Übliche.`, wie:`gleichgültig`, stimmung:`neutral`, bez:-1 } }
