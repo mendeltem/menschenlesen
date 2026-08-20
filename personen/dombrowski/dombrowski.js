@@ -31,7 +31,8 @@
 PERSONEN.push({
 
 id: `dombrowski`,
-/* In welcher Etage sie sitzt. Ohne den Schlüssel dafür kommst du nicht hin. */
+/* In welcher Etage diese Person sitzt. Dorthin kommst du erst, wenn dich
+   jemand aus der Etage darunter weiterschickt. */
 etage: 3,
 kurz: `Systemadministrator, 43. Kapuzenpulli unter dem Hemd, ein Becher
        kalter Kaffee, und ein Blick, der alle zwei Minuten zum Monitor geht.`,

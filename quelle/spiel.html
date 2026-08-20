@@ -541,7 +541,7 @@ table.bil tr.hi td.n{color:var(--accent); font-weight:600}
       <button class="mzeile" id="mInfo"><b>Was das Modell tut</b>
         <span>Die Rechnung dahinter, und was daran belegt ist.</span></button>
       <button class="mzeile" id="mReset"><b>Zurücksetzen</b>
-        <span>Alle Akten, alle Schlüssel und alle gespeicherten Einstellungen löschen.</span></button>
+        <span>Alle Akten, jeden Weg im Haus und alle gespeicherten Einstellungen löschen.</span></button>
     </div>
   </section>
 
@@ -1612,7 +1612,7 @@ function drehscheibe(){
   const items = [];
 
   /* Das Festlegen ist in den Stufen eins und zwei gefallen und dort
-     gewertet worden. Hier steht es nicht mehr: was du über ihn denkst,
+     gewertet worden. Hier steht es nicht mehr: was du über die Person denkst,
      hast du gesagt, und danach richtet sich jetzt alles. */
 
   const bfOffen = 0, moOffen = 0;
@@ -1899,7 +1899,7 @@ function werteRaten(cfg, tipps){
           z.gegenModell ? ` · <i style="color:var(--EFF)">gegen dein Modell</i>` : ``}</td>
         <td class="n"><span class="treffer ${z.dist===0?"ja":(z.dist===1?"nah":"nein")}">${
           z.dist===0?"bestätigt":(z.dist===1?"eingeschränkt":"widersprochen")}</span> ${vzk(z.p,1)}</td></tr>
-      <tr class="fdeut"><td colspan="3">Wenn du damit recht hast: ${esc(z.deutung)}</td></tr>`).join("")}
+      <tr class="fdeut"><td colspan="3">Wenn du damit recht hast: ${esc(anrede(z.deutung))}</td></tr>`).join("")}
     </table>
   </section>`);
   zeichne();
@@ -2145,7 +2145,7 @@ function stufenEnde(L, zeilen){
       geschafft
         ? (L.nr === 1 ? `Stufe zwei ist offen: was er braucht.`
            : `Du hast ${AN("ihn")} gelesen. Ab jetzt kannst du einfach vorbeikommen — und wenn alle auf
-             dieser Etage gelesen sind, liegt der Schlüssel für die nächste da.`)
+             dieser Etage gelesen und gefragt sind, schickt dich die Letzte eine Etage weiter.`)
         : `Du kannst die Stufe noch einmal spielen. Er fängt dann von vorn an, und du weißt mehr als beim ersten Mal.`}</p>
   </section>`);
   zeichne();
@@ -2251,7 +2251,7 @@ function zeigeMenue(){
     /* Beim ersten Mal steht da, wen du besuchst. Danach steht da, wie
        ihr auseinandergegangen seid. */
     /* Was auf der Karte steht: beim ersten Mal, wer da sitzt; danach,
-       wie weit du bist und was du bei ihm erreicht hast. */
+       wie weit du bist und was du dort erreicht hast. */
     const L = WELT.level[Math.min(2, (a.stufe || 1) - 1)];
     const beide = (a.punkte.bf || 0) + (a.punkte.mo || 0);
     const unten = zu
@@ -2308,7 +2308,7 @@ function zuruecksetzen(){
   const wo = document.body.classList.contains("imMenue") ? "" :
     "\n\nDas laufende Gespräch wird dabei abgebrochen.";
   if(!confirm("Wirklich alles zurücksetzen?\n\n"
-    + "· alle Schlüssel — du fängst wieder im Erdgeschoss an\n· alle Akten — jede Person kennt dich danach wieder nicht\n"
+    + "· jeden Weg im Haus — du fängst wieder im Erdgeschoss an\n· alle Akten — jede Person kennt dich danach wieder nicht\n"
     + "· Farbschema, Musik und das Tutorial\n· die aufgeklappten Kästen" + wo)) return;
   try{
     ["akte","tutorial","gespraech-theme","musik"].forEach(k => localStorage.removeItem(k));

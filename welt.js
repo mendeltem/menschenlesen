@@ -146,35 +146,35 @@ sharpness: 1.15,
        Festlegen gezeigt, zur Stufe, die wirklich stimmt. ------------ */
 
 deutung: {
-  O: { hoch: `Neues zieht ihn an. Ein Gedanke, den er noch nicht kennt, wirkt bei ihm besser als ein bewährter.`,
-       mitte:`Neues zieht ihn weder an noch ab. Argumentiere über die Sache, nicht über die Neuheit.`,
-       tief: `Er will Bewährtes. Neuheit ist für ihn ein Risiko und kein Reiz.` },
-  C: { hoch: `Er plant. Ein klarer Ablauf mit Terminen beruhigt ihn mehr als jedes Versprechen.`,
-       mitte:`Struktur hilft, ist aber kein Hebel bei ihm.`,
-       tief: `Pläne langweilen ihn. Er entscheidet früh und korrigiert unterwegs — gib ihm etwas zum Anfangen, keinen Fahrplan.` },
-  E: { hoch: `Er denkt im Reden. Lass ihn ausreden, widersprich ruhig; Stille und Monologe verlieren ihn.`,
-       mitte:`Er redet, wenn es etwas zu sagen gibt. Weder Schweigen noch Lautstärke bringen dich weiter.`,
-       tief: `Er braucht Pausen. Wer ihn zutextet, verliert ihn — frag und warte.` },
-  A: { hoch: `Er ist zugewandt und sagt ungern Nein. Genau deshalb ist ein Ja von ihm wenig wert, solange du ihm keinen echten Ausweg lässt.`,
-       mitte:`Er ist weder besonders nachgiebig noch besonders hart.`,
-       tief: `Er ist hart im Ton. Nimm Widerspruch nicht persönlich, er meint die Sache und nicht dich.` },
-  N: { hoch: `Er grübelt. Nimm ihm Risiken ab, bevor er sie selbst findet, sonst findet er sie nachts.`,
-       mitte:`Sorgen hat er wie jeder. Sie treiben ihn nicht.`,
-       tief: `Er ist robust. Warnungen und Zeitdruck perlen ab und kosten dich nur Glaubwürdigkeit.` }
+  O: { hoch: `Neues zieht {ihn} an. Ein Gedanke, den {er} noch nicht kennt, wirkt bei {ihm} besser als ein bewährter.`,
+       mitte:`Neues zieht {ihn} weder an noch ab. Argumentiere über die Sache, nicht über die Neuheit.`,
+       tief: `{Er} will Bewährtes. Neuheit ist für {ihn} ein Risiko und kein Reiz.` },
+  C: { hoch: `{Er} plant. Ein klarer Ablauf mit Terminen beruhigt {ihn} mehr als jedes Versprechen.`,
+       mitte:`Struktur hilft, ist aber kein Hebel bei {ihm}.`,
+       tief: `Pläne langweilen {ihn}. {Er} entscheidet früh und korrigiert unterwegs — gib {ihm} etwas zum Anfangen, keinen Fahrplan.` },
+  E: { hoch: `{Er} denkt im Reden. Lass {ihn} ausreden, widersprich ruhig; Stille und Monologe verlieren {ihn}.`,
+       mitte:`{Er} redet, wenn es etwas zu sagen gibt. Weder Schweigen noch Lautstärke bringen dich weiter.`,
+       tief: `{Er} braucht Pausen. Wer {ihn} zutextet, verliert {ihn} — frag und warte.` },
+  A: { hoch: `{Er} ist zugewandt und sagt ungern Nein. Genau deshalb ist ein Ja von {ihm} wenig wert, solange du {ihm} keinen echten Ausweg lässt.`,
+       mitte:`{Er} ist weder besonders nachgiebig noch besonders hart.`,
+       tief: `{Er} ist hart im Ton. Nimm Widerspruch nicht persönlich, {er} meint die Sache und nicht dich.` },
+  N: { hoch: `{Er} grübelt. Nimm {ihm} Risiken ab, bevor {er} sie selbst findet, sonst findet {er} sie nachts.`,
+       mitte:`Sorgen hat {er} wie jeder. Getrieben wird {er} davon nicht.`,
+       tief: `{Er} ist robust. Warnungen und Zeitdruck perlen ab und kosten dich nur Glaubwürdigkeit.` }
 },
 
 mdeutung: {
-  FRE: { hoch: `Er will selbst bestimmen. Jede Vorgabe, wie er etwas zu tun hat, kostet dich mehr, als dein Angebot einbringt — auch die gut gemeinte. Gib ihm die Wahl und halt den Mund.`,
-         mitte:`Er will beides und keines sehr. Freiheit nimmt er, wenn sie da ist, Sicherheit auch. Über diese Waage gewinnst du ihn nicht.`,
-         tief: `Er will Verlässlichkeit. Referenzen, Garantien, ein Ding, das morgen noch da ist. Freiheit klingt für ihn nach Arbeit, die keiner abnimmt.` },
-  GEL: { hoch: `Er will gesehen werden. Sein Name, sein Verdienst, sein Platz auf dem Papier. Wer ihn heraushebt, hat ihn.`,
-         mitte:`Weder Bühne noch Tisch entscheiden bei ihm. Sag ihm, was die Sache kann, nicht wer sonst noch dabei ist.`,
-         tief: `Er will dazugehören. Wer sonst mitmacht, ist ein Argument; Schmeichelei ist keins und kostet dich sofort.` }
+  FRE: { hoch: `{Er} will selbst bestimmen. Jede Vorgabe, wie {er} etwas zu tun hat, kostet dich mehr, als sie einbringt — auch die gut gemeinte. Gib {ihm} die Wahl und halt den Mund.`,
+         mitte:`{Er} will beides und keines sehr. Freiheit nimmt {er}, wenn sie da ist, Sicherheit auch. Über diese Waage gewinnst du {ihn} nicht.`,
+         tief: `{Er} will Verlässlichkeit. Namen, die man anrufen kann, Zusagen, die morgen noch gelten. Freiheit klingt für {ihn} nach Arbeit, die keiner abnimmt.` },
+  GEL: { hoch: `{Er} will gesehen werden. {Sein} Name, {sein} Verdienst, {sein} Platz auf dem Papier. Wer {ihn} heraushebt, hat {ihn}.`,
+         mitte:`Weder Bühne noch Tisch entscheiden bei {ihm}. Sag {ihm}, was die Sache ist, nicht wer sonst noch dabei ist.`,
+         tief: `{Er} will dazugehören. Wer sonst mitmacht, ist ein Argument; Schmeichelei ist keins und kostet dich sofort.` }
 },
 
 /* --- Die Etagen. Das Haus gibt sich nicht auf einmal her: unten
        sitzen zwei, und erst wer die beiden gelesen hat — beide
-       Lesestufen bestanden —, bekommt den Schlüssel für die nächste.
+       Lesestufen bestanden und danach gefragt —, wird weitergeschickt.
 
        Die Nummer steht bei jeder Person unter etage. Wer eine Etage
        ergänzt, schreibt hier eine Zeile dazu. --------------------- */

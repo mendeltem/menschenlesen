@@ -17,7 +17,8 @@
 PERSONEN.push({
 
 id: `reuter`,
-/* In welcher Etage sie sitzt. Ohne den Schlüssel dafür kommst du nicht hin. */
+/* In welcher Etage diese Person sitzt. Dorthin kommst du erst, wenn dich
+   jemand aus der Etage darunter weiterschickt. */
 etage: 2,
 kurz: `Papierrestauratorin, 38. Dunkler Bob und Kittel über dem Pullover,
        ein Tisch, auf dem jedes Werkzeug parallel liegt.`,

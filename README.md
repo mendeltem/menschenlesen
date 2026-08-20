@@ -53,7 +53,7 @@ nichts als zuhören sind, und danach darfst du einfach vorbeikommen.
 
 **In Stufe eins und zwei gibt es keine Balken und kein Modell.** Keine
 Freundschaft, keine Geduld, keine bit-Zahlen, keine
-Wahrscheinlichkeitsbalken — nur das Gespräch, deine Notizen und er. Du
+Wahrscheinlichkeitsbalken — nur das Gespräch, deine Notizen und sie. Du
 fragst, so lange du willst; nichts kostet etwas, nichts läuft ab. Wenn du
 meinst, genug zu wissen, legst du dich fest, und damit ist die Stufe
 vorbei.
@@ -68,14 +68,14 @@ zusammen zweihundert — daraus werden die Sterne:
 | ab 180 | ab 145 | ab 105 | ab 60 | ab 25 |
 
 Wer fünfzig Punkte schafft, kommt in die nächste Stufe. Wer nicht, spielt
-sie noch einmal — er fängt dann von vorn an, und man weiß mehr als beim
-ersten Mal.
+sie noch einmal — die Person fängt dann von vorn an, und man weiß mehr
+als beim ersten Mal.
 
 **Stufe drei erbt alles.** Die Festlegungen stehen, die Fragen sind
 gestellt, und die Freundschaft startet danach, wie gut du gelesen hast:
 zweihundert Punkte bringen dich auf 75 statt auf 35. Wer schlecht liest,
-sitzt einem Fremden gegenüber; wer gut liest, jemandem, der ihn für einen
-hält, der zuhört.
+sitzt einem Fremden gegenüber; wer gut liest, jemandem, der einen für
+jemanden hält, der zuhört.
 
 **Ein Besuch fängt nicht mit der Persönlichkeit an.** Beim Wiederkommen
 steht davor ein kurzer Wortwechsel über nichts Besonderes — das Wetter,
@@ -136,7 +136,7 @@ beidem ist das ganze Spiel.
 ein Datenpunkt, P(Person | Antwort) ∝ P(Antwort | Person) · P(Person).
 Über jeder Frage steht, wie viele bit sie verspricht.
 
-**Zwei Waagen für das, was er will.** Früher waren es fünf Motive — das
+**Zwei Waagen für das, was sie wollen.** Früher waren es fünf Motive — das
 war genauer und unlesbar. Jetzt gibt es zwei Fragen mit je zwei Seiten:
 
 | | |
@@ -155,7 +155,7 @@ die Mitte ist der seltenere Fall.
 
 **Besuche statt einer Partie.** Zwischen zwei Besuchen bleibt, was du
 gehört hast, und wie ihr steht. Gespeichert werden nicht die
-Wahrscheinlichkeiten, sondern seine Antworten; beim nächsten Mal wird
+Wahrscheinlichkeiten, sondern die Antworten; beim nächsten Mal wird
 daraus dasselbe Bild neu gerechnet.
 
 **Ein blätterbarer Verlauf.** Jeder Wortwechsel trägt eine Marke mit
@@ -364,7 +364,7 @@ genauso wie auf einem Server.
 Speicher des Browsers. **Zurücksetzen** steht oben in der Leiste, liegt
 auf <kbd>Umschalt</kbd>+<kbd>R</kbd> und ist aus dem Menü wie aus jedem
 laufenden Gespräch erreichbar; es fragt einmal nach und räumt dann alles
-weg: alle Akten, alle Schlüssel, Farbschema, Musik und die aufgeklappten
+weg: alle Akten, jeden Weg im Haus, das Tutorial, Farbschema, Musik und die aufgeklappten
 Kästen. Danach kennt dich jede Person wieder nicht, und du stehst wieder
 im Erdgeschoss.
 

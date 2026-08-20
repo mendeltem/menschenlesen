@@ -20,7 +20,8 @@
 PERSONEN.push({
 
 id: `sartori`,
-/* In welcher Etage sie sitzt. Ohne den Schlüssel dafür kommst du nicht hin. */
+/* In welcher Etage diese Person sitzt. Dorthin kommst du erst, wenn dich
+   jemand aus der Etage darunter weiterschickt. */
 etage: 2,
 kurz: `Kantinenkoch, 61. Grauer Schopf und grünes Halstuch,
        ein Wachstuchheft unter der Kasse, das seit vierunddreißig Jahren mitgeht.`,

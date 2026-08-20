@@ -17,7 +17,8 @@
 PERSONEN.push({
 
 id: `baumgartner`,
-/* In welcher Etage sie sitzt. Ohne den Schlüssel dafür kommst du nicht hin. */
+/* In welcher Etage diese Person sitzt. Dorthin kommst du erst, wenn dich
+   jemand aus der Etage darunter weiterschickt. */
 etage: 2,
 /* Womit die Person im Menü steht und welches Farbschema sie mitbringt. */
 kurz: `Statistiker, 52. Wilder grauer Schopf und Kopfhörer um den Hals,

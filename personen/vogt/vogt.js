@@ -19,7 +19,8 @@
 PERSONEN.push({
 
 id: `vogt`,
-/* In welcher Etage sie sitzt. Ohne den Schlüssel dafür kommst du nicht hin. */
+/* In welcher Etage diese Person sitzt. Dorthin kommst du erst, wenn dich
+   jemand aus der Etage darunter weiterschickt. */
 etage: 1,
 kurz: `Hausmeisterin, 47. Grauer Zopf und orangefarbene Arbeitsjacke,
        ein Schlüsselbund am Gürtel, an dem einundvierzig Schlüssel hängen.`,
@@ -638,7 +639,7 @@ zustaende: [
 
 { id:`schluessel`, titel:`Die Schlüssel werden elektronisch`,
   regie:`Neben dem Schlüsselbrett liegt ein Prospekt mit einem schwarzen Kartenleser darauf. Jemand hat ein Fragezeichen an den Rand gemalt.`,
-  er:`Ab Sommer alles auf Karte. Die Schlüssel kommen weg, alle.`,
+  er:`Ab Januar alles auf Karte. Die Schlüssel kommen weg, alle.`,
   wie:`sachlich, mit einem Blick auf den Gürtel`, stimmung:`neutral`,
   bedarf:{ id:`schl_fre`, was:`verliert den Zugang, mit dem sie tut, was nötig ist`, braucht:{FRE:1.5} },
   fragen:[

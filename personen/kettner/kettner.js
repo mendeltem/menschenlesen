@@ -31,7 +31,8 @@
 PERSONEN.push({
 
 id: `kettner`,
-/* In welcher Etage sie sitzt. Ohne den Schlüssel dafür kommst du nicht hin. */
+/* In welcher Etage diese Person sitzt. Dorthin kommst du erst, wenn dich
+   jemand aus der Etage darunter weiterschickt. */
 etage: 1,
 kurz: `Empfang, 56. Weinroter Strickmantel hinter einer Glasscheibe,
        ein aufgeschlagenes Besucherbuch, und ein Lächeln, das angeht und ausgeht.`,
@@ -568,7 +569,7 @@ zustaende: [
 
 { id:`karten`, titel:`Das Buch soll abgeschafft werden`,
   regie:`Neben dem Besucherbuch liegt ein Prospekt mit einem schwarzen Kartenleser darauf. Jemand hat mit Kugelschreiber ein Fragezeichen an den Rand gesetzt, sehr klein.`,
-  er:`Ab Sommer soll das elektronisch laufen. Das Buch fällt weg.`,
+  er:`Ab Januar soll das elektronisch laufen. Das Buch fällt weg.`,
   wie:`sachlich, ohne den Prospekt anzusehen`, stimmung:`neutral`,
   bedarf:{ id:`kart_sic`, was:`verliert den einzigen Nachweis dafür, was sie getan hat`, braucht:{FRE:-1.8} },
   fragen:[
@@ -634,7 +635,7 @@ zustaende: [
 
 { id:`glas`, titel:`Die Scheibe soll weg`,
   regie:`An der Glasscheibe klebt außen ein gelber Zettel mit einer Skizze: derselbe Tresen, ohne Glas, mit einem Blumenkübel daneben.`,
-  er:`Offener Empfang, heißt das. Im Frühjahr kommt die Scheibe raus.`,
+  er:`Offener Empfang, heißt das. Im Oktober kommt die Scheibe raus.`,
   wie:`ruhig, mit einem Blick auf den Zettel`, stimmung:`neutral`,
   bedarf:{ id:`glas_sic`, was:`soll die Deckung hergeben, die sie nach dem Vorfall bekommen hat`, braucht:{FRE:-1.5} },
   fragen:[
