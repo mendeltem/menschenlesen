@@ -75,7 +75,7 @@ raumbild: ``,
 
 baum: {
   start: {
-    regie: `Erster Stock, Gang ohne Fenster, dritte Tür. Du klopfst. Es dauert, dann geht sie auf, einen Spalt weit, und sie steht im Rahmen und sieht dich an.`,
+    regie: `Erster Stock, Gang ohne Fenster. An der vierten Tür klebt ein Aufkleber der Poststelle, halb abgerissen; darunter wächst der Papierstapel im Fach aus der Tür heraus. Du klopfst an der dritten. Es dauert, dann geht sie auf, einen Spalt weit, und sie steht im Rahmen und sieht dich an.`,
     er: `Entschuldigung. Ich hatte den Termin im Kopf und trotzdem vergessen.`,
     wie: `leise, sofort entschuldigend`, stimmung: `neutral`,
     erRegie: `Sie tritt zur Seite, nimmt einen Stapel Kartons vom Besucherstuhl und stellt ihn ordentlich neben die Tür.`,
@@ -113,10 +113,10 @@ kennenfrage: [
 ],
 
 uebergang1: {
-  duFest: `Du sagst, warum du da bist: eine Anzeige, drei Zeilen, jemand in diesem Haus sucht Hilfe. Unterschrieben mit R. Melzer, Zimmer 2.14. Wie dringend du sie brauchst, sagst du nicht.`,
+  duFest: `Du sagst, warum du da bist: eine Anzeige, drei Zeilen, jemand in diesem Haus sucht Hilfe. Unterschrieben mit R. Melzer, Zimmer 1.14. Wie dringend du sie brauchst, sagst du nicht.`,
   er: `Die Anzeige hing bei uns am Brett. Ich habe sie zweimal gelesen.`,
   erRegie: `Sie setzt sich auf die Kante ihres Arbeitshockers, nicht ganz darauf.`,
-  er2: `Ich habe ihm auch geschrieben, zweimal, und nie eine Antwort bekommen. Dann war das Zimmer leer. Aber Sie sind ja jetzt hier — reden wir erst über etwas anderes, ich bin sowieso schlecht darin, gleich zur Sache zu kommen.`,
+  er2: `Ich habe ihm auch geschrieben, zweimal, und nie eine Antwort bekommen. Sein Zimmer ist das vierte auf diesem Gang, ich gehe jeden Morgen daran vorbei. Aber Sie sind ja jetzt hier — reden wir erst über etwas anderes, ich bin sowieso schlecht darin, gleich zur Sache zu kommen.`,
   wie: `vorsichtig`, wie2: `entschuldigend, aber wärmer als vorher`, stimmung: `freundlich`
 },
 

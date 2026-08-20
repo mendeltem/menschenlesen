@@ -184,7 +184,7 @@ etagen: [
     was:`Die Tür und der Gang dahinter. An den beiden kommt niemand vorbei.`,
     /* Was gesagt wird, wenn hier alle gelesen und gefragt sind. Erst
        das schickt dich eine Etage weiter — kein Schlüssel, ein Mensch. */
-    weiter:`Gehen Sie oben mal vorbei. Erster Stock, die drei Zimmer am Ende. Einer davon hat im Frühjahr zweimal gefragt, ob ich jemanden weiß, und ich wusste niemanden.`,
+    weiter:`Gehen Sie oben mal vorbei. Erster Stock, die drei Zimmer am Ende — das vierte ist Melzers, da schließt seit dem Frühjahr niemand mehr auf. Von den dreien hat einer mich im Frühjahr zweimal gefragt, ob ich jemanden weiß, und ich wusste niemanden.`,
     weiterRegie:`Und dann, ohne dass du danach gefragt hättest:`,
     weiterWie:`beiläufig, als fiele es gerade erst ein` },
   { nr:2, name:`Erster Stock und Mensa`,

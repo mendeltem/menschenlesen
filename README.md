@@ -9,7 +9,7 @@ dort steht, welche Datei man anfasst, wie gebaut wird, was entschieden
 ist und was noch offen.*
 
 Eine Anzeige hat dich hergebracht: drei Zeilen, jemand in diesem Haus
-sucht Hilfe, unterschrieben mit **R. Melzer, Zimmer 2.14**. In 2.14 sitzt
+sucht Hilfe, unterschrieben mit **R. Melzer, Zimmer 1.14**. In 1.14 sitzt
 seit dem Frühjahr niemand mehr, und jeder im Haus weiß ein anderes
 Bruchstück darüber — die Empfangsdame hat seinen Ausweis noch als offen
 stehen, die Hausmeisterin hat sein Zimmer ausgeräumt, im Keller läuft

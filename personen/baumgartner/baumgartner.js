@@ -66,7 +66,7 @@ raumbild: `personen/baumgartner/bilder/raum.webp`,
 
 baum: {
   start: {
-    regie: `Erster Stock, letzte Tür. Sie geht auf, bevor du klopfen kannst. Kopfhörer um den Hals, Blazer über einem Shirt, das schon einen Tag gesehen hat.`,
+    regie: `Erster Stock. An der vorletzten Tür steht 1.14 und darunter ein Namensschild, aus dem jemand den Namen herausgezogen hat; der helle Streifen ist noch da. Die letzte Tür geht auf, bevor du klopfen kannst. Kopfhörer um den Hals, Blazer über einem Shirt, das schon einen Tag gesehen hat.`,
     er: `Sie sind der Grund, warum mein Kalender heute rot ist. Kommen Sie rein, ich muss nur eben —`,
     wie: `schnell, im Gehen gesprochen`, stimmung: `neutral`,
     erRegie: `Er schiebt einen Stapel Ausdrucke vom Besucherstuhl auf den Boden.`,
@@ -106,10 +106,10 @@ kennenfrage: [
    letzten Akt aus. */
 
 uebergang1: {
-  duFest: `Du sagst, warum du da bist: eine Anzeige, drei Zeilen, jemand in diesem Haus sucht Hilfe. Unterschrieben mit R. Melzer, Zimmer 2.14. Wie dringend du sie brauchst, sagst du nicht.`,
-  er: `Melzer. Ja. Die Anzeige war eigentlich meine Idee.`,
+  duFest: `Du sagst, warum du da bist: eine Anzeige, drei Zeilen, jemand in diesem Haus sucht Hilfe. Unterschrieben mit R. Melzer, Zimmer 1.14. Wie dringend du sie brauchst, sagst du nicht.`,
+  er: `Melzer. Ja. Nebenan, die Tür, an der Sie eben vorbeigekommen sind.`,
   erRegie: `Er lehnt sich zurück und legt die Kopfhörer auf den Tisch.`,
-  er2: `Wir wollten die Stelle teilen — er die eine Hälfte, ich die andere. Dann war er weg, und mit ihm die Hälfte, die er bezahlt hätte. Davon später. Erst reden wir über etwas anderes, sonst wird das hier ein Bewerbungsgespräch, und darin bin ich furchtbar.`,
+  er2: `Die Anzeige war eigentlich meine Idee. Wir wollten die Stelle teilen — er die eine Hälfte, ich die andere. Dann war er weg, und mit ihm die Hälfte, die er bezahlt hätte. Davon später. Erst reden wir über etwas anderes, sonst wird das hier ein Bewerbungsgespräch, und darin bin ich furchtbar.`,
   wie: `amüsiert, ein wenig lauernd`, wie2: `schneller, offener`, stimmung: `interessiert`
 },
 

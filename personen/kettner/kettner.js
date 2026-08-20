@@ -129,8 +129,8 @@ kennenfrage: [
 ],
 
 uebergang1: {
-  duFest: `Du sagst, warum du da bist: eine Anzeige, drei Zeilen, jemand in diesem Haus sucht Hilfe. Unterschrieben mit R. Melzer, Zimmer 2.14. Wie dringend du sie brauchst, sagst du nicht.`,
-  er: `Melzer. Zimmer 2.14.`,
+  duFest: `Du sagst, warum du da bist: eine Anzeige, drei Zeilen, jemand in diesem Haus sucht Hilfe. Unterschrieben mit R. Melzer, Zimmer 1.14. Wie dringend du sie brauchst, sagst du nicht.`,
+  er: `Melzer. Zimmer 1.14.`,
   erRegie: `Sie sagt es, ohne nachzusehen, und legt den Stift genau parallel zur Kante des Buches.`,
   er2: `Der hat das Haus im März verlassen. Den Ausweis hat er nicht abgegeben, das steht bei mir bis heute als offen. Sie können trotzdem sitzen bleiben — angemeldet ist bis halb zwölf ohnehin niemand.`,
   wie: `verbindlich, ohne jede Überraschung`, wie2: `sachlich`, stimmung: `neutral`

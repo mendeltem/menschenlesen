@@ -113,7 +113,7 @@ kennenfrage: [
 ],
 
 uebergang1: {
-  duFest: `Du sagst, warum du da bist: eine Anzeige, drei Zeilen, jemand in diesem Haus sucht Hilfe. Unterschrieben mit R. Melzer, Zimmer 2.14. Wie dringend du sie brauchst, sagst du nicht.`,
+  duFest: `Du sagst, warum du da bist: eine Anzeige, drei Zeilen, jemand in diesem Haus sucht Hilfe. Unterschrieben mit R. Melzer, Zimmer 1.14. Wie dringend du sie brauchst, sagst du nicht.`,
   er: `Melzer.`,
   erRegie: `Sie greift hinter sich, nimmt einen Schraubenzieher und fängt an, ihn zu putzen, ohne hinzusehen.`,
   er2: `Dessen Zimmer habe ich im April ausgeräumt. Zwei Kisten, die stehen immer noch bei mir, weil sie keiner abholt. Setzen Sie sich und erzählen Sie mir bis dahin was Vernünftiges, ich habe die Hände frei.`,

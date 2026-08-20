@@ -108,7 +108,7 @@ kennenfrage: [
 ],
 
 uebergang1: {
-  duFest: `Du sagst, warum du da bist: eine Anzeige, drei Zeilen, jemand in diesem Haus sucht Hilfe. Unterschrieben mit R. Melzer, Zimmer 2.14. Wie dringend du sie brauchst, sagst du nicht.`,
+  duFest: `Du sagst, warum du da bist: eine Anzeige, drei Zeilen, jemand in diesem Haus sucht Hilfe. Unterschrieben mit R. Melzer, Zimmer 1.14. Wie dringend du sie brauchst, sagst du nicht.`,
   er: `Ach, der Melzer.`,
   erRegie: `Er schiebt den Teller einen Zentimeter näher.`,
   er2: `Vierzehn Jahre lang dienstags Fisch, und kein einziges Mal etwas dazu gesagt. Weder gut noch schlecht. Essen Sie erst mal, das andere läuft nicht weg.`,

@@ -119,8 +119,8 @@ kennenfrage: [
 ],
 
 uebergang1: {
-  duFest: `Du sagst, warum du da bist: eine Anzeige, drei Zeilen, jemand in diesem Haus sucht Hilfe. Unterschrieben mit R. Melzer, Zimmer 2.14. Wie dringend du sie brauchst, sagst du nicht.`,
-  er: `2.14.`,
+  duFest: `Du sagst, warum du da bist: eine Anzeige, drei Zeilen, jemand in diesem Haus sucht Hilfe. Unterschrieben mit R. Melzer, Zimmer 1.14. Wie dringend du sie brauchst, sagst du nicht.`,
+  er: `1.14.`,
   erRegie: `Er stellt den Laptop auf den Boden, überlegt es sich anders und legt ihn auf die Knie zurück, zugeklappt.`,
   er2: `Sein Konto läuft noch. Es gibt keinen Vorgang dafür, wenn jemand einfach nicht mehr kommt — also läuft es weiter, seit fünf Monaten, und ich sehe jedes Mal seinen Namen. Erzählen Sie später davon. Ich höre erst mal zu.`,
   wie: `sofort, ohne nachzudenken`, wie2: `zu schnell, als wäre er froh, dass ihn jemand fragt`, stimmung: `freundlich`
