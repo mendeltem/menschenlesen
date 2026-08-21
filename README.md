@@ -102,6 +102,11 @@ auf einmal, mit seinem eigenen Bild und seiner eigenen Farbe, und
 wechselst mit **▲** und **▼**. Die Zimmer dahinter behalten ihr eigenes
 Farbschema — man tritt aus dem Amt in ein Leben und wieder zurück.
 
+Zwei bis drei Leute je Etage heißt: eine Karte darf groß sein. Das
+Gesicht steht oben über die ganze Breite, der Name darunter. Man soll
+sehen, wem man gleich gegenübersitzt, und nicht einen Daumennagel
+entziffern.
+
 | | | |
 |---|---|---|
 | **Erster Stock** | Tobias Baumgartner, Annika Reuter | der Gang mit den Büros; die vierte Tür ist Melzers |
@@ -162,11 +167,12 @@ gehört hast, und wie ihr steht. Gespeichert werden nicht die
 Wahrscheinlichkeiten, sondern die Antworten; beim nächsten Mal wird
 daraus dasselbe Bild neu gerechnet.
 
-**Ein blätterbarer Verlauf.** Jeder Wortwechsel trägt eine Marke mit
-Nummer — *jetzt*, *−1*, *−2* —, und genau einer steht groß. Mit den
-Pfeiltasten, den zwei Knöpfen oben rechts oder dem Mausrad am oberen
-Rand springt man zurück; der gewählte wird groß, alles andere klein, und
-daneben steht ausgeschrieben, wie weit man zurück ist.
+**Ein blätterbarer Verlauf.** Es steht genau ein Wortwechsel da, und
+alles davor ist nicht klein, sondern weg. Mit den Pfeiltasten, den zwei
+Knöpfen oben rechts oder dem Mausrad am oberen Rand blättert man
+zurück; daneben steht ausgeschrieben, wie weit — *jetzt*, *−1 · eine
+Unterhaltung davor*. Eine Wand aus halbdurchsichtiger Schrift liest
+niemand, und sie nimmt dem, was gerade gesagt wird, die Luft.
 
 **Eine Drehscheibe statt einer Reihenfolge.** Nach jedem Schritt
 entscheidest du neu: ihn über sich reden lassen, herausfinden, worauf er

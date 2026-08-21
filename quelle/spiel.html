@@ -207,7 +207,7 @@ body.imMenue .mkonto{color:#cdbfa6}
 body.imMenue .mkonto b{color:#f0d9a8}
 body.imMenue .eyebrow{color:color-mix(in srgb, var(--stock) 50%, #e8dcc6)}
 
-.mkarten{display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:12px; margin-top:12px}
+.mkarten{display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:16px; margin-top:14px}
 /* Eine Etage: Überschrift über die ganze Breite, darunter ihre Leute. */
 .etage{grid-column:1/-1; margin-top:14px; display:flex; align-items:baseline; gap:12px; flex-wrap:wrap}
 .etage:first-child{margin-top:0}
@@ -219,24 +219,24 @@ body.imMenue .eyebrow{color:color-mix(in srgb, var(--stock) 50%, #e8dcc6)}
 .etage span{font-size:13px; color:var(--muted)}
 .etage .schloss{grid-column:1/-1; font-size:13px; color:var(--muted); line-height:1.5;
   border:1px dashed var(--line); border-radius:11px; padding:12px 14px; background:var(--surface)}
-a.mkarte, button.mkarte{display:flex; gap:14px; align-items:center; text-align:left; font:inherit; color:inherit;
-  background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:14px 16px;
-  cursor:pointer; transition:border-color .15s, transform .15s, box-shadow .15s}
-.mkarte:hover{border-color:var(--accent); transform:translateY(-2px); box-shadow:var(--glow)}
-.mkarte .mbild{flex:0 0 auto; width:66px; height:66px; border-radius:12px; border:1px solid var(--line);
-  background-size:cover; background-position:center 12%; filter:var(--face-filter,none)}
-.mkarte b{display:block; font-size:17px; font-weight:600; letter-spacing:-.01em}
-.mkarte span{display:block; font-size:13px; color:var(--muted); line-height:1.45; margin-top:3px}
+/* Zwei bis drei Leute je Etage, also darf eine Karte groß sein: das
+   Gesicht oben über die ganze Breite, der Name darunter. Man soll
+   sehen, wem man gleich gegenübersitzt, und nicht einen Daumennagel
+   entziffern. */
+a.mkarte, button.mkarte{display:flex; flex-direction:column; align-items:stretch; text-align:left;
+  font:inherit; color:inherit; background:var(--surface); border:1px solid var(--line);
+  border-radius:var(--r); padding:0; overflow:hidden; cursor:pointer;
+  transition:border-color .15s, transform .15s, box-shadow .15s}
+.mkarte:hover{border-color:var(--accent); transform:translateY(-3px); box-shadow:var(--glow)}
+.mkarte .mbild{width:100%; aspect-ratio:5/4; border:0; border-bottom:1px solid var(--line);
+  background-size:cover; background-position:center 16%; filter:var(--face-filter,none)}
+.mkarte .mtext{padding:13px 16px 15px}
+.mkarte b{display:block; font-size:19px; font-weight:600; letter-spacing:-.01em}
+.mkarte span{display:block; font-size:13px; color:var(--muted); line-height:1.45; margin-top:4px}
+.mkarte[disabled] .mbild{filter:grayscale(1) brightness(.6)}
 .mkonto{margin-top:22px; font-family:var(--mono); font-size:11.5px; letter-spacing:.1em;
   text-transform:uppercase; color:var(--muted)}
 .mkonto b{color:var(--accent)}
-.mzeilen{display:flex; flex-direction:column; gap:8px; margin-top:20px; max-width:520px}
-button.mzeile{text-align:left; font:inherit; color:inherit; background:var(--surface);
-  border:1px solid var(--line-soft); border-radius:11px; padding:11px 14px; cursor:pointer;
-  transition:border-color .15s, transform .15s}
-button.mzeile:hover{border-color:var(--accent); transform:translateY(-1px)}
-button.mzeile b{display:block; font-size:14.5px; font-weight:600}
-button.mzeile span{display:block; font-size:12.5px; color:var(--muted); margin-top:2px; line-height:1.45}
 body.imMenue .grid{display:none}
 body:not(.imMenue) .menue{display:none}
 .chatschalter{; margin:4px 0}
@@ -257,13 +257,13 @@ body:not(.imMenue) .menue{display:none}
 .line.davor{opacity:.72}
 .line.davor .txt{font-size:15px}
 .line.davor.regie{font-size:12.5px}
-.line.frueher{opacity:.42}
-.line.frueher .txt{font-size:13px; line-height:1.4}
-.line.frueher.regie{font-size:11.5px; line-height:1.45}
-.line.frueher .lab{font-size:8px; margin-bottom:1px}
-.line.frueher .wie{display:none}
-.line.frueher.meta{font-size:9.5px; line-height:1.6}
-.talk:hover .line.frueher{opacity:.62}
+/* Es steht genau ein Wortwechsel da: der, auf dem der Blätterer steht.
+   Alles davor ist nicht klein, sondern weg — wer zurück will, blättert
+   zurück, und dann ist der andere weg. Eine Wand aus halbdurchsichtiger
+   Schrift liest niemand, und sie nimmt dem, was gerade gesagt wird,
+   die Luft. */
+.line.frueher{display:none}
+.wwmarke:not(.hier){display:none}
 @keyframes rise{from{opacity:0; transform:translateY(8px)} to{opacity:1; transform:none}}
 .line.meta{font-family:var(--mono); font-size:10.5px; line-height:1.8; letter-spacing:.03em; color:var(--muted);
   opacity:.85; margin-top:-4px; padding-left:16px; border-left:1px dashed var(--line-soft); max-width:70ch}
@@ -589,12 +589,6 @@ table.bil tr.hi td.n{color:var(--accent); font-weight:600}
     <div class="stockhinweis" id="stockHinweis" hidden></div>
     <div class="mkarten" id="mkarten"></div>
     <div class="mkonto" id="mkonto"></div>
-    <div class="mzeilen">
-      <button class="mzeile" id="mInfo"><b>Was das Modell tut</b>
-        <span>Die Rechnung dahinter, und was daran belegt ist.</span></button>
-      <button class="mzeile" id="mReset"><b>Zurücksetzen</b>
-        <span>Alle Akten, jeden Weg im Haus und alle gespeicherten Einstellungen löschen.</span></button>
-    </div>
   </section>
 
   <div class="grid">
@@ -2310,8 +2304,6 @@ function zeigeMenue(){
   if(etageJetzt == null) etageJetzt = routeBis();
   zeichneEtage();
   choicesEl.innerHTML = "";
-  document.getElementById("mInfo").onclick  = () => zeigeInfo(true);
-  document.getElementById("mReset").onclick = () => zuruecksetzen();
   waehleSpur();
 }
 
@@ -2373,7 +2365,7 @@ function zeichneEtage(){
              ? ` · <i style="color:var(--accent)">noch nicht nach dem Antrag gefragt</i>` : ``);
     return `<button class="mkarte" data-person="${pp.id}"${zu?" disabled":""}>
       <span class="mbild" style="background-image:url('${pp.menubild || ""}')"></span>
-      <span><b>${esc(pp.hero.name)}, ${pp.hero.age}</b>
+      <span class="mtext"><b>${esc(pp.hero.name)}, ${pp.hero.age}</b>
         <span>${unten}</span></span>
     </button>`; }).join("");
   document.querySelectorAll("[data-person]").forEach(b =>
