@@ -7,15 +7,14 @@
    in den Speisesaal. Wer ihn für den lauten, herzlichen Koch hält, den
    das Klischee verspricht, redet an ihm vorbei.
 
-   Er ist auch der Prüfstein für die Ware. Bei Baumgartner trägt die
-   Uhr, bei Reuter der Stift, bei ihm ebenfalls der Stift — aus einem
-   anderen Grund: sie will nichts verlieren, er will nichts vergessen.
-   Wer die Ware nach dem Menschen wählt und nicht nach dem letzten Mal,
-   merkt den Unterschied nicht einmal. Wer nach Gewohnheit wählt, schon.
+   Er ist auch der Prüfstein für die Gewohnheit. Bei Reuter trägt der
+   behutsame Weg und bei ihm auch — nur aus einem anderen Grund: sie
+   ist genau, er ist warm. Wer nach dem Menschen geht, merkt den
+   Unterschied nicht einmal. Wer nach dem letzten Gespräch geht, schon.
 
    Seine vier privaten Felder tragen dieselben Kennungen wie bei den
-   anderen (musik, werkstatt, tochter, plan60), weil die Waren in
-   welt.js darauf zeigen. Die Kennungen sind Fächer, kein Inhalt.
+   anderen (musik, werkstatt, tochter, plan60). Die Kennungen sind
+   Fächer, kein Inhalt.
    ═══════════════════════════════════════════════════════════════════ */
 PERSONEN.push({
 
@@ -74,7 +73,7 @@ baum: {
     wie: `warm, ohne aufzusehen`, stimmung: `freundlich`,
     erRegie: `Er trocknet sich die Hände, stellt einen Teller mit zwei Stück Kuchen zwischen euch und schiebt ihn dir zu, ohne zu fragen.`,
     er2: `Vom Mittag übrig. Sonst wirft man ihn weg, und das mache ich nicht.`, wie2: `beiläufig, endgültig`,
-    nachRegie: `Er setzt sich, die Hände auf den Knien. Draußen läuft die Spülmaschine. Ihr habt vierzig Minuten, und du hast dir vorgenommen, nicht sofort nach der Stelle zu fragen.`,
+    nachRegie: `Er setzt sich, die Hände auf den Knien. Draußen läuft die Spülmaschine. Ihr habt vierzig Minuten, und du hast dir vorgenommen, nicht sofort nach dem Antrag zu fragen.`,
     frage: true
   },
 
@@ -457,7 +456,7 @@ motivfragen: [
 ],
 
 /* --- Was ihn privat bewegt. Dieselben vier Kennungen wie bei den
-       anderen, weil die Waren darauf zeigen. ----------------------- */
+       anderen — die Kennungen sind Fächer, kein Inhalt. ----------------------- */
 
 privat: {
   grenze: 10,

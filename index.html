@@ -1198,7 +1198,7 @@ function frischeAkte(){
   return { besuche:0, bez:WELT.freundschaft.start, bfVerlauf:[], moVerlauf:[],
            bfGestellt:[], moGestellt:[], privGestellt:[], zGesehen:[],
            fakten:[], spuren:[], gesagt:[], gefunden:[], bedarf:[],
-           geduldWeg:0, fest:{}, letzter:null, einstiegGesehen:[], arbeitGefragt:false,
+           geduldWeg:0, fest:{}, letzter:null, einstiegGesehen:[], antragGefragt:false,
            stufe:1, punkte:{}, sterne:null };
 }
 /* Ältere Stände bekommen fehlende Felder nachgereicht, statt dass das
@@ -1206,6 +1206,10 @@ function frischeAkte(){
 function akteVon(id){
   if(!AKTE[id]) AKTE[id] = frischeAkte();
   const a = AKTE[id], f = frischeAkte();
+  /* Das Feld hieß einmal arbeitGefragt, als es hier noch um eine Stelle
+     ging. Wer damals gespielt hat, soll seinen Weg behalten. */
+  if(a.antragGefragt === undefined && a.arbeitGefragt !== undefined)
+    a.antragGefragt = a.arbeitGefragt;
   for(const k in f) if(a[k] === undefined) a[k] = f[k];
   return a;
 }
@@ -1223,7 +1227,7 @@ function stufenMax(L){ return L.punkte ? L.punkte.genau * (L.key === "bf" ? 5 : 
 const gelesen = a => (a.stufe || 1) >= 3;
 /* Gelesen reicht nicht. Weiter kommt nur, wem jemand etwas gesagt hat —
    und dafür muss man gefragt haben. */
-const durch = a => gelesen(a) && !!a.arbeitGefragt;
+const durch = a => gelesen(a) && !!a.antragGefragt;
 const etageVon = pp => pp.etage || 1;
 const leuteAuf = n => PERSONEN.filter(pp => etageVon(pp) === n);
 /* Wie weit dich die Route gebracht hat: die erste Etage, auf der noch
@@ -1873,7 +1877,7 @@ function vielleichtTutorial(){
 
    Sind alle einer Etage gelesen und gefragt, hängt die Person noch
    einen Satz an: wo man als Nächstes hinsoll. */
-function arbeitFragen(){
+function antragFragen(){
   const A2 = DATA.antrag;
   if(!A2) return drehscheibe();
   const offen = gelesen(A) && S.stufe > 2;
@@ -1883,26 +1887,26 @@ function arbeitFragen(){
     sag("meta", `${AN("Er")} kennt dich zu wenig`,
       {warn:true, lang:`Auf diese Frage antwortet niemand ehrlich, der einen nicht kennt. Lies ${AN("ihn")} erst zu Ende — beide Stufen.`});
     zeichne();
-    return setTimeout(() => weiterNachArbeit(), 60);
+    return setTimeout(() => weiterNachAntrag(), 60);
   }
   erSagt(A2.offen); merke(A2.offen);
-  const vorher = A.arbeitGefragt;
-  A.arbeitGefragt = true; akteSichern();
+  const vorher = A.antragGefragt;
+  A.antragGefragt = true; akteSichern();
   /* Macht diese Frage die Etage voll? Dann sagt sie noch etwas dazu. */
   const E = WELT.etagen.find(e => e.nr === (DATA.etage || 1));
   const fertig = leuteAuf(DATA.etage || 1).every(pp => durch(akteVon(pp.id)));
   if(!vorher && fertig && E && E.weiter){
     if(E.weiterRegie) sag("regie", E.weiterRegie);
     sag("er", E.weiter, {wie:E.weiterWie});
-    sag("meta", E.ende ? `<b>${esc(WELT.angeheuert.titel)}</b>` : `Die Route geht weiter`,
-      {lang: E.ende ? esc(WELT.angeheuert.text)
+    sag("meta", E.ende ? `<b>${esc(WELT.a38.titel)}</b>` : `Die Route geht weiter`,
+      {lang: E.ende ? esc(WELT.a38.text)
                     : `Alle auf dieser Etage sind gelesen und gefragt. Hingehen durftest du überall — jetzt weiß man dort auch, wer du bist.`});
   }
   zeichne();
-  setTimeout(() => weiterNachArbeit(), 60);
+  setTimeout(() => weiterNachAntrag(), 60);
 }
 /* Nach der Frage geht es dorthin zurück, wo man hergekommen ist. */
-function weiterNachArbeit(){
+function weiterNachAntrag(){
   if(S.stufe <= 2) return leseRunde(S.band === "mo" ? cfgMO : cfgBF);
   drehscheibe();
 }
@@ -1947,9 +1951,9 @@ function drehscheibe(){
       rechts:`privat · kostet am meisten Geduld`,
       go(){ S.phase = 3; zeichne(); privatRunde(); } });
 
-  if(DATA.antrag && !A.arbeitGefragt)
+  if(DATA.antrag && !A.antragGefragt)
     items.push({ t:DATA.antrag.frage, tag:kopf, klasse:"haupt",
-      rechts:`der Antrag, wegen dem du hier bist`, go(){ arbeitFragen(); } });
+      rechts:`der Antrag, wegen dem du hier bist`, go(){ antragFragen(); } });
 
   items.push({ t:`Dich verabschieden`, tag:kopf, klasse:"weiter",
     rechts:`Besuch beenden, solange es gut ist`, go(){ abschied(); } });
@@ -2002,7 +2006,7 @@ function leseRunde(cfg){
      nächsten Besuch stehen sie noch da. Nur gewertet wird nichts,
      solange du dich nicht festgelegt hast. */
   if(S.stufe <= 2 && DATA.antrag) items.push({ t:DATA.antrag.frage, rechts:`der Antrag, wegen dem du hier bist`,
-    go(){ arbeitFragen(); } });
+    go(){ antragFragen(); } });
   if(S.stufe <= 2) items.push({ t:`Für heute reicht es. Du verabschiedest dich.`, klasse:"weiter",
     rechts:`ohne dich festzulegen · was du gehört hast, bleibt`,
     go(){ abschied(); } });
@@ -2616,7 +2620,7 @@ function zeichneEtage(){
         : `Stufe ${a.stufe} · ${esc(anredeVon(pp, L.name))}`
           + (a.sterne != null ? ` · ${"★".repeat(a.sterne)}${"☆".repeat(5-a.sterne)} ${beide} Punkte`
              : ` · ${beide} Punkte`)
-          + (gelesen(a) && !a.arbeitGefragt
+          + (gelesen(a) && !a.antragGefragt
              ? ` · <i style="color:var(--accent)">noch nicht nach dem Antrag gefragt</i>` : ``);
     return `<button class="mkarte" data-person="${pp.id}"${zu?" disabled":""}>
       <span class="mbild" style="background-image:url('${pp.menubild || ""}')"></span>
@@ -2629,7 +2633,7 @@ function zeichneEtage(){
   const fertig = PERSONEN.filter(pp => durch(akteVon(pp.id))).length;
   const wo = WELT.etagen.find(x => x.nr === routeBis()) || {};
   document.getElementById("mkonto").innerHTML = fertig === PERSONEN.length
-    ? `<b>${esc(WELT.angeheuert.titel)}</b> ${esc(WELT.angeheuert.text)}`
+    ? `<b>${esc(WELT.a38.titel)}</b> ${esc(WELT.a38.text)}`
     : `<b>${wort(fertig)}</b> von ${wort(PERSONEN.length)} Menschen gelesen und gefragt · `
       + `die Route steht im <b>${esc(wo.name || "")}</b>`;
 }

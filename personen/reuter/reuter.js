@@ -10,9 +10,9 @@
    sondern ein sehr höfliches Ende.
 
    Ihre vier privaten Felder tragen dieselben Kennungen wie seine
-   (musik, werkstatt, tochter, plan60), weil die Waren in welt.js
-   darauf zeigen. Die Kennungen sind Fächer, kein Inhalt: bei ihm
-   steht unter musik ein Kontrabass, bei ihr ein Kirchenchor.
+   (musik, werkstatt, tochter, plan60). Die Kennungen sind Fächer, kein
+   Inhalt: bei ihm steht unter musik ein Kontrabass, bei ihr ein
+   Kirchenchor.
    ═══════════════════════════════════════════════════════════════════ */
 PERSONEN.push({
 
@@ -80,7 +80,7 @@ baum: {
     wie: `leise, sofort entschuldigend`, stimmung: `neutral`,
     erRegie: `Sie tritt zur Seite, nimmt einen Stapel Kartons vom Besucherstuhl und stellt ihn ordentlich neben die Tür.`,
     er2: `Setzen Sie sich. Möchten Sie Tee? Ich habe nur Tee.`, wie2: `freundlich, ein wenig zu schnell`,
-    nachRegie: `Der Raum ist kühl und sehr aufgeräumt. Auf dem Tisch liegt ein einzelnes stockfleckiges Blatt unter sechs Messinggewichten. Ihr habt vierzig Minuten, und du hast dir vorgenommen, nicht sofort nach der Stelle zu fragen.`,
+    nachRegie: `Der Raum ist kühl und sehr aufgeräumt. Auf dem Tisch liegt ein einzelnes stockfleckiges Blatt unter sechs Messinggewichten. Ihr habt vierzig Minuten, und du hast dir vorgenommen, nicht sofort nach dem Antrag zu fragen.`,
     frage: true
   },
 
@@ -440,8 +440,7 @@ motivfragen: [
 ],
 
 /* --- Was sie privat bewegt. Die Kennungen sind dieselben Fächer wie
-       bei Baumgartner, damit die Waren aus welt.js darauf zeigen —
-       der Inhalt ist ihrer. ---------------------------------------- */
+       bei Baumgartner, der Inhalt ist ihrer. ----------------------- */
 
 privat: {
   grenze: 10,

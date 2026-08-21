@@ -79,7 +79,7 @@ baum: {
     erRegie: `Es klackt zweimal, dann kommt sie heraus, steht auf und wischt sich die Hände an der Hose ab.`,
     er2: `So. Sie sind der Termin. Setzen Sie sich, aber nicht auf den Stuhl da, der ist gestrichen.`,
     wie2: `schnell, freundlich, ohne Punkt und Komma`,
-    nachRegie: `Sie schiebt einen Hocker mit dem Fuß herüber und setzt sich auf die Werkbank. Irgendwo im Raum läuft ein Radio, sehr leise. Ihr habt vierzig Minuten, und du hast dir vorgenommen, nicht sofort nach der Stelle zu fragen.`,
+    nachRegie: `Sie schiebt einen Hocker mit dem Fuß herüber und setzt sich auf die Werkbank. Irgendwo im Raum läuft ein Radio, sehr leise. Ihr habt vierzig Minuten, und du hast dir vorgenommen, nicht sofort nach dem Antrag zu fragen.`,
     frage: true
   },
 
@@ -461,7 +461,7 @@ motivfragen: [
 ],
 
 /* --- Was sie privat bewegt. Dieselben vier Kennungen wie bei den
-       anderen, weil die Waren darauf zeigen. ----------------------- */
+       anderen — die Kennungen sind Fächer, kein Inhalt. ----------------------- */
 
 privat: {
   grenze: 10,
@@ -752,7 +752,7 @@ zustaende: [
       liest:{C:1.0, E:0.5, A:-0.3},
       gut:{ er:`Nein. Aufzug ist Fremdfirma, das ist auch richtig so.`,
             erRegie:`Sie klopft mit dem Fingerknöchel gegen das Schild.`,
-            er2:`Was ich darf, ist das Schild hinhängen und den Leuten im dritten Stock erklären, warum. Beides mache ich seit gestern.`,
+            er2:`Was ich darf, ist das Schild hinhängen und es der Verwaltung im zweiten Stock erklären, warum. Beides mache ich seit gestern.`,
             wie:`sofort`, wie2:`trocken`, stimmung:`interessiert`,
             fakt:`darf an den Aufzug nicht ran und muss ihn trotzdem den Leuten erklären`, bez:7 },
       zu:{ er:`Das macht die Firma.`, wie:`knapp`, stimmung:`neutral`, bez:-1 } },

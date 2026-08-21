@@ -71,7 +71,7 @@ baum: {
     wie: `schnell, im Gehen gesprochen`, stimmung: `neutral`,
     erRegie: `Er schiebt einen Stapel Ausdrucke vom Besucherstuhl auf den Boden.`,
     er2: `So. Setzen.`, wie2: `kurz, endgültig`,
-    nachRegie: `Er stellt zwei Tassen hin, ohne zu fragen, und schiebt dir eine zu. Die Maschine dahinter ist von 2009 und klingt danach. Ihr habt vierzig Minuten, und du hast dir vorgenommen, nicht sofort nach der Stelle zu fragen.`,
+    nachRegie: `Er stellt zwei Tassen hin, ohne zu fragen, und schiebt dir eine zu. Die Maschine dahinter ist von 2009 und klingt danach. Ihr habt vierzig Minuten, und du hast dir vorgenommen, nicht sofort nach dem Antrag zu fragen.`,
     frage: true
   },
 
@@ -302,8 +302,8 @@ bigfive: [
 
        Die Antworten sind absichtlich lang. Sie sollen nicht nur einen
        Wert setzen, sondern einen Menschen zeigen: eine Zahl, ein Jahr,
-       ein Name — irgendetwas, das man sich merkt und worauf man im
-       Verkauf zurückgreifen kann. ---------------------------------- */
+       ein Name — irgendetwas, das man sich merkt und worauf man später
+       zurückgreifen kann. ------------------------------------------ */
 
 motivfragen: [
   { id:`zusage`, q:`Was müsste ein Projekt haben, damit Sie zusagen?`,
@@ -524,10 +524,6 @@ hinausgeworfen: {
   er: `Wissen Sie, ich habe vierzig Minuten geblockt, nicht meine Biografie. Schicken Sie mir per Mail, was Sie eigentlich wollten.`,
   wie: `ruhig, endgültig, ohne jede Lautstärke`, stimmung: `abweisend`
 },
-
-/* --- Akt 5: der Verkauf. Erst das Was, dann das Wie. --------------
-   passt   = an welche Motive das Produkt selbst ruehrt
-   spricht = welche privaten Funde es zusaetzlich treffen             */
 
 /* ═══════════════════════════════════════════════════════════════════
    Was seit dem letzten Mal passiert ist.

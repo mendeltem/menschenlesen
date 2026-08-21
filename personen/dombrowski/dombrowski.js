@@ -85,7 +85,7 @@ baum: {
     erRegie: `Irgendwo hört ein Ton auf. Er atmet aus, klappt den Laptop zu und dreht sich auf dem Wagen zu dir herum.`,
     er2: `So. Sie sind der Termin. Setzen Sie sich — nicht auf den Karton, da ist was drin.`,
     wie2: `schneller, als er selbst erwartet hat`,
-    nachRegie: `Er schiebt dir einen Bürostuhl ohne Lehne zu und bleibt selbst auf dem Rollwagen sitzen. Die Lüfter rauschen so gleichmäßig, dass man es nach zwei Minuten nicht mehr hört. Ihr habt vierzig Minuten, und du hast dir vorgenommen, nicht sofort nach der Stelle zu fragen.`,
+    nachRegie: `Er schiebt dir einen Bürostuhl ohne Lehne zu und bleibt selbst auf dem Rollwagen sitzen. Die Lüfter rauschen so gleichmäßig, dass man es nach zwei Minuten nicht mehr hört. Ihr habt vierzig Minuten, und du hast dir vorgenommen, nicht sofort nach dem Antrag zu fragen.`,
     frage: true
   },
 
@@ -468,7 +468,7 @@ motivfragen: [
 ],
 
 /* --- Was ihn privat bewegt. Dieselben vier Kennungen wie bei den
-       anderen, weil die Waren darauf zeigen. ----------------------- */
+       anderen — die Kennungen sind Fächer, kein Inhalt. ----------------------- */
 
 privat: {
   grenze: 10,
