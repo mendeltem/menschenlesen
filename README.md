@@ -1,8 +1,10 @@
-# Vierzig Minuten für einen Fremden
+# A38
 
-[![Vierzig Minuten für einen Fremden — jetzt im Browser spielen](bilder/spielen.svg)](https://mendeltem.github.io/menschenlesen/)
+[![A38 — jetzt im Browser spielen](bilder/spielen.svg)](https://mendeltem.github.io/menschenlesen/)
 
 ### ▶ [Hier spielen](https://mendeltem.github.io/menschenlesen/) — im Browser, ohne Installation, ohne Konto
+
+*Ein Antrag in sechs Gesprächen.*
 
 *Wer hier weiterbaut, fängt unten bei **[Weiterbauen](#weiterbauen)** an:
 dort steht, welche Datei man anfasst, wie gebaut wird, was entschieden
