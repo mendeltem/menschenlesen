@@ -15,6 +15,27 @@ Dateien gehören nach `bilder/` und heißen so, wie `welt.js` sie erwartet:
 Fehlt ein Bild, bleibt der Farbverlauf stehen — das Spiel läuft, es ist
 nur weniger schön.
 
+Über dem Bild liegt ein Schleier, damit die Schrift lesbar bleibt: oben
+und unten dunkel, in der Mitte durchsichtig. Ein Bild darf also ruhig
+hell sein.
+
+### Der erste Bogen
+
+Er kam als 2×2, also mit vier Feldern für drei Stockwerke — das
+Erdgeschoss war zweimal drin. Genommen wurde die Fassung mit der
+Werkstatttür, den Paketen und den nassen Streifen, weil diese drei Dinge
+im Gespräch vorkommen. Der Bogen liegt als `etagenbogen.jpg` daneben.
+
+Die hellen Stege lagen bei x 1368–1383 und y 760–775; geschnitten wurde
+mit drei Pixel Rand:
+
+| Feld | Datei |
+|---|---|
+| oben links | `etageE.webp` |
+| oben rechts | `etage1.webp` |
+| unten rechts | `etageU.webp` |
+| unten links | die zweite Erdgeschossfassung, ungenutzt |
+
 ---
 
 ## Was alle drei gemeinsam haben

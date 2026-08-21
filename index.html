@@ -417,11 +417,14 @@ body.imMenue .raum{display:none}
 body.imMenue .menue{
   --stock: #8c5a44;
   padding:22px 24px 26px; border-radius:18px;
+  /* Drei Lagen: ein Schleier, damit die Schrift lesbar bleibt, darunter
+     das Stockwerksbild, und ganz unten der Verlauf für den Fall, dass
+     es fehlt. */
   background:
-    linear-gradient(180deg, rgba(244,238,226,.06), rgba(244,238,226,0) 40%),
+    linear-gradient(180deg, rgba(12,9,6,.86) 0%, rgba(12,9,6,.58) 42%, rgba(12,9,6,.90) 100%),
     var(--stockbild, none),
     linear-gradient(160deg, color-mix(in srgb, var(--stock) 34%, #17110c), #17110c 72%);
-  background-size:auto, cover, auto; background-position:center;
+  background-size:auto, cover, auto; background-position:center, center 38%, center;
   border:1px solid color-mix(in srgb, var(--stock) 45%, var(--line));
   box-shadow:inset 0 1px 0 rgba(244,238,226,.10), 0 18px 44px rgba(0,0,0,.45);
 }
