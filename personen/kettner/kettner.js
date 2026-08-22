@@ -34,6 +34,10 @@ id: `kettner`,
 /* In welcher Etage diese Person sitzt. Dorthin kommst du erst, wenn dich
    jemand aus der Etage darunter weiterschickt. */
 etage: 1,
+/* An welcher Stelle der Route sie steht, und was an ihrer Tür
+   hängt. Vor der eigenen Nummer sieht man nur die Tür. */
+route: 1,
+tuer: { schild: `Empfang`, bild: `bilder/tuer-empfang.webp` },
 kurz: `Empfang, 56. Weinroter Strickmantel hinter einer Glasscheibe,
        ein aufgeschlagenes Besucherbuch, und ein Lächeln, das angeht und ausgeht.`,
 theme: `ozean`,

@@ -20,6 +20,10 @@ id: `baumgartner`,
 /* In welcher Etage diese Person sitzt. Dorthin kommst du erst, wenn dich
    jemand aus der Etage darunter weiterschickt. */
 etage: 2,
+/* An welcher Stelle der Route sie steht, und was an ihrer Tür
+   hängt. Vor der eigenen Nummer sieht man nur die Tür. */
+route: 3,
+tuer: { schild: `1.11`, bild: `bilder/tuer-buero.webp` },
 /* Womit die Person im Menü steht und welches Farbschema sie mitbringt. */
 kurz: `Statistiker, 52. Wilder grauer Schopf und Kopfhörer um den Hals,
        ein Schreibtisch, der seit Jahren nicht aufgeräumt wurde.`,

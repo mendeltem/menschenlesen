@@ -22,6 +22,10 @@ id: `vogt`,
 /* In welcher Etage diese Person sitzt. Dorthin kommst du erst, wenn dich
    jemand aus der Etage darunter weiterschickt. */
 etage: 1,
+/* An welcher Stelle der Route sie steht, und was an ihrer Tür
+   hängt. Vor der eigenen Nummer sieht man nur die Tür. */
+route: 2,
+tuer: { schild: `Hausmeisterei`, bild: `bilder/tuer-werkstatt.webp` },
 kurz: `Hausmeisterin, 47. Grauer Zopf und orangefarbene Arbeitsjacke,
        ein Schlüsselbund am Gürtel, an dem einundvierzig Schlüssel hängen.`,
 theme: `terminal`,

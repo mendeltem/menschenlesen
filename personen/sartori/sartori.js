@@ -22,6 +22,10 @@ id: `sartori`,
 /* In welcher Etage diese Person sitzt. Dorthin kommst du erst, wenn dich
    jemand aus der Etage darunter weiterschickt. */
 etage: 3,
+/* An welcher Stelle der Route sie steht, und was an ihrer Tür
+   hängt. Vor der eigenen Nummer sieht man nur die Tür. */
+route: 5,
+tuer: { schild: `Küche · Personal`, bild: `bilder/tuer-kueche.webp` },
 kurz: `Kantinenkoch, 61. Grauer Schopf und grünes Halstuch,
        ein Wachstuchheft unter der Kasse, das seit vierunddreißig Jahren mitgeht.`,
 theme: `dschungel`,

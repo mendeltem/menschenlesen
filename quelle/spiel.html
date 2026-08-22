@@ -210,6 +210,25 @@ body.imMenue .mkonto b{color:#f0d9a8}
 body.imMenue .eyebrow{color:color-mix(in srgb, var(--stock) 50%, #e8dcc6)}
 
 .mkarten{display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:16px; margin-top:14px}
+/* ── Türen ───────────────────────────────────────────────────────────
+   Wer noch nicht dran ist, ist eine Tür: ein Blatt, ein Griff, ein
+   Schild. Kein Name, kein Gesicht — das gibt es, wenn sie aufgeht. */
+.tuer{display:flex; flex-direction:column; align-items:stretch; border-radius:var(--r);
+  border:1px solid color-mix(in srgb, var(--stock) 26%, var(--line));
+  background:rgba(23,17,12,.42); overflow:hidden; opacity:.72}
+.tuer .tblatt{position:relative; width:100%; aspect-ratio:5/4; background-size:cover;
+  background-position:center; background-color:rgba(20,15,11,.75)}
+.tuer .griff{position:absolute; right:16%; top:50%; width:11px; height:11px; border-radius:50%;
+  background:color-mix(in srgb, var(--stock) 60%, #d8c9ad); box-shadow:0 0 0 3px rgba(0,0,0,.35)}
+.tuer .tschild{padding:13px 16px 2px; font-family:var(--mono); font-size:11.5px; letter-spacing:.12em;
+  text-transform:uppercase; color:#cdbfa6}
+.tuer .tstatus{padding:2px 16px 14px; font-size:12.5px; color:var(--muted)}
+/* Die Tür, die dran ist, leuchtet — und hört nicht damit auf. */
+@keyframes pocht{0%,100%{box-shadow:0 0 0 1px var(--accent), 0 0 0 rgba(0,0,0,0)}
+  50%{box-shadow:0 0 0 1px var(--accent), 0 0 26px color-mix(in srgb, var(--accent) 55%, transparent)}}
+.mkarte.dran{border-color:var(--accent); animation:pocht 2.4s ease-in-out infinite}
+.mkarte .tschild-auf{font-family:var(--mono); font-size:10.5px; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--accent); margin-top:2px}
 /* Eine Etage: Überschrift über die ganze Breite, darunter ihre Leute. */
 .etage{grid-column:1/-1; margin-top:14px; display:flex; align-items:baseline; gap:12px; flex-wrap:wrap}
 .etage:first-child{margin-top:0}
@@ -961,15 +980,19 @@ const gelesen = a => (a.stufe || 1) >= 3;
 const durch = a => gelesen(a) && !!a.antragGefragt;
 const etageVon = pp => pp.etage || 1;
 const leuteAuf = n => PERSONEN.filter(pp => etageVon(pp) === n);
-/* Wie weit dich die Route gebracht hat: die erste Etage, auf der noch
-   jemand nicht durch ist. Betreten darfst du auch die darüber — nur
-   weiß dort niemand, wer du bist. */
+/* Die Route läuft von Person zu Person, nicht von Etage zu Etage.
+   Offen ist genau eine Tür: die erste, die noch nicht durch ist. Alles
+   davor steht offen, alles danach ist zu. */
+const nachRoute = () => PERSONEN.slice().sort((a,b) => (a.route||99) - (b.route||99));
+function dranNr(){
+  for(const pp of nachRoute()) if(!durch(akteVon(pp.id))) return pp.route || 1;
+  return 99;
+}
+const offenFuer = pp => (pp.route || 1) <= dranNr();
+/* Die Etage, in der die offene Tür liegt — dort schlägt das Menü auf. */
 function routeBis(){
-  for(const E of WELT.etagen){
-    const hier = leuteAuf(E.nr);
-    if(hier.length && !hier.every(pp => durch(akteVon(pp.id)))) return E.nr;
-  }
-  return WELT.etagen[WELT.etagen.length-1].nr;
+  const dran = nachRoute().find(pp => !durch(akteVon(pp.id)));
+  return dran ? (dran.etage || 1) : WELT.etagen[WELT.etagen.length-1].nr;
 }
 /* Welches Stockwerk gerade zu sehen ist. */
 let etageJetzt = null;
@@ -2251,20 +2274,31 @@ function zeichneEtage(){
 
   /* Wer hier oben noch nichts von dir weiß, schickt dich weiter. Das
      steht dabei, statt dass die Tür zu wäre. */
-  const dran = E.nr <= routeBis();
+  /* Steht hier keine offene Tür, sagt das Stockwerk, woran es liegt. */
+  const hier = leuteAuf(E.nr);
   const hinw = document.getElementById("stockHinweis");
-  hinw.hidden = dran;
-  if(!dran){
-    const fehlen = WELT.etagen.filter(x => x.nr < E.nr)
-      .flatMap(x => leuteAuf(x.nr)).filter(pp => !durch(akteVon(pp.id))).length;
-    hinw.innerHTML = `Hingehen darfst du. Nur weiß hier oben noch niemand, wer du bist —
-      man wird dich weiterschicken, freundlich und im Kreis.
-      ${akk(fehlen)} ${fehlen === 1 ? "Menschen" : "Menschen"} weiter unten
-      ${fehlen === 1 ? "hast du" : "hast du"} noch nicht zu Ende gelesen.`;
+  const offen = hier.some(pp => offenFuer(pp));
+  hinw.hidden = offen;
+  if(!offen){
+    const naechste = nachRoute().find(pp => !durch(akteVon(pp.id)));
+    const wo = naechste ? (WELT.etagen.find(x => x.nr === (naechste.etage||1))||{}).name : "";
+    hinw.innerHTML = `Hier ist alles zu. Türen gehen in diesem Haus nicht auf, weil man klopft,
+      sondern weil jemand einen schickt — und geschickt wirst du gerade
+      <b>${esc(wo)}</b>. Geh dorthin zurück und mach die Tür fertig, die dort offen steht.`;
   }
 
-  document.getElementById("mkarten").innerHTML = leuteAuf(E.nr).map(pp => {
+  document.getElementById("mkarten").innerHTML = leuteAuf(E.nr)
+    .slice().sort((x,y) => (x.route||99) - (y.route||99)).map(pp => {
     const a = akteVon(pp.id), zu = a.bez < WELT.freundschaft.verbrannt;
+    const T2 = pp.tuer || {};
+    /* Noch nicht dran: man sieht die Tür und das Schild, sonst nichts.
+       Wer dahinter sitzt, erfährt man, wenn sie aufgeht. */
+    if(!offenFuer(pp)) return `<div class="tuer zu">
+      <span class="tblatt" style="background-image:url('${T2.bild || ""}')"><span class="griff"></span></span>
+      <span class="tschild">${esc(T2.schild || "")}</span>
+      <span class="tstatus">verschlossen</span>
+    </div>`;
+    const istDran = !durch(a);
     /* Was auf der Karte steht: beim ersten Mal, wer da sitzt; danach,
        wie weit du bist und was du dort erreicht hast. */
     const L = WELT.level[Math.min(2, (a.stufe || 1) - 1)];
@@ -2278,9 +2312,10 @@ function zeichneEtage(){
              : ` · ${beide} Punkte`)
           + (gelesen(a) && !a.antragGefragt
              ? ` · <i style="color:var(--accent)">noch nicht nach dem Antrag gefragt</i>` : ``);
-    return `<button class="mkarte" data-person="${pp.id}"${zu?" disabled":""}>
+    return `<button class="mkarte${istDran?" dran":""}" data-person="${pp.id}"${zu?" disabled":""}>
       <span class="mbild" style="background-image:url('${pp.menubild || ""}')"></span>
       <span class="mtext"><b>${esc(pp.hero.name)}, ${pp.hero.age}</b>
+        <span class="tschild-auf">${esc(T2.schild || "")}</span>
         <span>${unten}</span></span>
     </button>`; }).join("");
   document.querySelectorAll("[data-person]").forEach(b =>

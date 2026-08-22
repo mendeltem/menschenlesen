@@ -20,6 +20,10 @@ id: `reuter`,
 /* In welcher Etage diese Person sitzt. Dorthin kommst du erst, wenn dich
    jemand aus der Etage darunter weiterschickt. */
 etage: 2,
+/* An welcher Stelle der Route sie steht, und was an ihrer Tür
+   hängt. Vor der eigenen Nummer sieht man nur die Tür. */
+route: 4,
+tuer: { schild: `1.13 · Papierrestaurierung`, bild: `bilder/tuer-restaurierung.webp` },
 kurz: `Papierrestauratorin, 38. Dunkler Bob und Kittel über dem Pullover,
        ein Tisch, auf dem jedes Werkzeug parallel liegt.`,
 theme: `blaupause`,

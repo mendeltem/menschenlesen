@@ -34,6 +34,10 @@ id: `dombrowski`,
 /* In welcher Etage diese Person sitzt. Dorthin kommst du erst, wenn dich
    jemand aus der Etage darunter weiterschickt. */
 etage: 3,
+/* An welcher Stelle der Route sie steht, und was an ihrer Tür
+   hängt. Vor der eigenen Nummer sieht man nur die Tür. */
+route: 6,
+tuer: { schild: `U 14`, bild: `bilder/tuer-server.webp` },
 kurz: `Systemadministrator, 43. Kapuzenpulli unter dem Hemd, ein Becher
        kalter Kaffee, und ein Blick, der alle zwei Minuten zum Monitor geht.`,
 theme: `kosmos`,
