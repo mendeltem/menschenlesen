@@ -21,17 +21,23 @@ Hausmeisterin hat sein Zimmer ausgeräumt, im Keller läuft sein Konto
 weiter, weil es keinen Vorgang dafür gibt, wenn jemand einfach nicht mehr
 kommt. Die Freigabe für den A38 hängt an diesem Konto und ist gültig.
 
-**Verschlossen ist nichts.** Du darfst in jede Etage, und jede Tür geht
-auf. Nur schickt dich weg, wer dich nicht kennt — höflich, vollständig,
-und im Kreis. Erst wer beide Lesestufen hinter sich hat, hört von
-derselben Person dieselbe Sache noch einmal, und dann stimmt sie. Wer
-eine Etage durch hat, wird eine Etage weitergeschickt.
+**Im Treppenhaus steht genau eine Tür offen.** Alle anderen sind zu:
+ein Blatt, ein Griff, ein Schild, und wer dahinter sitzt, erfährst du,
+wenn sie aufgeht. Türen gehen hier nicht auf, weil man klopft.
 
-Am Ende kann dir niemand helfen. Jeder der sechs versucht es und bleibt
-an derselben Stelle stehen. Den A38 stellt dir jemand aus, den du nie
-gesprochen hast — weil in derselben Woche sechs Leute aus diesem Haus
-wegen derselben Person bei ihm angerufen haben, und das habe es in elf
-Jahren nicht gegeben.
+Wer hinter der offenen Tür sitzt, kann dir den Antrag nicht geben.
+Wirklich nicht — jeder der sechs versucht es und bleibt an derselben
+Stelle stehen. Was du bekommst, wenn du dich zu Ende mit einem Menschen
+beschäftigt hast, ist ein Satz: *ich weiß es nicht, aber ich gebe es
+weiter.* Dann geht die nächste Tür auf. Sechs Türen, fünf Weitergaben.
+
+Am Ende steht ein Systemadministrator im Serverraum, der niemanden mehr
+kennt, den er fragen könnte. Melzers Freigabe läuft weiter, weil es
+keinen Vorgang dafür gibt, wenn jemand einfach nicht mehr kommt. Drei
+Handgriffe, und sie steht auf deinem Namen. Er hat das seit dem Frühjahr
+für niemanden getan und es sich bei mindestens vier Leuten überlegt. Bei
+dir wusste er, wie du heißt und was du dienstags machst. Das ist der
+ganze Unterschied.
 
 Es läuft vollständig im Browser: kein Server, kein Konto, nichts wird
 gesendet. Der Knopf oben startet die gespielte Fassung; wer das Zeug
@@ -113,37 +119,43 @@ entziffern.
 | **Erdgeschoss** | Petra Kettner, Angela Vogt | Drehtür, Empfang, der Gang dahinter |
 | **Untergeschoss** | Luigi Sartori, Kai Dombrowski | Kantine und Serverraum |
 
-**Hingehen darfst du überall, von der ersten Minute an.** Was sich
-sperrt, ist nicht das Haus, sondern die Route: den nächsten Hinweis
-bekommt nur, wer die Leute davor gelesen hat. Steht die Route noch
-weiter unten, sagt es das Stockwerk gleich dazu — *man wird dich
-weiterschicken, freundlich und im Kreis.*
+**Herumlaufen darfst du überall**, vom ersten Zug an — nur stehst du
+dann vor zu. Sichtbar ist immer das ganze Haus, betretbar ist eine Tür:
+die nächste auf der Route. Sie leuchtet, zeigt das Gesicht und pocht
+leise; alles davor bleibt offen, alles danach ist ein Türblatt mit einem
+Schild.
 
-Eine Etage rückt weiter, wenn **jede** Person darunter beide Lesestufen
-bestanden hat **und** danach nach dem Antrag gefragt wurde. Wer das
-Erdgeschoss durch hat, hört von Petra: *„Gehen Sie in den ersten Stock.
-Melzers Zimmer ist das vierte am Gang, da schließt seit dem Frühjahr
-niemand mehr auf — aber die beiden nebenan haben mit ihm gearbeitet."*
+Aufgeschlossen wird nicht mit Schlüsseln, sondern von Menschen. Wer
+beide Lesestufen hinter sich hat **und** danach nach dem Antrag gefragt
+wurde, gibt einen Namen weiter — und im Treppenhaus ist eine Tür mehr
+auf. Die Route steht in `route: 1…6` bei der Person, nicht bei der
+Etage; wo jemand sitzt, sagt `etage`. Die beiden sind nicht dasselbe:
+die Route läuft Erdgeschoss, Erdgeschoss, erster Stock, erster Stock,
+Keller, Keller, und im Haus geht es dabei einmal hoch und zweimal
+runter.
 
 ## Dieselbe Frage, zwei Antworten
 
-*Wo bekomme ich den A38?* — die Frage steht immer zur Wahl, vom ersten
-Satz an. Was sich ändert, ist die Antwort.
+*Wo bekomme ich den A38?* — damit fängt jeder Besuch an. Du sagst in
+der Ankunft, warum du da bist, und bekommst eine Absage; nachsetzen darfst
+du einmal pro Nachmittag. Was sich ändert, ist die Antwort.
 
 | | |
 |---|---|
-| **fremd** | „Formulare liegen im Regal rechts neben dem Aufzug. Alphabetisch, A bis C im obersten Fach. Was nicht dort liegt, gibt es nicht. Jedenfalls nicht für Besucher." |
-| **gelesen** | „Im Regal liegt A36 und A39. Dazwischen ist eine Lücke, und die ist kein Versehen. Den A38 stellt in diesem Haus eine einzige Person aus. Ich schicke seit dem Frühjahr Leute zu einem Zimmer, in dem niemand sitzt, und niemand hat mir gesagt, dass ich damit aufhören soll. Also mache ich es weiter." |
+| **fremd** | „Da kann ich Ihnen nicht weiterhelfen. Formulare liegen im Regal rechts neben dem Aufzug, alphabetisch, A bis C im obersten Fach. Was nicht dort liegt, gibt es nicht. Jedenfalls nicht für Besucher." |
+| **gelesen** | „Ich weiß es nicht." — *Sie legt den Stift hin und sieht dich zum ersten Mal an, ohne dabei etwas einzutragen.* — „Aber ich gebe es weiter. An die Hausmeisterin — Frau Vogt weiß über dieses Haus mehr als ich. Den Gang hinunter, letzte Tür. Sie steht offen, das tut sie immer." |
 
 Beides ist Petra Kettner, beides ist wahr, und der Unterschied zwischen
-beidem ist das ganze Spiel.
+beidem ist das ganze Spiel. Die zweite Antwort ist kürzer als die erste
+— sie hilft nur wirklich.
 
 ## Was drin steckt
 
 **Fünf Merkmale, fünf Stufen.** Die Persönlichkeit bleibt bayessch:
 3125 mögliche Menschen, ein Rollenklischee als Startbild, jede Antwort
 ein Datenpunkt, P(Person | Antwort) ∝ P(Antwort | Person) · P(Person).
-Über jeder Frage steht, wie viele bit sie verspricht.
+Zu sehen ist davon nichts — siehe *[Das Modell rechnet, und du siehst es
+nicht](#das-modell-rechnet-und-du-siehst-es-nicht)*.
 
 **Zwei Waagen für das, was sie wollen.** Früher waren es fünf Motive — das
 war genauer und unlesbar. Jetzt gibt es zwei Fragen mit je zwei Seiten:
@@ -153,8 +165,8 @@ war genauer und unlesbar. Jetzt gibt es zwei Fragen mit je zwei Seiten:
 | Sicherheit ⟷ Freiheit | will Verlässlichkeit ⟷ will selbst bestimmen |
 | Nähe ⟷ Geltung | will dazugehören ⟷ will gesehen werden |
 
-Fünfundzwanzig mögliche Menschen statt 3125, dieselbe Rechnung, und man
-kann den Balken ansehen und weiß Bescheid. Jede der sieben Fragen bietet
+Fünfundzwanzig mögliche Menschen statt 3125, dieselbe Rechnung, und zwei
+Fragen, auf die man eine Antwort im Kopf behalten kann. Jede der sieben Fragen bietet
 vier Antworten, eine je Pol, und trennt damit beide Waagen auf einmal.
 
 Die Waagen verteilen sich flacher als die Merkmale: ein Merkmal ist
@@ -188,9 +200,13 @@ jederzeit — nur zählt das erst wieder, wenn du seither Neues gehört hast:
 volle Wertung ab einer neuen Antwort je Achse. Wer dieselbe Vorstellung
 zweimal abgibt, bekommt nichts dafür und kostet ihn Geduld.
 
-**Die Wahrheit siehst du nie.** Es gibt keine Auflösung, in der seine
-wahren Werte in einer Tabelle stehen. Du hast dein Modell, deine Notizen
-und ihn. Wenn du dich festlegst, sagst du es ihm ins Gesicht, und er
+### Das Modell rechnet, und du siehst es nicht
+
+**Die Wahrheit siehst du nie**, und das Modell auch nicht. Es rechnet bei
+jeder Antwort mit — es entscheidet, was gesagt wird und was ein Zug
+bringt —, aber es steht nirgends: keine Balken, keine Prozente, keine bit
+über den Fragen, keine Auflösungstafel am Ende. Du hast das Gespräch,
+deine Notizen und dein eigenes Urteil. Wenn du dich festlegst, sagst du es ihm ins Gesicht, und er
 antwortet: bei einem Treffer bestätigt er, bei einem Fehlgriff
 widerspricht er. Aus der Richtung seines Widerspruchs kannst du
 schließen, wohin du danebenlagst. Mehr Hilfe gibt es nicht.

@@ -99,7 +99,7 @@ baum: {
     erRegie: `Du sagst ihn. Sie trägt ihn ein, dreht das Buch um und schiebt dir einen Stift durch den Schlitz, ohne den Kopf zu heben.`,
     er2: `Unterschrift hier. Der Ausweis kommt zurück, wenn Sie gehen. Und Sie sind heute der Erste, der sich erst mal umsieht — die anderen wissen alle, wo sie hinwollen.`,
     wie2: `zügig, sehr geübt, eine Spur zu schnell für ein Gespräch`,
-    nachRegie: `Sie schiebt dir einen Besucherausweis zu, Nummer 14, und sieht dich zum ersten Mal an. Hinter ihr klingelt ein Telefon zweimal und hört wieder auf. Ihr habt vierzig Minuten, und du hast dir vorgenommen, nicht sofort nach dem Antrag zu fragen.`,
+    nachRegie: `Sie schiebt dir einen Besucherausweis zu, Nummer 14, und sieht dich zum ersten Mal an. Hinter ihr klingelt ein Telefon zweimal und hört wieder auf. Ihr habt vierzig Minuten, und du hast eine Frage frei, bevor du sagst, warum du gekommen bist.`,
     frage: true
   },
 
@@ -574,7 +574,7 @@ hinausgeworfen: {
        Formular, Zuständigkeit. Jeder Weg, der über den Menschen geht —
        Mitgefühl, Vertraulichkeit, gemeinsames Schimpfen —, geht daneben,
        und zwar auch dann, wenn er gut gemeint ist. Das ist genau
-       umgekehrt zu Angela, die eine Etage weiter hinten sitzt: die
+       umgekehrt zu Angela, die einen Gang weiter hinten sitzt: die
        erreicht man nur über den Menschen. --------------------------- */
 
 zustaende: [

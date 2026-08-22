@@ -77,7 +77,7 @@ baum: {
     wie: `warm, ohne aufzusehen`, stimmung: `freundlich`,
     erRegie: `Er trocknet sich die Hände, stellt einen Teller mit zwei Stück Kuchen zwischen euch und schiebt ihn dir zu, ohne zu fragen.`,
     er2: `Vom Mittag übrig. Sonst wirft man ihn weg, und das mache ich nicht.`, wie2: `beiläufig, endgültig`,
-    nachRegie: `Er setzt sich, die Hände auf den Knien. Draußen läuft die Spülmaschine. Ihr habt vierzig Minuten, und du hast dir vorgenommen, nicht sofort nach dem Antrag zu fragen.`,
+    nachRegie: `Er setzt sich, die Hände auf den Knien. Draußen läuft die Spülmaschine. Ihr habt vierzig Minuten, und du hast eine Frage frei, bevor du sagst, warum du gekommen bist.`,
     frage: true
   },
 

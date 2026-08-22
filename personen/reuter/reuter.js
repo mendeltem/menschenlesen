@@ -31,7 +31,7 @@ menubild: `personen/reuter/bilder/freundlich.webp`,
 
 hero: {
   name: `Annika Reuter`, age: 38, job: `Papierrestauratorin`,
-  ort: `Erster Stock, Zimmer sieben, Werkstatt ohne Fenster`,
+  ort: `Erster Stock, Zimmer 1.13, Werkstatt ohne Fenster`,
   /* Eher still, sehr gewissenhaft, sehr verträglich, robust, mäßig
      neugierig. Sie will Verlässlichkeit und Nähe, nicht Freiheit und
      nicht Geltung.
@@ -84,7 +84,7 @@ baum: {
     wie: `leise, sofort entschuldigend`, stimmung: `neutral`,
     erRegie: `Sie tritt zur Seite, nimmt einen Stapel Kartons vom Besucherstuhl und stellt ihn ordentlich neben die Tür.`,
     er2: `Setzen Sie sich. Möchten Sie Tee? Ich habe nur Tee.`, wie2: `freundlich, ein wenig zu schnell`,
-    nachRegie: `Der Raum ist kühl und sehr aufgeräumt. Auf dem Tisch liegt ein einzelnes stockfleckiges Blatt unter sechs Messinggewichten. Ihr habt vierzig Minuten, und du hast dir vorgenommen, nicht sofort nach dem Antrag zu fragen.`,
+    nachRegie: `Der Raum ist kühl und sehr aufgeräumt. Auf dem Tisch liegt ein einzelnes stockfleckiges Blatt unter sechs Messinggewichten. Ihr habt vierzig Minuten, und du hast eine Frage frei, bevor du sagst, warum du gekommen bist.`,
     frage: true
   },
 
@@ -120,7 +120,7 @@ uebergang1: {
   duFest: `Du sagst, warum du da bist: du brauchst den Antrag A38. Drei Wochen läuft das jetzt, vier Stellen haben dich weitergeschickt, und die letzte hat gesagt, in diesem Haus sitze jemand, der ihn ausstellen darf — R. Melzer, Zimmer 1.14. Wie oft du das inzwischen gehört hast, sagst du nicht.`,
   er: `Den A38 habe ich auch einmal gebraucht.`,
   erRegie: `Sie setzt sich auf die Kante ihres Arbeitshockers, nicht ganz darauf.`,
-  er2: `Für die Ausstellung, letztes Jahr. Elf Wochen, und am Ende hat Melzer ihn unterschrieben, ohne hinzusehen. Sein Zimmer ist das vierte auf diesem Gang, ich gehe jeden Morgen daran vorbei. Aber Sie sind ja jetzt hier — reden wir erst über etwas anderes, ich bin sowieso schlecht darin, gleich zur Sache zu kommen.`,
+  er2: `Für die Ausstellung, letztes Jahr. Elf Wochen, und am Ende hat Melzer ihn unterschrieben, ohne hinzusehen. Sein Zimmer ist das vierte auf diesem Gang, gleich neben meinem. Ich sehe die Tür jeden Morgen. Aber Sie sind ja jetzt hier — reden wir erst über etwas anderes, ich bin sowieso schlecht darin, gleich zur Sache zu kommen.`,
   wie: `vorsichtig`, wie2: `entschuldigend, aber wärmer als vorher`, stimmung: `freundlich`
 },
 

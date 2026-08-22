@@ -132,9 +132,9 @@ level: [
 /* --- Aus den zwei Punktzahlen wird ein Stern-Urteil. Zweihundert sind
        das Höchste, hundert je Stufe. ------------------------------- */
 sterne: [
-  { ab:180, n:5, t:`Du hast ihn gelesen wie ein offenes Buch.` },
+  { ab:180, n:5, t:`Du hast {ihn} gelesen wie ein offenes Buch.` },
   { ab:145, n:4, t:`Sehr genau. Ein Merkmal hat dich gefoppt, mehr nicht.` },
-  { ab:105, n:3, t:`Brauchbar. Du kennst ihn, aber nicht gut.` },
+  { ab:105, n:3, t:`Brauchbar. Du kennst {ihn}, aber nicht gut.` },
   { ab:60,  n:2, t:`Halb daneben. Vieles war geraten.` },
   { ab:25,  n:1, t:`Wenig getroffen. Zuhören ist etwas anderes als Fragen.` },
   { ab:-999, n:0, t:`Du hast einen anderen Menschen beschrieben als den, der dir gegenübersaß.` }
@@ -172,11 +172,12 @@ mdeutung: {
          tief: `{Er} will dazugehören. Wer sonst mitmacht, ist ein Argument; Schmeichelei ist keins und kostet dich sofort.` }
 },
 
-/* --- Die Etagen. Das Haus gibt sich nicht auf einmal her: unten
-       sitzen zwei, und erst wer die beiden gelesen hat — beide
-       Lesestufen bestanden und danach gefragt —, wird weitergeschickt.
-       Wohin, sagt die Person selbst; die Etage weiss davon nichts. Hier
-       steht nur, wie das Stockwerk heisst und wie es aussieht.
+/* --- Die Etagen. Sichtbar ist immer das ganze Haus, offen ist immer
+       genau eine Tuer. Aufgeschlossen wird nicht mit Schluesseln,
+       sondern von Menschen: wer gelesen und gefragt wurde, gibt einen
+       Namen weiter. Wohin, sagt die Person selbst; die Etage weiss
+       davon nichts. Hier steht nur, wie das Stockwerk heisst und wie
+       es aussieht.
 
        bild   liegt in bilder/ und ist Querformat; fehlt es, bleibt der
               Verlauf aus farbe stehen.

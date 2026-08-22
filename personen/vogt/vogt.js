@@ -83,7 +83,7 @@ baum: {
     erRegie: `Es klackt zweimal, dann kommt sie heraus, steht auf und wischt sich die Hände an der Hose ab.`,
     er2: `So. Sie sind der Termin. Setzen Sie sich, aber nicht auf den Stuhl da, der ist gestrichen.`,
     wie2: `schnell, freundlich, ohne Punkt und Komma`,
-    nachRegie: `Sie schiebt einen Hocker mit dem Fuß herüber und setzt sich auf die Werkbank. Irgendwo im Raum läuft ein Radio, sehr leise. Ihr habt vierzig Minuten, und du hast dir vorgenommen, nicht sofort nach dem Antrag zu fragen.`,
+    nachRegie: `Sie schiebt einen Hocker mit dem Fuß herüber und setzt sich auf die Werkbank. Irgendwo im Raum läuft ein Radio, sehr leise. Ihr habt vierzig Minuten, und du hast eine Frage frei, bevor du sagst, warum du gekommen bist.`,
     frage: true
   },
 
@@ -160,7 +160,7 @@ einstieg: [
   { id:`schluessel`, t:`Sie sind schon unterwegs gewesen.`, wie:`mit einem Blick auf den Schlüsselbund`,
     er:`Seit halb sechs.`,
     erRegie:`Sie hebt den Bund an und lässt ihn fallen.`,
-    er2:`Vier Stockwerke, alle Fenster im Treppenhaus, und den Müllraum. Danach weiß ich, was für ein Tag wird.`,
+    er2:`Zwei Stockwerke, den Keller, alle Fenster im Treppenhaus, und den Müllraum. Danach weiß ich, was für ein Tag wird.`,
     wie:`sachlich`, wie2:`bestimmt`, stimmung:`neutral`,
     fakt:`geht jeden Morgen ab halb sechs das ganze Haus ab` },
 
@@ -555,7 +555,7 @@ zustaende: [
 
 { id:`rohr`, titel:`Das Rohr, vor dem sie gewarnt hat`,
   regie:`Auf der Werkbank liegt ein Rohrstück, aufgeschnitten, die Innenwand fast zugewachsen. Daneben ein Zettel mit zwei Datumsangaben.`,
-  er:`Samstagnacht. Zweiter Stock, Steigleitung. Vier Büros unter Wasser.`,
+  er:`Samstagnacht. Erster Stock, Steigleitung. Vier Büros unter Wasser.`,
   wie:`sachlich, ohne jede Aufregung`, stimmung:`neutral`,
   bedarf:{ id:`rohr_gel`, was:`hat zweimal gewarnt und will es endlich belegt haben`, braucht:{GEL:1.8} },
   fragen:[
@@ -766,7 +766,7 @@ zustaende: [
       gut:{ er:`Nicht schön, nein.`, wie:`freundlich`, stimmung:`neutral`, bez:2 },
       zu:{ er:`Für mich?`,
            erRegie:`Sie zeigt mit dem Kinn nach oben.`,
-           er2:`Im dritten sitzt eine Kollegin mit Rollator. Ärgerlich ist es für die. Ich laufe die Treppe sowieso.`,
+           er2:`Oben sitzt eine Kollegin mit Rollator. Ärgerlich ist es für die. Ich laufe die Treppe sowieso.`,
            wie:`ungläubig`, wie2:`laut`, stimmung:`gereizt`, bez:-6 } },
 
     { id:`dreimal`, t:`Dreimal im Jahr — woran liegt das?`, wie:`sachlich`,

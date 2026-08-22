@@ -512,6 +512,29 @@ button.prod .key{flex:0 0 auto; font-family:var(--mono); font-size:10px; color:v
 .treffer.ja{color:var(--SIC); border-color:var(--SIC)}
 .treffer.nah{color:var(--EFF); border-color:var(--EFF)}
 .treffer.nein{color:var(--STA); border-color:var(--STA)}
+/* Chips: die vier Zahlen eines Besuchs in einer Zeile, statt in einem
+   Satz versteckt. */
+.chips{display:flex; flex-wrap:wrap; gap:7px; margin:14px 0 12px}
+.chip{font-size:11.5px; color:var(--muted); border:1px solid var(--line);
+  border-radius:999px; padding:4px 11px; white-space:nowrap}
+.chip b{color:var(--ink); font-weight:600}
+.chip i{font-family:var(--mono); font-size:10.5px; font-style:normal; margin-left:5px; color:var(--muted)}
+.chip i.auf{color:var(--SIC)} .chip i.ab{color:var(--STA)}
+/* Faecher: zu, bis jemand nachsehen will. Die Zahl rechts sagt vorher,
+   ob sich das Aufklappen lohnt. */
+.fach{border-top:1px solid var(--line-soft); margin-top:2px}
+.fach summary{display:flex; align-items:center; gap:9px; cursor:pointer; list-style:none;
+  padding:11px 2px; font-family:var(--mono); font-size:10px; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--muted)}
+.fach summary::-webkit-details-marker{display:none}
+.fach summary span{flex:1 1 auto}
+.fach summary b{color:var(--accent-2); font-weight:600; font-size:11px; letter-spacing:0}
+.fach summary::after{content:"▾"; font-size:10px; transition:transform .2s}
+.fach[open] summary::after{transform:rotate(180deg)}
+.fach summary:hover{color:var(--ink)}
+.fach > :last-child{margin-bottom:14px}
+.fach h2.nurdrin{display:none}
+.verdict h2{margin-top:18px}
 table.bil{width:100%; border-collapse:collapse; font-size:13px; margin-top:4px}
 table.bil td{padding:6px 8px 6px 0; border-bottom:1px solid var(--line-soft); vertical-align:top; color:var(--muted)}
 table.bil td.n{font-family:var(--mono); font-size:11.5px; text-align:right; white-space:nowrap}
@@ -678,30 +701,34 @@ table.bil tr.hi td.n{color:var(--accent); font-weight:600}
     <p><b>Zwei Waagen für das, was er will.</b> Früher waren es fünf Motive; das war genauer und unlesbar. Jetzt
     gibt es zwei Fragen mit je zwei Seiten: selbst bestimmen oder sicher sein, dazugehören oder gesehen werden.
     Das sind 25 mögliche Menschen statt 3125, dieselbe Rechnung, und man kann den Balken ansehen und weiß Bescheid.</p>
-    <p><b>Entropie</b> misst, wie unentschieden dein Bild ist: 11,61 bit bei völliger Ratlosigkeit über die
-    Merkmale, 4,64 über die zwei Waagen, 0 bei Gewissheit. Über jeder Frage steht, wie viel sie verspricht.</p>
+    <p><b>Und warum siehst du nichts davon?</b> Weil es beim Zuhören auch nichts hilft. Die Rechnung läuft bei
+    jeder Antwort mit — sie entscheidet, was gesagt wird und was ein Zug bringt —, aber sie steht nirgends: keine
+    Balken, keine Prozente, keine bit über den Fragen. Du hast das Gespräch, deine Notizen und dein eigenes
+    Urteil. Mehr hat man bei einem Menschen auch sonst nicht.</p>
     <p><b>Die Person steht fest.</b> Sie wird nicht aus dem Prior gezogen. Das Rollenklischee, mit dem du startest,
-    ist deshalb genau das: ein Klischee, und bei ihm ist es überwiegend falsch. Seine wahren Werte bekommst du
-    in diesem Spiel nie zu sehen — nur ihn.</p>
+    ist deshalb genau das: ein Klischee, und bei allen sechs ist es überwiegend falsch. Die wahren Werte bekommst
+    du in diesem Spiel nie zu sehen — nur den Menschen.</p>
     <p><b>Zwei Balken.</b> Die <i>Geduld</i> gilt für diesen Nachmittag: sie fällt bei jeder Frage, und zwar
-    zunehmend, und sie steigt wieder, wenn ein Gespräch trifft. Bei null steht er auf. Die <i>Freundschaft</i>
-    bleibt über die Besuche: sie wächst, wenn du ihn richtig liest, und fällt, wenn du danebengreifst.</p>
+    zunehmend, und sie steigt wieder, wenn ein Gespräch trifft. Bei null steht dein Gegenüber auf. Die <i>Freundschaft</i>
+    bleibt über die Besuche: sie wächst, wenn du richtig liest, und fällt, wenn du danebengreifst.</p>
     <p><b>Du brauchst den Antrag A38.</b> Ausstellen darf ihn in diesem Haus genau eine Person: R. Melzer,
-    Zimmer 1.14 — und Melzer ist seit dem Frühjahr weg. Fragen darfst du jeden sofort, und hingehen darfst du
-    überall; verschlossen ist keine Etage. Nur bekommst du von einem Fremden eine Antwort, die höflich ist,
-    vollständig und leer. Wer dich kennt, sagt dieselbe Sache noch einmal, und dann stimmt sie. Wer eine
-    Etage durch hat, wird eine Etage weitergeschickt. Am Ende kann dir niemand helfen — und du bekommst den
-    A38 trotzdem, weil sechs Leute deinen Namen gesagt haben.</p>
+    Zimmer 1.14 — und Melzer ist seit dem Frühjahr weg. Danach fragst du bei jedem, der noch da ist, und jeder
+    sagt dasselbe: tut mir leid, da kann ich Ihnen nicht weiterhelfen. Das ist keine Bosheit, das ist wahr.</p>
+    <p><b>Es geht trotzdem weiter — über Menschen.</b> Im Treppenhaus steht immer genau eine Tür offen. Wer
+    dahinter sitzt, kann dir den Antrag nicht geben, aber wenn du dich zu Ende mit ihm beschäftigt hast, gibt er
+    deinen Namen weiter, und die nächste Tür geht auf. Sechs Türen, sechs Weitergaben. Bei der letzten kann dir
+    auch niemand mehr helfen — und du bekommst den A38 trotzdem, weil fünf Leute vorher deinen Namen gesagt
+    haben.</p>
     <p><b>Wie du fragst, zählt mehr als was.</b> Jeder Zug unterstellt dem Gegenüber eine Persönlichkeit. Trifft
-    die Unterstellung, geht er darauf ein; trifft sie nicht, merkt er es sofort. Was in diesem Spiel gewichtet
+    die Unterstellung, geht dein Gegenüber darauf ein; trifft sie nicht, merkt es das sofort. Was in diesem Spiel gewichtet
     wird, ist die Autonomieunterstützung — rund dreimal so stark wie die Motivpassung. <span id="belegA"></span></p>
     <p><span id="belegC"></span></p>
     <p><span id="belegAsym"></span></p>
     <p><b>Wo es dünn bleibt.</b> <span id="belegItems"></span></p>
     <p><b>Und das Gesicht?</b> Es trägt null bit. Persönlichkeitsurteile aus Standbildern erreichen bestenfalls kleine
     und über Studien hinweg widersprüchliche Trefferquoten (Jaeger, Sleegers, Stern, Penke &amp; Jones,
-    <i>European Journal of Personality</i>, 2024). Die Stimmung im Rahmen ist keine Diagnose — sie zeigt nur, wie er
-    gerade reagiert.</p>
+    <i>European Journal of Personality</i>, 2024). Die Stimmung im Rahmen ist keine Diagnose — sie zeigt nur, wie
+    gerade reagiert wird.</p>
     <div class="keys" id="keys"></div>
   </div>
 </div>
@@ -783,7 +810,7 @@ const MUSIK = {
   menue:     "musik/menu.mp3",       // Menü und Erklärfenster
   ingame:    "musik/ingame.mp3",     // das laufende Gespräch
   gewonnen:  "musik/won.mp3",        // der Besuch ist gut ausgegangen
-  verloren:  "musik/verloren.mp3"    // kein Abschluss oder rausgeworfen
+  verloren:  "musik/verloren.mp3"    // schlecht ausgegangen oder hinausgeworfen
 };
 const LAUTSTAERKE = 0.35;
 const spuren = {};
@@ -831,7 +858,7 @@ function waehleSpur(){
   if(document.body.classList.contains("imMenue")) return setzeMusik("menue");
   if(!S) return;
   if(!document.getElementById("info").hidden) return setzeMusik("menue");
-  if(S.phase >= 5) return setzeMusik(S.bez >= S.bezStart ? "gewonnen" : "verloren");
+  if(S.phase >= 5) return setzeMusik(S.geschafft || S.bez >= S.bezStart ? "gewonnen" : "verloren");
   setzeMusik("ingame");
 }
 
@@ -1020,7 +1047,8 @@ function neuerZustand(){
     privGestellt:A.privGestellt.slice(), privLog:[],
     zustand:null, zGestellt:[], zLog:[], zAn:false, bedarf:[],
     rateLog:[],
-    raus:false, ende:null, faktenStart:A.fakten.length, fragenHeute:0
+    raus:false, ende:null, geschafft:null, antragAbgeblitzt:false,
+    faktenStart:A.fakten.length, fragenHeute:0
   };
   S.bfPrior = startPrior(T, DATA.rollenprior, DATA.zglocke);
   S.moPrior = startPrior(M, null, DATA.mglocke);
@@ -1446,6 +1474,12 @@ function phase1(id){
 function uebergang1(){
   const u = DATA.uebergang1;
   sag("regie", u.duFest, {bruch:true}); erSagt(u);
+  /* Hier ist die Frage gestellt — jede Ankunft besteht daraus. Was
+     danach kommt, ist Nachsetzen, und dafür gibt es die Absage. */
+  A.antragErst = true; akteSichern();
+  S.hinweisGezeigt = true;
+  sag("meta", `So kommst du nicht weiter`,
+    {warn:true, lang:`Auf diese Frage antwortet niemand ehrlich, der einen nicht kennt. Finde heraus, wer ${AN("er")} ist — beide Stufen —, und frag dann noch einmal.`});
   weiterNachAnkunft();
 }
 
@@ -1536,10 +1570,12 @@ const TUTOR = () => [
   { ziel:"#talk", titel:"Das Gespräch",
     text:`Hier steht, was gesagt wird. <b>${AN("Seine")} Sätze stehen in Anführungszeichen</b>, deine darüber,
       und was kursiv dasteht, tut ${AN("er")}, während ${AN("er")} redet — eine Hand, ein Blick, eine Pause.
-      Der neueste Wortwechsel steht groß, alles davor klein.` },
+      Es steht immer nur der neueste Wortwechsel da — mit <b>▲</b> und <b>▼</b> blätterst du durch das,
+      was vorher war.` },
   { ziel:"#choices", titel:"Deine Züge",
     text:"Unten stehen deine Möglichkeiten, und die Zifferntasten wählen sie auch. "
-       + "Es gibt keine falsche Wahl — nur Folgen. Rechts steht jeweils, was ein Zug bringt oder kostet." },
+       + "Es gibt keine falsche Wahl — nur Folgen. Rechts steht es dazu, wenn ein Zug an etwas anknüpft "
+       + "oder etwas kostet; in den ersten beiden Stufen kostet nichts." },
   { ziel:".panel.person", titel:"Das Gesicht",
     text:`${AN("Seine")} Stimmung, und nur das. Sie sagt dir, <b>wie ${AN("er")} gerade reagiert</b> — nicht,
       wie ${AN("er")} ist. Das Bild trägt keine Information über den Charakter, mit Absicht.` },
@@ -1618,9 +1654,15 @@ function antragFragen(danach){
   const offen = gelesen(A);
   sag("du", A2.frage, {wie:A2.wie});
   if(!offen){
+    S.antragAbgeblitzt = true;
     erSagt(A2.zu);
-    sag("meta", `So kommst du nicht weiter`,
-      {warn:true, lang:`Auf diese Frage antwortet niemand ehrlich, der einen nicht kennt. Finde heraus, wer ${AN("er")} ist — beide Stufen —, und frag dann noch einmal.`});
+    /* Der Hinweis steht einmal pro Besuch. Zweimal derselbe Kasten
+       liest sich wie ein Fehler. */
+    if(!S.hinweisGezeigt){
+      S.hinweisGezeigt = true;
+      sag("meta", `So kommst du nicht weiter`,
+        {warn:true, lang:`Auf diese Frage antwortet niemand ehrlich, der einen nicht kennt. Finde heraus, wer ${AN("er")} ist — beide Stufen —, und frag dann noch einmal.`});
+    }
     zeichne();
     return setTimeout(weiter, 60);
   }
@@ -1632,6 +1674,8 @@ function antragFragen(danach){
      nennt. Bei der letzten Tür gibt es niemanden mehr — dort endet es. */
   if(!vorher){
     const naechste = nachRoute().find(pp => !durch(akteVon(pp.id)));
+    S.geschafft = A2.offen.ende ? "ende"
+      : ((naechste && (naechste.tuer||{}).schild) || "Die nächste Tür");
     sag("meta", A2.offen.ende ? `<b>${esc(WELT.a38.titel)}</b>`
         : `${esc((naechste && (naechste.tuer||{}).schild) || "Die nächste Tür")} steht offen`,
       {lang: A2.offen.ende ? esc(WELT.a38.text)
@@ -1686,9 +1730,9 @@ function drehscheibe(){
       rechts:`privat · kostet am meisten Geduld`,
       go(){ S.phase = 3; zeichne(); privatRunde(); } });
 
-  if(DATA.antrag && !A.antragGefragt)
+  if(DATA.antrag && !A.antragGefragt && !S.antragAbgeblitzt)
     items.push({ t:DATA.antrag.frage, tag:kopf, klasse:"haupt",
-      rechts:`der Antrag, wegen dem du hier bist`, go(){ antragFragen(); } });
+      rechts:`deswegen bist du hier`, go(){ antragFragen(); } });
 
   items.push({ t:`Dich verabschieden`, tag:kopf, klasse:"weiter",
     rechts:`Besuch beenden, solange es gut ist`, go(){ abschied(); } });
@@ -1717,15 +1761,6 @@ function biete(pool, gestellt){
 }
 
 function leseRunde(cfg){
-  /* Die erste Frage ist immer dieselbe, und die Antwort darauf ist
-     immer nein. Erst danach gehen die anderen auf — und dann weiß man
-     auch, wozu man sie stellt. */
-  if(!A.antragErst && !gelesen(A) && DATA.antrag){
-    zeichne();
-    return waehle([{ t:DATA.antrag.frage, tag:`Deswegen bist du hier`,
-      rechts:`die Frage, mit der jeder Besuch anfängt`,
-      go(){ A.antragErst = true; akteSichern(); antragFragen(() => leseRunde(cfg)); } }]);
-  }
   const rest = cfg.pool.filter(p => !S[cfg.gestellt].includes(p.id));
   if(!rest.length) return cfg.fertig();
   const glaube = S[cfg.glaube];
@@ -1748,8 +1783,10 @@ function leseRunde(cfg){
      trotzdem gezählt: die Antworten liegen in der Akte, und beim
      nächsten Besuch stehen sie noch da. Nur gewertet wird nichts,
      solange du dich nicht festgelegt hast. */
-  if(S.stufe <= 2 && DATA.antrag && gelesen(A) && !A.antragGefragt)
-    items.push({ t:DATA.antrag.frage, klasse:"haupt", rechts:`jetzt kennt ${AN("sie")} dich`,
+  /* Nachsetzen darf man — einmal. Beim zweiten Mal an einem Nachmittag
+     wäre es keine Frage mehr, sondern Drängeln. */
+  if(DATA.antrag && !A.antragGefragt && !S.antragAbgeblitzt)
+    items.push({ t:DATA.antrag.frage, klasse:"haupt", rechts:`noch einmal nachfragen`,
       go(){ antragFragen(); } });
   if(S.stufe <= 2) items.push({ t:`Für heute reicht es. Du verabschiedest dich.`, klasse:"weiter",
     rechts:`ohne dich festzulegen · was du gehört hast, bleibt`,
@@ -2056,7 +2093,7 @@ function zustandZug(z, f){
   sag("meta", `${trifft ? AN("er")+" geht darauf ein" : "du greifst daneben"} · Freundschaft <b>${vzk(wirkung)}</b> auf ${Math.round(S.bez)}`,
     {warn: !trifft,
      lang: neu ? `Du weißt jetzt, was ${AN("er")} deswegen braucht: ${esc(z.bedarf.was)}. Wer das kennt, redet anders mit ${AN("ihm")}.`
-                : (trifft ? `` : `Dein Zug hat eine Persönlichkeit unterstellt, die er nicht hat. Das merkt er sofort.`)});
+                : (trifft ? `` : `Dein Zug hat eine Persönlichkeit unterstellt, die ${AN("er")} nicht hat. Das merkt ${AN("er")} sofort.`)});
   zeichne();
   setTimeout(() => zustandRunde(), 60);
 }
@@ -2155,7 +2192,7 @@ function stufenEnde(L, zeilen){
     </div>
 
     ${fertig ? `<div style="margin:16px 0 6px">${sterneBild(st.n)}</div>
-      <p class="small" style="margin-bottom:14px">${esc(st.t)}</p>` : ``}
+      <p class="small" style="margin-bottom:14px">${esc(anrede(st.t))}</p>` : ``}
 
     <table class="bil">${zeilen.map(z => `<tr class="${z.dist===0?"hi":""}">
       <td>${z.label}</td>
@@ -2167,10 +2204,10 @@ function stufenEnde(L, zeilen){
 
     <p class="small dim" style="margin-top:12px">${
       geschafft
-        ? (L.nr === 1 ? `Stufe zwei ist offen: was er braucht.`
-           : `Du hast ${AN("ihn")} gelesen. Ab jetzt kannst du einfach vorbeikommen — und wenn alle auf
-             dieser Etage gelesen und gefragt sind, schickt dich die Letzte eine Etage weiter.`)
-        : `Du kannst die Stufe noch einmal spielen. Er fängt dann von vorn an, und du weißt mehr als beim ersten Mal.`}</p>
+        ? (L.nr === 1 ? `Stufe zwei ist offen: was ${AN("er")} braucht.`
+           : `Du hast ${AN("ihn")} gelesen. Ab jetzt kannst du einfach vorbeikommen — und jetzt lohnt sich
+             die Frage, wegen der du hier bist.`)
+        : `Du kannst die Stufe noch einmal spielen. ${AN("Er")} fängt dann von vorn an, und du weißt mehr als beim ersten Mal.`}</p>
   </section>`);
   zeichne();
   /* Wer beide Schätzungen hinter sich hat, muss für die eine Frage,
@@ -2211,21 +2248,31 @@ function bilanz(){
   const fragen = S.bfLog.concat(S.moLog);
   const bit = fragen.reduce((a,f) => a + f.gewinn, 0);
 
+  /* Drei Ausgänge, und nur einer zählt für den Antrag: sie gibt dich
+     weiter. Wer das geschafft hat, liest hier nicht, er sei gegangen,
+     bevor es kippte — das wäre wahr und trotzdem daneben. */
   const titel = S.ende === "raus" ? `${AN("Er")} hat dich hinausgeworfen.`
+    : S.geschafft === "ende" ? esc(WELT.a38.titel)
+    : S.geschafft ? `${AN("Sie")} gibt dich weiter.`
     : "Du bist gegangen, bevor es kippte.";
-  const farbe = dz > 4 ? "var(--SIC)" : (dz < -4 ? "var(--STA)" : "var(--EFF)");
+  const farbe = S.geschafft ? "var(--SIC)"
+    : dz > 4 ? "var(--SIC)" : (dz < -4 ? "var(--STA)" : "var(--EFF)");
+  const ziel = !S.geschafft ? ``
+    : S.geschafft === "ende" ? `<p class="small" style="margin-top:10px">${esc(WELT.a38.text)}</p>`
+    : `<p class="small" style="margin-top:10px">Darauf kam es an. Im Treppenhaus steht jetzt
+       <b>${esc(S.geschafft)}</b> offen.</p>`;
 
-  const festTab = S.rateLog.length ? S.rateLog.map(r => `<h2>Worauf du dich festgelegt hast · ${esc(r.titel)}</h2>
+  const festTab = S.rateLog.length ? S.rateLog.map(r => `<h2>${esc(r.titel || "Deine Einschätzung")}</h2>
     <table class="bil">${r.zeilen.map(z => `<tr class="${z.dist===0?"hi":""}">
       <td>${z.label}</td>
       <td class="n">du ${vz(z.tipp)}</td>
       <td class="n"><span class="treffer ${z.dist===0?"ja":(z.dist===1?"nah":"nein")}">${
         z.dist===0?"bestätigt":(z.dist===1?"eingeschränkt":"widersprochen")}</span> ${vzk(z.p,1)}</td></tr>`).join("")}
     </table>
-    <p class="small dim" style="margin-top:8px">Zusammen ${vzk(r.punkte,1)} Freundschaft. Was er bestätigt hat, heißt
+    <p class="small dim" style="margin-top:8px">Zusammen ${vzk(r.punkte,1)} Freundschaft. Was ${AN("er")} bestätigt hat, heißt
     nicht, dass du recht hattest — nur, dass ${AN("er")} nicht widersprochen hat.</p>`).join("") : "";
 
-  const lage = S.zLog.length ? `<h2>Was gerade bei ${AN("ihm")} los ist</h2>
+  const lage = S.zLog.length ? `<h2 class="nurdrin">Was gerade bei ${AN("ihm")} los ist</h2>
     <p class="small" style="margin-bottom:8px"><b>${esc(S.zustand.titel)}</b></p>
     <table class="bil">${S.zLog.map(z => `<tr class="${z.trifft?"hi":""}">
       <td>${esc(z.t.length>78 ? z.t.slice(0,78)+"…" : z.t)}</td>
@@ -2233,10 +2280,15 @@ function bilanz(){
     </table>
     ${S.zustand.bedarf && S.bedarf.includes(S.zustand.bedarf.id)
       ? `<p class="small dim" style="margin-top:8px">Du weißt jetzt: ${esc(S.zustand.bedarf.was)}. Das ist mehr, als die meisten hier über ${AN("ihn")} wissen.</p>`
-      : `<p class="small dim" style="margin-top:8px">Was er deswegen braucht, hast du nicht herausbekommen.</p>`}` : "";
+      : `<p class="small dim" style="margin-top:8px">Was ${AN("er")} deswegen braucht, hast du nicht herausbekommen.</p>`}` : "";
 
   const notiert = neueFakten.length ? `<h2>Was du heute erfahren hast</h2>
     <table class="bil">${neueFakten.map(f => `<tr class="hi"><td>${esc(f)}</td></tr>`).join("")}</table>` : "";
+
+  /* Was zugeklappt anfaengt, sagt in der Zeile schon, wie viel drin
+     steht — sonst klappt man auf, um Leeres zu finden. */
+  const fach = (titel, zahl, inhalt) => inhalt
+    ? `<details class="fach"><summary><span>${titel}</span><b>${zahl}</b></summary>${inhalt}</details>` : "";
 
   const privZeilen = DATA.privat.felder.map(f => {
     const da = S.gefunden.includes(f.id);
@@ -2247,18 +2299,23 @@ function bilanz(){
   return `<section class="panel verdict" style="margin-top:20px">
     <div class="eyebrow">${ord(A.besuche)} Besuch · Ende</div>
     <div class="big" style="color:${farbe}">${esc(titel)}</div>
-    <p class="small dim" style="margin-top:10px">Freundschaft ${Math.round(S.bezStart)} →
-      <b>${Math.round(S.bez)}</b> (${vzk(dz,0)}), Stufe <b>${st.name}</b>. ${esc(anrede(st.text))}</p>
+    ${ziel}
+
+    <div class="chips">
+      <span class="chip">Freundschaft ${Math.round(S.bezStart)} → <b>${Math.round(S.bez)}</b>
+        <i class="${dz > 0 ? "auf" : dz < 0 ? "ab" : ""}">${vzk(dz,0)}</i></span>
+      <span class="chip">Stufe <b>${esc(st.name)}</b></span>
+      <span class="chip">Geduld <b>${Math.round(S.geduld)}</b>/100${S.geduld < 40 ? ` <i class="ab">ein Drittel fehlt nächstes Mal</i>` : ``}</span>
+      <span class="chip">privat <b>${S.gefunden.length}</b>/${DATA.privat.felder.length}</span>
+    </div>
+    <p class="small dim">${S.geschafft ? `Über die Freundschaft sagt das nichts: ` : ``}${esc(anrede(st.text))}</p>
 
     ${notiert}
-    ${lage}
-    ${festTab}
-
-    <h2>Was du über ${AN("ihn")} persönlich weißt</h2>
-    <table class="bil">${privZeilen}</table>
-    <p class="small dim" style="margin-top:8px">Geduld am Ende des Besuchs:
-      ${Math.round(S.geduld)} von hundert.${S.geduld < 40 ? " Ein Drittel davon fehlt ihm beim nächsten Mal." : ""}</p>
-
+    ${fach(`Was gerade bei ${AN("ihm")} los ist`, S.zLog.length, lage)}
+    ${fach(`Worauf du dich festgelegt hast`, S.rateLog.reduce((a,r) => a + r.zeilen.length, 0), festTab)}
+    ${fach(`Was du über ${AN("ihn")} persönlich weißt`,
+           `${S.gefunden.length}/${DATA.privat.felder.length}`,
+           `<table class="bil">${privZeilen}</table>`)}
 
     <p class="small dim" style="margin-top:16px">Wie ${AN("er")} wirklich ist, steht hier nicht und wird hier nie stehen.
     Du hast ${AN("sein")} Verhalten, deine Notizen und dein eigenes Urteil. Mehr hat man bei einem Menschen auch sonst nicht.</p>
@@ -2294,8 +2351,9 @@ function zeichneEtage(){
   menue.style.setProperty("--stock", E.farbe || "#8c5a44");
   menue.style.setProperty("--stockbild", E.bild ? `url('${E.bild}')` : "none");
 
+  const geschafft = PERSONEN.filter(pp => durch(akteVon(pp.id))).length;
   document.getElementById("stockNr").textContent =
-    `Stockwerk ${i+1} von ${wort(alle.length)} · Route Schritt ${E.nr}`;
+    `Stockwerk ${i+1} von ${wort(alle.length)} · ${geschafft ? wort(geschafft) : "keine"} von ${wort(PERSONEN.length)} Türen durch`;
   document.getElementById("stockName").textContent = E.name;
   document.getElementById("stockWas").textContent = E.was;
 
@@ -2318,8 +2376,8 @@ function zeichneEtage(){
     const naechste = nachRoute().find(pp => !durch(akteVon(pp.id)));
     const wo = naechste ? (WELT.etagen.find(x => x.nr === (naechste.etage||1))||{}).name : "";
     hinw.innerHTML = `Hier ist alles zu. Türen gehen in diesem Haus nicht auf, weil man klopft,
-      sondern weil jemand einen schickt — und geschickt wirst du gerade
-      <b>${esc(wo)}</b>. Geh dorthin zurück und mach die Tür fertig, die dort offen steht.`;
+      sondern weil jemand einen schickt. Offen steht gerade
+      <b>${esc((naechste && (naechste.tuer||{}).schild) || "eine andere Tür")}</b>${wo ? ` — ${esc(wo)}` : ``}.`;
   }
 
   document.getElementById("mkarten").innerHTML = leuteAuf(E.nr)

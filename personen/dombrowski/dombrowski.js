@@ -89,7 +89,7 @@ baum: {
     erRegie: `Irgendwo hört ein Ton auf. Er atmet aus, klappt den Laptop zu und dreht sich auf dem Wagen zu dir herum.`,
     er2: `So. Sie sind der Termin. Setzen Sie sich — nicht auf den Karton, da ist was drin.`,
     wie2: `schneller, als er selbst erwartet hat`,
-    nachRegie: `Er schiebt dir einen Bürostuhl ohne Lehne zu und bleibt selbst auf dem Rollwagen sitzen. Die Lüfter rauschen so gleichmäßig, dass man es nach zwei Minuten nicht mehr hört. Ihr habt vierzig Minuten, und du hast dir vorgenommen, nicht sofort nach dem Antrag zu fragen.`,
+    nachRegie: `Er schiebt dir einen Bürostuhl ohne Lehne zu und bleibt selbst auf dem Rollwagen sitzen. Die Lüfter rauschen so gleichmäßig, dass man es nach zwei Minuten nicht mehr hört. Ihr habt vierzig Minuten, und du hast eine Frage frei, bevor du sagst, warum du gekommen bist.`,
     frage: true
   },
 
@@ -944,7 +944,7 @@ abschied: [
     er:`Kommen Sie wieder. Und wenn Sie hier unten sind: die Tür ist offen, ich höre das Rauschen sowieso nicht mehr.`,
     wie:`warm, ein wenig unbeholfen`, stimmung:`freundlich`, bez:3 },
   { ab:50, regie:`Er steht auf und hält die Tür auf.`,
-    er:`War gut. Melden Sie sich, wenn Sie mal wieder in dem Stock sind.`, wie:`freundlich`, stimmung:`neutral`, bez:2 },
+    er:`War gut. Melden Sie sich, wenn Sie mal wieder hier unten sind.`, wie:`freundlich`, stimmung:`neutral`, bez:2 },
   { ab:30, regie:`Er nickt und ist mit den Augen schon wieder beim Monitor.`,
     er:`Ja. Machen Sie es gut.`, wie:`kurz`, stimmung:`neutral`, bez:1 },
   { ab:-999, regie:`Er bleibt sitzen und zeigt mit dem Kinn Richtung Tür.`,

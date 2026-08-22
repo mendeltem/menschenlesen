@@ -32,7 +32,7 @@ menubild: `personen/baumgartner/bilder/freundlich.webp`,
 
 hero: {
   name: `Tobias Baumgartner`, age: 52, job: `Statistiker`,
-  ort: `Erster Stock, letzte Tür, Blick in den Innenhof`,
+  ort: `Erster Stock, Zimmer 1.11, Blick in den Innenhof`,
   /* Die wahre Ausprägung, −2 bis +2. Danach antwortet er, und das ist
      die Lösung, die am Ende aufgedeckt wird. */
   z: { O: 2, C: -1, E: 2, A: 1, N: -2 },
@@ -70,12 +70,12 @@ raumbild: `personen/baumgartner/bilder/raum.webp`,
 
 baum: {
   start: {
-    regie: `Erster Stock. An der vorletzten Tür steht 1.14 und darunter ein Namensschild, aus dem jemand den Namen herausgezogen hat; der helle Streifen ist noch da. Die letzte Tür geht auf, bevor du klopfen kannst. Kopfhörer um den Hals, Blazer über einem Shirt, das schon einen Tag gesehen hat.`,
+    regie: `Erster Stock. Ganz hinten am Gang steht 1.14 an einer Tür, darunter ein Namensschild, aus dem jemand den Namen herausgezogen hat; der helle Streifen ist noch da. Die erste Tür geht auf, bevor du klopfen kannst. Kopfhörer um den Hals, Blazer über einem Shirt, das schon einen Tag gesehen hat.`,
     er: `Sie sind der Grund, warum mein Kalender heute rot ist. Kommen Sie rein, ich muss nur eben —`,
     wie: `schnell, im Gehen gesprochen`, stimmung: `neutral`,
     erRegie: `Er schiebt einen Stapel Ausdrucke vom Besucherstuhl auf den Boden.`,
     er2: `So. Setzen.`, wie2: `kurz, endgültig`,
-    nachRegie: `Er stellt zwei Tassen hin, ohne zu fragen, und schiebt dir eine zu. Die Maschine dahinter ist von 2009 und klingt danach. Ihr habt vierzig Minuten, und du hast dir vorgenommen, nicht sofort nach dem Antrag zu fragen.`,
+    nachRegie: `Er stellt zwei Tassen hin, ohne zu fragen, und schiebt dir eine zu. Die Maschine dahinter ist von 2009 und klingt danach. Ihr habt vierzig Minuten, und du hast eine Frage frei, bevor du sagst, warum du gekommen bist.`,
     frage: true
   },
 
@@ -111,7 +111,7 @@ kennenfrage: [
 
 uebergang1: {
   duFest: `Du sagst, warum du da bist: du brauchst den Antrag A38. Drei Wochen läuft das jetzt, vier Stellen haben dich weitergeschickt, und die letzte hat gesagt, in diesem Haus sitze jemand, der ihn ausstellen darf — R. Melzer, Zimmer 1.14. Wie oft du das inzwischen gehört hast, sagst du nicht.`,
-  er: `A38. Nebenan, die Tür, an der Sie eben vorbeigekommen sind.`,
+  er: `A38. Vierte Tür von hier, ganz am Ende vom Gang.`,
   erRegie: `Er lehnt sich zurück und legt die Kopfhörer auf den Tisch.`,
   er2: `Melzer hat den ausgestellt, und Melzer ist weg. Wir haben uns die Sache geteilt — er das Papier, ich die Zahlen. Dann war er weg, und das Papier auch. Davon später. Erst reden wir über etwas anderes, sonst wird das hier ein Antragsgespräch, und darin bin ich furchtbar.`,
   wie: `amüsiert, ein wenig lauernd`, wie2: `schneller, offener`, stimmung: `interessiert`
