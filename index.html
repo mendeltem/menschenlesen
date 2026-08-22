@@ -364,12 +364,14 @@ body.imMenue .raum{display:none}
 /* Eine Marke je Wortwechsel: Trennstrich und Nummer. Der gewählte
    trägt sie in der Akzentfarbe und ausgeschrieben, alle anderen nur
    als Kürzel — so sieht man auf einen Blick, wo einer aufhört. */
-.wwmarke{display:flex; align-items:center; gap:9px; margin:6px 0 10px}
-.wwmarke:before{content:""; flex:1; height:1px; background:var(--line-soft)}
-.wwmarke b{font-family:var(--mono); font-size:9px; font-weight:500; letter-spacing:.14em;
+/* Beschriftung links, Linie nach rechts — und rechts bleibt Platz für
+   den Blätterer, der dort in der Ecke sitzt. */
+.wwmarke{display:flex; align-items:center; gap:9px; margin:6px 0 10px; padding-right:78px}
+.wwmarke:after{content:""; flex:1; height:1px; background:var(--line-soft)}
+.wwmarke b{order:-1; font-family:var(--mono); font-size:9px; font-weight:500; letter-spacing:.14em;
   text-transform:uppercase; color:var(--muted); border:1px solid var(--line-soft);
   border-radius:999px; padding:2px 9px; white-space:nowrap}
-.wwmarke.hier:before{background:var(--accent); opacity:.45}
+.wwmarke.hier:after{background:var(--accent); opacity:.45}
 .wwmarke.hier b{color:var(--accent); border-color:var(--accent); box-shadow:var(--glow)}
 
 /* Der Blätterer sitzt oben rechts im Gespräch, über dem Verlauf. */
@@ -381,7 +383,7 @@ body.imMenue .raum{display:none}
   background:none; border:none; border-radius:50%; color:var(--muted); font-size:10px; line-height:1}
 .blaettern button:hover:not(:disabled){color:var(--ink); background:var(--surface-hi)}
 .blaettern button:disabled{opacity:.3; cursor:default}
-.blaettern span{font-family:var(--mono); font-size:9px; letter-spacing:.1em; text-transform:uppercase;
+.blaettern span{display:none; font-family:var(--mono); font-size:9px; letter-spacing:.1em; text-transform:uppercase;
   color:var(--muted); min-width:52px; text-align:center}
 .line{max-width:62ch}
 .line.regie{font-family:var(--serif); font-style:italic; font-size:13.5px; color:var(--muted); line-height:1.5;
@@ -844,7 +846,6 @@ table.bil tr.hi td.n{color:var(--accent); font-weight:600}
         <div class="ratefeld" id="ratefeld" hidden></div>
         <div class="blaettern" id="blaettern" hidden>
           <button id="zurueck" title="Einen Wortwechsel zurück (Pfeil hoch)" aria-label="Einen Wortwechsel zurück">▲</button>
-          <span id="fokusText">jetzt</span>
           <button id="vor" title="Einen Wortwechsel vor (Pfeil runter)" aria-label="Einen Wortwechsel vor">▼</button>
         </div>
         <button class="runter" id="runter">↓ Neueste</button>
@@ -1462,7 +1463,6 @@ function zeichneBlaetterer(n){
      Reihe der Stufenknöpfe. */
   kasten.hidden = n < 2 || !!R.aktiv;
   if(kasten.hidden) return;
-  document.getElementById("fokusText").textContent = S.fokus === 0 ? "jetzt" : "−" + S.fokus;
   document.getElementById("zurueck").disabled = S.fokus >= n - 1;
   document.getElementById("vor").disabled = S.fokus <= 0;
 }
