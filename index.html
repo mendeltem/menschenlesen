@@ -567,13 +567,10 @@ button.act:hover{filter:brightness(1.08); transform:translateY(-2px)}
 .face:after{content:""; position:absolute; inset:0; background:var(--face-tint,none); mix-blend-mode:var(--face-blend,normal)}
 .who-name{font-size:15px; font-weight:600; letter-spacing:-.01em; line-height:1.2}
 .who-job{font-size:13px; color:var(--muted); margin-top:1px}
-/* In den Lesestufen liegt das Modell unter dem Tisch: keine Balken,
-   keine bit, keine Wahrscheinlichkeiten. Nur die Notizen und er. */
-body[data-stufe="lesen"] #lesebandBox,
+/* In den Lesestufen gibt es auch die zwei Balken nicht und nichts
+   Privates: nur das Gespräch, die Notizen und die Person. */
 body[data-stufe="lesen"] .zahlen,
 body[data-stufe="lesen"] #privatBox{display:none}
-body[data-stufe="lesen"] #ratefeld .cells{display:none}
-body[data-stufe="lesen"] button.pick .rechts{display:none}
 
 /* Der Stufenkopf steht anstelle der Phasenleiste. */
 .stufe-kopf{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap}
@@ -651,7 +648,7 @@ body.raten .zahlen{padding:10px 14px}
 .falt.auf .falt-kopf .pfeil{transform:rotate(180deg)}
 .falt-koerper{margin-top:9px}
 .lesekopf{display:flex; align-items:baseline; justify-content:space-between; gap:10px}
-.hval{font-family:var(--mono); font-size:19px; font-weight:600; letter-spacing:-.03em; line-height:1;
+.hval{display:none; font-family:var(--mono); font-size:19px; font-weight:600; letter-spacing:-.03em; line-height:1;
   color:var(--accent); text-shadow:var(--glow)}
 .hval span{font-size:10px; font-weight:400; color:var(--muted); letter-spacing:.16em; margin-left:5px; text-shadow:none}
 .dims{display:flex; flex-direction:column; gap:6px; margin-top:9px}
@@ -711,8 +708,6 @@ body.raten .zahlen{padding:10px 14px}
   transition:border-color .12s, background .12s, color .12s}
 .ratezeile button:hover{border-color:var(--accent); color:var(--ink)}
 /* Waehrend des Festlegens ist die Spalte der aktive Bereich. */
-#lesebandBox.dran{border-color:var(--accent); box-shadow:var(--glow)}
-#lesebandBox.dran #lesebandTitel{color:var(--accent)}
 .ratehinweis{font-family:var(--mono); font-size:9.5px; letter-spacing:.1em;
   text-transform:uppercase; color:var(--muted); margin-bottom:9px; line-height:1.7}
 .ratehinweis b{color:var(--ink)}
@@ -881,14 +876,6 @@ table.bil tr.hi td.n{color:var(--accent); font-weight:600}
           <div class="meter geduld"><i id="aufBar" style="width:100%"></i></div>
           <div class="zhinweis" id="aufText"></div>
         </div>
-      </section>
-
-      <section class="panel" id="lesebandBox">
-        <div class="lesekopf"><span class="bandwahl" id="bandwahl"></span>
-          <span class="hval" id="hval">–<span>BIT</span></span></div>
-        <div class="dims" id="dims"></div>
-        <div class="row" style="margin-top:11px">
-          <button class="act" id="festJetzt">Festlegen</button></div>
       </section>
 
       <section class="panel">
@@ -1510,44 +1497,11 @@ function zeichneAkte(){
 
 /* Was hier steht, ist dein Bild von ihm und nicht er. Die wahren Werte
    bekommst du in diesem Spiel nie zu sehen — nur ihn. */
-function zeichneLeseband(){
-  document.getElementById("lesebandBox").hidden = false;
-  const motiv = S.band === "mo";
-  const dims = motiv ? M : T, labels = motiv ? DATA.mlabels : DATA.tlabels;
-  const poles = motiv ? DATA.mpoles : DATA.tpoles, glaube = motiv ? S.moGlaube : S.bfGlaube;
-  const fest = motiv ? A.fest.mo : A.fest.bf;
-  document.getElementById("bandwahl").innerHTML =
-    `<button data-band="bf" class="${motiv?"":"an"}">Wesen</button>
-     <button data-band="mo" class="${motiv?"an":""}">Antriebe</button>`;
-  document.querySelectorAll("#bandwahl button").forEach(b =>
-    b.onclick = () => { S.band = b.dataset.band; zeichneLeseband(); });
-  document.getElementById("hval").innerHTML = nk(H(glaube)) + "<span>BIT</span>";
-  /* Derselbe Zug wie oben in der Übersicht, nur direkt am Balken: wer
-     hier hinsieht, hat gerade den Gedanken, sich festzulegen. */
-  const knopf = document.getElementById("festJetzt");
-  const zahl = (motiv ? A.moVerlauf : A.bfVerlauf).length;
-  knopf.textContent = (fest ? "Neu festlegen: " : "Festlegen: ")
-    + (motiv ? `was ${AN("ihn")} treibt` : `wer ${AN("er")} ist`);
-  knopf.disabled = !!R.aktiv || S.phase === 4 || !!S.ende;
-  knopf.title = zahl ? `Aus ${wort(zahl)} ${zahl===1?"Antwort":"Antworten"}. ${AN("Er")} antwortet dir darauf.`
-                     : `Du hast ${AN("ihn")} noch nichts gefragt — du würdest raten.`;
-  knopf.onclick = () => { if(knopf.disabled) return; rateRunde(motiv ? rateMO : rateBF); };
-  document.getElementById("dims").innerHTML = dims.map((d,i) => {
-    const m = marginal(glaube,i,dims.length), mx = Math.max(...m), ev = erwartung(m);
-    const zellen = m.map((p,j) => `<i class="${j===2?"mid":""}" style="height:${Math.max(6,100*p/mx).toFixed(1)}%"></i>`).join("");
-    /* Worauf du dich festgelegt hast, steht als Strich in der Reihe —
-       damit du siehst, wo du dich gegen dein eigenes Modell entschieden
-       hast. Die Wahrheit steht hier nicht. */
-    const marke = fest ? `<div class="truth"><i style="left:${((fest[i]+2)/4*100).toFixed(1)}%"></i></div>` : "";
-    /* Die Pole stehen verkürzt in der Titelzeile; ausgeschrieben
-       erscheinen sie beim Überfahren. Das spart fünf Zeilen Höhe. */
-    return `<div class="dimrow"><div class="dh"><b>${labels[d]}</b>
-        <span class="pol" title="links: ${esc(poles[d][0])} — rechts: ${esc(poles[d][1])}">→ ${esc(poles[d][1])}</span>
-        <span class="v">${fest ? "du "+vz(fest[i]) : vzk(ev)}</span></div>
-      <div class="cells">${zellen}</div>${marke}</div>`;
-  }).join("");
-}
-
+/* Das Modell hat keine Anzeige mehr. Es rechnet weiter — es
+   entscheidet, was sie antwortet und wie viel eine Frage bringt —, aber
+   man sieht es nicht. Wer wissen will, wer da sitzt, hat das Gespräch,
+   seine Notizen und sein eigenes Urteil. Mehr hat man bei einem
+   Menschen auch sonst nicht. */
 function zeichneNotizen(){
   const el = document.getElementById("notes");
   el.innerHTML = S.fakten.length
@@ -1592,7 +1546,7 @@ function zeichne(){
   /* Ein Zeitgeber aus einem abgebrochenen Gespräch darf hier nicht
      mehr durchkommen. */
   if(!S || !A || document.body.classList.contains("imMenue")){ waehleSpur(); return; }
-  zeichneAkte(); zeichneTalk(); zeichneKopf(); zeichneLeseband(); zeichneNotizen();
+  zeichneAkte(); zeichneTalk(); zeichneKopf(); zeichneNotizen();
   zeichneBalken(); drehscheibe0(); waehleSpur(); }
 
 /* Wie viele Zeilen das Ratefeld hat, sagt der Achsensatz — fünf für
@@ -1990,17 +1944,16 @@ function leseRunde(cfg){
   const kopf = S.stufe <= 2
     ? `Frage ${S[cfg.gestellt].length+1} · ${wort(rest.length)} ${rest.length===1?"Frage":"Fragen"} übrig · frag so lange du willst`
     : `Frage ${S[cfg.gestellt].length+1} · kostet ${nk(-fragepreis(),1).replace(",0","")} Freundschaft`
-      + (S.fragenHeute >= 5 ? ` · er wird ungeduldig` : ``)
-      + ` · noch ${nk(H(glaube))} bit im Dunkeln`;
+      + (S.fragenHeute >= 5 ? ` · ${AN("er")} wird ungeduldig` : ``);
   const items = biete(cfg.pool, S[cfg.gestellt]).map(f => {
-    const an = anknuepfung(f), g = eig(glaube, f, cfg.dims, cfg.feld);
+    const an = anknuepfung(f);
     return { t: an ? an.text : f.q, tag: kopf,
-      rechts: `${nk(g)} bit` + (an ? ` · <i style="color:var(--accent)">Anschluss</i>` : ``),
+      rechts: an ? `<i style="color:var(--accent)">Anschluss</i>` : ``,
       go(){ stelle(f, an, cfg); } };
   });
   items.push(S.stufe <= 2
     ? { t:`Genug. Ich lege mich fest.`, klasse:"haupt", rechts:``, go(){ rateRunde(cfg.key === "bf" ? rateBF : rateMO); } }
-    : { t: cfg.weiterText, klasse:"weiter", rechts:`0 bit`, go(){ cfg.fertig(); } });
+    : { t: cfg.weiterText, klasse:"weiter", rechts:``, go(){ cfg.fertig(); } });
   /* Gehen darf man immer, auch mitten in einer Lesestufe. Gehört wird
      trotzdem gezählt: die Antworten liegen in der Akte, und beim
      nächsten Besuch stehen sie noch da. Nur gewertet wird nichts,
@@ -2033,10 +1986,7 @@ function stelle(frage, an, cfg){
   if(antwort.nachRegie) sag("regie", antwort.nachRegie);
   if(antwort.nachEr) sag("er", antwort.nachEr, {wie:antwort.wie});
   if(S.stufe > 2)
-  sag("meta", `<b>${gewinn>=0?"+":""}${nk(gewinn)}</b> bit · Freundschaft <b>${vzk(nachStimmung(preis))}</b> · Geduld <b>${vzk(-geduldpreis(),0)}</b>`,
-    {lang: `erwartet hatte die Frage ${nk(erwartet)} bit`
-      + (beste.id !== frage.id ? `, stärker gewesen wäre <s>${esc(beste.q)}</s> mit ${nk(besteEig)} bit`
-                               : `, und das war die stärkste offene Frage`) + `.`});
+  sag("meta", `Freundschaft <b>${vzk(nachStimmung(preis))}</b> · Geduld <b>${vzk(-geduldpreis(),0)}</b>`);
 
   if(S.stufe > 2){ bezPlus(nachStimmung(preis)); geduldPlus(-geduldpreis()); }
   S.fragenHeute++;
@@ -2082,11 +2032,8 @@ function zeichneRatefeld(){
   if(!R.aktiv) return;
   const cfg = R.aktiv, glaube = cfg.key === "bf" ? S.bfGlaube : S.moGlaube;
   document.getElementById("ratefeld").innerHTML = cfg.dims.map((d,i) => {
-    const m = marginal(glaube, i, cfg.dims.length), mx = Math.max(...m);
-    const zellen = m.map((p,j) => `<i class="${j===2?"mid":""}" style="height:${Math.max(6,100*p/mx).toFixed(1)}%"></i>`).join("");
     return `<div class="rz" data-i="${i}">
       <div class="rz-name"><b>${cfg.labels[d]}</b><span>${esc(cfg.poles[d][0])} ⟷ ${esc(cfg.poles[d][1])}</span></div>
-      <div class="cells">${zellen}</div>
       <div class="ratezeile">${STUFEN.map(v =>
         `<button data-v="${v}" class="${R.tipps[i]===v?"an":""}">${vz(v)}</button>`).join("")}</div>
     </div>`;
@@ -2184,34 +2131,6 @@ function werteRaten(cfg, tipps){
     : punkte >= -10 ? `${AN("Er")} widerspricht dir öfter, als dir lieb ist.`
     : "Er widerspricht fast durchgehend. Ihr redet über zwei verschiedene Menschen.";
 
-  sag("ergebnis", `<section class="panel festlegung">
-    <div class="fkopf">
-      <div><div class="eyebrow">Festgelegt · ${esc(cfg.titel)}</div>
-        <div class="furteil">${urteil}</div></div>
-      <div class="fpunkte ${wirkung>=0?"plus":"minus"}">${vzk(wirkung,1)}<small>Freundschaft</small></div>
-    </div>
-    ${alt ? `<div class="fbilanz" style="margin-bottom:0">${
-      anteil <= 0
-        ? `Du hast seit dem letzten Mal nichts Neues gehört, also zählt es nicht — und ihn kostet es Geduld,
-           dieselbe Vorstellung zweimal anzuhören. Frag ihn etwas, dann lohnt es sich wieder.`
-        : anteil < 1
-          ? `Seit dem letzten Festlegen hast du ${wort(neues)} ${neues===1?"Antwort":"Antworten"} gehört.
-             Für die volle Wertung wären es ${wort(cfg.dims.length)} — deshalb zählt es zu
-             ${Math.round(anteil*100)} Prozent, aus ${vzk(roh,1)} wird ${vzk(wirkung,1)}.`
-          : `Du hast seither genug Neues gehört, das zählt voll.`}</div>` : ``}
-    <div class="fbilanz">${akk(genau)} ${genau===1?"Punkt":"Punkte"} hat er bestätigt${
-      knapp?`, bei ${dat(knapp)} eingeschränkt`:``}${weit?`, bei ${dat(weit)} deutlich widersprochen`:``}.
-      Wie ${AN("er")} wirklich ist, wirst du nie schwarz auf weiß sehen — nur, wie ${AN("er")} darauf reagiert.</div>
-    <table class="ftab">${zeilen.map(z => `
-      <tr class="fzeile ${z.dist===0?"ja":(z.dist===1?"nah":"nein")}">
-        <td class="fname">${z.label}</td>
-        <td class="n">du <b>${vz(z.tipp)}</b> · dein Modell gab dem ${Math.round(z.sicher*100)} %${
-          z.gegenModell ? ` · <i style="color:var(--EFF)">gegen dein Modell</i>` : ``}</td>
-        <td class="n"><span class="treffer ${z.dist===0?"ja":(z.dist===1?"nah":"nein")}">${
-          z.dist===0?"bestätigt":(z.dist===1?"eingeschränkt":"widersprochen")}</span> ${vzk(z.p,1)}</td></tr>
-      <tr class="fdeut"><td colspan="3">Wenn du damit recht hast: ${esc(anrede(z.deutung))}</td></tr>`).join("")}
-    </table>
-  </section>`);
   zeichne();
   /* In den Lesestufen ist das Festlegen das Ende der Stufe; in Stufe
      drei geht es danach weiter wie bisher. */
@@ -2315,14 +2234,9 @@ function zustandRunde(){
   }
   const rest = z.fragen.filter(f => !S.zGestellt.includes(f.id));
   if(!rest.length) return drehscheibe();
-  const items = rest.map(f => {
-    const e = erwarteterWert(f.liest, S.bfGlaube, T);
-    const farbe = e > 0.8 ? "var(--SIC)" : (e < -0.8 ? "var(--STA)" : "var(--EFF)");
-    const urteil = e > 0.8 ? "passt zu deinem Bild" : (e < -0.8 ? "gegen dein Bild" : "unklar");
-    return { t:f.t, tag:`Seine Lage · ${esc(z.titel)}`, klasse: e < -0.8 ? "riskant" : "",
-      rechts:`<i style="color:${farbe}" title="Das ist, was dein Modell erwarten lässt — nicht, wie die Person ist. Ob es stimmt, sagt dir nur sie selbst.">${urteil} ${vzk(e)}</i>`,
-      go(){ zustandZug(z, f); } };
-  });
+  const items = rest.map(f => ({
+    t:f.t, tag:`${AN("Seine")} Lage · ${esc(z.titel)}`, rechts:``,
+    go(){ zustandZug(z, f); } }));
   items.push({ t:`Das Thema ruhen lassen.`, klasse:"weiter", rechts:``, go(){ drehscheibe(); } });
   waehle(items);
 }
@@ -2538,11 +2452,6 @@ function bilanz(){
     <p class="small dim" style="margin-top:8px">Geduld am Ende des Besuchs:
       ${Math.round(S.geduld)} von hundert.${S.geduld < 40 ? " Ein Drittel davon fehlt ihm beim nächsten Mal." : ""}</p>
 
-    ${fragen.length ? `<h2>Deine Fragen</h2>
-    <table class="bil">${fragen.map(f => `<tr class="hi"><td>${esc(f.q)}</td>
-      <td class="n">${f.gewinn>=0?"+":""}${nk(f.gewinn)} bit</td></tr>`).join("")}</table>
-    <p class="small dim" style="margin-top:8px">Zusammen ${nk(bit)} bit in ${wort(fragen.length)}
-    ${fragen.length===1?"Frage":"Fragen"}, und ${nk(-W_FRAGE*fragen.length)} Freundschaft dafür.</p>` : ""}
 
     <p class="small dim" style="margin-top:16px">Wie ${AN("er")} wirklich ist, steht hier nicht und wird hier nie stehen.
     Du hast ${AN("sein")} Verhalten, deine Notizen und dein Modell. Mehr hat man bei einem Menschen auch sonst nicht.</p>
