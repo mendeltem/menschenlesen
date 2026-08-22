@@ -19,9 +19,17 @@ zeigt das Gesicht. Alles davor steht offen, alles danach ist zu.
 Fehlt ein Bild, bleibt die dunkle Fläche mit dem Griff stehen — es läuft,
 es ist nur weniger schön.
 
-**Der Griff wird im Spiel gezeichnet**, als kleiner Punkt rechts auf
-halber Höhe. Wer im Bild schon einen malt, bekommt zwei; besser also
-ohne, oder den gezeichneten Punkt später aus dem CSS nehmen.
+**Die Griffe kommen aus dem Bild.** Anfangs zeichnete das Spiel noch
+einen eigenen Punkt dazu — bei Bildern mit Klinke waren es dann zwei.
+Der gezeichnete ist raus.
+
+Der erste Satz kam als sechs einzelne Dateien, 2304 × 1856, also fast
+genau 5:4 — sie ließen sich ohne Zuschnitt übernehmen, verkleinert auf
+900 Pixel Breite. Zugeordnet habe ich sie an dem, was darauf liegt:
+Vorhängeschloss-Öse und Kabelrolle, angelehnte Bürotür mit Karton,
+dieselbe Tür penibel zu mit Hygrometer und Handtuch, Pendeltür mit
+Bullauge, Brandschutztür mit Kartenleser, und der Tresen mit
+Sprechschlitz.
 
 ---
 

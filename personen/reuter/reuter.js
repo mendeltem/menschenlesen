@@ -179,7 +179,7 @@ einstieg: [
 antrag: {
   frage: `Wo bekomme ich den A38?`,
   wie: `vorsichtig`,
-  zu: { er:`Das müsste im Intranet stehen.`,
+  zu: { er:`Tut mir leid, damit kenne ich mich nicht aus. Das müsste im Intranet stehen.`,
         erRegie:`Sie sieht kurz auf und dann wieder auf das Blatt vor sich.`,
         er2:`Unter Formulare, glaube ich. Ich habe da lange nicht nachgesehen.`,
         wie:`leise`, wie2:`abschließend`, stimmung:`verschlossen` },

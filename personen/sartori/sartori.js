@@ -172,7 +172,7 @@ einstieg: [
 antrag: {
   frage: `Wo bekomme ich den A38?`,
   wie: `beiläufig, mit dem Teller in der Hand`,
-  zu: { er:`In der Küche bestimmt nicht.`,
+  zu: { er:`Das tut mir leid, da kann ich Ihnen nicht helfen. In der Küche bestimmt nicht.`,
         erRegie:`Er wischt die Anrichte ab, die schon sauber ist.`,
         er2:`Da müssen Sie nach oben. Hier unten gibt es Essen und Kabel, sonst nichts.`,
         wie:`freundlich`, wie2:`ausweichend, ohne dass es unhöflich klingt`, stimmung:`neutral` },

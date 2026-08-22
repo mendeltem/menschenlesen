@@ -185,7 +185,7 @@ einstieg: [
 antrag: {
   frage: `Wo bekomme ich den A38?`,
   wie: `sachlich`,
-  zu: { er:`Hier unten gar nicht.`,
+  zu: { er:`Nein, tut mir leid. Hier unten gar nicht.`,
         erRegie:`Er sieht am Bildschirm vorbei und dann wieder hin.`,
         er2:`Ich betreibe die Geräte. Was auf den Geräten passiert, ist nicht meine Zuständigkeit. Das ist der Satz, den ich hier am häufigsten sage.`,
         wie:`knapp`, wie2:`nüchtern`, stimmung:`neutral` },

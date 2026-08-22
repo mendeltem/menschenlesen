@@ -171,7 +171,7 @@ einstieg: [
 antrag: {
   frage: `Wo bekomme ich den A38?`,
   wie: `beiläufig`,
-  zu: { er:`Puh. Nebenan, glaube ich. Oder das war früher so.`,
+  zu: { er:`Puh. Da kann ich Ihnen leider überhaupt nicht weiterhelfen. Nebenan, glaube ich. Oder das war früher so.`,
         erRegie:`Er sieht auf den Stapel, als könnte die Antwort darin liegen, und sucht nicht.`,
         er2:`Ich müsste nachsehen, und ich sehe garantiert nicht nach. Nehmen Sie es mir nicht übel, ich bin nicht die Auskunft.`,
         wie:`gut gelaunt`, wie2:`entwaffnend ehrlich und völlig unbrauchbar`, stimmung:`amuesiert` },

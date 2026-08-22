@@ -196,7 +196,7 @@ einstieg: [
 antrag: {
   frage: `Wo bekomme ich den A38?`,
   wie: `beiläufig, als wäre es dir gerade eingefallen`,
-  zu: { er:`Formulare liegen im Regal rechts neben dem Aufzug. Alphabetisch, A bis C im obersten Fach.`,
+  zu: { er:`Da kann ich Ihnen nicht weiterhelfen. Formulare liegen im Regal rechts neben dem Aufzug, alphabetisch, A bis C im obersten Fach.`,
         erRegie:`Sie zeigt mit dem Stift in die Richtung, ohne hinzusehen.`,
         er2:`Was nicht dort liegt, gibt es nicht. Jedenfalls nicht für Besucher.`,
         wie:`freundlich, vollständig, und ohne einen Krümel Inhalt`,

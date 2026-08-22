@@ -463,9 +463,7 @@ body.imMenue .eyebrow{color:color-mix(in srgb, var(--stock) 50%, #e8dcc6)}
   border:1px solid color-mix(in srgb, var(--stock) 26%, var(--line));
   background:rgba(23,17,12,.42); overflow:hidden; opacity:.72}
 .tuer .tblatt{position:relative; width:100%; aspect-ratio:5/4; background-size:cover;
-  background-position:center; background-color:rgba(20,15,11,.75)}
-.tuer .griff{position:absolute; right:16%; top:50%; width:11px; height:11px; border-radius:50%;
-  background:color-mix(in srgb, var(--stock) 60%, #d8c9ad); box-shadow:0 0 0 3px rgba(0,0,0,.35)}
+  background-position:center 42%; background-color:rgba(20,15,11,.75)}
 .tuer .tschild{padding:13px 16px 2px; font-family:var(--mono); font-size:11.5px; letter-spacing:.12em;
   text-transform:uppercase; color:#cdbfa6}
 .tuer .tstatus{padding:2px 16px 14px; font-size:12.5px; color:var(--muted)}
@@ -1202,7 +1200,8 @@ function frischeAkte(){
   return { besuche:0, bez:WELT.freundschaft.start, bfVerlauf:[], moVerlauf:[],
            bfGestellt:[], moGestellt:[], privGestellt:[], zGesehen:[],
            fakten:[], spuren:[], gesagt:[], gefunden:[], bedarf:[],
-           geduldWeg:0, fest:{}, letzter:null, einstiegGesehen:[], antragGefragt:false, treffer:{},
+           geduldWeg:0, fest:{}, letzter:null, einstiegGesehen:[], antragGefragt:false,
+           antragErst:false, treffer:{},
            stufe:1, punkte:{}, sterne:null };
 }
 /* Ältere Stände bekommen fehlende Felder nachgereicht, statt dass das
@@ -1871,8 +1870,8 @@ function antragFragen(danach){
   sag("du", A2.frage, {wie:A2.wie});
   if(!offen){
     erSagt(A2.zu);
-    sag("meta", `${AN("Er")} kennt dich zu wenig`,
-      {warn:true, lang:`Auf diese Frage antwortet niemand ehrlich, der einen nicht kennt. Lies ${AN("ihn")} erst zu Ende — beide Stufen.`});
+    sag("meta", `So kommst du nicht weiter`,
+      {warn:true, lang:`Auf diese Frage antwortet niemand ehrlich, der einen nicht kennt. Finde heraus, wer ${AN("er")} ist — beide Stufen —, und frag dann noch einmal.`});
     zeichne();
     return setTimeout(weiter, 60);
   }
@@ -1969,6 +1968,15 @@ function biete(pool, gestellt){
 }
 
 function leseRunde(cfg){
+  /* Die erste Frage ist immer dieselbe, und die Antwort darauf ist
+     immer nein. Erst danach gehen die anderen auf — und dann weiß man
+     auch, wozu man sie stellt. */
+  if(!A.antragErst && !gelesen(A) && DATA.antrag){
+    zeichne();
+    return waehle([{ t:DATA.antrag.frage, tag:`Deswegen bist du hier`,
+      rechts:`die Frage, mit der jeder Besuch anfängt`,
+      go(){ A.antragErst = true; akteSichern(); antragFragen(() => leseRunde(cfg)); } }]);
+  }
   const rest = cfg.pool.filter(p => !S[cfg.gestellt].includes(p.id));
   if(!rest.length) return cfg.fertig();
   const glaube = S[cfg.glaube];
@@ -1991,8 +1999,9 @@ function leseRunde(cfg){
      trotzdem gezählt: die Antworten liegen in der Akte, und beim
      nächsten Besuch stehen sie noch da. Nur gewertet wird nichts,
      solange du dich nicht festgelegt hast. */
-  if(S.stufe <= 2 && DATA.antrag) items.push({ t:DATA.antrag.frage, rechts:`der Antrag, wegen dem du hier bist`,
-    go(){ antragFragen(); } });
+  if(S.stufe <= 2 && DATA.antrag && gelesen(A) && !A.antragGefragt)
+    items.push({ t:DATA.antrag.frage, klasse:"haupt", rechts:`jetzt kennt ${AN("sie")} dich`,
+      go(){ antragFragen(); } });
   if(S.stufe <= 2) items.push({ t:`Für heute reicht es. Du verabschiedest dich.`, klasse:"weiter",
     rechts:`ohne dich festzulegen · was du gehört hast, bleibt`,
     go(){ abschied(); } });
@@ -2571,7 +2580,7 @@ function zeichneEtage(){
     /* Noch nicht dran: man sieht die Tür und das Schild, sonst nichts.
        Wer dahinter sitzt, erfährt man, wenn sie aufgeht. */
     if(!offenFuer(pp)) return `<div class="tuer zu">
-      <span class="tblatt" style="background-image:url('${T2.bild || ""}')"><span class="griff"></span></span>
+      <span class="tblatt" style="background-image:url('${T2.bild || ""}')"></span>
       <span class="tschild">${esc(T2.schild || "")}</span>
       <span class="tstatus">verschlossen</span>
     </div>`;

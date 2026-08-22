@@ -180,7 +180,7 @@ einstieg: [
 antrag: {
   frage: `Wo bekomme ich den A38?`,
   wie: `geradeheraus`,
-  zu: { er:`Weiß ich nicht.`,
+  zu: { er:`Tut mir leid, da bin ich raus. Weiß ich nicht.`,
         erRegie:`Sie sagt es, ohne von der Schraube aufzusehen.`,
         er2:`Fragen Sie in der Verwaltung. Die sitzen zwei Straßen weiter und wissen sowas.`,
         wie:`knapp`, wie2:`freundlich und vollkommen nutzlos`, stimmung:`neutral` },
