@@ -83,7 +83,7 @@ stimmungen: {
   abweisend:    { t:`abweisend`,         bild:`personen/kettner/bilder/abweisend.webp` }
 },
 
-raumbild: ``,
+raumbild: `personen/kettner/bilder/raum.webp`,
 
 /* --- Ankunft. Der Empfang läuft ab, dann hast du genau eine Frage. -- */
 

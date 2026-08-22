@@ -185,11 +185,13 @@ mdeutung: {
               Keller. nr ist der Schritt auf der Route, hoehe der Stock —
               die zwei sind nicht dasselbe.
 
-       Ueber dem ersten Stock liegt der zweite: die Verwaltung. Dort
-       sitzt niemand, den man besuchen kann, und genau das ist der
-       Witz — von dort kommen die Vorgaben, dorthin gehen die Meldungen,
-       und dort sitzt der, der am Ende unterschreibt. Etagen ohne Leute
-       stehen nicht im Treppenhaus.
+       Ueber dem ersten Stock kommt nichts mehr. Drei Stockwerke, und
+       das ist das ganze Haus.
+
+       Die Verwaltung sitzt zwei Straßen weiter, in einem anderen
+       Gebaeude. Von dort kommen die Vorgaben, dorthin gehen die
+       Meldungen, und dort sitzt der, der am Ende unterschreibt. Wer
+       hier arbeitet, hat sie noch nie gesehen.
 
        Die Nummer steht bei jeder Person unter etage. Wer eine Etage
        ergänzt, schreibt hier eine Zeile dazu. --------------------- */
@@ -221,7 +223,7 @@ etagen: [
 /* Was am Ende steht, wenn alle sechs gelesen und gefragt sind. */
 a38: {
   titel:`Du hast den A38.`,
-  text:`Nicht, weil du ihn beantragt hättest. Melzer ist nie wiedergekommen, seine Unterschrift fehlt, seine Freigabe ist gültig und tot, und keiner der sechs konnte dir helfen — jeder Einzelne hat es versucht und ist an derselben Stelle stehengeblieben. Ausgestellt hat ihn jemand, den du nie gesprochen hast: Verwaltung, zweiter Stock, zwei Minuten, kein Formular. Er hat gesagt, in derselben Woche hätten sechs Leute aus diesem Haus wegen derselben Person bei ihm angerufen, und das habe es in elf Jahren nicht gegeben. Wofür du den A38 brauchst, hat er nicht gefragt.`
+  text:`Nicht, weil du ihn beantragt hättest. Melzer ist nie wiedergekommen, seine Unterschrift fehlt, seine Freigabe ist gültig und tot, und keiner der sechs konnte dir helfen — jeder Einzelne hat es versucht und ist an derselben Stelle stehengeblieben. Ausgestellt hat ihn jemand, den du nie gesprochen hast: die Verwaltung, zwei Straßen weiter, zwei Minuten am Telefon, kein Formular. Er hat gesagt, in derselben Woche hätten sechs Leute aus diesem Haus wegen derselben Person bei ihm angerufen, und das habe es in elf Jahren nicht gegeben. Wofür du den A38 brauchst, hat er nicht gefragt.`
 },
 
 belege: {

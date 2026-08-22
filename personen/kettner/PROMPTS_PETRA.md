@@ -228,6 +228,15 @@ Seitenkopf. Jeder Gegenstand kommt im Gespräch vor.
 > desk rather than the door. Cool even daylight from the glass entrance,
 > everything squared up and slightly worn.
 
+**Beim erzeugten Bild standen die Platzhalter aus dem Prompt mit
+drauf** — SELF-PRINTED NAME SIGN, CANTEEN MENU, VISITOR'S BOOK, obwohl
+*no text* dabeisteht. Zwei davon liegen im sichtbaren Band hinter dem
+Seitenkopf. Wegretuschiert habe ich sie nicht: auf dem Schild soll
+ohnehin ihr Name stehen und auf dem Faltblatt der Speiseplan. Also
+übermalt und das Richtige hingeschrieben — *P. KETTNER*, *SPEISE-PLAN*,
+*BESUCHER*. Wer das Bild neu erzeugt, sollte das im Prompt gleich
+mitgeben, statt auf *no text* zu hoffen.
+
 Wer die Szene mit ihr darin will:
 
 > The woman from the portraits sits behind the counter in three-quarter

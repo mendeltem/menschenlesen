@@ -118,7 +118,7 @@ body.imMenue .raum{display:none}
 /* Eine Marke je Wortwechsel: Trennstrich und Nummer. Der gewählte
    trägt sie in der Akzentfarbe und ausgeschrieben, alle anderen nur
    als Kürzel — so sieht man auf einen Blick, wo einer aufhört. */
-.wwmarke{display:flex; align-items:center; gap:9px; margin:10px 0 2px}
+.wwmarke{display:flex; align-items:center; gap:9px; margin:6px 0 10px}
 .wwmarke:before{content:""; flex:1; height:1px; background:var(--line-soft)}
 .wwmarke b{font-family:var(--mono); font-size:9px; font-weight:500; letter-spacing:.14em;
   text-transform:uppercase; color:var(--muted); border:1px solid var(--line-soft);
@@ -1142,7 +1142,13 @@ function sag(who, text, o){ S.talk.push(Object.assign({who, text}, o||{})); S.ne
    zum ersten. Zurück gibt es die Anfangszeile je Wortwechsel. */
 function wortwechsel(){
   const a = [0];
-  S.talk.forEach((l,i) => { if(i > 0 && l.who === "du") a.push(i); });
+  /* Ein Wortwechsel fängt an, wo du etwas sagst — oder wo ein Zug
+     ausdrücklich einen Bruch setzt. Nicht jeder Zug beginnt mit deinen
+     Worten: der Übergang erzählt in Regie, warum du da bist, eine Lage
+     stellt sich in Regie vor, und der Abschied ebenso. Ohne Bruch
+     hingen die hinten am Zug davor, und man sah zwei Beats in einem
+     Block. */
+  S.talk.forEach((l,i) => { if(i > 0 && (l.who === "du" || l.bruch)) a.push(i); });
   return a;
 }
 function zeichneTalk(){
@@ -1171,7 +1177,7 @@ function zeichneTalk(){
   };
 
   talkEl.innerHTML = S.talk.map((l,i) => {
-    const kopf = (i > 0 && start.indexOf(i) >= 0) ? marke(wwZu[i]) : "";
+    const kopf = start.indexOf(i) >= 0 ? marke(wwZu[i]) : "";
     const neu = (i >= S.talk.length - S.neu ? " neu" : "")
       + " " + (l.who === "verdict" || l.who === "ergebnis" || wwZu[i] === ziel ? "jetzt" : "frueher")
       + (i === letzterEr ? " wichtig" : "");
@@ -1454,7 +1460,7 @@ function phase1(id){
 }
 function uebergang1(){
   const u = DATA.uebergang1;
-  sag("regie", u.duFest); erSagt(u);
+  sag("regie", u.duFest, {bruch:true}); erSagt(u);
   weiterNachAnkunft();
 }
 
@@ -1811,7 +1817,7 @@ const W_GEDULD_WIEDERHOLT = 8;
 
 function rateRunde(cfg){
   R.aktiv = cfg; R.tipps = cfg.dims.map(() => null);
-  sag("regie", cfg.aufforderung);
+  sag("regie", cfg.aufforderung, {bruch:true});
   zeichne();
   /* Der Verlauf tritt zur Seite, das Ratefeld nimmt seinen Platz ein.
      Gleiche Fläche, gleiche Spalte, kein zusätzliches Fenster. */
@@ -2052,7 +2058,7 @@ function zustandRunde(){
     S.zAn = true;
     if(!A.zGesehen.includes(z.id)) A.zGesehen.push(z.id);
     akteSichern();
-    sag("regie", z.regie); erSagt(z);
+    sag("regie", z.regie, {bruch:true}); erSagt(z);
     if(!S.fakten.includes(z.titel)) merke({fakt:z.titel});
     zeichne();
   }
@@ -2097,7 +2103,7 @@ function zustandZug(z, f){
 
 function rausgeworfen(){
   const h = DATA.hinausgeworfen;
-  sag("regie", h.regie); erSagt(h);
+  sag("regie", h.regie, {bruch:true}); erSagt(h);
   const w = bezPlus(W_RAUSWURF);
   sag("meta", `Freundschaft <b>${vzk(w)}</b> auf ${Math.round(S.bez)}`, {warn:true});
   S.ende = "raus";
@@ -2110,7 +2116,7 @@ function rausgeworfen(){
 function abschied(){
   const a = (DATA.abschied || []).find(x => S.bez >= x.ab);
   if(a){
-    sag("regie", a.regie); erSagt(a);
+    sag("regie", a.regie, {bruch:true}); erSagt(a);
     const w = bezPlus(a.bez || 0);
     if(w) sag("meta", `Freundschaft <b>${vzk(w)}</b> auf ${Math.round(S.bez)}`);
   }

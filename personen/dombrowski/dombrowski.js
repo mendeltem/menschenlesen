@@ -905,7 +905,7 @@ reaktion: {
          zuHoch:{ er:`Gesellig.`, erRegie:`Er sieht sich in dem fensterlosen Raum um.`, er2:`Ich sitze seit elf Jahren allein in einem Raum, in den niemand kommt, und ich habe mich nie darum bemüht, dass sich das ändert.`, wie:`gedehnt`, wie2:`sachlich` },
          zuTief:{ er:`So still bin ich auch wieder nicht. Sie sind seit einer halben Stunde hier, und ich habe deutlich mehr geredet als Sie.`, wie:`richtigstellend, fast amüsiert` } },
     A: { genau:{ er:`Ja, ich bin kurz angebunden. Nicht aus Bosheit — ich habe meistens gerade etwas im Kopf, das gleich kaputtgeht.`, wie:`sachlich, ohne Entschuldigung` },
-         zuHoch:{ er:`Nachgiebig.`, erRegie:`Er zieht eine Augenbraue hoch.`, er2:`Fragen Sie mal im zweiten Stock, wie das war, als ich zum vierten Mal dieselbe Frage bekommen habe. Ich war nicht nachgiebig, ich war ein Idiot.`, wie:`trocken`, wie2:`ohne Reue` },
+         zuHoch:{ er:`Nachgiebig.`, erRegie:`Er zieht eine Augenbraue hoch.`, er2:`Fragen Sie mal oben im ersten, wie das war, als ich zum vierten Mal dieselbe Frage bekommen habe. Ich war nicht nachgiebig, ich war ein Idiot.`, wie:`trocken`, wie2:`ohne Reue` },
          zuTief:{ er:`So hart bin ich nicht. Ich erkläre es dreimal, wenn einer sich nicht traut zu fragen. Nur beim vierten Mal wird es schwierig.`, wie:`einschränkend` } },
     N: { genau:{ er:`Ja.`, erRegie:`Er nickt und sieht dabei nicht weg, was er sonst tut.`, er2:`Das sagt mir sonst keiner. Die meisten halten mich für ruhig, weil ich leise bin. Ich bin nicht ruhig, ich bin nur leise.`, wie:`sofort`, wie2:`sehr klar` },
          zuHoch:{ er:`Ganz so schlimm ist es nicht. Ich funktioniere. Ich habe elf Jahre lang funktioniert.`, wie:`einschränkend, und nicht sehr überzeugend` },

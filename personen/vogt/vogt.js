@@ -126,7 +126,7 @@ uebergang1: {
 
 einstieg: [
   { id:`kaputt`, t:`Was ist heute kaputt?`, wie:`geradeheraus, schon in der Tür`,
-    er:`Heizung im zweiten, Türschließer im Treppenhaus, und einer hat den Schlüssel im Schloss abgebrochen.`,
+    er:`Heizung im ersten, Türschließer im Treppenhaus, und einer hat den Schlüssel im Schloss abgebrochen.`,
     erRegie:`Sie zählt es an drei Fingern ab, ohne aufzusehen.`,
     er2:`Halb elf. Das ist ein normaler Vormittag.`,
     wie:`schnell, ohne Klage`, wie2:`trocken, fast vergnügt`, stimmung:`amuesiert`,
@@ -178,7 +178,7 @@ antrag: {
   wie: `geradeheraus`,
   zu: { er:`Weiß ich nicht.`,
         erRegie:`Sie sagt es, ohne von der Schraube aufzusehen.`,
-        er2:`Fragen Sie in der Verwaltung, zweiter Stock. Die wissen sowas.`,
+        er2:`Fragen Sie in der Verwaltung. Die sitzen zwei Straßen weiter und wissen sowas.`,
         wie:`knapp`, wie2:`freundlich und vollkommen nutzlos`, stimmung:`neutral` },
   offen: { er:`Die Verwaltung weiß gar nichts, das habe ich Ihnen letztes Mal noch anders gesagt.`,
            erRegie:`Sie legt den Schraubenzieher hin.`,
@@ -752,7 +752,7 @@ zustaende: [
       liest:{C:1.0, E:0.5, A:-0.3},
       gut:{ er:`Nein. Aufzug ist Fremdfirma, das ist auch richtig so.`,
             erRegie:`Sie klopft mit dem Fingerknöchel gegen das Schild.`,
-            er2:`Was ich darf, ist das Schild hinhängen und es der Verwaltung im zweiten Stock erklären, warum. Beides mache ich seit gestern.`,
+            er2:`Was ich darf, ist das Schild hinhängen und es der Verwaltung erklären, die zwei Straßen weiter sitzt und den Aufzug noch nie gesehen hat. Beides mache ich seit gestern.`,
             wie:`sofort`, wie2:`trocken`, stimmung:`interessiert`,
             fakt:`darf an den Aufzug nicht ran und muss ihn trotzdem den Leuten erklären`, bez:7 },
       zu:{ er:`Das macht die Firma.`, wie:`knapp`, stimmung:`neutral`, bez:-1 } },
