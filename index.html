@@ -459,6 +459,10 @@ body.imMenue .eyebrow{color:color-mix(in srgb, var(--stock) 50%, #e8dcc6)}
 /* ── Türen ───────────────────────────────────────────────────────────
    Wer noch nicht dran ist, ist eine Tür: ein Blatt, ein Griff, ein
    Schild. Kein Name, kein Gesicht — das gibt es, wenn sie aufgeht. */
+@keyframes ruetteln{0%,100%{transform:translateX(0)} 20%{transform:translateX(-3px)}
+  40%{transform:translateX(3px)} 60%{transform:translateX(-2px)} 80%{transform:translateX(2px)}}
+.tuer.zu{cursor:default}
+.tuer.ruettelt{animation:ruetteln .28s}
 .tuer{display:flex; flex-direction:column; align-items:stretch; border-radius:var(--r);
   border:1px solid color-mix(in srgb, var(--stock) 26%, var(--line));
   background:rgba(23,17,12,.42); overflow:hidden; opacity:.72}
@@ -848,7 +852,7 @@ table.bil tr.hi td.n{color:var(--accent); font-weight:600}
     </div>
     <div class="tools">
       <button class="tool nurschmal" id="sideToggle">Dein Bild</button>
-      <button class="tool" id="musikToggle" title="Hintergrundmusik">♪ <span id="musikText">an</span></button>
+      <button class="tool" id="musikToggle" title="Musik und Geräusche">♪ <span id="musikText">an</span></button>
       <button class="tool" id="infoToggle">Was das Modell tut</button>
       <button class="tool warnung" id="resetToggle" title="Alle Akten und alle Einstellungen löschen · Umschalt + R">Zurücksetzen</button>
       <div class="themepick">
@@ -1103,6 +1107,40 @@ function musikSchalten(an){
   try{ localStorage.setItem("musik", an ? "an" : "aus"); }catch(e){}
   if(an) waehleSpur(); else musikAus();
 }
+/* ═══════════════ Geräusche ═══════════════
+   Sieben kurze Sachen aus klang/, alle unter anderthalb Sekunden.
+   Fehlt eine Datei, bleibt es still und niemand merkt es — deshalb
+   dürfen sie fehlen, solange sie niemand aufgenommen hat. Sie hängen
+   am selben Schalter wie die Musik: wer den Ton ausmacht, macht ihn
+   ganz aus. */
+const KLANG = {
+  tuerAuf:      "klang/tuer-auf.mp3",       // eine Tür geht auf — jemand hat dich weitergeschickt
+  schloss:      "klang/schloss.mp3",        // eine Tür, die noch nicht dran ist
+  eintragen:    "klang/eintragen.mp3",      // das Besucherbuch
+  stempel:      "klang/stempel.mp3",        // der A38 — dafür gibt es noch keine Aufnahme
+  blaettern:    "klang/blaettern.mp3",      // einen Wortwechsel zurück
+  notiz:        "klang/notiz.mp3",          // eine Notiz mehr
+  treppeHoch:   "klang/treppe-hoch.mp3",    // ein Stockwerk höher
+  treppeRunter: "klang/treppe-runter.mp3"   // und wieder hinunter
+};
+/* Die Dateien sind einzeln auf ihre Spitze gebracht — laut ist hier
+   die Tür, die aufgeht, leise der Bleistiftstrich. Der Regler bleibt
+   deshalb einer für alle. */
+const KLANG_LAUT = 0.85;
+const klaenge = {};
+function klingt(id){
+  if(!musikAn || !KLANG[id]) return;
+  let a = klaenge[id];
+  if(a === null) return;                    /* einmal danebengegriffen, nie wieder */
+  if(a === undefined){
+    a = new Audio(KLANG[id]);
+    a.volume = KLANG_LAUT; a.preload = "auto";
+    a.addEventListener("error", () => { klaenge[id] = null; });
+    klaenge[id] = a;
+  }
+  try{ a.currentTime = 0; a.play().catch(() => {}); }catch(e){}
+}
+
 /* Welche Spur passt gerade? Menü schlägt alles, sonst entscheidet die Phase. */
 function waehleSpur(){
   if(!musikAn) return;
@@ -1428,7 +1466,8 @@ talkEl.addEventListener("wheel", e => {
   blaettere(zurueck ? +1 : -1);
 }, {passive:false});
 
-function sag(who, text, o){ S.talk.push(Object.assign({who, text}, o||{})); S.neu++; S.fokus = 0; }
+function sag(who, text, o){ S.talk.push(Object.assign({who, text}, o||{})); S.neu++; S.fokus = 0;
+  if(o && o.klang) klingt(o.klang); }
 
 /* Ein Wortwechsel beginnt bei deiner Zeile; was davor steht, gehört
    zum ersten. Zurück gibt es die Anfangszeile je Wortwechsel. */
@@ -1511,6 +1550,7 @@ function blaettere(um){
   const n = wortwechsel().length;
   const neu = Math.max(0, Math.min(n - 1, S.fokus + um));
   if(neu === S.fokus) return;
+  klingt("blaettern");
   S.fokus = neu;
   leserOben = S.fokus > 0;
   zeichneTalk();
@@ -1644,6 +1684,7 @@ function knopf(text, go){
 /* Seine Rede kann aus Regie davor, Rede, Regie, zweiter Rede und Regie
    danach bestehen. Jede Rede trägt ihre Sprechweise mit. */
 function erSagt(o){
+  if(o.klang) klingt(o.klang);
   if(o.erRegieVor) sag("regie", o.erRegieVor);
   if(o.er)  sag("er", o.er,  {wie:o.wie});
   if(o.erRegie) sag("regie", o.erRegie);
@@ -1653,7 +1694,7 @@ function erSagt(o){
   setzeStimmung(o.stimmung);
 }
 function merke(o){
-  if(o.fakt && !S.fakten.includes(o.fakt)){ S.fakten.push(o.fakt); A.fakten.push(o.fakt); }
+  if(o.fakt && !S.fakten.includes(o.fakt)){ S.fakten.push(o.fakt); A.fakten.push(o.fakt); klingt("notiz"); }
   if(o.spur && !S.spuren.includes(o.spur)){ S.spuren.push(o.spur); A.spuren.push(o.spur); }
 }
 
@@ -1924,6 +1965,7 @@ function antragFragen(danach){
      Spiel: nicht ein Schlüssel, sondern ein Mensch, der einen Namen
      nennt. Bei der letzten Tür gibt es niemanden mehr — dort endet es. */
   if(!vorher){
+    klingt(A2.offen.ende ? "stempel" : "tuerAuf");
     const naechste = nachRoute().find(pp => !durch(akteVon(pp.id)));
     S.geschafft = A2.offen.ende ? "ende"
       : ((naechste && (naechste.tuer||{}).schild) || "Die nächste Tür");
@@ -2134,7 +2176,8 @@ function zeichneRateHinweis(){
   if(!R.aktiv){ return; }
   const offen = R.tipps.filter(t => t === null).length;
   choicesEl.innerHTML = `<div class="wahlkopf">${esc(R.aktiv.kopf)} ·
-      ${offen ? `noch <em>${wort(offen)}</em> offen` : `alle fünf gesetzt`}</div>
+      ${offen ? `noch <em>${wort(offen)}</em> offen`
+        : (R.tipps.length === 2 ? `beide gesetzt` : `alle ${wort(R.tipps.length)} gesetzt`)}</div>
     <div class="row"><button class="act" id="rateFertigUnten" ${offen?"disabled":""}>Festlegen</button></div>`;
   const b = document.getElementById("rateFertigUnten");
   b.onclick = () => {
@@ -2613,8 +2656,8 @@ function zeichneEtage(){
   const runter = document.getElementById("etageRunter");
   hoch.disabled = i === 0;
   runter.disabled = i === alle.length - 1;
-  hoch.onclick = () => { if(i > 0){ etageJetzt = alle[i-1].nr; zeichneEtage(); } };
-  runter.onclick = () => { if(i < alle.length-1){ etageJetzt = alle[i+1].nr; zeichneEtage(); } };
+  hoch.onclick = () => { if(i > 0){ klingt("treppeHoch"); etageJetzt = alle[i-1].nr; zeichneEtage(); } };
+  runter.onclick = () => { if(i < alle.length-1){ klingt("treppeRunter"); etageJetzt = alle[i+1].nr; zeichneEtage(); } };
 
   /* Wer hier oben noch nichts von dir weiß, schickt dich weiter. Das
      steht dabei, statt dass die Tür zu wäre. */
@@ -2637,7 +2680,7 @@ function zeichneEtage(){
     const T2 = pp.tuer || {};
     /* Noch nicht dran: man sieht die Tür und das Schild, sonst nichts.
        Wer dahinter sitzt, erfährt man, wenn sie aufgeht. */
-    if(!offenFuer(pp)) return `<div class="tuer zu">
+    if(!offenFuer(pp)) return `<div class="tuer zu" data-zu="1" title="Diese Tür ist noch nicht dran">
       <span class="tblatt" style="background-image:url('${T2.bild || ""}')"></span>
       <span class="tschild">${esc(T2.schild || "")}</span>
       <span class="tstatus">verschlossen</span>
@@ -2664,6 +2707,11 @@ function zeichneEtage(){
     </button>`; }).join("");
   document.querySelectorAll("[data-person]").forEach(b =>
     b.onclick = () => starteGespraech(PERSONEN.find(x => x.id === b.dataset.person)));
+  /* Die zugehörigen Türen kann man drücken. Sie geben nicht nach, und
+     genau das soll man hören und sehen. */
+  document.querySelectorAll("[data-zu]").forEach(d =>
+    d.onclick = () => { klingt("schloss"); d.classList.remove("ruettelt");
+      void d.offsetWidth; d.classList.add("ruettelt"); });
 
   const fertig = PERSONEN.filter(pp => durch(akteVon(pp.id))).length;
   const wo = WELT.etagen.find(x => x.nr === routeBis()) || {};

@@ -294,7 +294,7 @@ bigfive: [
   { id:`hof`, q:`Sie kennen hier ziemlich viele Leute.`,
     a:[
       {id:`alle`, wie:`laut, mit einem Lachen`, stimmung:`amuesiert`,
-       t:`Alle. Ich kenne auch die, die glauben, dass ich sie nicht kenne. Der aus dem dritten wirft seit zwei Jahren Kaffeesatz ins Waschbecken.`,
+       t:`Alle. Ich kenne auch die, die glauben, dass ich sie nicht kenne. Der aus 1.12 wirft seit zwei Jahren Kaffeesatz ins Waschbecken.`,
        l:{E:2.2}, fakt:`kennt jeden im Haus, auch die, die das nicht wissen`},
       {id:`arbeit`, wie:`sachlich`, stimmung:`neutral`,
        t:`So weit man muss. Ich brauche die Namen für die Zettel.`,

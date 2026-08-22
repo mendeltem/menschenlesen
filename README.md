@@ -471,6 +471,30 @@ anders wäre — wenn eine Konstante wandert, wandert die Messung mit. Wer
 an Gewichten dreht, dreht sie in `quelle/spiel.html` und lässt das hier
 gegenrechnen, bevor er committet.
 
+**Hundertmal durchspielen:**
+
+```bash
+python -m http.server 8000
+```
+
+Dann im Spiel die Konsole öffnen und
+
+```js
+fetch("werkzeug/durchspielen.js").then(r=>r.text()).then(eval)
+await durchspielen(100)
+```
+
+Der Läufer klickt dieselben Knöpfe wie ein Mensch und liest denselben
+Text — von der Drehtür bis zum A38, hundert Durchläufe in etwa fünf
+Minuten. Geprüft wird nicht, ob eine Funktion zurückgibt, was sie soll,
+sondern ob das Haus zusammenpasst: ob immer genau eine Tür offen steht,
+ob die Person, die weiterschickt, die nennt, die als Nächste dran ist,
+ob die Überschrift am Ende zum Ausgang passt — und ob irgendwo ein
+Platzhalter, ein `undefined` oder eine falsche Anrede in einem Satz
+steht, den jemand liest. Was danach in `SIM.funde` liegt, ist ein
+Widerspruch; `SIM.gesehen` zählt, was tatsächlich vorkam, damit ein
+Lauf ohne Funde nicht mit einem Lauf ohne Inhalt verwechselt wird.
+
 **Örtlich ansehen:**
 
 ```bash

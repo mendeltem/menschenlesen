@@ -103,7 +103,7 @@ baum: {
     fakt: `vermisst seit Montag ein Falzbein und sagt es niemandem`, spur: `brett`, ende: true
   },
   pflanze: {
-    er: `Die kriegt hier unten kein Licht. Ich weiß das, und ich nehme sie trotzdem nicht mit nach Hause.`,
+    er: `Die kriegt hier drin kein Licht. Ich weiß das, und ich nehme sie trotzdem nicht mit nach Hause.`,
     erRegie: `Sie dreht den Topf ein Stück, sodass die kahle Seite nach hinten zeigt.`,
     er2: `Sie war von einer Kollegin.`, wie: `beiläufig`, wie2: `kürzer, abschließend`,
     stimmung: `verschlossen`, spur: `pflanze`, ende: true
@@ -113,7 +113,7 @@ baum: {
 kennenfrage: [
   { t: `Was machen Sie hier eigentlich genau?`, wie: `interessiert`, ziel: `beruf` },
   { t: `Da fehlt ein Werkzeug an Ihrem Brett.`, wie: `beiläufig, mit einem Blick zur Wand`, ziel: `brett` },
-  { t: `Die Pflanze hat es schwer hier unten.`, wie: `leicht, fast nebenbei`, ziel: `pflanze` }
+  { t: `Die Pflanze hat es schwer in diesem Raum.`, wie: `leicht, fast nebenbei`, ziel: `pflanze` }
 ],
 
 uebergang1: {
@@ -377,7 +377,7 @@ motivfragen: [
        t:`Dass drei Häuser mit einem Verfahren arbeiten, das von mir ist, und niemand das weiß.`,
        aff:{GEL:1.9}},
       {id:`unten`, wie:`sehr leise`, stimmung:`nachdenklich`,
-       t:`Dass ich hier unten sitze und oben Dinge entschieden werden, bei denen ich nicht dabei bin. Man vergisst mich nicht aus Bosheit. Man vergisst mich einfach.`,
+       t:`Dass hier über meine Arbeit entschieden wird, ohne dass ich dabei bin. Man vergisst mich nicht aus Bosheit. Man vergisst mich einfach.`,
        aff:{GEL:-2.4}, fakt:`wird bei Entscheidungen schlicht vergessen`}
     ]},
 
@@ -392,8 +392,8 @@ motivfragen: [
       {id:`budget`, wie:`vorsichtig`, stimmung:`neutral`,
        t:`Ein eigenes Budget, über das ich allein entscheide.`, aff:{FRE:2.1}},
       {id:`schild`, wie:`mit einem schiefen Lächeln`, stimmung:`amuesiert`,
-       t:`Ein Schild an der Tür, auf dem steht, was hier unten gemacht wird. Da steht Werkstatt drei.`,
-       aff:{GEL:2.1}, fakt:`an ihrer Tür steht nur Werkstatt drei`},
+       t:`Dass mein Name an meinem Verfahren steht. Drei Häuser arbeiten damit und nennen es das Verfahren aus dem Nachbarhaus.`,
+       aff:{GEL:2.1}, fakt:`ihr Verfahren läuft in drei Häusern unter dem Namen des Nachbarhauses`},
       {id:`zweiter`, wie:`ohne Umschweife`, stimmung:`nachdenklich`,
        t:`Einen zweiten Menschen in diesem Raum. Irgendeinen. Ich rede sonst mit dem Papier, und das ist kein Scherz.`,
        aff:{GEL:-2.2}, fakt:`arbeitet allein und redet mit dem Material`}
@@ -590,7 +590,7 @@ zustaende: [
   ] },
 
 { id:`praktikum`, titel:`Die Praktikantin`,
-  regie:`Ein zweiter Hocker steht am Tisch. Er ist abgestaubt, was hier unten auffällt.`,
+  regie:`Ein zweiter Hocker steht am Tisch. Er ist abgestaubt, was in diesem Raum auffällt.`,
   er:`Ab Oktober bekomme ich eine Praktikantin. Sechs Monate, jeden Tag.`,
   wie:`neutral, mit einer winzigen Pause vor jeden Tag`, stimmung:`neutral`,
   bedarf:{ id:`prakt_zug`, was:`bekommt zum ersten Mal jemanden dauerhaft an den Tisch`, braucht:{GEL:-1.4} },
@@ -761,7 +761,7 @@ zustaende: [
   wie:`freundlich, und der Satz endet tiefer, als er anfing`, stimmung:`freundlich`,
   bedarf:{ id:`eltern_zug`, was:`verliert den einzigen Menschen, mit dem sie hier redet`, braucht:{GEL:-1.7} },
   fragen:[
-    { id:`wermitihr`, t:`Und mit wem reden Sie dann hier unten?`, wie:`ruhig, ohne Ironie`,
+    { id:`wermitihr`, t:`Und mit wem reden Sie dann hier?`, wie:`ruhig, ohne Ironie`,
       liest:{A:0.9, N:0.6, E:-0.3},
       gut:{ er:`Das ist genau die Frage.`,
             erRegie:`Sie stellt die Storchenkarte einen Zentimeter weiter nach vorn.`,

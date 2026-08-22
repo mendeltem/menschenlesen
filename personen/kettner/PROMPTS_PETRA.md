@@ -167,6 +167,24 @@ Zum Nachziehen, mit dem Referenzporträt und nur für dieses eine Feld:
 > mouth is closed and neutral. A receptionist deciding whether to
 > believe you, not a woman who is angry. Square 1:1, no text, no frame.
 
+**Nachgezogen wurde es am Ende doch als ganzer Bogen** — der liegt als
+`kontaktbogen2.jpg` daneben, sechs Spalten mal zwei Reihen statt fünf
+mal zwei, und Feld sechs der oberen Reihe ist genau das gesuchte
+prüfende Gesicht: Brauen waagerecht, Kinn zurück, die Augen einen
+Millimeter enger. Übernommen wurde **nur dieses eine Feld**. Die
+anderen neun bleiben vom ersten Bogen, allen voran Feld 7 — das ist
+mühsam genug entstanden.
+
+Beim Einsetzen half das Schneidewerkzeug nicht: die Felder des zweiten
+Bogens sind hochkant, und die Figur steht darin kleiner. Wer so ein
+Feld einfach ausschneidet, bekommt ein Bild, das im Rahmen springt,
+sobald die Stimmung wechselt. Eingepasst wurde deshalb **am Kopf**: die
+Silhouette wird von oben nach unten breiter, schmaler und wieder
+breiter — Haar, Hals, Schultern. Der schmalste Punkt dazwischen ist der
+Hals, und Oberkante bis Hals ist ein Maß, das in beiden Bögen dasselbe
+meint. Das neue Feld wurde auf dieses Maß skaliert (0,85), oben bündig
+gesetzt und mit dem Grau des Bogens auf 642 × 642 aufgefüllt.
+
 ---
 
 ## Mit Referenzbild: ein Bild hinein, zehn heraus
@@ -246,12 +264,14 @@ Wer die Szene mit ihr darin will:
 
 ## Danach
 
-`kettner.js` erwartet die zehn Dateien bereits unter den Namen oben. Nur
-das Raumbild fehlt noch in der Datei:
+`kettner.js` erwartet alle elf Dateien unter den Namen oben, das
+Raumbild eingeschlossen:
 
 ```js
 raumbild: `personen/kettner/bilder/raum.webp`,
 ```
 
-Bis dahin steht dort absichtlich nichts, dann bleibt der Streifen oben
-leer statt tot.
+Fehlt eines, bleibt an der Stelle die Fläche stehen — das Spiel läuft,
+es ist nur weniger schön. **Offen ist noch Feld 6**: der Generator hat
+ein Wutgesicht geliefert statt eines prüfenden, der Nachzieh-Prompt
+steht oben unter *Was beim ersten Durchgang schiefging*.

@@ -401,8 +401,8 @@ motivfragen: [
        t:`Die beiden Hilfskräfte fest anstellen. Dann muss ich nicht jedes halbe Jahr von vorn anfangen.`,
        aff:{FRE:-2.1}},
       {id:`schild`, wie:`mit einem schiefen Lächeln`, stimmung:`amuesiert`,
-       t:`Ein Schild an meine Tür. Da steht nichts drauf, seit vierunddreißig Jahren.`,
-       aff:{GEL:2.0}, fakt:`hat seit vierunddreißig Jahren kein Schild an der Tür`},
+       t:`Meinen Namen an die Tür. Da steht Personal, seit vierunddreißig Jahren.`,
+       aff:{GEL:2.0}, fakt:`an seiner Tür steht Personal, sein Name seit vierunddreißig Jahren nicht`},
       {id:`tischhoch`, wie:`warm`, stimmung:`freundlich`,
        t:`Einen langen Tisch statt der kleinen. Dann setzen sich Leute zusammen, die sich sonst nur nicken.`,
        aff:{GEL:-2.0}}
