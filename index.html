@@ -691,6 +691,9 @@ body.raten .zahlen{padding:10px 14px}
   border-radius:9px; padding:6px 10px; line-height:1.4}
 .notes li.offen{color:var(--muted); font-style:italic; background:transparent; border-style:dashed}
 .notes li.neu{animation:rise .4s cubic-bezier(.2,.8,.3,1) both}
+/* Was beim letzten Versuch gesessen hat: steht oben und ist erledigt. */
+.notes li.sicher{color:var(--SIC); border-left:2px solid var(--SIC); padding-left:9px}
+.notes li.sicher b{color:var(--SIC)}
 .notes-leer{font-size:12.5px; color:var(--muted); font-style:italic}
 
 /* ── Balken ── */
@@ -1199,7 +1202,7 @@ function frischeAkte(){
   return { besuche:0, bez:WELT.freundschaft.start, bfVerlauf:[], moVerlauf:[],
            bfGestellt:[], moGestellt:[], privGestellt:[], zGesehen:[],
            fakten:[], spuren:[], gesagt:[], gefunden:[], bedarf:[],
-           geduldWeg:0, fest:{}, letzter:null, einstiegGesehen:[], antragGefragt:false,
+           geduldWeg:0, fest:{}, letzter:null, einstiegGesehen:[], antragGefragt:false, treffer:{},
            stufe:1, punkte:{}, sterne:null };
 }
 /* Ältere Stände bekommen fehlende Felder nachgereicht, statt dass das
@@ -1527,9 +1530,15 @@ function zeichneAkte(){
    Menschen auch sonst nicht. */
 function zeichneNotizen(){
   const el = document.getElementById("notes");
-  el.innerHTML = S.fakten.length
+  /* Ganz oben steht, was schon feststeht: Achsen, die beim letzten
+     Versuch bestätigt wurden. Darauf muss man nicht noch einmal raten. */
+  const sicher = [].concat((A.treffer || {}).bf || [], (A.treffer || {}).mo || [])
+    .filter(x => !gelesen(A) || S.stufe <= 2);
+  const kopf = sicher.map(x =>
+    `<li class="sicher">${esc(anrede(x.label))} <b>${vz(x.v)}</b> — steht schon</li>`).join("");
+  el.innerHTML = kopf + (S.fakten.length
     ? S.fakten.map((f,i) => `<li class="${i===S.fakten.length-1?"neu":""}">${esc(f)}</li>`).join("")
-    : `<li class="notes-leer">Noch nichts, was der Rede wert wäre.</li>`;
+    : (kopf ? `` : `<li class="notes-leer">Noch nichts, was der Rede wert wäre.</li>`));
   document.getElementById("notizZahl").textContent = S.fakten.length;
 
   const pb = document.getElementById("privatBox");
@@ -1854,17 +1863,18 @@ function vielleichtTutorial(){
 
    Sind alle einer Etage gelesen und gefragt, hängt die Person noch
    einen Satz an: wo man als Nächstes hinsoll. */
-function antragFragen(){
+function antragFragen(danach){
+  const weiter = danach || weiterNachAntrag;
   const A2 = DATA.antrag;
-  if(!A2) return drehscheibe();
-  const offen = gelesen(A) && S.stufe > 2;
+  if(!A2) return weiter();
+  const offen = gelesen(A);
   sag("du", A2.frage, {wie:A2.wie});
   if(!offen){
     erSagt(A2.zu);
     sag("meta", `${AN("Er")} kennt dich zu wenig`,
       {warn:true, lang:`Auf diese Frage antwortet niemand ehrlich, der einen nicht kennt. Lies ${AN("ihn")} erst zu Ende — beide Stufen.`});
     zeichne();
-    return setTimeout(() => weiterNachAntrag(), 60);
+    return setTimeout(weiter, 60);
   }
   erSagt(A2.offen); merke(A2.offen);
   const vorher = A.antragGefragt;
@@ -1880,7 +1890,7 @@ function antragFragen(){
                     : `Alle auf dieser Etage sind gelesen und gefragt. Hingehen durftest du überall — jetzt weiß man dort auch, wer du bist.`});
   }
   zeichne();
-  setTimeout(() => weiterNachAntrag(), 60);
+  setTimeout(weiter, 60);
 }
 /* Nach der Frage geht es dorthin zurück, wo man hergekommen ist. */
 function weiterNachAntrag(){
@@ -2040,7 +2050,11 @@ const W_RATE_TREFFER = 5, W_RATE_NAH = 1, W_RATE_DANEBEN = -3;
 const W_GEDULD_WIEDERHOLT = 8;
 
 function rateRunde(cfg){
-  R.aktiv = cfg; R.tipps = cfg.dims.map(() => null);
+  R.aktiv = cfg;
+  /* Was beim letzten Versuch bestätigt wurde, steht schon drin — man
+     bestätigt es noch einmal oder ändert es, aber man rät es nicht neu. */
+  const sicher = (A.treffer || {})[cfg.key] || [];
+  R.tipps = cfg.dims.map(d => { const f = sicher.find(x => x.d === d); return f ? f.v : null; });
   sag("regie", cfg.aufforderung, {bruch:true});
   zeichne();
   /* Der Verlauf tritt zur Seite, das Ratefeld nimmt seinen Platz ein.
@@ -2353,6 +2367,11 @@ function geduldPlus(w){
 function stufenEnde(L, zeilen){
   const punkte = stufenPunkte(zeilen, L);
   A.punkte[L.key] = punkte;
+  /* Was gesessen hat, bleibt stehen. Wer die Stufe wiederholt, muss
+     nicht dieselben fünf noch einmal raten, sondern die, die
+     danebenlagen. */
+  A.treffer = A.treffer || {};
+  A.treffer[L.key] = zeilen.filter(z => z.dist === 0).map(z => ({d:z.d, v:z.tipp, label:z.label}));
   A.stufe = punkte >= L.bestehen ? Math.min(3, A.stufe + 1) : A.stufe;
   const beide = (A.punkte.bf || 0) + (A.punkte.mo || 0);
   const fertig = A.punkte.bf != null && A.punkte.mo != null;
@@ -2396,6 +2415,13 @@ function stufenEnde(L, zeilen){
         : `Du kannst die Stufe noch einmal spielen. Er fängt dann von vorn an, und du weißt mehr als beim ersten Mal.`}</p>
   </section>`);
   zeichne();
+  /* Wer beide Schätzungen hinter sich hat, muss für die eine Frage,
+     wegen der er hier ist, nicht erst wieder hinausgehen. */
+  if(fertig && DATA.antrag && !A.antragGefragt)
+    return knopf(DATA.antrag.frage, () => {
+      S.ende = null; S.phase = 3;
+      antragFragen(() => { S.ende = "stufe"; besuchEnde(); });
+    });
   knopf("Zurück ins Menü", () => zeigeMenue());
 }
 
@@ -2434,7 +2460,7 @@ function bilanz(){
   const festTab = S.rateLog.length ? S.rateLog.map(r => `<h2>Worauf du dich festgelegt hast · ${esc(r.titel)}</h2>
     <table class="bil">${r.zeilen.map(z => `<tr class="${z.dist===0?"hi":""}">
       <td>${z.label}</td>
-      <td class="n">du ${vz(z.tipp)} · dein Modell ${Math.round(z.sicher*100)} %</td>
+      <td class="n">du ${vz(z.tipp)}</td>
       <td class="n"><span class="treffer ${z.dist===0?"ja":(z.dist===1?"nah":"nein")}">${
         z.dist===0?"bestätigt":(z.dist===1?"eingeschränkt":"widersprochen")}</span> ${vzk(z.p,1)}</td></tr>`).join("")}
     </table>
@@ -2477,7 +2503,7 @@ function bilanz(){
 
 
     <p class="small dim" style="margin-top:16px">Wie ${AN("er")} wirklich ist, steht hier nicht und wird hier nie stehen.
-    Du hast ${AN("sein")} Verhalten, deine Notizen und dein Modell. Mehr hat man bei einem Menschen auch sonst nicht.</p>
+    Du hast ${AN("sein")} Verhalten, deine Notizen und dein eigenes Urteil. Mehr hat man bei einem Menschen auch sonst nicht.</p>
   </section>`;
 }
 

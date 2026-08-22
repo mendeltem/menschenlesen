@@ -189,11 +189,11 @@ antrag: {
         erRegie:`Er sieht am Bildschirm vorbei und dann wieder hin.`,
         er2:`Ich betreibe die Geräte. Was auf den Geräten passiert, ist nicht meine Zuständigkeit. Das ist der Satz, den ich hier am häufigsten sage.`,
         wie:`knapp`, wie2:`nüchtern`, stimmung:`neutral` },
-  offen: { er:`Ich kann Ihnen die Freigabe anzeigen. Geben kann ich sie Ihnen nicht.`,
-           erRegie:`Er stellt den Laptop neben sich auf den Rollwagen und dreht ihn nicht zu dir.`,
-           er2:`Sie steht auf Melzers Konto und ist gültig — das System weiß nicht, dass er weg ist. Ich könnte sie mit drei Handgriffen auf Ihren Namen umschreiben, und niemand würde es je merken. Ich mache es nicht. Nicht weil ich Angst habe, erwischt zu werden, sondern weil dann alles, was Sie hier in Wochen erarbeitet haben, auf einer Lüge steht.`,
-           wie:`sachlich`, wie2:`langsam, sehr genau`, stimmung:`interessiert`,
-           fakt:`könnte Melzers Freigabe umschreiben und tut es nicht` }
+  offen: { er:`Die Freigabe steht auf Melzers Konto und ist gültig. Das System weiß nicht, dass er weg ist.`,
+           erRegie:`Er stellt den Laptop neben sich auf den Rollwagen und dreht ihn diesmal zu dir.`,
+           er2:`Drei Handgriffe, und sie steht auf Ihrem Namen. Ich habe das seit dem Frühjahr nicht ein einziges Mal gemacht, für niemanden, und ich habe es mir bei mindestens vier Leuten überlegt. Sie sind der Erste, bei dem ich weiß, wie er heißt und was er dienstags macht.`,
+           wie:`sachlich`, wie2:`langsam, und dann sehr schnell`, stimmung:`interessiert`,
+           fakt:`kann Melzers Freigabe umschreiben und hat es bisher für niemanden getan` }
 },
 
 /* --- Neun Fragen zur Person. l = wie stark eine Antwort für welches

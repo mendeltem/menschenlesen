@@ -214,16 +214,16 @@ etagen: [
   { nr:3, name:`Untergeschoss`,
     was:`Kantine und Serverraum. Hier unten kommt sonst niemand vorbei.`,
     hoehe:-1, bild:`bilder/etageU.webp`, farbe:`#4a6a72`,
-    weiter:`Damit sind Sie durch, und das Ergebnis ist: es geht nicht. Nicht bei mir, nicht bei den anderen, bei niemandem in diesem Haus. Ich sage das ungern, weil ich weiß, wie lange Sie unterwegs sind. Aber Sie laufen jetzt seit Wochen hier herum und kennen inzwischen jeden — das kann von uns keiner von sich behaupten, ich am allerwenigsten. Ich rufe oben an.`,
-    weiterRegie:`Er klappt den Laptop zu, was er sonst nicht tut, wenn jemand da ist.`,
-    weiterWie:`langsam, als hätte er es vorher überlegt`,
+    weiter:`Auf dem Dienstweg geht es nicht. Nicht bei mir, nicht bei den anderen, bei niemandem in diesem Haus — das haben Sie inzwischen selbst gemerkt. Also gehen wir nicht den Dienstweg. Setzen Sie sich einen Moment daneben und sehen Sie weg, das dauert nicht lang.`,
+    weiterRegie:`Er klappt den Laptop auf, was er sonst nur tut, wenn niemand da ist, und tippt eine Weile ohne aufzusehen. Dann dreht er den Bildschirm doch zu dir.`,
+    weiterWie:`ruhig, als hätte er es sich lange überlegt und gerade eben entschieden`,
     ende:true }
 ],
 
 /* Was am Ende steht, wenn alle sechs gelesen und gefragt sind. */
 a38: {
   titel:`Du hast den A38.`,
-  text:`Nicht, weil du ihn beantragt hättest. Melzer ist nie wiedergekommen, seine Unterschrift fehlt, seine Freigabe ist gültig und tot, und keiner der sechs konnte dir helfen — jeder Einzelne hat es versucht und ist an derselben Stelle stehengeblieben. Ausgestellt hat ihn jemand, den du nie gesprochen hast: die Verwaltung, zwei Straßen weiter, zwei Minuten am Telefon, kein Formular. Er hat gesagt, in derselben Woche hätten sechs Leute aus diesem Haus wegen derselben Person bei ihm angerufen, und das habe es in elf Jahren nicht gegeben. Wofür du den A38 brauchst, hat er nicht gefragt.`
+  text:`Nicht über den Dienstweg. Melzer ist nie wiedergekommen, seine Unterschrift fehlt, und keiner der sechs konnte dir auf dem vorgesehenen Weg helfen — jeder Einzelne hat es versucht und ist an derselben Stelle stehengeblieben. Melzers Freigabe aber läuft weiter, weil es keinen Vorgang dafür gibt, wenn jemand einfach nicht mehr kommt. Kai hat sie auf deinen Namen umgeschrieben. Drei Handgriffe, und er hat es seit dem Frühjahr für niemanden getan — bei mindestens vier Leuten hat er es sich überlegt und es gelassen. Bei dir wusste er, wie du heißt und was du dienstags machst. Das ist der ganze Unterschied, und es ist derselbe, der dich durch dieses Haus gebracht hat.`
 },
 
 belege: {
