@@ -184,11 +184,11 @@ antrag: {
         erRegie:`Sie sagt es, ohne von der Schraube aufzusehen.`,
         er2:`Fragen Sie in der Verwaltung. Die sitzen zwei Straßen weiter und wissen sowas.`,
         wie:`knapp`, wie2:`freundlich und vollkommen nutzlos`, stimmung:`neutral` },
-  offen: { er:`Die Verwaltung weiß gar nichts, das habe ich Ihnen letztes Mal noch anders gesagt.`,
-           erRegie:`Sie legt den Schraubenzieher hin.`,
-           er2:`In diesem Haus bekommt man kein Papier, indem man es beantragt. Man bekommt es, weil einer, der einen kennt, im richtigen Moment den Namen sagt. Ich sage ihn.`,
+  offen: { er:`Ich auch nicht.`,
+           erRegie:`Sie legt den Schraubenzieher hin und sieht zur Decke, als könnte sie hindurchsehen.`,
+           er2:`Aber ich sage Ihren Namen weiter, und zwar oben. Erster Stock, die Zimmer am Ende. Da sitzt einer, der mich im Frühjahr zweimal gefragt hat, ob ich jemanden weiß. Ich wusste niemanden. Jetzt weiß ich jemanden.`,
            wie:`direkt`, wie2:`laut, ohne Umschweife`, stimmung:`freundlich`,
-           fakt:`will deinen Namen sagen, wenn jemand fragt` }
+           fakt:`sagt deinen Namen im ersten Stock weiter` }
 },
 
 /* --- Neun Fragen zur Person. l = wie stark eine Antwort für welches

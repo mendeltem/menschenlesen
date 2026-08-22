@@ -175,8 +175,8 @@ mdeutung: {
 /* --- Die Etagen. Das Haus gibt sich nicht auf einmal her: unten
        sitzen zwei, und erst wer die beiden gelesen hat — beide
        Lesestufen bestanden und danach gefragt —, wird weitergeschickt.
-       Verschlossen ist keine Etage: hinaufgehen darf man jederzeit, nur
-       schickt einen weg, wer einen nicht kennt.
+       Wohin, sagt die Person selbst; die Etage weiss davon nichts. Hier
+       steht nur, wie das Stockwerk heisst und wie es aussieht.
 
        bild   liegt in bilder/ und ist Querformat; fehlt es, bleibt der
               Verlauf aus farbe stehen.
@@ -199,25 +199,13 @@ mdeutung: {
 etagen: [
   { nr:1, name:`Erdgeschoss`,
     was:`Drehtür, Empfang, und der Gang dahinter. An den beiden kommt niemand vorbei.`,
-    hoehe:0, bild:`bilder/etageE.webp`, farbe:`#8c5a44`,
-    /* Was gesagt wird, wenn hier alle gelesen und gefragt sind. Erst
-       das schickt dich eine Etage weiter — kein Schlüssel, ein Mensch. */
-    weiter:`Gehen Sie in den ersten Stock. Melzers Zimmer ist das vierte am Gang, da schließt seit dem Frühjahr niemand mehr auf — aber die beiden nebenan haben mit ihm gearbeitet. Einer von denen weiß, woran Ihr Papier hängt. Fragen Sie nicht die Verwaltung, fragen Sie die zwei.`,
-    weiterRegie:`Und dann, ohne dass du danach gefragt hättest:`,
-    weiterWie:`beiläufig, als fiele es gerade erst ein` },
+    hoehe:0, bild:`bilder/etageE.webp`, farbe:`#8c5a44` },
   { nr:2, name:`Erster Stock`,
     was:`Der Gang mit den Büros. Die vierte Tür ist Melzers und steht seit dem Frühjahr zu.`,
-    hoehe:1, bild:`bilder/etage1.webp`, farbe:`#8a6f4a`,
-    weiter:`Und dann müssen Sie ins Untergeschoss. Was Melzer unterschrieben hat, hängt an einem Rechner, und der Rechner steht unten. Ohne die Freigabe von dort ist Ihr Antrag ein Blatt Papier. Die zwei da unten vergisst hier jeder, weil niemand vorbeikommt — die sind mehr, als sie aussehen.`,
-    weiterRegie:`Dann, mit einem Nicken Richtung Treppenhaus:`,
-    weiterWie:`sachlich` },
+    hoehe:1, bild:`bilder/etage1.webp`, farbe:`#8a6f4a` },
   { nr:3, name:`Untergeschoss`,
     was:`Kantine und Serverraum. Hier unten kommt sonst niemand vorbei.`,
-    hoehe:-1, bild:`bilder/etageU.webp`, farbe:`#4a6a72`,
-    weiter:`Auf dem Dienstweg geht es nicht. Nicht bei mir, nicht bei den anderen, bei niemandem in diesem Haus — das haben Sie inzwischen selbst gemerkt. Also gehen wir nicht den Dienstweg. Setzen Sie sich einen Moment daneben und sehen Sie weg, das dauert nicht lang.`,
-    weiterRegie:`Er klappt den Laptop auf, was er sonst nur tut, wenn niemand da ist, und tippt eine Weile ohne aufzusehen. Dann dreht er den Bildschirm doch zu dir.`,
-    weiterWie:`ruhig, als hätte er es sich lange überlegt und gerade eben entschieden`,
-    ende:true }
+    hoehe:-1, bild:`bilder/etageU.webp`, farbe:`#4a6a72` }
 ],
 
 /* Was am Ende steht, wenn alle sechs gelesen und gefragt sind. */

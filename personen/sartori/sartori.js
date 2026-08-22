@@ -176,11 +176,11 @@ antrag: {
         erRegie:`Er wischt die Anrichte ab, die schon sauber ist.`,
         er2:`Da müssen Sie nach oben. Hier unten gibt es Essen und Kabel, sonst nichts.`,
         wie:`freundlich`, wie2:`ausweichend, ohne dass es unhöflich klingt`, stimmung:`neutral` },
-  offen: { er:`Sie fragen das seit Wochen, und Sie fragen es jedes Mal beiläufig.`,
-           erRegie:`Er setzt sich hin, was er sonst nicht tut.`,
-           er2:`Man fragt so, wenn man es nötig hat und nicht möchte, dass es jemand merkt. Ich kann Ihnen das Papier nicht geben. Aber ich weiß, wer in diesem Haus wen anruft, und ich koche hier seit vierunddreißig Jahren für alle. Sagen Sie mir Bescheid, wenn es so weit ist.`,
+  offen: { er:`Nicht ich. Aber dann bleibt noch einer.`,
+           erRegie:`Er setzt sich hin, was er sonst nicht tut, und nickt zur Tür gegenüber.`,
+           er2:`Der junge Mann im Serverraum, die Tür ohne Schild. Ich bringe ihm zweimal die Woche einen Teller, weil er sonst nicht isst. Er kommt an alles ran, was in diesem Haus auf einem Gerät steht.`,
            wie:`ruhig, ohne Vorwurf`, wie2:`warm, sehr genau`, stimmung:`geruehrt`,
-           fakt:`weiß, wer in diesem Haus wen anruft, und bietet es an` }
+           fakt:`bringt Kai Dombrowski zweimal die Woche einen Teller` }
 },
 
 /* --- Akt 2: neun Fragen zur Person, du stellst so viele du willst. --

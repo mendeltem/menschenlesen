@@ -201,11 +201,11 @@ antrag: {
         er2:`Was nicht dort liegt, gibt es nicht. Jedenfalls nicht für Besucher.`,
         wie:`freundlich, vollständig, und ohne einen Krümel Inhalt`,
         wie2:`sachlich`, stimmung:`neutral` },
-  offen: { er:`Im Regal liegt A36 und A39. Dazwischen ist eine Lücke, und die ist kein Versehen.`,
+  offen: { er:`Ich weiß es nicht.`,
            erRegie:`Sie legt den Stift hin und sieht dich zum ersten Mal an, ohne dabei etwas einzutragen.`,
-           er2:`Den A38 stellt in diesem Haus eine einzige Person aus. Ich schicke seit dem Frühjahr Leute zu einem Zimmer, in dem niemand sitzt, und niemand hat mir gesagt, dass ich damit aufhören soll. Also mache ich es weiter.`,
+           er2:`Aber ich gebe es weiter. An die Hausmeisterin — Frau Vogt weiß über dieses Haus mehr als ich. Den Gang hinunter, letzte Tür. Sie steht offen, das tut sie immer.`,
            wie:`trocken`, wie2:`nüchtern, und darin liegt zum ersten Mal etwas`, stimmung:`interessiert`,
-           fakt:`schickt seit dem Frühjahr Leute zu einem Zimmer, in dem niemand sitzt` }
+           fakt:`gibt deinen Namen an Angela Vogt weiter` }
 },
 
 /* --- Neun Fragen zur Person. l = wie stark eine Antwort für welches

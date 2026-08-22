@@ -183,11 +183,11 @@ antrag: {
         erRegie:`Sie sieht kurz auf und dann wieder auf das Blatt vor sich.`,
         er2:`Unter Formulare, glaube ich. Ich habe da lange nicht nachgesehen.`,
         wie:`leise`, wie2:`abschließend`, stimmung:`verschlossen` },
-  offen: { er:`Im Intranet steht er, und der Link geht ins Leere. Seit dem Frühjahr.`,
+  offen: { er:`Nein. Aber ich weiß, wen Sie fragen müssen, und er kommt Ihnen albern vor.`,
            erRegie:`Sie legt den Pinsel quer über das Glas und lässt die Hände liegen.`,
-           er2:`Ich habe das gemeldet. Man hat mir geantwortet, das Formular sei nicht abgeschafft, nur die Zuständigkeit sei offen. Das ist der genaueste Satz, den ich je aus diesem Haus bekommen habe, und er hilft niemandem.`,
-           wie:`ruhig`, wie2:`sehr genau, ohne Bitterkeit`, stimmung:`nachdenklich`,
-           fakt:`der Link zum A38 geht seit dem Frühjahr ins Leere; die Zuständigkeit ist offen` }
+           er2:`Den Koch. Herr Sartori, unten in der Küche. Er kocht hier seit vierunddreißig Jahren für alle und weiß deshalb, wer in diesem Haus wen anruft. Bei meinem A38 war er es, der mir gesagt hat, wo es klemmt.`,
+           wie:`ruhig`, wie2:`sehr genau, ohne jede Ironie`, stimmung:`nachdenklich`,
+           fakt:`Luigi Sartori hat ihr damals gesagt, wo ihr A38 klemmte` }
 },
 
 /* --- Akt 2: neun Fragen zu ihr. Jede bietet eine starke und eine

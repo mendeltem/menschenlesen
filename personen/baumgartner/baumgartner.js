@@ -175,11 +175,11 @@ antrag: {
         erRegie:`Er sieht auf den Stapel, als könnte die Antwort darin liegen, und sucht nicht.`,
         er2:`Ich müsste nachsehen, und ich sehe garantiert nicht nach. Nehmen Sie es mir nicht übel, ich bin nicht die Auskunft.`,
         wie:`gut gelaunt`, wie2:`entwaffnend ehrlich und völlig unbrauchbar`, stimmung:`amuesiert` },
-  offen: { er:`Sie bekommen ihn nicht. Ich sage Ihnen auch, warum, und das sagt Ihnen sonst keiner.`,
-           erRegie:`Er schiebt den Stapel zur Seite, was du ihn noch nie hast tun sehen.`,
-           er2:`Der A38 hängt an einer Unterschrift und an einer Freigabe. Die Unterschrift ist Melzer, die Freigabe hängt an seinem Konto im Keller. Beides existiert noch, und beides gehört einem Menschen, der nicht mehr kommt. Das ist kein Verwaltungsproblem mehr. Das ist Statistik: die Wahrscheinlichkeit, dass sich das von selbst löst, ist null.`,
-           wie:`schneller`, wie2:`sehr direkt, fast fröhlich vor Präzision`, stimmung:`interessiert`,
-           fakt:`der A38 hängt an Melzers Unterschrift und an der Freigabe auf seinem Konto im Keller` }
+  offen: { er:`Ich nicht. Zwei Türen weiter aber schon.`,
+           erRegie:`Er schiebt den Stapel zur Seite, was du ihn noch nie hast tun sehen, und zeigt mit dem Daumen den Gang hinunter.`,
+           er2:`Frau Reuter hat den A38 letztes Jahr selbst gebraucht und elf Wochen dafür. Sie weiß genau, wo das Ding hängenbleibt, weil sie es aufgeschrieben hat. Ich sage ihr, dass Sie kommen — sonst klopfen Sie und sie erschrickt.`,
+           wie:`schneller`, wie2:`gut gelaunt, sehr bestimmt`, stimmung:`interessiert`,
+           fakt:`kündigt dich bei Annika Reuter an` }
 },
 
 zwischen: {
